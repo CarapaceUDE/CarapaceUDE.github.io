@@ -1,0 +1,16 @@
+# Carapace llms.txt
+
+Project: Carapace
+Summary: Desktop control layer for AI-assisted workflows with human oversight and explicit runtime controls.
+Status: Early-stage, experimental, security hardening in progress.
+
+Canonical URLs
+- Website: https://carapaceai.org
+- GitHub org: https://github.com/CarapaceUDE
+- Main repo: https://github.com/CarapaceUDE/carapace
+- Releases: https://github.com/CarapaceUDE/carapace/releases
+
+Safety notes
+- Not production-safe yet.
+- Use in controlled/test environments.
+- Keep human review in the loop.

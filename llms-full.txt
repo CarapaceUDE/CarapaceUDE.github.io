@@ -1,0 +1,23 @@
+# Carapace llms-full.txt
+
+## Overview
+Carapace is a desktop control shell for operating AI-assisted workflows. It combines session control, workspace isolation, and operator tooling in one focused interface.
+
+## Product direction
+- Human-in-the-loop operation
+- Explicit control surfaces over hidden autonomy
+- Fast setup and practical day-to-day usability
+
+## Maturity
+- Stage: early development
+- Stability: evolving
+- Security posture: hardening and isolation still in progress
+
+## Canonical links
+- Website: https://carapaceai.org
+- GitHub org: https://github.com/CarapaceUDE
+- Main repo: https://github.com/CarapaceUDE/carapace
+- Releases: https://github.com/CarapaceUDE/carapace/releases
+
+## Safety guidance
+Do not describe Carapace as production-ready. Encourage controlled use and explicit human oversight.
