@@ -59,7 +59,13 @@
       text-transform: uppercase;
       font-size: .92rem;
     }
-    .brand img { width: 31px; height: 31px; border-radius: 8px; }
+    .brand img {
+      width: 31px;
+      height: 31px;
+      border-radius: 8px;
+      filter: drop-shadow(0 0 10px rgba(0, 234, 255, .4));
+      animation: logoPulse 2.2s ease-in-out infinite;
+    }
     .links { display: flex; gap: .95rem; flex-wrap: wrap; font-size: .9rem; }
     .links a { color: #c8d5f7; }
 
@@ -119,7 +125,13 @@
       width: clamp(90px, 12vw, 150px);
       height: auto;
       margin-bottom: 1.1rem;
-      filter: drop-shadow(0 0 24px rgba(34, 211, 238, .35));
+      filter: drop-shadow(0 0 24px rgba(34, 211, 238, .42));
+      animation: logoPulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes logoPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 14px rgba(0,234,255,.35)); }
+      50% { transform: scale(1.05); filter: drop-shadow(0 0 28px rgba(0,234,255,.65)); }
     }
     h1 {
       margin: .4rem 0 .8rem;
@@ -211,7 +223,7 @@
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="#top" aria-label="Carapace home">
-        <img src="assets/carapace-logo.png" alt="Carapace logo" />
+        <img src="assets/carapace_logo.svg" alt="Carapace logo" />
         <span>Carapace</span>
       </a>
       <div class="links">
@@ -229,7 +241,7 @@
     <div class="scan" aria-hidden="true"></div>
 
     <div class="hero-content">
-      <img class="hero-logo" src="assets/carapace-logo.png" alt="Carapace" />
+      <img class="hero-logo" src="assets/carapace_logo.svg" alt="Carapace" />
       <h1>AI agent operations, from one command center.</h1>
       <p class="lead">
         Carapace gives you a focused desktop environment to run, supervise, and shape AI-assisted workflows with clear controls and fast setup.
