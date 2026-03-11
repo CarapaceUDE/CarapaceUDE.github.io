@@ -3,318 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Carapace | Build with AI Agents</title>
-  <meta name="description" content="Carapace is a desktop command center for running and supervising AI-assisted workflows with fast setup and clear operator control." />
+  <title>Carapace | Open-Source AI Operations</title>
+  <meta name="description" content="Carapace is an open-source AI operations platform for running and supervising AI-assisted workflows, with a business services path for deployment, integration, and customization." />
   <meta name="theme-color" content="#090c18" />
   <style>
-    :root {
-      --bg: #070b16;
-      --surface: #101a31;
-      --surface-2: #121f39;
-      --text: #edf1ff;
-      --muted: #a7b3d3;
-      --border: #253554;
-      --primary: #8b5cf6;
-      --secondary: #22d3ee;
-      --warn: #f97316;
-      --max: 1140px;
-    }
-
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      color: var(--text);
-      font: 16px/1.58 Inter, Segoe UI, Roboto, system-ui, sans-serif;
-      background: linear-gradient(180deg, #0b1122 0%, var(--bg) 100%);
-      overflow-x: hidden;
-    }
-
-    .wrap { width: min(100% - 2rem, var(--max)); margin: 0 auto; }
-    a { color: var(--secondary); text-decoration: none; }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      backdrop-filter: blur(9px);
-      background: rgba(7, 11, 22, .72);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: .82rem 0;
-    }
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: .7rem;
-      color: var(--text);
-      font-weight: 700;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      font-size: .92rem;
-    }
-    .brand img {
-      width: 62px;
-      height: 62px;
-      border-radius: 8px;
-      filter: drop-shadow(0 0 10px rgba(0, 234, 255, .4));
-      animation: logoPulse 2.2s ease-in-out infinite;
-    }
-    .links { display: flex; gap: .95rem; flex-wrap: wrap; font-size: .9rem; }
-    .links a { color: #c8d5f7; }
-
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0 1rem;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('assets/hero-bg.jpg');
-      background-size: cover;
-      background-position: center;
-      opacity: .34;
-      transform: scale(1.04);
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(1000px 520px at 20% -10%, rgba(139,92,246,.24), transparent 45%),
-        radial-gradient(1000px 520px at 110% 10%, rgba(34,211,238,.16), transparent 42%),
-        linear-gradient(180deg, rgba(8,11,21,.48), rgba(7,11,22,.9));
-    }
-    .scan {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-    .scan::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      background: rgba(34,211,238,.34);
-      animation: sweep 4s linear infinite;
-    }
-    @keyframes sweep {
-      from { top: 6%; }
-      to { top: 94%; }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 860px;
-      margin-top: -3vh;
-    }
-    .hero-logo {
-      width: clamp(180px, 24vw, 300px);
-      height: auto;
-      margin-bottom: .35rem;
-      filter: drop-shadow(0 0 24px rgba(34, 211, 238, .42));
-      animation: logoPulse 2.2s ease-in-out infinite;
-    }
-
-    @keyframes logoPulse {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 14px rgba(0,234,255,.35)); }
-      50% { transform: scale(1.05); filter: drop-shadow(0 0 28px rgba(0,234,255,.65)); }
-    }
-    h1 {
-      margin: .4rem 0 .8rem;
-      line-height: 1.04;
-      font-size: clamp(1.95rem, 5.2vw, 4.35rem);
-      letter-spacing: -.02em;
-      text-shadow: 0 0 24px rgba(139, 92, 246, .3);
-    }
-    .lead {
-      color: var(--muted);
-      max-width: 64ch;
-      margin: 0 auto 1.3rem;
-      font-size: clamp(1rem, 1.8vw, 1.2rem);
-    }
-    .cta {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: .8rem;
-      margin-bottom: .6rem;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 11px;
-      border: 1px solid transparent;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      font-size: .78rem;
-      padding: .8rem 1.12rem;
-      transition: .18s ease;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn.primary {
-      color: #040713;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      box-shadow: 0 10px 30px rgba(139,92,246,.3);
-    }
-    .btn.outline {
-      color: #dce8ff;
-      border-color: var(--border);
-      background: rgba(16, 26, 48, .72);
-    }
-    .hero-note { color: #95a7d3; font-size: .88rem; }
-
-    section { padding: 2.3rem 0; }
-    h2 { margin: 0 0 .85rem; font-size: clamp(1.2rem, 2.2vw, 1.75rem); }
-    .surface {
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(16,26,48,.92), rgba(14,22,40,.88));
-      padding: 1rem 1.06rem;
-    }
-    .grid { display: grid; gap: 1rem; }
-    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
-    .warn {
-      border-left: 4px solid var(--warn);
-      background: linear-gradient(165deg, rgba(52,29,14,.56), rgba(16,23,39,.92));
-    }
-
-    .shot {
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      overflow: hidden;
-      background: var(--surface-2);
-    }
-    .shot img { width: 100%; display: block; }
-    .shot p { margin: .72rem .92rem 1rem; color: var(--muted); font-size: .92rem; }
-
-    footer {
-      border-top: 1px solid var(--border);
-      margin-top: 2.2rem;
-      padding: 1.45rem 0 2.4rem;
-      color: #9fb0d7;
-      font-size: .9rem;
-    }
-
-    @media (max-width: 960px) {
-      .two, .three { grid-template-columns: 1fr; }
-      .links { gap: .65rem; }
-    }
+    :root { --bg:#070b16; --surface:#101a31; --surface-2:#121f39; --text:#edf1ff; --muted:#a7b3d3; --border:#253554; --primary:#5b6fa6; --primary-2:#475981; --secondary:#cfd8ee; --warn:#f97316; --max:1140px; }
+    *{box-sizing:border-box;} html,body{margin:0;padding:0;} html{scroll-behavior:smooth;}
+    body{color:var(--text);font:16px/1.58 Inter,Segoe UI,Roboto,system-ui,sans-serif;background:linear-gradient(180deg,#0b1122 0%,var(--bg) 100%);overflow-x:hidden;}
+    .wrap{width:min(100% - 2rem,var(--max));margin:0 auto;} a{color:var(--secondary);text-decoration:none;}
+    .nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(9px);background:rgba(7,11,22,.72);border-bottom:1px solid var(--border);} .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.82rem 0;}
+    .brand{display:inline-flex;align-items:center;gap:.7rem;color:var(--text);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.92rem;}
+    .brand img{width:62px;height:62px;border-radius:8px;filter:drop-shadow(0 0 10px rgba(0,234,255,.4));animation:logoPulse 2.2s ease-in-out infinite;}
+    .links{display:flex;gap:.95rem;flex-wrap:wrap;font-size:.9rem;align-items:center;} .links>a,.dropbtn{color:#c8d5f7;}
+    .dropdown{position:relative;display:inline-flex;align-items:center;} .dropbtn{background:transparent;border:0;font:inherit;cursor:pointer;padding:0;}
+    .dropdown-menu{position:absolute;top:calc(100% + .5rem);left:0;min-width:220px;border:1px solid var(--border);border-radius:10px;background:rgba(16,26,48,.98);box-shadow:0 10px 26px rgba(0,0,0,.35);display:none;overflow:hidden;}
+    .dropdown-menu a{display:block;padding:.58rem .8rem;color:#d8e3ff;border-bottom:1px solid rgba(37,53,84,.45);} .dropdown-menu a:last-child{border-bottom:0;} .dropdown-menu a:hover{background:rgba(34,211,238,.1);} .dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu{display:block;}
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2.2rem 1rem 4rem;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;background-image:url('assets/hero-bg.jpg');background-size:cover;background-position:center;opacity:.34;transform:scale(1.04);} .hero-overlay{position:absolute;inset:0;background:radial-gradient(1000px 520px at 20% -10%,rgba(139,92,246,.24),transparent 45%),radial-gradient(1000px 520px at 110% 10%,rgba(34,211,238,.16),transparent 42%),linear-gradient(180deg,rgba(8,11,21,.48),rgba(7,11,22,.9));}
+    .scan{position:absolute;inset:0;pointer-events:none;} .scan::before{content:"";position:absolute;left:0;width:100%;height:1px;background:rgba(34,211,238,.34);animation:sweep 4s linear infinite;} @keyframes sweep{from{top:6%;}to{top:94%;}}
+    .hero-content{position:relative;z-index:2;max-width:920px;margin:0 auto;padding-top:0;} .hero-logo{width:clamp(180px,24vw,280px);height:auto;margin:0 auto .45rem;display:block;filter:drop-shadow(0 0 20px rgba(34,211,238,.26));animation:logoPulse 2.2s ease-in-out infinite;}
+    @keyframes logoPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 12px rgba(0,234,255,.24));}50%{transform:scale(1.03);filter:drop-shadow(0 0 20px rgba(0,234,255,.38));}}
+    h1{margin:.4rem 0 .9rem;line-height:1.02;font-size:clamp(2.15rem,5.4vw,4.5rem);letter-spacing:-.03em;text-shadow:0 0 22px rgba(139,92,246,.18);} .lead{color:var(--muted);max-width:62ch;margin:0 auto 1rem;font-size:clamp(1.02rem,1.9vw,1.22rem);} .sublead{color:#cbd8f8;max-width:58ch;margin:0 auto 1.5rem;font-size:1rem;}
+    .cta{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem;margin-bottom:.6rem;} .btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;border-radius:11px;border:1px solid transparent;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem;padding:.9rem 1.18rem;transition:.18s ease;min-width:220px;line-height:1.15;text-align:center;} .btn:hover{transform:translateY(-1px);} .btn small{margin-top:.35rem;font-size:.68rem;letter-spacing:.03em;text-transform:none;font-weight:600;opacity:.9;} .btn.primary{color:#eef3ff;background:linear-gradient(180deg,var(--primary),var(--primary-2));border-color:rgba(207,216,238,.14);box-shadow:0 8px 18px rgba(8,12,22,.28);} .btn.outline{color:#dce8ff;border-color:#334566;background:rgba(15,22,38,.74);} .btn.outline:hover{background:rgba(22,31,52,.9);border-color:#41567e;} .hero-note{color:#95a7d3;font-size:.88rem;}
+    section{padding:3rem 0;} h2{margin:0 0 1rem;font-size:clamp(1.24rem,2.2vw,1.86rem);letter-spacing:-.01em;} .surface{border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,rgba(16,26,48,.94),rgba(14,22,40,.9));padding:1.15rem 1.16rem;box-shadow:0 10px 28px rgba(0,0,0,.14);} .grid{display:grid;gap:1rem;} .two{grid-template-columns:repeat(2,minmax(0,1fr));} .three{grid-template-columns:repeat(3,minmax(0,1fr));}
+    .warn{border-left:4px solid var(--warn);background:linear-gradient(165deg,rgba(52,29,14,.56),rgba(16,23,39,.92));} .shot{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:0 10px 28px rgba(0,0,0,.14);} .shot img{width:100%;display:block;} .shot p{margin:.78rem .98rem 1.05rem;color:var(--muted);font-size:.92rem;} .path-title{margin:0 0 .36rem;} .path-cta{margin-top:.85rem;display:inline-block;font-weight:700;} .proof{padding-top:.4rem;} .proof-list{display:grid;gap:1rem;grid-template-columns:repeat(3,minmax(0,1fr));} .proof-list strong{display:block;margin-bottom:.32rem;}
+    footer{border-top:1px solid var(--border);margin-top:2.2rem;padding:1.45rem 0 2.4rem;color:#9fb0d7;font-size:.9rem;}
+    @media (max-width:960px){.two,.three,.proof-list{grid-template-columns:1fr;} .links{gap:.65rem;} .dropdown-menu{left:auto;right:0;} .btn{min-width:unset;width:100%;max-width:360px;}}
   </style>
 </head>
 <body>
-  <nav class="nav">
-    <div class="wrap nav-inner">
-      <a class="brand" href="#top" aria-label="Carapace home">
-        <img src="assets/carapace_logo.svg" alt="Carapace logo" />
-        <span>Carapace</span>
-      </a>
-      <div class="links">
-        <a href="#download">Download</a>
-        <a href="#overview">Overview</a>
-        <a href="#safety">Safety</a>
-        <a href="#screens">Screens</a>
-      </div>
-    </div>
-  </nav>
-
-  <header id="top" class="hero">
-    <div class="hero-bg" aria-hidden="true"></div>
-    <div class="hero-overlay" aria-hidden="true"></div>
-    <div class="scan" aria-hidden="true"></div>
-
-    <div class="hero-content">
-      <img class="hero-logo" src="assets/carapace_logo.svg" alt="Carapace" />
-      <h1>UNIFYING HUMAN AND AGENT INTERACTION</h1>
-      <p class="lead">
-        Carapace gives you a focused desktop environment to run, supervise, and shape AI-assisted workflows with clear controls and fast setup.
-      </p>
-      <div class="cta" id="download">
-        <a class="btn primary" href="https://github.com/CarapaceUDE/carapace/releases" target="_blank" rel="noreferrer">Download</a>
-        <a class="btn outline" href="https://github.com/CarapaceUDE" target="_blank" rel="noreferrer">View on GitHub</a>
-      </div>
-      <p class="hero-note">Experimental release, only use in controlled environments or in isolation.</p>
-    </div>
-  </header>
-
+  <nav class="nav"><div class="wrap nav-inner"><a class="brand" href="#top" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="Carapace logo" /><span>Carapace</span></a><div class="links"><a href="#download">Get Started</a><a href="#paths">Paths</a><a href="business.html">Business</a><div class="dropdown"><button class="dropbtn" aria-haspopup="true" aria-expanded="false">Products ▾</button><div class="dropdown-menu" role="menu"><a href="carapace.html">Carapace</a><a href="cortex.html">Cortex (Coming Soon)</a><a href="core-skills.html">Core Skills</a></div></div><a href="#safety">Safety</a><a href="#screens">Screens</a></div></div></nav>
+  <header id="top" class="hero"><div class="hero-bg" aria-hidden="true"></div><div class="hero-overlay" aria-hidden="true"></div><div class="scan" aria-hidden="true"></div><div class="hero-content"><img class="hero-logo" src="assets/carapace_logo.svg" alt="Carapace" /><h1>A unified desktop environment for AI-assisted work</h1><p class="lead">Carapace gives you one place to run, supervise, and shape AI-assisted workflows without losing visibility or control.</p><p class="sublead">Use it for personal experimentation, or work with Carapace LLC to deploy, integrate, and adapt it for real business workflows.</p><div class="cta" id="download"><a class="btn primary" href="https://github.com/CarapaceUDE/carapace/releases" target="_blank" rel="noreferrer">Free Download<small>for personal use</small></a><a class="btn outline" href="business.html">Business Setup &amp; Integration<small>deployment, integration, and consulting</small></a></div><p class="hero-note">Experimental software. Use controlled environments and keep human review in the loop.</p></div></header>
   <main class="wrap">
-    <section id="overview">
-      <h2>What Carapace includes</h2>
-      <div class="grid two">
-        <article class="surface">
-          <strong>Unified workspace</strong>
-          <p>Coordinate sessions, objectives, and operations from one place without tab sprawl.</p>
-        </article>
-        <article class="surface">
-          <strong>Workspace isolation</strong>
-          <p>Separated runtime context to keep experiments safer and easier to reason about.</p>
-        </article>
-        <article class="surface">
-          <strong>Fast install path</strong>
-          <p>Get from install to useful control quickly, with fewer setup bottlenecks.</p>
-        </article>
-        <article class="surface">
-          <strong>Human oversight by default</strong>
-          <p>Clear intervention points and transparent system behavior stay front and center.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="safety">
-      <h2>Status and safety</h2>
-      <div class="grid two">
-        <div class="surface">
-          <strong>Early stage</strong>
-          <p>Carapace is evolving rapidly and still hardening reliability and security boundaries.</p>
-        </div>
-        <div class="surface warn">
-          <strong>Important</strong>
-          <p>Do not treat current builds as production-safe. Use controlled environments and maintain human review.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="screens">
-      <h2>Interface previews</h2>
-      <div class="grid three">
-        <figure class="shot">
-          <img src="assets/screenshot-command-center.svg" alt="Command center preview" />
-          <p>Command center for chat, tools, and active orchestration.</p>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshot-agent-collab.svg" alt="Agent collaboration preview" />
-          <p>Agent collaboration with readable context and intervention hooks.</p>
-        </figure>
-        <figure class="shot">
-          <img src="assets/screenshot-security-boundary.svg" alt="Security boundary preview" />
-          <p>Boundary design with visible trust zones and warning states.</p>
-        </figure>
-      </div>
-    </section>
+    <section id="overview"><h2>What Carapace gives you</h2><div class="grid two"><article class="surface"><strong>One working surface</strong><p>Keep sessions, tools, objectives, and operator decisions in one place instead of scattering them across tabs.</p></article><article class="surface"><strong>Clearer isolation</strong><p>Separate runtime context so experiments are easier to reason about and less likely to bleed into each other.</p></article><article class="surface"><strong>Faster setup</strong><p>Get from install to a usable workflow with less friction and fewer manual handoffs.</p></article><article class="surface"><strong>Human oversight</strong><p>Keep intervention points, status visibility, and operator control front and center.</p></article></div></section>
+    <section class="proof"><h2>What that looks like in practice</h2><div class="surface"><div class="proof-list"><div><strong>Agent supervision</strong><p>Monitor active chats, tool calls, and orchestration work without losing the thread.</p></div><div><strong>Workflow control</strong><p>Keep objectives, sessions, and intervention points in one place instead of juggling multiple tools.</p></div><div><strong>Safer experimentation</strong><p>Test AI-assisted workflows in a more controlled environment before they touch important work.</p></div></div></div></section>
+    <section id="paths"><h2>Choose your path</h2><div class="grid two"><article class="surface"><h3 class="path-title">Free download</h3><p>For personal use, self-hosting, and hands-on exploration. Start with the software and see how it fits your workflow.</p><a class="path-cta" href="https://github.com/CarapaceUDE/carapace/releases" target="_blank" rel="noreferrer">Get the free download &rarr;</a></article><article class="surface"><h3 class="path-title">Business solutions</h3><p>For teams that want help installing, integrating, governing, and operationalizing Carapace inside a real environment.</p><a class="path-cta" href="business.html">Explore business solutions &rarr;</a></article></div></section>
+    <section id="safety"><h2>Status and safety</h2><div class="surface warn"><strong>Early-stage software.</strong> Carapace is evolving quickly and should be used in controlled environments with human review still in the loop.</div></section>
+    <section id="screens"><h2>Interface previews</h2><div class="grid three"><figure class="shot"><img src="assets/screenshot-command-center.svg" alt="Command center preview" /><p>Command center for chat, tools, and active orchestration.</p></figure><figure class="shot"><img src="assets/screenshot-agent-collab.svg" alt="Agent collaboration preview" /><p>Agent collaboration with readable context and intervention hooks.</p></figure><figure class="shot"><img src="assets/screenshot-security-boundary.svg" alt="Security boundary preview" /><p>Boundary design with visible trust zones and warning states.</p></figure></div></section>
   </main>
-
-  <footer>
-    <div class="wrap">
-      <div>Carapace is experimental software.</div>
-      <div><a href="https://github.com/CarapaceUDE" target="_blank" rel="noreferrer">CarapaceUDE on GitHub</a></div>
-    </div>
-  </footer>
+  <footer><div class="wrap"><div>Carapace is experimental software.</div><div><a href="carapace.html">Carapace product page</a> | <a href="business.html">Business solutions</a> | <a href="https://github.com/CarapaceUDE" target="_blank" rel="noreferrer">CarapaceUDE on GitHub</a></div></div></footer>
 </body>
 </html>

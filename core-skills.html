@@ -1,0 +1,244 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Core Skills | Carapace</title>
+  <meta name="description" content="Core Skills product page with guide access, PDF download, and buy-pack CTA." />
+  <style>
+    :root {
+      --bg: #070b16;
+      --surface: #101a31;
+      --surface-2: #121f39;
+      --text: #edf1ff;
+      --muted: #a7b3d3;
+      --border: #253554;
+      --primary: #8b5cf6;
+      --secondary: #22d3ee;
+      --max: 1100px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      color: var(--text);
+      font: 16px/1.62 Inter, Segoe UI, Roboto, system-ui, sans-serif;
+      background: linear-gradient(180deg, #0b1122 0%, var(--bg) 100%);
+    }
+    a { color: var(--secondary); text-decoration: none; }
+    .wrap { width: min(100% - 2rem, var(--max)); margin: 0 auto; }
+
+    .nav {
+      position: sticky; top: 0; z-index: 30;
+      backdrop-filter: blur(8px);
+      background: rgba(7,11,22,.76);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; padding: .8rem 0;
+    }
+    .brand { display: inline-flex; align-items: center; gap: .65rem; color: var(--text); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: .9rem; }
+    .brand img { width: 46px; height: 46px; border-radius: 8px; filter: drop-shadow(0 0 10px rgba(34,211,238,.35)); }
+
+    .hero {
+      position: relative;
+      padding: 3.4rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(900px 440px at 10% -10%, rgba(139,92,246,.22), transparent 46%),
+        radial-gradient(900px 400px at 110% 10%, rgba(34,211,238,.14), transparent 44%);
+    }
+    h1 {
+      margin: .4rem 0 .8rem;
+      line-height: 1.08;
+      font-size: clamp(1.75rem, 4.2vw, 3rem);
+      letter-spacing: -.02em;
+    }
+    .lead { color: var(--muted); max-width: 70ch; margin: 0 0 1.2rem; }
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: .35rem .7rem;
+      font-size: .82rem;
+      color: #cfe1ff;
+      background: rgba(18,31,57,.7);
+      margin-right: .45rem;
+      margin-bottom: .45rem;
+    }
+
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      margin-top: 1rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 11px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      letter-spacing: .03em;
+      font-size: .84rem;
+      padding: .78rem 1.05rem;
+      transition: .18s ease;
+      text-transform: uppercase;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn.primary {
+      color: #040713;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      box-shadow: 0 8px 26px rgba(139,92,246,.3);
+    }
+    .btn.outline {
+      color: #dce8ff;
+      border-color: var(--border);
+      background: rgba(16, 26, 48, .72);
+    }
+
+    main { padding: 1.35rem 0 2.5rem; }
+    .grid { display: grid; gap: 1rem; }
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(16,26,48,.92), rgba(14,22,40,.88));
+      padding: 1rem 1.05rem;
+    }
+    .card h3 { margin: .1rem 0 .5rem; font-size: 1.06rem; }
+    .muted { color: var(--muted); }
+
+    .loop {
+      margin-top: .5rem;
+      font-weight: 700;
+      letter-spacing: .01em;
+      color: #d8e9ff;
+    }
+
+    .steps {
+      margin: .6rem 0 0;
+      padding-left: 1.15rem;
+    }
+    .steps li { margin: .42rem 0; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.3rem 0 2rem;
+      color: #9fb0d7;
+      font-size: .9rem;
+    }
+
+    @media (max-width: 940px) {
+      .two, .three { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="index.html" aria-label="Carapace home">
+        <img src="assets/carapace_logo.svg" alt="Carapace logo" />
+        <span>Carapace</span>
+      </a>
+      <a href="index.html">← Back to home</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <h1>Core Skills</h1>
+      <p class="lead">
+        Build the 5-core-skill learning loop yourself, or buy the ready-to-use pack. This product explains the architecture and gives an implementation path your own agent can follow.
+      </p>
+      <span class="pill">Product: Core Skills</span>
+      <span class="pill">Format: HTML Guide + PDF</span>
+      <span class="pill">Pack: Coming Online</span>
+
+      <div class="cta">
+        <a class="btn outline" href="core-skills-guide.html">View Guide</a>
+        <a class="btn outline" href="core-skills-guide.pdf" download>Download PDF</a>
+        <a class="btn primary" href="#buy-pack">Buy Pack</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid three">
+      <article class="card">
+        <h3>1) Core Orchestration</h3>
+        <p class="muted">Decision and routing layer.</p>
+        <p>Interprets objectives, chooses direct vs delegated action, and coordinates tools/models/agents.</p>
+      </article>
+      <article class="card">
+        <h3>2) Core Memory</h3>
+        <p class="muted">Continuity and recall layer.</p>
+        <p>Retrieves durable context and stores meaningful outcomes so the system stays grounded over time.</p>
+      </article>
+      <article class="card">
+        <h3>3) Reflection & Evaluation</h3>
+        <p class="muted">Quality control layer.</p>
+        <p>Compares outputs to goals, identifies misses, and emits structured lesson candidates.</p>
+      </article>
+      <article class="card">
+        <h3>4) Core Learning (Novel)</h3>
+        <p class="muted">Behavior adaptation layer.</p>
+        <p>Converts validated lessons into behavior updates and tracks impact with rollback-safe evolution.</p>
+      </article>
+      <article class="card">
+        <h3>5) Core Governance</h3>
+        <p class="muted">Risk and policy layer.</p>
+        <p>Enforces approval boundaries, classifies risk, and keeps actions and adaptations policy-aligned.</p>
+      </article>
+      <article class="card">
+        <h3>The Learning Loop</h3>
+        <p class="loop">Do → Remember → Evaluate → Adapt → Govern → Repeat</p>
+        <p class="muted">This is the mechanism that makes Carapace improve cycle by cycle instead of remaining static.</p>
+      </article>
+    </section>
+
+    <section class="grid two" style="margin-top:1rem;">
+      <article class="card">
+        <h3>How the skills interact</h3>
+        <ol class="steps">
+          <li><strong>Orchestration</strong> executes toward an objective.</li>
+          <li><strong>Memory</strong> supplies context and records outcomes.</li>
+          <li><strong>Reflection</strong> scores quality and creates lessons.</li>
+          <li><strong>Learning</strong> applies vetted improvements.</li>
+          <li><strong>Governance</strong> validates and constrains change.</li>
+        </ol>
+      </article>
+
+      <article class="card">
+        <h3>What you get</h3>
+        <p><strong>Guide:</strong> architecture, contracts, interaction map, implementation workflow.</p>
+        <p><strong>Pack:</strong> downloadable zip with the 5 skills prepared for faster integration.</p>
+        <p class="muted">Payment path will support Simplex first, with additional methods added in future updates.</p>
+      </article>
+    </section>
+
+    <section id="buy-pack" class="card" style="margin-top:1rem;">
+      <h3>Buy Pack (Coming Online)</h3>
+      <p>
+        This option will let buyers purchase the Core Skills zip package directly and receive the 5-skill bundle ready for import.
+      </p>
+      <p class="muted">
+        Initial checkout target: <strong>Simplex</strong>. Additional payment methods will be added as the storefront expands.
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="#">Buy Pack via Simplex (Soon)</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div>Carapace Core Skills Product Page</div>
+      <div><a href="index.html">Back to main site</a></div>
+    </div>
+  </footer>
+</body>
+</html>

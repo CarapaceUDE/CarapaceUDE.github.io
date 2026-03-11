@@ -1,0 +1,11 @@
+name = "carapace-intake"
+main = "worker.js"
+compatibility_date = "2026-03-10"
+
+[[d1_databases]]
+binding = "INTAKE_DB"
+database_name = "carapace-intake"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[vars]
+# If you move the frontend off the apex later, update allowed origin in worker.js too.

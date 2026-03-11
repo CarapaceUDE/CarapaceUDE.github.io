@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Business Solutions | Carapace</title>
+  <meta name="description" content="Carapace LLC helps businesses deploy, customize, and govern AI-assisted workflows with practical setup, integrations, and human oversight." />
+  <meta name="theme-color" content="#090c18" />
+  <style>
+    :root {
+      --bg:#070b16; --surface:#101a31; --surface-2:#121f39; --text:#edf1ff; --muted:#a7b3d3; --border:#253554;
+      --primary:#5b6fa6; --primary-2:#475981; --secondary:#cfd8ee; --max:1100px;
+    }
+    *{box-sizing:border-box;} html,body{margin:0;padding:0;} body{color:var(--text);font:16px/1.6 Inter,Segoe UI,Roboto,system-ui,sans-serif;background:linear-gradient(180deg,#0b1122 0%,var(--bg) 100%);} a{color:var(--secondary);text-decoration:none;}
+    .wrap{width:min(100% - 2rem,var(--max));margin:0 auto;}
+    .nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(9px);background:rgba(7,11,22,.74);border-bottom:1px solid var(--border);}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.82rem 0;}
+    .brand{display:inline-flex;align-items:center;gap:.7rem;color:var(--text);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.92rem;}
+    .brand img{width:54px;height:54px;border-radius:8px;filter:drop-shadow(0 0 10px rgba(0,234,255,.4));}
+    .links{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;font-size:.92rem;}
+    .hero{padding:4.3rem 0 2.6rem;background:radial-gradient(900px 440px at 10% -10%,rgba(139,92,246,.22),transparent 46%),radial-gradient(900px 400px at 110% 10%,rgba(34,211,238,.14),transparent 44%);border-bottom:1px solid var(--border);}
+    h1{margin:.2rem 0 .95rem;line-height:1.03;font-size:clamp(2.15rem,4.8vw,3.9rem);letter-spacing:-.03em;}
+    h2{margin:0 0 .95rem;font-size:clamp(1.24rem,2.2vw,1.9rem);} h3{margin:.1rem 0 .6rem;font-size:1.05rem;}
+    .lead{color:var(--muted);max-width:66ch;margin:0 0 1rem;font-size:1.08rem;}
+    .pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:.35rem .7rem;font-size:.82rem;color:#cfe1ff;background:rgba(18,31,57,.7);margin-right:.45rem;margin-bottom:.45rem;}
+    .cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem;}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:11px;border:1px solid transparent;font-weight:700;letter-spacing:.03em;font-size:.84rem;padding:.8rem 1.08rem;transition:.18s ease;text-transform:uppercase;}
+    .btn:hover{transform:translateY(-1px);} .btn.primary{color:#eef3ff;background:linear-gradient(180deg,var(--primary),var(--primary-2));border-color:rgba(207,216,238,.14);box-shadow:0 8px 18px rgba(8,12,22,.28);} .btn.outline{color:#dce8ff;border-color:#334566;background:rgba(15,22,38,.74);} .btn.outline:hover{background:rgba(22,31,52,.9);border-color:#41567e;}
+    main{padding:1.9rem 0 3rem;} section{padding:1.15rem 0;} .grid{display:grid;gap:1rem;} .two{grid-template-columns:repeat(2,minmax(0,1fr));} .three{grid-template-columns:repeat(3,minmax(0,1fr));}
+    .card{border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,rgba(16,26,48,.94),rgba(14,22,40,.9));padding:1.15rem 1.15rem;box-shadow:0 10px 28px rgba(0,0,0,.14);}
+    .muted{color:var(--muted);} ul,ol{padding-left:1.2rem;} li{margin:.42rem 0;} .quote{font-size:1rem;color:#d8e6ff;line-height:1.7;} .cta-panel{display:flex;justify-content:space-between;gap:1rem;align-items:center;} .intake-intro{display:grid;gap:1rem;grid-template-columns:1.2fr .8fr;align-items:start;} .checklist{margin:0;padding-left:1.1rem;} .checklist li{margin:.3rem 0;}
+    .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem;}
+    label{display:block;font-size:.9rem;color:#d9e6ff;margin:0 0 .32rem;}
+    input,select,textarea{width:100%;border:1px solid var(--border);border-radius:10px;background:#0d162b;color:var(--text);padding:.8rem .85rem;font:inherit;}
+    textarea{min-height:140px;resize:vertical;}
+    .full{grid-column:1 / -1;} .note{font-size:.9rem;color:#97a8d3;} .form-status{margin-top:.9rem;font-size:.94rem;color:#cfe1ff;min-height:1.2em;}
+    footer{border-top:1px solid var(--border);padding:1.35rem 0 2rem;color:#9fb0d7;font-size:.9rem;}
+    @media (max-width:900px){.two,.three,.form-grid,.intake-intro{grid-template-columns:1fr;} .cta-panel{flex-direction:column;align-items:flex-start;}}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="index.html" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="Carapace logo" /><span>Carapace</span></a>
+      <div class="links"><a href="index.html">Home</a><a href="carapace.html">Product</a><a href="#contact">Contact</a></div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <h1>Business Setup &amp; Integration</h1>
+      <p class="lead">Carapace LLC helps teams turn Carapace into a working business system, with installation, integration, operator controls, and practical human oversight built in from the start.</p>
+      <p class="muted">For teams that want a real deployment, not just a promising demo.</p>
+      <p class="quote">Carapace is open source. What you hire us for is the implementation work: getting it installed, adapted, integrated, and actually useful inside your business.</p>
+      <span class="pill">Open-source core</span>
+      <span class="pill">Paid deployment &amp; consulting</span>
+      <span class="pill">Custom integrations</span>
+      <div class="cta">
+        <a class="btn primary" href="#contact">Start a Consultation</a>
+        <a class="btn outline" href="carapace.html">View Carapace Product</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid two">
+      <article class="card">
+        <h2>What we do</h2>
+        <p class="muted">We install, adapt, and integrate Carapace so it fits the way your team actually works.</p>
+        <ul>
+          <li>Install and configure Carapace for business use</li>
+          <li>Set up assistants around specific workflows and teams</li>
+          <li>Integrate business tools, approvals, and operational processes</li>
+          <li>Build custom skills, tools, and reusable integration packages</li>
+          <li>Add human oversight, governance, and clearer operator control</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2>Who it’s for</h2>
+        <p class="muted">Best fit for teams that want practical AI operations, not another pile of disconnected scripts, dashboards, and sidecars.</p>
+        <ul>
+          <li>Founder-led technical teams</li>
+          <li>Small businesses with growing operational complexity</li>
+          <li>Internal ops teams testing AI-assisted workflows</li>
+          <li>Organizations that need controlled, local, or self-hosted deployments</li>
+        </ul>
+      </article>
+    </section>
+
+    <section>
+      <div class="grid three">
+        <article class="card">
+          <h3>Discovery</h3>
+          <p class="muted">We map your workflow, current tooling, and pain points so the build starts from reality instead of assumptions.</p>
+        </article>
+        <article class="card">
+          <h3>Pilot Setup</h3>
+          <p class="muted">We stand up a practical first deployment with the right controls, integrations, and operator touchpoints.</p>
+        </article>
+        <article class="card">
+          <h3>Expand &amp; Productize</h3>
+          <p class="muted">Useful custom work can later be turned into reusable packages, skills, and templates.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>Why teams hire us</h2>
+        <ul>
+          <li>Faster setup than building everything from scratch</li>
+          <li>Less fragmentation across tools, workflows, and agent behavior</li>
+          <li>Practical implementation instead of prolonged trial and error</li>
+          <li>Clearer operator control, oversight, and audit-friendly workflow design</li>
+          <li>Custom-fit integrations for your actual environment</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2>Engagement model</h2>
+        <ol>
+          <li><strong>Consultation:</strong> understand the team, tooling, constraints, and goals</li>
+          <li><strong>Pilot:</strong> launch a first useful deployment</li>
+          <li><strong>Integration:</strong> connect approvals, tools, and business systems</li>
+          <li><strong>Support:</strong> refine, expand, and harden the setup over time</li>
+        </ol>
+        <p class="note">Carapace remains open source. The paid path is implementation, integration, customization, and support.</p>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="cta-panel">
+        <div>
+          <h2>Typical first engagement</h2>
+          <p class="muted">Most teams do not need a giant transformation project. They need one grounded pilot that proves the workflow, the controls, and whether Carapace is a fit.</p>
+        </div>
+        <a class="btn primary" href="#contact">Start with a Pilot</a>
+      </div>
+    </section>
+
+    <section id="contact" class="card">
+      <h2>Talk to us about your workflow</h2>
+      <div class="intake-intro">
+        <div>
+          <p class="muted">Use this as a first-pass intake form. It can be wired to your preferred contact or CRM flow later.</p>
+          <p class="muted">A good first engagement is usually a scoped conversation followed by a pilot. We look at the workflow, the constraints, the existing tools, and where Carapace would actually help.</p>
+        </div>
+        <div class="surface" style="box-shadow:none;">
+          <strong>What helps us respond faster</strong>
+          <ul class="checklist">
+            <li>Your team size</li>
+            <li>The workflow you want to improve</li>
+            <li>Your current tools or bottlenecks</li>
+            <li>Your timeline</li>
+          </ul>
+        </div>
+      </div>
+      <form id="intake-form" action="https://api.carapaceai.org/intake" method="post">
+        <input type="hidden" name="source_page" value="business.html" />
+        <div class="form-grid">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" />
+          </div>
+          <div>
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text" placeholder="Company or team" />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@company.com" />
+          </div>
+          <div>
+            <label for="team-size">Team size</label>
+            <select id="team-size" name="team-size">
+              <option value="">Select one</option>
+              <option>1-5</option>
+              <option>6-20</option>
+              <option>21-100</option>
+              <option>100+</option>
+            </select>
+          </div>
+          <div class="full">
+            <label for="pain">Current workflow pain or goal</label>
+            <textarea id="pain" name="pain" placeholder="What are you trying to improve, automate, or operationalize?"></textarea>
+          </div>
+          <div>
+            <label for="deployment">What do you want to deploy?</label>
+            <input id="deployment" name="deployment" type="text" placeholder="Example: internal assistant, approval workflow, local AI ops setup" />
+          </div>
+          <div>
+            <label for="timeline">Timeline</label>
+            <input id="timeline" name="timeline" type="text" placeholder="Example: this month, next quarter" />
+          </div>
+          <div class="full">
+            <label for="notes">Additional notes</label>
+            <textarea id="notes" name="notes" placeholder="Anything else we should know before a consultation?"></textarea>
+          </div>
+        </div>
+        <div class="cta">
+          <button class="btn primary" type="submit">Request Consultation</button>
+          <a class="btn outline" href="index.html">Back to Home</a>
+        </div>
+        <div id="form-status" class="form-status" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div>Carapace LLC business solutions</div>
+      <div><a href="index.html">Home</a> | <a href="carapace.html">Carapace product page</a></div>
+    </div>
+  </footer>
+  <script>
+    (function () {
+      const form = document.getElementById('intake-form');
+      const status = document.getElementById('form-status');
+      if (!form || !status) return;
+
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        status.textContent = 'Sending...';
+
+        const button = form.querySelector('button[type="submit"]');
+        if (button) button.disabled = true;
+
+        try {
+          const formData = new FormData(form);
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+          });
+
+          const data = await response.json().catch(() => ({}));
+
+          if (!response.ok || !data.ok) {
+            throw new Error(data.error || 'Submission failed');
+          }
+
+          form.reset();
+          form.querySelector('input[name="source_page"]').value = 'business.html';
+          status.textContent = 'Thanks. Your request was received.';
+        } catch (error) {
+          status.textContent = 'Could not submit right now. Please try again shortly.';
+        } finally {
+          if (button) button.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

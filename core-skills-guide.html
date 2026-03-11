@@ -1,0 +1,210 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Carapace Core Skills Guide — Agent Builder Edition</title>
+  <style>
+    :root {
+      --bg: #070b16;
+      --surface: #101a31;
+      --surface-2: #121f39;
+      --text: #edf1ff;
+      --muted: #a7b3d3;
+      --border: #253554;
+      --primary: #8b5cf6;
+      --secondary: #22d3ee;
+    }
+
+    @page { size: Letter; margin: 0.65in; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      line-height: 1.5;
+      background: linear-gradient(180deg, #0b1122 0%, var(--bg) 100%);
+      color: var(--text);
+      font-size: 12pt;
+    }
+
+    .wrap {
+      width: min(100% - 2rem, 980px);
+      margin: 0 auto;
+      padding: 1.4rem 0 2rem;
+    }
+
+    .hero {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background:
+        radial-gradient(900px 440px at 10% -10%, rgba(139,92,246,.22), transparent 46%),
+        radial-gradient(900px 400px at 110% 10%, rgba(34,211,238,.14), transparent 44%),
+        linear-gradient(180deg, rgba(16,26,48,.92), rgba(14,22,40,.88));
+      padding: 1rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 { font-size: 28px; margin: 0 0 6px; letter-spacing: -.02em; }
+    h2 { font-size: 17px; margin-top: 20px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+    h3 { font-size: 13.5px; margin-top: 12px; margin-bottom: 5px; }
+    p { margin: 6px 0; }
+    .muted { color: var(--muted); }
+
+    .loop {
+      font-weight: 700;
+      font-size: 15px;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(18,31,57,.8);
+      color: #d9e9ff;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 10px;
+      margin: 8px 0;
+      background: linear-gradient(180deg, rgba(16,26,48,.92), rgba(14,22,40,.88));
+    }
+
+    .small { font-size: 10.5pt; }
+    code, pre { font-family: Consolas, Menlo, monospace; font-size: 10pt; }
+    pre {
+      background: rgba(18,31,57,.82);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px;
+      white-space: pre-wrap;
+      color: #dfeaff;
+    }
+
+    ul, ol { margin-top: 5px; margin-bottom: 5px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .footer { margin-top: 18px; font-size: 10pt; color: #94a7d5; }
+
+    @media (max-width: 840px) {
+      .grid2 { grid-template-columns: 1fr; }
+    }
+
+    /* Print mode: black on white for readability and toner-friendly output */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11pt;
+      }
+      .wrap { width: 100%; margin: 0; padding: 0; }
+      .hero, .card, .loop, pre {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border: 1px solid #d1d5db !important;
+        box-shadow: none !important;
+      }
+      .muted, .footer, a { color: #111111 !important; }
+      h2 { border-bottom: 1px solid #d1d5db !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Core Skills Guide (Agent Builder Edition)</h1>
+      <p class="muted">A practical spec for AI agents to implement the 5-core-skill architecture from scratch.</p>
+    </section>
+
+    <h2>0) What this guide gives you</h2>
+    <ul>
+      <li>Clear responsibilities for each skill.</li>
+      <li>Cross-skill interfaces (how skills call/reference each other).</li>
+      <li>A minimal file layout and contracts you can copy directly.</li>
+      <li>Governance + rollback requirements so adaptation stays safe.</li>
+      <li>Build sequence an AI agent can follow step-by-step.</li>
+    </ul>
+    <p class="small"><strong>Important:</strong> If your agent needs help scaffolding/updating skills, use OpenClaw's built-in <strong>skill-creator</strong> skill for detailed packaging/structure instructions while implementing.</p>
+
+    <h2>1) Core architecture</h2>
+    <p class="loop">Do → Remember → Evaluate → Adapt → Govern → Repeat</p>
+    <p>This is a controlled improvement loop. Learning never bypasses governance.</p>
+
+    <h2>2) The 5 skills (roles + required I/O)</h2>
+
+    <div class="card"><h3>Core Orchestration</h3><p><strong>Input:</strong> objective, constraints, recalled context.</p><p><strong>Output:</strong> execution plan + routing decisions + result envelope.</p><p><strong>Calls:</strong> core-memory (read/write), tools/subagents, core-reflection-evaluation.</p></div>
+    <div class="card"><h3>Core Memory</h3><p><strong>Input:</strong> recall query OR durable memory draft.</p><p><strong>Output:</strong> relevant memory snippets OR persisted memory artifact.</p><p><strong>Calls:</strong> memory retrieval/storage only; does not make policy decisions.</p></div>
+    <div class="card"><h3>Core Reflection & Evaluation</h3><p><strong>Input:</strong> objective, constraints, execution result.</p><p><strong>Output:</strong> score, diagnostics, lessonCandidates[].</p><p><strong>Calls:</strong> core-learning (lesson candidates), optionally core-memory (log summaries).</p></div>
+    <div class="card"><h3>Core Learning</h3><p><strong>Input:</strong> lessonCandidates[] + confidence + context.</p><p><strong>Output:</strong> proposed behavior update(s) + expected impact + rollback key.</p><p><strong>Calls:</strong> core-governance for approval before durable apply.</p></div>
+    <div class="card"><h3>Core Governance</h3><p><strong>Input:</strong> proposed action/update with risk metadata.</p><p><strong>Output:</strong> allow / ask / deny decision + rationale.</p><p><strong>Calls:</strong> none required; returns policy decision to caller.</p></div>
+
+    <h2>3) Cross-skill interaction map (authoritative)</h2>
+<pre>orchestration.start(task)
+  -> memory.recall(task)
+  -> orchestration.plan(task, recalled)
+  -> orchestration.execute(plan)
+  -> memory.capture(result_draft)
+  -> reflection.evaluate(task, result)
+      -> learning.propose(lessonCandidates)
+          -> governance.decide(updateProposal)
+          -> if allow: learning.apply(updateProposal)
+          -> if ask: queue for human approval
+          -> if deny: archive proposal (no apply)
+  -> memory.capture(final_decisions)
+  -> orchestration.return(final_response)</pre>
+
+    <h2>4) Minimal file layout (starter)</h2>
+<pre>skills/
+  core-orchestration/
+  core-memory/
+  core-reflection-evaluation/
+  core-learning/
+  core-governance/
+memory/
+MEMORY.md
+ops/
+  updates-log.jsonl
+  rollback-map.json
+  approvals-queue.json</pre>
+
+    <h2>5) Required contracts (copy this spec)</h2>
+<pre>{
+  "taskContract": {"objective":"string","constraints":["string"],"doneDefinition":"string"},
+  "resultEnvelope": {"status":"ok|partial|failed","artifacts":["string"],"notes":"string"},
+  "evaluationRecord": {"score":0.0,"diagnostics":["string"],"lessonCandidates":[{"text":"string","confidence":0.0}]},
+  "learningProposal": {"updateId":"string","scope":"prompt|workflow|tooling|memory-policy","change":"string","expectedImpact":"string","rollbackKey":"string"},
+  "governanceDecision": {"decision":"allow|ask|deny","reason":"string"}
+}</pre>
+
+    <h2>6) Build workflow for an AI agent</h2>
+    <ol>
+      <li>Create folder skeleton + SKILL.md for all five skills.</li>
+      <li>Implement contracts first.</li>
+      <li>Wire orchestration→memory recall before execution.</li>
+      <li>Wire post-execution reflection and lesson emission.</li>
+      <li>Wire learning proposals through governance gate.</li>
+      <li>Add apply + rollback paths for approved updates only.</li>
+      <li>Add memory writes for decisions and outcomes.</li>
+      <li>Run 10-task test suite and compare pre/post scores.</li>
+    </ol>
+
+    <h2>7) Governance policy baseline</h2>
+    <div class="grid2">
+      <div class="card"><h3>Auto-Allow</h3><ul><li>Read-only local analysis.</li><li>Formatting/summarization.</li><li>Low-risk internal planning.</li></ul></div>
+      <div class="card"><h3>Ask First</h3><ul><li>External messaging/posting.</li><li>Payment or wallet operations.</li><li>Durable behavior/policy changes.</li></ul></div>
+    </div>
+    <div class="card"><h3>Deny by default</h3><p>Destructive actions without explicit approval, and any attempt to bypass governance for learning updates.</p></div>
+
+    <h2>8) Testing protocol (must pass)</h2>
+    <ul>
+      <li><strong>Recall test:</strong> skill can retrieve relevant prior decisions.</li>
+      <li><strong>Evaluation test:</strong> every non-trivial task emits evaluationRecord.</li>
+      <li><strong>Learning gate test:</strong> unapproved update cannot be applied.</li>
+      <li><strong>Rollback test:</strong> applied update can be reverted by rollbackKey.</li>
+      <li><strong>Safety test:</strong> high-risk actions return ask/deny as expected.</li>
+    </ul>
+
+    <h2>9) OpenClaw implementation note</h2>
+    <p>When your building agent needs deeper help creating or updating skill packages, invoke OpenClaw's <strong>skill-creator</strong> skill for SKILL.md structure, packaging conventions, and repeatable scaffolding.</p>
+
+    <p class="footer">Carapace • Core Skills Guide (Agent Builder Edition) • v4</p>
+  </main>
+</body>
+</html>
