@@ -233,8 +233,14 @@
             throw new Error(data.error || 'Submission failed');
           }
 
+          const submissionId = data.submissionId;
           form.reset();
           form.querySelector('input[name="source_page"]').value = 'business.html';
+          status.textContent = 'Thanks. Redirecting...';
+          if (submissionId) {
+            window.location.href = `thank-you.html?submission=${encodeURIComponent(submissionId)}`;
+            return;
+          }
           status.textContent = 'Thanks. Your request was received.';
         } catch (error) {
           status.textContent = 'Could not submit right now. Please try again shortly.';

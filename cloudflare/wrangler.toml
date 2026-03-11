@@ -10,3 +10,10 @@ routes = [
 binding = "INTAKE_DB"
 database_name = "intake"
 database_id = "b6cb6544-2e1e-4a4e-8127-defbd3d74ca4"
+
+[vars]
+PUBLIC_SITE_URL = "https://carapaceai.org"
+# Set these when Docuseal is ready:
+DOCUSEAL_API_URL = ""
+DOCUSEAL_API_KEY = ""
+DOCUSEAL_TEMPLATE_ID = ""
