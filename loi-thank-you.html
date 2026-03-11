@@ -26,6 +26,12 @@
   <script>
     (function () {
       const params = new URLSearchParams(window.location.search);
+      if (params.get('signed') === '1') {
+        document.getElementById('title').textContent = 'Your non-binding LOI has been recorded.';
+        document.getElementById('lead').textContent = 'Thanks for taking the extra step to show early access interest.';
+        document.getElementById('body-copy').textContent = 'We saved your signed, non-binding letter of intent and can use it to prioritize follow-up around pilots, early access, or implementation conversations.';
+        return;
+      }
       if (params.get('skipped') === '1') {
         document.getElementById('title').textContent = 'Thanks, your request is still in the queue.';
         document.getElementById('lead').textContent = 'You skipped the optional letter of intent, which is completely fine.';

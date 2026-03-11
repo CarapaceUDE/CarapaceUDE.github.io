@@ -25,6 +25,10 @@ export default {
       return handleLoiSkip(request, env);
     }
 
+    if (url.pathname === '/loi/sign' && request.method === 'POST') {
+      return handleLoiSign(request, env);
+    }
+
     if (url.pathname === '/loi/status' && request.method === 'GET') {
       return handleLoiStatus(url, env);
     }
@@ -77,7 +81,7 @@ async function handleLoiCreate(request, env) {
     }
 
     const intake = await env.INTAKE_DB.prepare(
-      `SELECT * FROM intake_submissions WHERE id = ? LIMIT 1`
+      `SELECT id, name, company, email, pain, deployment, timeline FROM intake_submissions WHERE id = ? LIMIT 1`
     ).bind(submissionId).first();
 
     if (!intake) {
@@ -88,93 +92,32 @@ async function handleLoiCreate(request, env) {
       `SELECT * FROM loi_requests WHERE intake_submission_id = ? ORDER BY id DESC LIMIT 1`
     ).bind(submissionId).first();
 
-    if (existing?.signing_url) {
-      return json({
-        ok: true,
+    if (!existing) {
+      await env.INTAKE_DB.prepare(
+        `INSERT INTO loi_requests (
+          intake_submission_id, signer_name, signer_email, company, intended_use, timeline, status, raw_payload_json
+        ) VALUES (?, ?, ?, ?, ?, ?, 'pending', ?)`
+      ).bind(
         submissionId,
-        loiRequestId: existing.id,
-        status: existing.status,
-        signingUrl: existing.signing_url,
-        provider: 'docuseal',
-        mode: 'existing',
-      });
+        intake.name || '',
+        intake.email || '',
+        intake.company || '',
+        intake.pain || '',
+        intake.timeline || '',
+        JSON.stringify({ source: 'thank-you-continue' })
+      ).run();
+    } else if (existing.status === 'skipped') {
+      await env.INTAKE_DB.prepare(
+        `UPDATE loi_requests SET status = 'pending', skipped_at = NULL WHERE id = ?`
+      ).bind(existing.id).run();
     }
 
-    const templateId = env.DOCUSEAL_TEMPLATE_ID || 'DOCUSEAL_TEMPLATE_ID_NOT_SET';
     const publicBase = env.PUBLIC_SITE_URL || 'https://carapaceai.org';
-    const fallbackUrl = `${publicBase}/loi-thank-you.html?submission=${submissionId}&provider=docuseal-pending`;
-
-    let signingUrl = fallbackUrl;
-    let docusealSubmissionId = null;
-    let rawPayload = {
-      mode: 'placeholder',
-      message: 'Docuseal API not fully configured yet',
-      templateId,
-    };
-
-    if (env.DOCUSEAL_API_URL && env.DOCUSEAL_API_KEY && env.DOCUSEAL_TEMPLATE_ID) {
-      const response = await fetch(`${env.DOCUSEAL_API_URL.replace(/\/$/, '')}/submissions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': env.DOCUSEAL_API_KEY,
-        },
-        body: JSON.stringify({
-          template_id: env.DOCUSEAL_TEMPLATE_ID,
-          send_email: false,
-          submitters: [
-            {
-              name: intake.name,
-              email: intake.email,
-              values: {
-                signer_name: intake.name,
-                signer_email: intake.email,
-                company_name: intake.company || '',
-                intended_use: intake.pain || '',
-                deployment_interest: intake.deployment || '',
-                timeline: intake.timeline || '',
-                non_binding_notice: 'This letter of intent is non-binding and expresses interest only.',
-              },
-            },
-          ],
-        }),
-      });
-
-      rawPayload = await response.json().catch(() => ({ ok: false, error: 'Invalid Docuseal response' }));
-
-      if (!response.ok) {
-        return json({ ok: false, error: 'Docuseal request failed', detail: rawPayload }, 502);
-      }
-
-      docusealSubmissionId = rawPayload?.id || rawPayload?.submission_id || null;
-      signingUrl = rawPayload?.embed_src || rawPayload?.link || rawPayload?.url || fallbackUrl;
-    }
-
-    const insert = await env.INTAKE_DB.prepare(
-      `INSERT INTO loi_requests (
-        intake_submission_id, signer_name, signer_email, company,
-        docuseal_template_id, docuseal_submission_id, signing_url, status, raw_payload_json
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    ).bind(
-      submissionId,
-      intake.name || '',
-      intake.email || '',
-      intake.company || '',
-      templateId,
-      docusealSubmissionId,
-      signingUrl,
-      env.DOCUSEAL_API_URL && env.DOCUSEAL_API_KEY && env.DOCUSEAL_TEMPLATE_ID ? 'sent' : 'pending_provider_setup',
-      JSON.stringify(rawPayload)
-    ).run();
-
     return json({
       ok: true,
       submissionId,
-      loiRequestId: insert.meta?.last_row_id || null,
-      status: env.DOCUSEAL_API_URL && env.DOCUSEAL_API_KEY && env.DOCUSEAL_TEMPLATE_ID ? 'sent' : 'pending_provider_setup',
-      signingUrl,
-      provider: 'docuseal',
-      mode: env.DOCUSEAL_API_URL && env.DOCUSEAL_API_KEY && env.DOCUSEAL_TEMPLATE_ID ? 'live' : 'placeholder',
+      signingUrl: `${publicBase}/loi.html?submission=${submissionId}`,
+      mode: 'in_house',
       nonBinding: true,
     });
   } catch (error) {
@@ -211,17 +154,122 @@ async function handleLoiSkip(request, env) {
 
     const insert = await env.INTAKE_DB.prepare(
       `INSERT INTO loi_requests (
-        intake_submission_id, signer_name, signer_email, company, status, skipped_at, raw_payload_json
-      ) VALUES (?, ?, ?, ?, 'skipped', CURRENT_TIMESTAMP, ?)`
+        intake_submission_id, signer_name, signer_email, company, intended_use, timeline, status, skipped_at, raw_payload_json
+      ) VALUES (?, ?, ?, ?, ?, ?, 'skipped', CURRENT_TIMESTAMP, ?)`
     ).bind(
       submissionId,
       intake.name || '',
       intake.email || '',
       intake.company || '',
+      intake.pain || '',
+      intake.timeline || '',
       JSON.stringify({ source: 'thank-you-skip' })
     ).run();
 
     return json({ ok: true, submissionId, skipped: true, loiRequestId: insert.meta?.last_row_id || null });
+  } catch (error) {
+    return json({ ok: false, error: 'Server error', detail: String(error?.message || error) }, 500);
+  }
+}
+
+async function handleLoiSign(request, env) {
+  try {
+    const payload = await parsePayload(request);
+    const submissionId = Number(payload.submissionId || payload.submission_id || 0);
+    const signerName = clean(payload.signerName || payload.signer_name);
+    const signerEmail = clean(payload.signerEmail || payload.signer_email);
+    const company = clean(payload.company);
+    const signerTitle = clean(payload.signerTitle || payload.signer_title);
+    const intendedUse = clean(payload.intendedUse || payload.intended_use);
+    const timeline = clean(payload.timeline);
+    const typedSignature = clean(payload.typedSignature || payload.typed_signature);
+    const drawnSignatureDataUrl = clean(payload.drawnSignatureDataUrl || payload.drawn_signature_data_url);
+    const consentAuthorized = toBool(payload.consentAuthorized || payload.consent_authorized);
+    const consentNonBinding = toBool(payload.consentNonBinding || payload.consent_non_binding);
+
+    if (!submissionId || !signerName || !typedSignature || !consentAuthorized || !consentNonBinding) {
+      return json({ ok: false, error: 'Missing required LOI fields' }, 400);
+    }
+
+    const intake = await env.INTAKE_DB.prepare(
+      `SELECT * FROM intake_submissions WHERE id = ? LIMIT 1`
+    ).bind(submissionId).first();
+
+    if (!intake) {
+      return json({ ok: false, error: 'Submission not found' }, 404);
+    }
+
+    const existing = await env.INTAKE_DB.prepare(
+      `SELECT * FROM loi_requests WHERE intake_submission_id = ? ORDER BY id DESC LIMIT 1`
+    ).bind(submissionId).first();
+
+    const rawPayload = JSON.stringify({
+      signerName,
+      signerEmail,
+      company,
+      signerTitle,
+      intendedUse,
+      timeline,
+      hasDrawnSignature: Boolean(drawnSignatureDataUrl),
+    });
+
+    if (existing) {
+      await env.INTAKE_DB.prepare(
+        `UPDATE loi_requests SET
+          signer_name = ?,
+          signer_email = ?,
+          company = ?,
+          signer_title = ?,
+          intended_use = ?,
+          timeline = ?,
+          typed_signature = ?,
+          drawn_signature_data_url = ?,
+          consent_authorized = ?,
+          consent_non_binding = ?,
+          status = 'signed',
+          completed_at = CURRENT_TIMESTAMP,
+          raw_payload_json = ?
+        WHERE id = ?`
+      ).bind(
+        signerName,
+        signerEmail || intake.email || '',
+        company || intake.company || '',
+        signerTitle,
+        intendedUse || intake.pain || '',
+        timeline || intake.timeline || '',
+        typedSignature,
+        drawnSignatureDataUrl || '',
+        consentAuthorized ? 1 : 0,
+        consentNonBinding ? 1 : 0,
+        rawPayload,
+        existing.id
+      ).run();
+
+      return json({ ok: true, submissionId, loiRequestId: existing.id, status: 'signed' });
+    }
+
+    const insert = await env.INTAKE_DB.prepare(
+      `INSERT INTO loi_requests (
+        intake_submission_id, signer_name, signer_email, company, signer_title, intended_use, timeline,
+        typed_signature, drawn_signature_data_url, consent_authorized, consent_non_binding,
+        status, completed_at, raw_payload_json
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'signed', CURRENT_TIMESTAMP, ?)`
+    ).bind(
+      submissionId,
+      signerName,
+      signerEmail || intake.email || '',
+      company || intake.company || '',
+      signerTitle,
+      intendedUse || intake.pain || '',
+      timeline || intake.timeline || '',
+      typedSignature,
+      drawnSignatureDataUrl || '',
+      consentAuthorized ? 1 : 0,
+      consentNonBinding ? 1 : 0,
+      rawPayload
+    ).run();
+
+    return json({ ok: true, submissionId, loiRequestId: insert.meta?.last_row_id || null, status: 'signed' });
   } catch (error) {
     return json({ ok: false, error: 'Server error', detail: String(error?.message || error) }, 500);
   }
@@ -246,13 +294,7 @@ async function handleLoiStatus(url, env) {
       `SELECT * FROM loi_requests WHERE intake_submission_id = ? ORDER BY id DESC LIMIT 1`
     ).bind(submissionId).first();
 
-    return json({
-      ok: true,
-      submissionId,
-      intake,
-      loi: loi || null,
-      nonBinding: true,
-    });
+    return json({ ok: true, submissionId, intake, loi: loi || null, nonBinding: true, mode: 'in_house' });
   } catch (error) {
     return json({ ok: false, error: 'Server error', detail: String(error?.message || error) }, 500);
   }
@@ -260,9 +302,7 @@ async function handleLoiStatus(url, env) {
 
 async function parsePayload(request) {
   const contentType = request.headers.get('content-type') || '';
-  if (contentType.includes('application/json')) {
-    return await request.json();
-  }
+  if (contentType.includes('application/json')) return await request.json();
   if (contentType.includes('application/x-www-form-urlencoded') || contentType.includes('multipart/form-data')) {
     const formData = await request.formData();
     return Object.fromEntries(formData.entries());
@@ -272,7 +312,11 @@ async function parsePayload(request) {
 
 function clean(value) {
   if (value == null) return '';
-  return String(value).trim().slice(0, 5000);
+  return String(value).trim().slice(0, 20000);
+}
+
+function toBool(value) {
+  return value === true || value === 'true' || value === '1' || value === 1 || value === 'on';
 }
 
 function corsHeaders() {
