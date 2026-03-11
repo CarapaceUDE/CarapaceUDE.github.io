@@ -6,6 +6,7 @@
   <title>Business Solutions | Carapace</title>
   <meta name="description" content="Carapace LLC helps businesses deploy, customize, and govern AI-assisted workflows with practical setup, integrations, and human oversight." />
   <meta name="theme-color" content="#090c18" />
+  <link rel="stylesheet" href="assets/cortex-bloom-theme.css" />
   <style>
     :root {
       --bg:#070b16; --surface:#101a31; --surface-2:#121f39; --text:#edf1ff; --muted:#a7b3d3; --border:#253554;
@@ -38,7 +39,7 @@
     @media (max-width:900px){.two,.three,.form-grid,.intake-intro{grid-template-columns:1fr;} .cta-panel{flex-direction:column;align-items:flex-start;}}
   </style>
 </head>
-<body>
+<body class="page-business">
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="index.html" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="Carapace logo" /><span>Carapace</span></a>
@@ -97,10 +98,6 @@
           <h3>Pilot Setup</h3>
           <p class="muted">We stand up a practical first deployment with the right controls, integrations, and operator touchpoints.</p>
         </article>
-        <article class="card">
-          <h3>Expand &amp; Productize</h3>
-          <p class="muted">Useful custom work can later be turned into reusable packages, skills, and templates.</p>
-        </article>
       </div>
     </section>
 
@@ -141,7 +138,6 @@
       <h2>Talk to us about your workflow</h2>
       <div class="intake-intro">
         <div>
-          <p class="muted">Use this as a first-pass intake form. It can be wired to your preferred contact or CRM flow later.</p>
           <p class="muted">A good first engagement is usually a scoped conversation followed by a pilot. We look at the workflow, the constraints, the existing tools, and where Carapace would actually help.</p>
         </div>
         <div class="surface" style="box-shadow:none;">
@@ -248,5 +244,6 @@
       });
     })();
   </script>
+  <script src="assets/cortex-bloom-bg.js"></script>
 </body>
 </html>

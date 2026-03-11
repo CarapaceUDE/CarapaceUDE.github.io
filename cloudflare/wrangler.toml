@@ -1,0 +1,12 @@
+name = "carapace-intake"
+main = "worker.js"
+compatibility_date = "2026-03-10"
+
+routes = [
+  { pattern = "api.carapaceai.org/*", zone_name = "carapaceai.org" }
+]
+
+[[d1_databases]]
+binding = "INTAKE_DB"
+database_name = "intake"
+database_id = "b6cb6544-2e1e-4a4e-8127-defbd3d74ca4"

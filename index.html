@@ -6,6 +6,7 @@
   <title>Carapace | Open-Source AI Operations</title>
   <meta name="description" content="Carapace is an open-source AI operations platform for running and supervising AI-assisted workflows, with a business services path for deployment, integration, and customization." />
   <meta name="theme-color" content="#090c18" />
+  <link rel="stylesheet" href="assets/cortex-bloom-theme.css" />
   <style>
     :root { --bg:#070b16; --surface:#101a31; --surface-2:#121f39; --text:#edf1ff; --muted:#a7b3d3; --border:#253554; --primary:#5b6fa6; --primary-2:#475981; --secondary:#cfd8ee; --warn:#f97316; --max:1140px; }
     *{box-sizing:border-box;} html,body{margin:0;padding:0;} html{scroll-behavior:smooth;}
@@ -15,24 +16,25 @@
     .brand{display:inline-flex;align-items:center;gap:.7rem;color:var(--text);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.92rem;}
     .brand img{width:62px;height:62px;border-radius:8px;filter:drop-shadow(0 0 10px rgba(0,234,255,.4));animation:logoPulse 2.2s ease-in-out infinite;}
     .links{display:flex;gap:.95rem;flex-wrap:wrap;font-size:.9rem;align-items:center;} .links>a,.dropbtn{color:#c8d5f7;}
-    .dropdown{position:relative;display:inline-flex;align-items:center;} .dropbtn{background:transparent;border:0;font:inherit;cursor:pointer;padding:0;}
-    .dropdown-menu{position:absolute;top:calc(100% + .5rem);left:0;min-width:220px;border:1px solid var(--border);border-radius:10px;background:rgba(16,26,48,.98);box-shadow:0 10px 26px rgba(0,0,0,.35);display:none;overflow:hidden;}
-    .dropdown-menu a{display:block;padding:.58rem .8rem;color:#d8e3ff;border-bottom:1px solid rgba(37,53,84,.45);} .dropdown-menu a:last-child{border-bottom:0;} .dropdown-menu a:hover{background:rgba(34,211,238,.1);} .dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu{display:block;}
-    .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2.2rem 1rem 4rem;overflow:hidden;}
+    .dropdown{position:relative;display:inline-flex;align-items:center;} .dropbtn{background:transparent;border:0;font:inherit;cursor:pointer;padding:.2rem 0;}
+    .dropdown-menu{position:absolute;top:calc(100% - .1rem);left:50%;transform:translateX(-50%);min-width:220px;border:1px solid var(--border);border-radius:10px;background:rgba(16,26,48,.98);box-shadow:0 10px 26px rgba(0,0,0,.35);display:none;overflow:hidden;padding-top:.35rem;}
+    .dropdown::after{content:'';position:absolute;left:0;right:0;top:100%;height:.55rem;}
+    .dropdown-menu a{display:block;padding:.58rem .8rem;color:#d8e3ff;border-bottom:1px solid rgba(37,53,84,.45);} .dropdown-menu a:last-child{border-bottom:0;} .dropdown-menu a:hover{background:rgba(34,211,238,.1);} .dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu,.dropdown.open .dropdown-menu{display:block;}
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:.85rem 1rem 4rem;overflow:hidden;}
     .hero-bg{position:absolute;inset:0;background-image:url('assets/hero-bg.jpg');background-size:cover;background-position:center;opacity:.34;transform:scale(1.04);} .hero-overlay{position:absolute;inset:0;background:radial-gradient(1000px 520px at 20% -10%,rgba(139,92,246,.24),transparent 45%),radial-gradient(1000px 520px at 110% 10%,rgba(34,211,238,.16),transparent 42%),linear-gradient(180deg,rgba(8,11,21,.48),rgba(7,11,22,.9));}
     .scan{position:absolute;inset:0;pointer-events:none;} .scan::before{content:"";position:absolute;left:0;width:100%;height:1px;background:rgba(34,211,238,.34);animation:sweep 4s linear infinite;} @keyframes sweep{from{top:6%;}to{top:94%;}}
-    .hero-content{position:relative;z-index:2;max-width:920px;margin:0 auto;padding-top:0;} .hero-logo{width:clamp(180px,24vw,280px);height:auto;margin:0 auto .45rem;display:block;filter:drop-shadow(0 0 20px rgba(34,211,238,.26));animation:logoPulse 2.2s ease-in-out infinite;}
+    .hero-content{position:relative;z-index:2;max-width:820px;margin:0 auto;padding-top:0;} .hero-logo{width:clamp(160px,22vw,250px);height:auto;margin:0 auto .25rem;display:block;filter:drop-shadow(0 0 18px rgba(34,211,238,.24));animation:logoPulse 2.2s ease-in-out infinite;}
     @keyframes logoPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 12px rgba(0,234,255,.24));}50%{transform:scale(1.03);filter:drop-shadow(0 0 20px rgba(0,234,255,.38));}}
-    h1{margin:.35rem 0 .35rem;line-height:.96;font-size:clamp(2.8rem,8vw,5.4rem);letter-spacing:-.05em;text-shadow:0 0 18px rgba(34,211,238,.16);color:#8fd0ff;} .hero-kicker{margin:0 0 1rem;font-size:clamp(1.08rem,2vw,1.4rem);letter-spacing:.12em;text-transform:uppercase;color:#d8e6ff;} .lead{color:var(--muted);max-width:62ch;margin:0 auto 1rem;font-size:clamp(1.02rem,1.9vw,1.22rem);} .sublead{color:#cbd8f8;max-width:58ch;margin:0 auto 1.5rem;font-size:1rem;}
-    .cta{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem;margin-bottom:.6rem;} .btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;border-radius:11px;border:1px solid transparent;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem;padding:.9rem 1.18rem;transition:.18s ease;min-width:220px;line-height:1.15;text-align:center;} .btn:hover{transform:translateY(-1px);} .btn small{margin-top:.35rem;font-size:.68rem;letter-spacing:.03em;text-transform:none;font-weight:600;opacity:.9;} .btn.primary{color:#eef3ff;background:linear-gradient(180deg,var(--primary),var(--primary-2));border-color:rgba(207,216,238,.14);box-shadow:0 8px 18px rgba(8,12,22,.28);} .btn.outline{color:#dce8ff;border-color:#334566;background:rgba(15,22,38,.74);} .btn.outline:hover{background:rgba(22,31,52,.9);border-color:#41567e;} .hero-note{color:#95a7d3;font-size:.88rem;}
+    h1{margin:.2rem 0 .22rem;line-height:.94;font-size:clamp(2.7rem,7.5vw,5rem);letter-spacing:-.05em;text-shadow:0 0 18px rgba(34,211,238,.16);color:#8fd0ff;} .hero-kicker{margin:0 0 .8rem;font-size:clamp(1rem,1.8vw,1.28rem);letter-spacing:.12em;text-transform:uppercase;color:#d8e6ff;} .lead{color:var(--muted);max-width:50ch;margin:0 auto .55rem;font-size:clamp(1rem,1.55vw,1.1rem);} .sublead{color:#cbd8f8;max-width:44ch;margin:0 auto 1.2rem;font-size:.95rem;}
+    .cta{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem;margin-bottom:.45rem;} .btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;border-radius:11px;border:1px solid transparent;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem;padding:.86rem 1.12rem;transition:.18s ease;min-width:220px;line-height:1.15;text-align:center;} .btn:hover{transform:translateY(-1px);} .btn small{margin-top:.32rem;font-size:.66rem;letter-spacing:.03em;text-transform:none;font-weight:600;opacity:.9;} .btn.primary{color:#eef3ff;background:linear-gradient(180deg,var(--primary),var(--primary-2));border-color:rgba(207,216,238,.14);box-shadow:0 8px 18px rgba(8,12,22,.28);} .btn.outline{color:#dce8ff;border-color:#334566;background:rgba(15,22,38,.74);} .btn.outline:hover{background:rgba(22,31,52,.9);border-color:#41567e;} .hero-note{color:#95a7d3;font-size:.84rem;}
     section{padding:3rem 0;} h2{margin:0 0 1rem;font-size:clamp(1.24rem,2.2vw,1.86rem);letter-spacing:-.01em;} .surface{border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,rgba(16,26,48,.94),rgba(14,22,40,.9));padding:1.15rem 1.16rem;box-shadow:0 10px 28px rgba(0,0,0,.14);} .grid{display:grid;gap:1rem;} .two{grid-template-columns:repeat(2,minmax(0,1fr));} .three{grid-template-columns:repeat(3,minmax(0,1fr));}
     .warn{border-left:4px solid var(--warn);background:linear-gradient(165deg,rgba(52,29,14,.56),rgba(16,23,39,.92));} .shot{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:0 10px 28px rgba(0,0,0,.14);} .shot img{width:100%;display:block;} .shot p{margin:.78rem .98rem 1.05rem;color:var(--muted);font-size:.92rem;} .path-title{margin:0 0 .36rem;} .path-cta{margin-top:.85rem;display:inline-block;font-weight:700;} .proof{padding-top:.4rem;} .proof-list{display:grid;gap:1rem;grid-template-columns:repeat(3,minmax(0,1fr));} .proof-list strong{display:block;margin-bottom:.32rem;}
     footer{border-top:1px solid var(--border);margin-top:2.2rem;padding:1.45rem 0 2.4rem;color:#9fb0d7;font-size:.9rem;}
     @media (max-width:960px){.two,.three,.proof-list{grid-template-columns:1fr;} .links{gap:.65rem;} .dropdown-menu{left:auto;right:0;} .btn{min-width:unset;width:100%;max-width:360px;}}
   </style>
 </head>
-<body>
-  <nav class="nav"><div class="wrap nav-inner"><a class="brand" href="#top" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="Carapace logo" /><span>Carapace</span></a><div class="links"><a href="#download">Get Started</a><a href="#paths">Paths</a><a href="business.html">Business</a><div class="dropdown"><button class="dropbtn" aria-haspopup="true" aria-expanded="false">Products ▾</button><div class="dropdown-menu" role="menu"><a href="carapace.html">Carapace</a><a href="cortex.html">Cortex (Coming Soon)</a><a href="core-skills.html">Core Skills</a></div></div><a href="#safety">Safety</a><a href="#screens">Screens</a></div></div></nav>
+<body class="page-home">
+  <nav class="nav"><div class="wrap nav-inner"><a class="brand" href="#top" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="Carapace logo" /><span>Carapace</span></a><div class="links"><a href="business.html">Business</a><div class="dropdown"><button class="dropbtn" aria-haspopup="true" aria-expanded="false">Products ▾</button><div class="dropdown-menu" role="menu"><a href="carapace.html">Carapace</a><a href="cortex.html">Cortex</a><a href="core-skills.html">Core Skills</a></div></div></div></div></nav>
   <header id="top" class="hero"><div class="hero-bg" aria-hidden="true"></div><div class="hero-overlay" aria-hidden="true"></div><div class="scan" aria-hidden="true"></div><div class="hero-content"><img class="hero-logo" src="assets/carapace_logo.svg" alt="Carapace" /><h1>CARAPACE</h1><div class="hero-kicker">Unified Desktop Environment</div><p class="lead">For AI-assisted work.</p><p class="sublead">Use it yourself, or work with Carapace LLC to deploy it for your team.</p><div class="cta" id="download"><a class="btn primary" href="https://github.com/CarapaceUDE/carapace/releases" target="_blank" rel="noreferrer">Free Download<small>for personal use</small></a><a class="btn outline" href="business.html">Business Setup &amp; Integration<small>deployment, integration, and consulting</small></a></div><p class="hero-note">Experimental software. Use controlled environments and keep human review in the loop.</p></div></header>
   <main class="wrap">
     <section id="overview"><h2>What Carapace gives you</h2><div class="grid two"><article class="surface"><strong>One working surface</strong><p>Keep sessions, tools, objectives, and operator decisions in one place instead of scattering them across tabs.</p></article><article class="surface"><strong>Clearer isolation</strong><p>Separate runtime context so experiments are easier to reason about and less likely to bleed into each other.</p></article><article class="surface"><strong>Faster setup</strong><p>Get from install to a usable workflow with less friction and fewer manual handoffs.</p></article><article class="surface"><strong>Human oversight</strong><p>Keep intervention points, status visibility, and operator control front and center.</p></article></div></section>
@@ -42,5 +44,25 @@
     <section id="screens"><h2>Interface previews</h2><div class="grid three"><figure class="shot"><img src="assets/screenshot-command-center.svg" alt="Command center preview" /><p>Command center for chat, tools, and active orchestration.</p></figure><figure class="shot"><img src="assets/screenshot-agent-collab.svg" alt="Agent collaboration preview" /><p>Agent collaboration with readable context and intervention hooks.</p></figure><figure class="shot"><img src="assets/screenshot-security-boundary.svg" alt="Security boundary preview" /><p>Boundary design with visible trust zones and warning states.</p></figure></div></section>
   </main>
   <footer><div class="wrap"><div>Carapace is experimental software.</div><div><a href="carapace.html">Carapace product page</a> | <a href="business.html">Business solutions</a> | <a href="https://github.com/CarapaceUDE" target="_blank" rel="noreferrer">CarapaceUDE on GitHub</a></div></div></footer>
+  <script>
+    (function () {
+      const dropdown = document.querySelector('.dropdown');
+      const button = dropdown && dropdown.querySelector('.dropbtn');
+      if (!dropdown || !button) return;
+
+      button.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        dropdown.classList.toggle('open');
+      });
+
+      document.addEventListener('click', function (event) {
+        if (!dropdown.contains(event.target)) {
+          dropdown.classList.remove('open');
+        }
+      });
+    })();
+  </script>
+  <script src="assets/cortex-bloom-bg.js"></script>
 </body>
 </html>
