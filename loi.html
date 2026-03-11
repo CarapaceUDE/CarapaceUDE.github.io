@@ -197,10 +197,10 @@
             body: JSON.stringify(payload)
           });
           const data = await response.json().catch(() => ({}));
-          if (!response.ok || !data.ok) throw new Error(data.error || 'Could not sign LOI');
+          if (!response.ok || !data.ok) throw new Error(data.error || data.detail || 'Could not sign LOI');
           window.location.href = `loi-thank-you.html?submission=${encodeURIComponent(submissionId)}&signed=1`;
         } catch (error) {
-          status.textContent = 'Could not save the LOI right now. Please try again shortly.';
+          status.textContent = error && error.message ? error.message : 'Could not save the LOI right now. Please try again shortly.';
           submitBtn.disabled = false;
         }
       });
