@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Business Solutions | Carapace</title>
-  <meta name="description" content="Carapace LLC helps businesses deploy, customize, and govern AI-assisted workflows with practical setup, integrations, and human oversight." />
+  <title>How We Help | Carapace</title>
+  <meta name="description" content="Carapace helps businesses adopt practical AI through workflow consulting, pilot deployments, implementation, reusable integrations, and optional support." />
   <meta name="theme-color" content="#090c18" />
   <link rel="stylesheet" href="assets/cortex-bloom-theme.css" />
   <style>
@@ -29,108 +29,135 @@
     .btn:hover{transform:translateY(-1px);} .btn.primary{color:#eef3ff;background:linear-gradient(180deg,var(--primary),var(--primary-2));border-color:rgba(207,216,238,.14);box-shadow:0 8px 18px rgba(8,12,22,.28);} .btn.outline{color:#dce8ff;border-color:#334566;background:rgba(15,22,38,.74);} .btn.outline:hover{background:rgba(22,31,52,.9);border-color:#41567e;}
     main{padding:1.9rem 0 3rem;} section{padding:1.15rem 0;} .grid{display:grid;gap:1rem;} .two{grid-template-columns:repeat(2,minmax(0,1fr));} .three{grid-template-columns:repeat(3,minmax(0,1fr));}
     .card{border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,rgba(16,26,48,.94),rgba(14,22,40,.9));padding:1.15rem 1.15rem;box-shadow:0 10px 28px rgba(0,0,0,.14);}
-    .muted{color:var(--muted);} ul,ol{padding-left:1.2rem;} li{margin:.42rem 0;} .quote{font-size:1rem;color:#d8e6ff;line-height:1.7;} .cta-panel{display:flex;justify-content:space-between;gap:1rem;align-items:center;} .intake-intro{display:grid;gap:1rem;grid-template-columns:1.2fr .8fr;align-items:start;} .checklist{margin:0;padding-left:1.1rem;} .checklist li{margin:.3rem 0;}
+    .muted{color:var(--muted);} ul,ol{padding-left:1.2rem;} li{margin:.42rem 0;} .quote{font-size:1rem;color:#d8e6ff;line-height:1.7;} .intake-intro{display:grid;gap:1rem;grid-template-columns:1.2fr .8fr;align-items:start;} .checklist{margin:0;padding-left:1.1rem;} .checklist li{margin:.3rem 0;}
     .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem;}
     label{display:block;font-size:.9rem;color:#d9e6ff;margin:0 0 .32rem;}
     input,select,textarea{width:100%;border:1px solid var(--border);border-radius:10px;background:#0d162b;color:var(--text);padding:.8rem .85rem;font:inherit;}
     textarea{min-height:140px;resize:vertical;}
     .full{grid-column:1 / -1;} .note{font-size:.9rem;color:#97a8d3;} .form-status{margin-top:.9rem;font-size:.94rem;color:#cfe1ff;min-height:1.2em;}
+    .carousel-shell{position:relative;padding:1rem 4.2rem;overflow:hidden;max-width:760px;margin:0 auto;}
+    .carousel-viewport{position:relative;min-height:285px;overflow:visible;}
+    .carousel-track{display:flex;gap:1rem;transition:transform .55s ease;will-change:transform;}
+    .carousel-slide{min-width:calc(100% - 72px);padding:0 .1rem;opacity:.22;transform:scale(.965);transition:opacity .35s ease,transform .35s ease;}
+    .carousel-slide.is-active{opacity:1;transform:scale(1);}
+    .carousel-card{min-height:265px;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;text-align:left;}
+    .carousel-card strong{display:block;font-size:1.4rem;line-height:1.15;margin-bottom:.45rem;color:#edf1ff;}
+    .carousel-card p{margin:0;color:#cbd8f8;font-size:1rem;max-width:48ch;}
+    .bullet-list{margin:.8rem 0 0;padding-left:1.15rem;color:var(--muted);}
+    .bullet-list li{opacity:0;transform:translateY(8px);animation:bulletIn .38s ease forwards;}
+    .bullet-list li:nth-child(1){animation-delay:.18s;}
+    .bullet-list li:nth-child(2){animation-delay:.42s;}
+    .bullet-list li:nth-child(3){animation-delay:.66s;}
+    @keyframes bulletIn{to{opacity:1;transform:translateY(0);}}
+    .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:999px;border:1px solid #41567e;background:rgba(15,22,38,.86);color:#edf1ff;font-size:1.35rem;display:grid;place-items:center;cursor:pointer;transition:.18s ease;z-index:2;}
+    .carousel-btn:hover{background:rgba(22,31,52,.96);border-color:#8fd0ff;}
+    .carousel-btn.prev{left:1rem;}
+    .carousel-btn.next{right:1rem;}
+    .carousel-dots{display:flex;justify-content:center;gap:.5rem;margin-top:.5rem;}
+    .carousel-dot{width:10px;height:10px;border-radius:999px;border:0;background:#41567e;cursor:pointer;opacity:.9;transition:.18s ease;}
+    .carousel-dot.active{background:#8fd0ff;transform:scale(1.1);}
     footer{border-top:1px solid var(--border);padding:1.35rem 0 2rem;color:#9fb0d7;font-size:.9rem;}
-    @media (max-width:900px){.two,.three,.form-grid,.intake-intro{grid-template-columns:1fr;} .cta-panel{flex-direction:column;align-items:flex-start;}}
+    @media (max-width:900px){.two,.three,.form-grid,.intake-intro{grid-template-columns:1fr;} .carousel-shell{padding:1rem 3.25rem;max-width:100%;} .carousel-viewport{min-height:320px;} .carousel-slide{min-width:calc(100% - 56px);} .carousel-card{min-height:300px;}}
+    @media (max-width:640px){.carousel-shell{padding:1rem 2.8rem;} .carousel-slide{min-width:100%;opacity:1;transform:none;} .carousel-btn{width:38px;height:38px;} .carousel-card strong{font-size:1.22rem;} .carousel-card p{font-size:.96rem;}}
   </style>
 </head>
 <body class="page-business">
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="index.html" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="Carapace logo" /><span>Carapace</span></a>
-      <div class="links"><a href="index.html">Home</a><a href="carapace.html">Product</a><a href="#contact">Contact</a></div>
+      <div class="links"><a href="index.html">Home</a><a href="solutions.html">Solutions</a><a href="licensing.html">Licensing</a><a href="about.html">About</a><a href="carapace.html">Platform</a><a href="#contact">Contact</a></div>
     </div>
   </nav>
 
   <header class="hero">
     <div class="wrap">
-      <h1>Business Setup &amp; Integration</h1>
-      <p class="lead">Carapace LLC helps teams turn Carapace into a working business system, with installation, integration, operator controls, and practical human oversight built in from the start.</p>
-      <p class="muted">For teams that want a real deployment, not just a promising demo.</p>
-      <p class="quote">Carapace is open source. What you hire us for is the implementation work: getting it installed, adapted, integrated, and actually useful inside your business.</p>
-      <span class="pill">Open-source core</span>
-      <span class="pill">Paid deployment &amp; consulting</span>
-      <span class="pill">Custom integrations</span>
+      <h1>How We Help</h1>
+      <p class="lead">Carapace helps businesses turn messy, repetitive workflows into practical AI-assisted systems.</p>
+      <p class="muted">For teams that want useful business systems, not more disconnected AI experiments.</p>
+      <p class="quote">We start with a real workflow, run a practical pilot, and build from what proves useful.</p>
+      <span class="pill">Workflow consulting</span>
+      <span class="pill">Commercial deployment</span>
+      <span class="pill">Reusable integrations</span>
       <div class="cta">
-        <a class="btn primary" href="#contact">Start a Consultation</a>
-        <a class="btn outline" href="carapace.html">View Carapace Product</a>
+        <a class="btn primary" href="#contact">Book a Workflow Consult</a>
+        <a class="btn outline" href="carapace.html">Explore the Platform</a>
       </div>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="grid two">
-      <article class="card">
-        <h2>What we do</h2>
-        <p class="muted">We install, adapt, and integrate Carapace so it fits the way your team actually works.</p>
-        <ul>
-          <li>Install and configure Carapace for business use</li>
-          <li>Set up assistants around specific workflows and teams</li>
-          <li>Integrate business tools, approvals, and operational processes</li>
-          <li>Build custom skills, tools, and reusable integration packages</li>
-          <li>Add human oversight, governance, and clearer operator control</li>
-        </ul>
-      </article>
-      <article class="card">
-        <h2>Who it’s for</h2>
-        <p class="muted">Best fit for teams that want practical AI operations, not another pile of disconnected scripts, dashboards, and sidecars.</p>
-        <ul>
-          <li>Founder-led technical teams</li>
-          <li>Small businesses with growing operational complexity</li>
-          <li>Internal ops teams testing AI-assisted workflows</li>
-          <li>Organizations that need controlled, local, or self-hosted deployments</li>
-        </ul>
-      </article>
-    </section>
-
     <section>
-      <div class="grid three">
-        <article class="card">
-          <h3>Discovery</h3>
-          <p class="muted">We map your workflow, current tooling, and pain points so the build starts from reality instead of assumptions.</p>
-        </article>
-        <article class="card">
-          <h3>Pilot Setup</h3>
-          <p class="muted">We stand up a practical first deployment with the right controls, integrations, and operator touchpoints.</p>
-        </article>
+      <h2>How we help businesses</h2>
+      <div class="card carousel-shell">
+        <button class="carousel-btn prev" type="button" aria-label="Previous card">‹</button>
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="help-carousel-track">
+            <article class="carousel-slide">
+              <div class="carousel-card">
+                <strong>What we do</strong>
+                <p>We help businesses turn useful AI ideas into workflows that actually run.</p>
+                <ul class="bullet-list">
+                  <li>Scope the workflow around a real pain point</li>
+                  <li>Connect tools, approvals, and process</li>
+                  <li>Build reusable integrations and workflow packages</li>
+                </ul>
+              </div>
+            </article>
+            <article class="carousel-slide">
+              <div class="carousel-card">
+                <strong>Who it’s for</strong>
+                <p>Best fit for teams that already feel the drag of repetitive work and messy workflows.</p>
+                <ul class="bullet-list">
+                  <li>Owner-operators and small businesses</li>
+                  <li>Growing teams with rising operational complexity</li>
+                  <li>Organizations that need controlled deployments</li>
+                </ul>
+              </div>
+            </article>
+            <article class="carousel-slide">
+              <div class="carousel-card">
+                <strong>Why teams hire us</strong>
+                <p>We help teams get to something useful faster, with less trial and error.</p>
+                <ul class="bullet-list">
+                  <li>Faster than building everything from scratch</li>
+                  <li>Less fragmentation across tools and workflows</li>
+                  <li>More leverage for the team you already have</li>
+                </ul>
+              </div>
+            </article>
+            <article class="carousel-slide">
+              <div class="carousel-card">
+                <strong>Engagement model</strong>
+                <p>We start small, prove value, and build from what works.</p>
+                <ul class="bullet-list">
+                  <li>Consult on the workflow and goals</li>
+                  <li>Run a pilot around a real use case</li>
+                  <li>Package repeatable solutions and support if needed</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+        <button class="carousel-btn next" type="button" aria-label="Next card">›</button>
+        <div class="carousel-dots" id="help-carousel-dots" aria-label="Carousel navigation"></div>
       </div>
     </section>
 
-    <section class="grid two">
-      <article class="card">
-        <h2>Why teams hire us</h2>
-        <ul>
-          <li>Faster setup than building everything from scratch</li>
-          <li>Less fragmentation across tools, workflows, and agent behavior</li>
-          <li>Practical implementation instead of prolonged trial and error</li>
-          <li>Clearer operator control, oversight, and audit-friendly workflow design</li>
-          <li>Custom-fit integrations for your actual environment</li>
-        </ul>
-      </article>
-      <article class="card">
-        <h2>Engagement model</h2>
-        <ol>
-          <li><strong>Consultation:</strong> understand the team, tooling, constraints, and goals</li>
-          <li><strong>Pilot:</strong> launch a first useful deployment</li>
-          <li><strong>Integration:</strong> connect approvals, tools, and business systems</li>
-          <li><strong>Support:</strong> refine, expand, and harden the setup over time</li>
-        </ol>
-        <p class="note">Carapace remains open source. The paid path is implementation, integration, customization, and support.</p>
-      </article>
-    </section>
-
-    <section class="card">
-      <div class="cta-panel">
-        <div>
-          <h2>Typical first engagement</h2>
-          <p class="muted">Most teams do not need a giant transformation project. They need one grounded pilot that proves the workflow, the controls, and whether Carapace is a fit.</p>
-        </div>
-        <a class="btn primary" href="#contact">Start with a Pilot</a>
+    <section style="padding-top:1.8rem;">
+      <h2>How a first engagement usually works</h2>
+      <div class="grid three">
+        <article class="card">
+          <h3>Consult</h3>
+          <p class="muted">We map the workflow, tools, and pain points before we build anything.</p>
+        </article>
+        <article class="card">
+          <h3>Pilot</h3>
+          <p class="muted">We launch a practical first deployment to prove the value.</p>
+        </article>
+        <article class="card">
+          <h3>Implement</h3>
+          <p class="muted">We connect the tools, process, and workflow around what works.</p>
+        </article>
       </div>
     </section>
 
@@ -138,9 +165,9 @@
       <h2>Talk to us about your workflow</h2>
       <div class="intake-intro">
         <div>
-          <p class="muted">A good first engagement is usually a scoped conversation followed by a pilot. We look at the workflow, the constraints, the existing tools, and where Carapace would actually help.</p>
+          <p class="muted">Most teams do not need a giant transformation project. They need one scoped conversation, one practical pilot, and a clear sense of what is worth building next.</p>
         </div>
-        <div class="surface" style="box-shadow:none;">
+        <div class="card" style="box-shadow:none;">
           <strong>What helps us respond faster</strong>
           <ul class="checklist">
             <li>Your team size</li>
@@ -192,7 +219,7 @@
             <textarea id="notes" name="notes" placeholder="Anything else we should know before a consultation?"></textarea>
           </div>
         </div>
-        <div class="cta">
+        <div class="cta" style="margin-top:1.2rem;">
           <button class="btn primary" type="submit">Request Consultation</button>
           <a class="btn outline" href="index.html">Back to Home</a>
         </div>
@@ -203,8 +230,8 @@
 
   <footer>
     <div class="wrap">
-      <div>Carapace LLC business solutions</div>
-      <div><a href="index.html">Home</a> | <a href="carapace.html">Carapace product page</a></div>
+      <div>Carapace helps businesses scope, pilot, and implement practical AI workflows.</div>
+      <div><a href="index.html">Home</a> | <a href="carapace.html">Platform</a> | <a href="licensing.html">Licensing</a></div>
     </div>
   </footer>
   <script>
@@ -248,6 +275,77 @@
           if (button) button.disabled = false;
         }
       });
+    })();
+
+    (function () {
+      const track = document.getElementById('help-carousel-track');
+      const dotsWrap = document.getElementById('help-carousel-dots');
+      const prevBtn = document.querySelector('.carousel-btn.prev');
+      const nextBtn = document.querySelector('.carousel-btn.next');
+      if (!track || !dotsWrap || !prevBtn || !nextBtn) return;
+
+      const slides = Array.from(track.children);
+      let current = 0;
+      let autoTimer = null;
+
+      function restartBullets() {
+        slides.forEach(function (slide, index) {
+          const list = slide.querySelector('.bullet-list');
+          if (!list) return;
+          list.style.visibility = index === current ? 'visible' : 'hidden';
+          if (index === current) {
+            const items = Array.from(list.children);
+            items.forEach(function (item) {
+              item.style.animation = 'none';
+              item.offsetHeight;
+              item.style.animation = '';
+            });
+          }
+        });
+      }
+
+      function renderDots() {
+        dotsWrap.innerHTML = '';
+        slides.forEach(function (_, index) {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'carousel-dot' + (index === current ? ' active' : '');
+          dot.setAttribute('aria-label', 'Go to card ' + (index + 1));
+          dot.addEventListener('click', function () {
+            goTo(index);
+          });
+          dotsWrap.appendChild(dot);
+        });
+      }
+
+      function goTo(index) {
+        current = (index + slides.length) % slides.length;
+        const slideWidth = slides[0].getBoundingClientRect().width;
+        const trackGap = parseFloat(getComputedStyle(track).gap || '0');
+        track.style.transform = 'translateX(-' + ((slideWidth + trackGap) * current) + 'px)';
+        slides.forEach(function (slide, slideIndex) {
+          slide.classList.toggle('is-active', slideIndex === current);
+        });
+        renderDots();
+        restartBullets();
+        startAuto();
+      }
+
+      function startAuto() {
+        if (autoTimer) clearInterval(autoTimer);
+        autoTimer = setInterval(function () {
+          goTo(current + 1);
+        }, 6500);
+      }
+
+      prevBtn.addEventListener('click', function () { goTo(current - 1); });
+      nextBtn.addEventListener('click', function () { goTo(current + 1); });
+
+      window.addEventListener('resize', function () {
+        goTo(current);
+      });
+
+      goTo(0);
     })();
   </script>
   <script src="assets/cortex-bloom-bg.js"></script>
