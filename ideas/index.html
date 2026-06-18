@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Carapace / Cortex — Fullscreen Pitch Deck</title>
+<meta name="description" content="The Carapace / Cortex pitch deck: private, governed, model-independent AI infrastructure for organizations." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800;850&display=swap" rel="stylesheet">
@@ -46,7 +47,8 @@ body::before { content:""; position:fixed; inset:0; z-index:20; pointer-events:n
 .edge-hint { position:absolute; z-index:8; top:50%; right:0; translate:0 -50%; height:42vh; width:clamp(56px,5.5vw,84px); display:grid; place-items:center; pointer-events:none; opacity:var(--edgeOpacity,.9); transition:opacity .25s ease; }
 .edge-hint span { writing-mode:vertical-rl; transform:rotate(180deg); color:rgba(255,255,255,.74); font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; padding:.9rem .55rem; border:1px solid rgba(255,255,255,.16); border-right:0; border-radius:14px 0 0 14px; background:rgba(5,7,11,.48); backdrop-filter:blur(15px); box-shadow:0 14px 35px rgba(0,0,0,.27); }
 .brand { position:fixed; top:0; left:0; right:0; z-index:30; display:flex; justify-content:space-between; align-items:center; padding:clamp(1rem,2vw,1.75rem) clamp(1.1rem,2.4vw,2.4rem); pointer-events:none; }
-.brand .mark { font-size:.78rem; font-weight:850; letter-spacing:.14em; color:rgba(255,255,255,.74); text-transform:uppercase; }
+.brand .mark { font-size:.78rem; font-weight:850; letter-spacing:.14em; color:rgba(255,255,255,.74); text-transform:uppercase; pointer-events:auto; text-decoration:none; transition:color .2s ease; }
+.brand .mark:hover { color:var(--aqua); }
 .brand .count { font-size:.78rem; letter-spacing:.08em; color:rgba(255,255,255,.58); }
 .progress { position:fixed; left:0; top:0; height:2px; width:100%; z-index:40; background:rgba(255,255,255,.08); }
 .progress span { display:block; height:100%; width:10%; background:linear-gradient(90deg,var(--aqua),var(--copper)); transition:width 430ms ease; box-shadow:0 0 22px rgba(103,241,226,.35); }
@@ -85,7 +87,7 @@ body::before { content:""; position:fixed; inset:0; z-index:20; pointer-events:n
 </head>
 <body>
   <div class="progress" aria-hidden="true"><span></span></div>
-  <header class="brand"><div class="mark">CARAPACE / CORTEX</div><div class="count">01 / 10</div></header>
+  <header class="brand"><a class="mark" href="../" aria-label="Return to Carapace home">← CARAPACE / CORTEX</a><div class="count">01 / 10</div></header>
   <main class="deck" aria-live="polite"><div class="slides"></div><div class="next-preview" aria-hidden="true"><img alt="" /></div></main>
   <div class="down-zone" aria-hidden="false"><button class="down-arrow" aria-label="Next slide"></button></div>
   <div class="peek-label">peek next slide</div>
@@ -106,7 +108,8 @@ const prevBtn = document.querySelector('[data-prev]');
 const nextBtn = document.querySelector('[data-next]');
 const revealBtn = document.querySelector('[data-reveal]');
 const nextPreview = document.querySelector('.next-preview img');
-let current = 0;
+const requestedSlide = Number.parseInt(window.location.hash.replace('#slide-', ''), 10);
+let current = Number.isInteger(requestedSlide) ? clamp(requestedSlide - 1, 0, slides.length - 1) : 0;
 let revealLocked = false;
 let isAnimating = false;
 
@@ -195,6 +198,7 @@ function updateClasses(){
   count.textContent = `${String(current + 1).padStart(2,'0')} / ${String(slides.length).padStart(2,'0')}`;
   nextPreview.src = slides[nextIndex()].img;
   document.title = `${slides[current].title} — Carapace / Cortex`;
+  history.replaceState(null, '', `#slide-${current + 1}`);
 }
 
 function go(target){
@@ -252,6 +256,10 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('click', (e) => {
   if(e.target.closest('button')) return;
   if(e.clientX > window.innerWidth * .72) toggleReveal();
+});
+window.addEventListener('hashchange', () => {
+  const target = Number.parseInt(window.location.hash.replace('#slide-', ''), 10);
+  if(Number.isInteger(target)) go(clamp(target - 1, 0, slides.length - 1));
 });
 </script>
 </body>

@@ -45,14 +45,14 @@
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="index.html" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="Carapace logo" /><span>Carapace</span></a>
-      <div class="links"><a href="index.html">Home</a><a href="business.html">How We Help</a><a href="solutions.html">Solutions</a><a href="licensing.html">Licensing</a><a href="about.html">About</a></div>
+      <div class="links"><a href="index.html">Home</a><a href="business.html">How We Help</a><a href="solutions.html">Solutions</a><a href="licensing.html">Licensing</a><a href="ideas/">Pitch Deck</a><a href="about.html">About</a></div>
     </div>
   </nav>
 
   <header class="hero">
     <div class="wrap">
       <h1>The Carapace Platform</h1>
-      <p class="lead">Carapace is the open-core platform behind practical AI business systems. It gives teams a clearer place to run, shape, and supervise AI-assisted work.</p>
+      <p class="lead">Carapace is the control plane for AI-assisted work: the layer that decides which model, tool, or environment handles each request based on policy, cost, speed, and context.</p>
       <p class="lead" style="font-size:.96rem;max-width:62ch;">You can explore it yourself, or use it as the base for a practical business deployment.</p>
       <span class="pill">Open core</span>
       <span class="pill">Personal use path</span>
@@ -76,6 +76,24 @@
         <h2>Status</h2>
         <p>Carapace is still experimental software. Use controlled environments, test carefully, and keep human review in the loop.</p>
       </article>
+    </section>
+
+    <section class="grid two">
+      <article class="card">
+        <h2>Secure by design</h2>
+        <p class="muted">The model cannot leak what it never received.</p>
+        <p>Passwords, tokens, and credentials are isolated and masked until the exact moment of execution. Models receive only the context required for the task.</p>
+      </article>
+      <article class="card">
+        <h2>Inspectability</h2>
+        <p class="muted">Trust is a feature, not a promise.</p>
+        <p>Policies, approvals, routing, models, and audit logs are designed to be inspected so teams can explain, govern, and improve how AI work gets done.</p>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>How it decides</h2>
+      <p>Carapace maintains a model roster spanning frontier APIs, local and open-weight models, private cloud environments, and specialized tools. Requests map to the right destination by capability, cost, speed, context needs, and company policy. If a provider changes, you route elsewhere.</p>
     </section>
 
     <section style="padding-bottom:1.8rem;">
@@ -152,6 +170,7 @@
           <li>Not hands-off automation with no human review</li>
           <li>Not a replacement for workflow thinking</li>
           <li>Not meant to be trusted without testing and oversight</li>
+          <li>Not a single-model platform or a vendor lock-in solution</li>
         </ul>
       </article>
     </section>
@@ -176,6 +195,7 @@
       <div class="cta" style="margin-top:1.2rem;">
         <a class="btn primary" href="business.html">See How We Help</a>
         <a class="btn outline" href="licensing.html">View Licensing</a>
+        <a class="btn outline" href="business.html#contact">Book the Discovery Sprint</a>
       </div>
     </section>
   </main>
