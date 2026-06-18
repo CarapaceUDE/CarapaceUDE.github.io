@@ -192,6 +192,53 @@ main > section:first-child { border-top: 0; }
 ul, ol { padding-left: 1.2rem; }
 li { margin: .38rem 0; }
 
+/* Responsive infographic containers */
+.infographic-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background:
+    radial-gradient(120% 100% at 0% 0%, rgba(67, 166, 255, .12), transparent 48%),
+    radial-gradient(90% 90% at 100% 100%, rgba(255, 149, 77, .09), transparent 45%),
+    linear-gradient(145deg, rgba(12, 27, 47, .88), rgba(6, 14, 26, .92)) !important;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .025), 0 20px 70px rgba(0, 0, 0, .18) !important;
+}
+.infographic-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 56%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blue), transparent);
+  opacity: .52;
+  z-index: 2;
+}
+.infographic-frame::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 24%;
+  background: linear-gradient(180deg, transparent, rgba(3, 7, 17, .28));
+  pointer-events: none;
+}
+.infographic-frame.card-fit { aspect-ratio: 4 / 5; }
+.infographic-frame.breakout-fit { aspect-ratio: 3 / 2; }
+.infographic-frame img,
+.infographic-frame picture {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.infographic-frame img {
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 720px) {
+  .infographic-frame.breakout-fit { aspect-ratio: 4 / 5; }
+}
+
 /* Buttons */
 .cta { display: flex !important; flex-wrap: wrap; gap: .7rem !important; justify-content: flex-start !important; margin-top: 1.4rem !important; margin-bottom: 0 !important; }
 .btn {
