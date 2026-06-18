@@ -1,0 +1,229 @@
+.home-hero {
+  --home-carousel-stage-height: calc(100svh - 209px);
+  padding: 0 !important;
+}
+
+#home-carousel-root {
+  flex: 0 0 calc(var(--home-carousel-stage-height) + 52px);
+  width: 100%;
+  height: calc(var(--home-carousel-stage-height) + 52px);
+  min-width: 0;
+}
+
+.home-carousel-react {
+  --carousel-ease: cubic-bezier(.2, .82, .18, 1);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #02050a;
+  isolation: isolate;
+}
+
+.home-carousel-stage {
+  position: relative;
+  flex: 0 0 var(--home-carousel-stage-height);
+  width: 100%;
+  height: var(--home-carousel-stage-height);
+  min-height: 0;
+  overflow: hidden;
+  perspective: 1200px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(40, 96, 145, .18), transparent 48%),
+    radial-gradient(circle at 18% 40%, rgba(210, 122, 73, .08), transparent 34%),
+    #02050a;
+}
+
+.home-carousel-stage::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(2,5,10,.72), transparent 13%, transparent 87%, rgba(2,5,10,.72));
+}
+
+.home-carousel-stage .swiper {
+  width: 100%;
+  height: 100%;
+  padding: 12px 0;
+  overflow: visible;
+}
+
+.home-carousel-stage .swiper-wrapper {
+  align-items: center;
+  transform-style: preserve-3d;
+  transition-timing-function: var(--carousel-ease) !important;
+}
+
+.home-carousel-stage .swiper-slide {
+  width: 100%;
+  height: calc(100% - 24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: .34;
+  filter: brightness(.42) saturate(.7);
+  transform-style: preserve-3d;
+  transition-property: transform, opacity, filter;
+  transition-timing-function: var(--carousel-ease);
+  will-change: transform, opacity, filter;
+}
+
+.home-carousel-stage .swiper-slide-prev,
+.home-carousel-stage .swiper-slide-next {
+  opacity: .72;
+  filter: brightness(.68) saturate(.82);
+}
+
+.home-carousel-stage .swiper-slide-active {
+  opacity: 1;
+  filter: none;
+}
+
+.home-carousel-card {
+  width: min(74vw, 920px);
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(123, 168, 214, .26);
+  border-radius: 18px;
+  color: inherit;
+  background: rgba(3, 8, 16, .94);
+  box-shadow: 0 28px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.025) inset;
+  transition: border-color .35s ease, box-shadow .35s ease;
+}
+
+.swiper-slide-active .home-carousel-card:hover,
+.swiper-slide-active .home-carousel-card:focus-visible {
+  border-color: rgba(244, 145, 83, .58);
+  box-shadow: 0 32px 82px rgba(0,0,0,.62), 0 0 32px rgba(244, 145, 83, .09);
+}
+
+.home-carousel-card img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(var(--home-carousel-stage-height) - 48px);
+  object-fit: scale-down;
+}
+
+.home-carousel-stage .swiper-slide-shadow-left,
+.home-carousel-stage .swiper-slide-shadow-right {
+  border-radius: 18px;
+  background-image: linear-gradient(90deg, rgba(1,3,7,.72), rgba(2,5,10,.06));
+}
+
+.home-carousel-stage .home-carousel-arrow {
+  position: absolute;
+  z-index: 7;
+  top: 50%;
+  width: clamp(46px, 5vw, 66px);
+  height: clamp(74px, 12vh, 112px);
+  display: grid;
+  place-items: center;
+  translate: 0 -50%;
+  border: 1px solid rgba(255,255,255,.18);
+  color: rgba(255,255,255,.82);
+  background: rgba(3,8,17,.48);
+  backdrop-filter: blur(14px);
+  cursor: pointer;
+  font-size: 1.3rem;
+  transition: color .24s ease, background .24s ease, border-color .24s ease, box-shadow .24s ease;
+}
+
+.home-carousel-stage .home-carousel-arrow:hover,
+.home-carousel-stage .home-carousel-arrow:focus-visible {
+  color: #fff;
+  background: rgba(11,26,43,.78);
+  border-color: rgba(255,255,255,.44);
+  box-shadow: 0 0 28px rgba(67,166,255,.12);
+}
+
+.home-carousel-stage .home-carousel-prev { left: 0; border-left: 0; border-radius: 0 18px 18px 0; }
+.home-carousel-stage .home-carousel-next { right: 0; border-right: 0; border-radius: 18px 0 0 18px; }
+
+.home-carousel-pagination {
+  position: relative;
+  z-index: 8;
+  flex: 0 0 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid rgba(93, 137, 181, .14);
+  border-bottom: 1px solid rgba(93, 137, 181, .14);
+  background: rgba(2, 6, 13, .94);
+}
+
+.home-carousel-pagination .home-carousel-dots {
+  position: static;
+  inset: auto;
+  display: flex;
+  align-items: center;
+  gap: .58rem;
+  translate: none;
+  padding: .55rem .72rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.home-carousel-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.38);
+  cursor: pointer;
+  transition: transform .25s var(--ease), background .25s ease, box-shadow .25s ease;
+}
+
+.home-carousel-dot:hover { background: rgba(255,255,255,.72); }
+.home-carousel-dot.is-active { background: var(--copper); transform: scale(1.45); box-shadow: 0 0 16px rgba(245,143,76,.58); }
+
+.home-carousel-pagination .home-carousel-count {
+  position: absolute;
+  right: clamp(1rem, 2vw, 2rem);
+  bottom: auto;
+  color: rgba(255,255,255,.58);
+  font: 600 .65rem/1 Roboto Mono, monospace;
+  letter-spacing: .12em;
+}
+
+@media (max-width: 760px) {
+  .home-hero {
+    --home-carousel-stage-height: calc(100svh - 256px);
+    padding: 0 !important;
+  }
+
+  .home-carousel-card { width: 86vw; }
+
+  .home-carousel-stage::after {
+    background: linear-gradient(90deg, rgba(2,5,10,.48), transparent 8%, transparent 92%, rgba(2,5,10,.48));
+  }
+
+  .home-carousel-pagination .home-carousel-dots {
+    gap: .46rem;
+  }
+
+  .home-carousel-stage .home-carousel-arrow { width: 44px; height: 72px; font-size: 1.05rem; }
+  .home-carousel-dot { width: 7px; height: 7px; }
+  .home-carousel-pagination .home-carousel-count { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The site-wide reduced-motion rule collapses Swiper's duration and can leave
+     its loop state out of sync. Keep this single, user-controlled hero motion
+     smooth while retaining the reduced-motion behavior everywhere else. */
+  .home-carousel-react .swiper-wrapper,
+  .home-carousel-react .swiper-slide,
+  .home-carousel-react .swiper-slide-shadow-left,
+  .home-carousel-react .swiper-slide-shadow-right {
+    transition-duration: 1.05s !important;
+  }
+}

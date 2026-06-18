@@ -1,0 +1,16 @@
+{
+  "name": "carapace-ude-site",
+  "private": true,
+  "scripts": {
+    "sync:carousel": "node ./scripts/sync-carousel-slides.mjs",
+    "build:carousel": "node ./scripts/sync-carousel-slides.mjs && esbuild ./src/home-carousel.jsx --bundle --format=esm --minify --outfile=./assets/home-carousel-react.js --jsx=automatic"
+  },
+  "dependencies": {
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "swiper": "12.2.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.1"
+  }
+}

@@ -7,6 +7,7 @@
   <meta name="description" content="Carapace installs and manages a private, governed, model-independent AI operating layer for your organization." />
   <meta name="theme-color" content="#030711" />
   <link rel="stylesheet" href="assets/site.css" />
+  <link rel="stylesheet" href="assets/home-carousel-react.css" />
 </head>
 <body class="page-home">
   <nav class="nav" aria-label="Primary navigation">
@@ -31,24 +32,10 @@
   </nav>
 
   <header id="top" class="hero home-hero">
-    <div class="wrap hero-grid">
-      <div class="hero-content">
-        <div class="hero-kicker">Private AI infrastructure · Model independent</div>
-        <h1>Own Your <span class="accent-copper">Intelligence.</span></h1>
-        <p class="lead"><strong>Carapace is the company.</strong> We build, install, and manage Cortex—the private operating layer between your business and the AI ecosystem.</p>
-        <p class="sublead">Use the best available models, agents, and automation without surrendering your data, workflows, or strategic control.</p>
-        <div class="cta">
-          <a class="btn primary" href="business.html#contact">Book the Discovery Sprint</a>
-          <a class="btn outline" href="carapace.html">Explore Cortex software</a>
-        </div>
-        <div class="brand-map"><span>CARAPACE</span><i>builds · deploys · manages</i><span>CORTEX</span></div>
-        <div class="signal-row" aria-label="Platform principles">
-          <span>Private by default</span><span>Inspectable</span><span>No vendor lock-in</span>
-        </div>
-      </div>
-      <a class="hero-visual" href="ideas/#slide-1" aria-label="Open the Carapace pitch deck">
-        <img src="ideas/1.png" alt="Carapace intelligence layer visualized as a secure illuminated system" />
-      </a>
+    <div id="home-carousel-root"></div>
+    <div class="home-hero-actions wrap" aria-label="Get started">
+      <a class="btn primary" href="business.html#contact">Book the Discovery Sprint</a>
+      <a class="btn outline" href="carapace.html">Explore Cortex</a>
     </div>
   </header>
 
@@ -95,7 +82,7 @@
         <div><div class="eyebrow">Policy-driven routing</div><h2>Control the destination. <span class="accent-copper">Not the vendor.</span></h2></div>
         <div><p>Some work should stay local. Some can use a frontier model. Some requires approval. You define the rules; Cortex enforces them.</p><div class="cta"><a class="btn outline" href="solutions.html">See how work gets routed</a></div></div>
       </div>
-      <a class="pitch-frame" href="ideas/#slide-5" aria-label="Open control plane slide in the pitch deck">
+      <a class="pitch-frame" href="ideas/#slide-7" aria-label="Open control plane slide in the pitch deck">
         <img src="ideas/5.png" alt="Cortex control plane routes work according to security, policy, cost, and approval requirements" loading="lazy" />
       </a>
     </section>
@@ -156,6 +143,7 @@
     <div class="wrap"><div>Carapace / Cortex · Private AI infrastructure under your control.</div><div><a href="business.html">How We Help</a> · <a href="licensing.html">Licensing</a> · <a href="https://github.com/CarapaceUDE" target="_blank" rel="noreferrer">GitHub</a></div></div>
   </footer>
   <script src="assets/cortex-bloom-bg.js"></script>
+  <script type="module" src="assets/home-carousel-react.js"></script>
   <script src="assets/site.js"></script>
 </body>
 </html>
