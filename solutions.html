@@ -8,6 +8,11 @@
   <meta name="theme-color" content="#090c18" />
   <link rel="stylesheet" href="assets/site.css" />
   <style>
+    .section-head .eyebrow {
+      font-size: .84rem;
+      letter-spacing: .18em;
+    }
+
     .editorial-intro {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -58,32 +63,97 @@
       transform: translateX(-50%);
     }
 
-    .breakout-visual img {
+    .zoomable-trigger {
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: zoom-in;
+    }
+
+    .zoomable-trigger img {
       display: block;
       width: 100%;
       height: auto;
     }
 
     .solution-gallery {
+      position: relative;
+      isolation: isolate;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: clamp(1rem, 2vw, 1.75rem);
     }
 
     .solution-visual {
       margin: 0;
-      transition: transform .28s var(--ease), filter .28s ease;
     }
 
-    .solution-visual:hover {
-      transform: translateY(-5px);
-      filter: drop-shadow(0 24px 38px rgba(0, 0, 0, .28));
+    .solution-visual .zoomable-trigger {
+      display: block;
+      border-radius: 1.15rem;
     }
 
     .solution-visual img {
       display: block;
       width: 100%;
       height: auto;
+    }
+
+    .media-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: block;
+      overflow: auto;
+      padding: 0;
+      background: rgba(6, 10, 20, .82);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .24s ease;
+      backdrop-filter: blur(10px);
+      overscroll-behavior: contain;
+      touch-action: pan-x pan-y pinch-zoom;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .media-lightbox.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .media-lightbox__panel {
+      width: min(94vw, 1120px);
+      margin: clamp(4.5rem, 10vh, 6rem) auto 2rem;
+    }
+
+    .media-lightbox__image {
+      display: block;
+      width: 100%;
+      max-width: none;
+      max-height: none;
+      height: auto;
+      border-radius: 1rem;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .36);
+    }
+
+    .media-lightbox__close {
+      position: sticky;
+      top: clamp(.75rem, 2vw, 1.25rem);
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 2.8rem;
+      height: 2.8rem;
+      margin: 0 0 -2.8rem auto;
+      padding: 0;
+      border: 1px solid rgba(208, 214, 224, .22);
+      background: rgba(10, 16, 30, .82);
+      color: var(--text);
+      border-radius: 50%;
+      font: 300 1.7rem/1 Arial, sans-serif;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
     }
 
     .starting-points {
@@ -124,12 +194,6 @@
       color: var(--text);
     }
 
-    @media (max-width: 1080px) {
-      .solution-gallery {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
     @media (max-width: 900px) {
       .editorial-intro,
       .cta-band,
@@ -145,6 +209,11 @@
 
       .breakout-visual {
         width: calc(100vw - 1rem);
+      }
+
+      .media-lightbox__panel {
+        width: 96vw;
+        margin-top: 4.5rem;
       }
     }
   </style>
@@ -194,13 +263,14 @@
       <div class="section-head">
         <div>
           <p class="eyebrow">Routable Work</p>
-          <h2>How work gets routable</h2>
         </div>
         <p>Plain-language work comes in. Cortex maps intent to capability, applies policy, and routes the request to the right destination without turning the team into human middleware.</p>
       </div>
 
       <figure class="breakout-visual">
-        <img src="assets/Solutions-how_work_gets_routable.png" alt="Diagram showing work requests entering Cortex capability aliases and being routed to local models, frontier models, private cloud, and specialized systems." />
+        <button class="zoomable-trigger" type="button" data-zoomable data-zoom-src="assets/Solutions-how_work_gets_routable.png" data-zoom-alt="Diagram showing work requests entering Cortex capability aliases and being routed to local models, frontier models, private cloud, and specialized systems." aria-label="Zoom image: routable work diagram">
+          <img src="assets/Solutions-how_work_gets_routable.png" alt="Diagram showing work requests entering Cortex capability aliases and being routed to local models, frontier models, private cloud, and specialized systems." />
+        </button>
       </figure>
     </section>
 
@@ -214,12 +284,12 @@
       </div>
 
       <div class="solution-gallery">
-        <figure class="solution-visual"><img src="assets/Solutions-Customer_follow-up.png" alt="Customer follow-up infographic showing staged follow-up, human handoff checkpoint, and confirmed response destination." /></figure>
-        <figure class="solution-visual"><img src="assets/solutions-operations.png" alt="Internal operations infographic showing recurring admin work being compressed into governed operating flows." /></figure>
-        <figure class="solution-visual"><img src="assets/solutions-approvals.png" alt="Approvals and oversight infographic showing repeatable workflow steps pausing at human approval gates." /></figure>
-        <figure class="solution-visual"><img src="assets/solutions-knowledge.png" alt="Knowledge workflows infographic showing capture, retrieval, and reuse of internal knowledge through Cortex." /></figure>
-        <figure class="solution-visual"><img src="assets/solutions-routing.png" alt="Reporting and routing infographic showing classified inputs moving to the right destinations." /></figure>
-        <figure class="solution-visual"><img src="assets/solutions-workflow_automation.png" alt="Small-team workflow automation infographic showing a lean team gaining leverage from Cortex-managed repeatable workflows." /></figure>
+        <figure class="solution-visual"><button class="zoomable-trigger" type="button" data-zoomable data-zoom-src="assets/Solutions-Customer_follow-up.png" data-zoom-alt="Customer follow-up infographic showing staged follow-up, human handoff checkpoint, and confirmed response destination." aria-label="Zoom workflow example: customer follow-up"><img src="assets/Solutions-Customer_follow-up.png" alt="Customer follow-up infographic showing staged follow-up, human handoff checkpoint, and confirmed response destination." /></button></figure>
+        <figure class="solution-visual"><button class="zoomable-trigger" type="button" data-zoomable data-zoom-src="assets/solutions-operations.png" data-zoom-alt="Internal operations infographic showing recurring admin work being compressed into governed operating flows." aria-label="Zoom workflow example: operations"><img src="assets/solutions-operations.png" alt="Internal operations infographic showing recurring admin work being compressed into governed operating flows." /></button></figure>
+        <figure class="solution-visual"><button class="zoomable-trigger" type="button" data-zoomable data-zoom-src="assets/solutions-approvals.png" data-zoom-alt="Approvals and oversight infographic showing repeatable workflow steps pausing at human approval gates." aria-label="Zoom workflow example: approvals"><img src="assets/solutions-approvals.png" alt="Approvals and oversight infographic showing repeatable workflow steps pausing at human approval gates." /></button></figure>
+        <figure class="solution-visual"><button class="zoomable-trigger" type="button" data-zoomable data-zoom-src="assets/solutions-knowledge.png" data-zoom-alt="Knowledge workflows infographic showing capture, retrieval, and reuse of internal knowledge through Cortex." aria-label="Zoom workflow example: knowledge"><img src="assets/solutions-knowledge.png" alt="Knowledge workflows infographic showing capture, retrieval, and reuse of internal knowledge through Cortex." /></button></figure>
+        <figure class="solution-visual"><button class="zoomable-trigger" type="button" data-zoomable data-zoom-src="assets/solutions-routing.png" data-zoom-alt="Reporting and routing infographic showing classified inputs moving to the right destinations." aria-label="Zoom workflow example: routing"><img src="assets/solutions-routing.png" alt="Reporting and routing infographic showing classified inputs moving to the right destinations." /></button></figure>
+        <figure class="solution-visual"><button class="zoomable-trigger" type="button" data-zoomable data-zoom-src="assets/solutions-workflow_automation.png" data-zoom-alt="Small-team workflow automation infographic showing a lean team gaining leverage from Cortex-managed repeatable workflows." aria-label="Zoom workflow example: workflow automation"><img src="assets/solutions-workflow_automation.png" alt="Small-team workflow automation infographic showing a lean team gaining leverage from Cortex-managed repeatable workflows." /></button></figure>
       </div>
     </section>
 
@@ -227,13 +297,14 @@
       <div class="section-head">
         <div>
           <p class="eyebrow">Adoption Path</p>
-          <h2>Discover &rarr; Deploy &rarr; Measure &rarr; Expand</h2>
         </div>
         <p>Start with a bounded win. Prove impact in a governed environment. Use the evidence to decide what deserves broader rollout next.</p>
       </div>
 
       <figure class="breakout-visual">
-        <img src="assets/Solutions-flow.png" alt="Discover, deploy, measure, and expand process graphic showing Carapace guiding adoption and Cortex carrying workflows." />
+        <button class="zoomable-trigger" type="button" data-zoomable data-zoom-src="assets/Solutions-flow.png" data-zoom-alt="Discover, deploy, measure, and expand process graphic showing Carapace guiding adoption and Cortex carrying workflows." aria-label="Zoom image: adoption path graphic">
+          <img src="assets/Solutions-flow.png" alt="Discover, deploy, measure, and expand process graphic showing Carapace guiding adoption and Cortex carrying workflows." />
+        </button>
       </figure>
     </section>
 
@@ -243,7 +314,7 @@
           <p class="eyebrow">Common Starting Points</p>
           <h2>What this usually looks like before we touch it</h2>
         </div>
-        <p>The symptoms are usually obvious before the fix is. The right first step is often not “buy AI,” but “map the messy workflow and decide what should become repeatable.”</p>
+        <p>The symptoms are usually obvious before the fix is. The right first step is often not "buy AI," but "map the messy workflow and decide what should become repeatable."</p>
       </div>
 
       <div class="starting-points">
@@ -289,7 +360,61 @@
     </div>
   </footer>
 
+  <div class="media-lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
+    <div class="media-lightbox__panel">
+      <button class="media-lightbox__close" type="button" data-lightbox-close aria-label="Close image viewer">&times;</button>
+      <img class="media-lightbox__image" src="" alt="" />
+    </div>
+  </div>
+
   <script src="assets/cortex-bloom-bg.js"></script>
   <script src="assets/site.js"></script>
+  <script>
+    (() => {
+      const zoomables = Array.from(document.querySelectorAll("[data-zoomable]"));
+      const lightbox = document.querySelector("[data-lightbox]");
+      const lightboxImage = lightbox?.querySelector(".media-lightbox__image");
+      const lightboxClose = lightbox?.querySelector("[data-lightbox-close]");
+      let lastTrigger = null;
+
+      function openLightbox(trigger) {
+        if (!lightbox || !lightboxImage) return;
+        lastTrigger = trigger;
+        lightboxImage.src = trigger.dataset.zoomSrc || trigger.querySelector("img")?.src || "";
+        lightboxImage.alt = trigger.dataset.zoomAlt || trigger.querySelector("img")?.alt || "";
+        lightbox.scrollTop = 0;
+        lightbox.classList.add("is-open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        lightboxClose?.focus();
+      }
+
+      function closeLightbox() {
+        if (!lightbox || !lightboxImage) return;
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+        lightboxImage.alt = "";
+        document.body.style.overflow = "";
+        if (lastTrigger) lastTrigger.focus();
+      }
+
+      zoomables.forEach((trigger) => {
+        trigger.addEventListener("click", () => openLightbox(trigger));
+      });
+
+      lightbox?.addEventListener("click", (event) => {
+        if (event.target === lightbox || event.target === lightboxClose) {
+          closeLightbox();
+        }
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && lightbox?.classList.contains("is-open")) {
+          closeLightbox();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
