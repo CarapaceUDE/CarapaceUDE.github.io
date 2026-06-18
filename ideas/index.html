@@ -37,7 +37,7 @@ body::before { content:""; position:fixed; inset:0; z-index:20; pointer-events:n
 .slide-img { width:100vw; height:100dvh; object-fit:contain; object-position:center center; transform:scale(var(--imgScale,1.006)); filter:drop-shadow(0 28px 70px rgba(0,0,0,.42)); }
 .vignette { z-index:4; pointer-events:none; background:linear-gradient(to bottom, rgba(0,0,0,.42), transparent 19%, transparent 69%, rgba(0,0,0,.62)), linear-gradient(to right, rgba(0,0,0,.30), transparent 28%, transparent 62%, rgba(0,0,0,.58)); opacity:var(--vignetteOpacity,.84); transition:opacity 900ms ease; }
 .explainer { z-index:3; display:flex; justify-content:flex-end; pointer-events:none; background:linear-gradient(to right, transparent 0%, rgba(5,7,11,.08) 37%, rgba(5,7,11,.72) 62%, rgba(5,7,11,.96) 100%); opacity:var(--panelOpacity,0); transition:opacity 900ms ease; }
-.explainer-inner { width:min(49rem, 48vw); height:100%; padding:clamp(4.8rem,7.5vh,6.8rem) clamp(2.1rem,4.1vw,5rem) clamp(5.4rem,8vh,7.2rem); display:flex; flex-direction:column; justify-content:center; transform:translateX(var(--innerX, 15vw)); opacity:var(--innerOpacity,0); transition:transform 1100ms var(--ease), opacity 900ms ease; overflow-y:auto; overscroll-behavior:contain; pointer-events:auto; scrollbar-width:thin; scrollbar-color:rgba(103,241,226,.45) transparent; }
+.explainer-inner { width:min(49rem, 48vw); height:100%; padding:clamp(4.8rem,7.5vh,6.8rem) clamp(2.1rem,4.1vw,5rem) clamp(5.4rem,8vh,7.2rem); display:flex; flex-direction:column; justify-content:center; transform:translateX(var(--innerX, 15vw)); opacity:var(--innerOpacity,0); transition:transform 1100ms var(--ease), opacity 900ms ease; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; pointer-events:auto; scrollbar-width:thin; scrollbar-color:rgba(103,241,226,.45) transparent; }
 .kicker { color:var(--aqua); letter-spacing:.16em; text-transform:uppercase; font-size:.70rem; font-weight:800; margin-bottom:1rem; }
 .explainer h1 { font-family:"Instrument Serif", Georgia, serif; font-weight:400; font-size:clamp(2.2rem,4vw,4.75rem); line-height:.95; letter-spacing:-.037em; margin:0 0 1.2rem; max-width:13ch; }
 .copy { max-width:48rem; font-size:clamp(.98rem,1.18vw,1.13rem); line-height:1.58; color:var(--muted); text-wrap:pretty; }
@@ -70,7 +70,7 @@ body::before { content:""; position:fixed; inset:0; z-index:20; pointer-events:n
 .mobile-note { display:none; position:fixed; right:1rem; bottom:1rem; z-index:61; color:rgba(255,255,255,.55); font-size:.75rem; }
 @media (max-width: 900px), (pointer:coarse) {
   .explainer { background:rgba(5,7,11,.90); }
-  .explainer-inner { width:100vw; padding:5rem 1.35rem 6.5rem; }
+  .explainer-inner { width:100vw; padding:5rem 1.35rem 6.5rem; justify-content:flex-start; }
   .explainer h1 { font-size:clamp(2rem,10vw,3.6rem); max-width:12ch; }
   .copy { font-size:.96rem; line-height:1.53; }
   .edge-hint { height:36vh; width:58px; }
@@ -114,6 +114,8 @@ let wheelDistance = 0;
 let wheelDirection = 0;
 let lastWheelTime = 0;
 const WHEEL_THRESHOLD = 180;
+const SWIPE_THRESHOLD = 72;
+let touchState = null;
 
 function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
 function slideEl(i){ return document.querySelector(`.slide[data-index="${i}"]`); }
@@ -275,12 +277,72 @@ function handleWheel(e){
   direction > 0 ? goNext() : goPrev();
 }
 
+function handleTouchStart(e){
+  if(e.touches.length !== 1 || e.target.closest('button, a')){
+    touchState = null;
+    return;
+  }
+  const touch = e.touches[0];
+  touchState = {
+    startX:touch.clientX,
+    startY:touch.clientY,
+    lastY:touch.clientY,
+    axis:null,
+    overscroll:0,
+    direction:0,
+    panel:e.target.closest('.explainer-inner')
+  };
+}
+
+function handleTouchMove(e){
+  if(!touchState || e.touches.length !== 1 || isAnimating) return;
+  const touch = e.touches[0];
+  const totalX = touch.clientX - touchState.startX;
+  const totalY = touch.clientY - touchState.startY;
+
+  if(!touchState.axis){
+    if(Math.abs(totalX) < 8 && Math.abs(totalY) < 8) return;
+    touchState.axis = Math.abs(totalY) > Math.abs(totalX) * 1.15 ? 'vertical' : 'horizontal';
+  }
+  if(touchState.axis !== 'vertical') return;
+
+  // Finger moving upward means content/slide movement toward the next item.
+  const step = touchState.lastY - touch.clientY;
+  const direction = Math.sign(step);
+  touchState.lastY = touch.clientY;
+  if(!direction) return;
+
+  const textIsVisible = revealLocked || hoverRevealActive;
+  if(touchState.panel && textIsVisible && canScrollText(touchState.panel, direction)){
+    touchState.overscroll = 0;
+    touchState.direction = direction;
+    return;
+  }
+
+  if(e.cancelable) e.preventDefault();
+  if(direction !== touchState.direction) touchState.overscroll = 0;
+  touchState.direction = direction;
+  touchState.overscroll += Math.abs(step);
+}
+
+function handleTouchEnd(){
+  if(!touchState) return;
+  const { axis, overscroll, direction } = touchState;
+  touchState = null;
+  if(axis !== 'vertical' || overscroll < SWIPE_THRESHOLD || isAnimating) return;
+  direction > 0 ? goNext() : goPrev();
+}
+
 renderSlides();
 updateClasses();
 
 document.addEventListener('mousemove', setRevealFromPointer);
 document.addEventListener('mouseleave', hideReveal);
 document.addEventListener('wheel', handleWheel, { passive:false });
+document.addEventListener('touchstart', handleTouchStart, { passive:true });
+document.addEventListener('touchmove', handleTouchMove, { passive:false });
+document.addEventListener('touchend', handleTouchEnd, { passive:true });
+document.addEventListener('touchcancel', () => { touchState = null; }, { passive:true });
 nextBtn.addEventListener('click', goNext);
 prevBtn.addEventListener('click', goPrev);
 revealBtn.addEventListener('click', () => toggleReveal());
