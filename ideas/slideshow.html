@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Carapace / Cortex — Pitch Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c0f14;
+      --bg-elevated: #141a24;
+      --text: #e8ecf4;
+      --text-muted: #9aa8bc;
+      --accent: #5eead4;
+      --accent-dim: rgba(94, 234, 212, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --slide-pad: clamp(1.25rem, 4vw, 3rem);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "DM Sans", system-ui, sans-serif;
+      overflow: hidden;
+    }
+    .deck {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      grid-template-rows: minmax(0, 1fr);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.45s ease, visibility 0.45s;
+      pointer-events: none;
+    }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    @media (max-width: 900px) {
+      .slide {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 42vh) minmax(0, 1fr);
+      }
+    }
+    .slide-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      max-height: 100%;
+      background: var(--bg-elevated);
+      overflow: hidden;
+      border-right: 1px solid var(--border);
+      padding: clamp(0.5rem, 2vw, 1.25rem);
+    }
+    @media (max-width: 900px) {
+      .slide-visual { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+    .slide-visual img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+    }
+    .slide-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(12, 15, 20, 0.35) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .slide-num {
+      position: absolute;
+      top: var(--slide-pad);
+      left: var(--slide-pad);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      z-index: 2;
+    }
+    .slide-copy {
+      padding: var(--slide-pad);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      max-height: 100vh;
+      max-height: 100dvh;
+    }
+    .slide-copy h2 {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin: 0;
+      color: var(--text);
+    }
+    .slide-copy .body {
+      font-size: clamp(0.9rem, 1.35vw, 1.02rem);
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+    .slide-copy .body p { margin: 0 0 0.85rem; }
+    .slide-copy .body p:last-child { margin-bottom: 0; }
+    .brand-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem var(--slide-pad);
+      background: linear-gradient(to bottom, rgba(12, 15, 20, 0.92), transparent);
+      pointer-events: none;
+    }
+    .brand-bar span {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+    .progress {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent);
+      z-index: 50;
+      transition: width 0.35s ease;
+    }
+    .nav {
+      position: fixed;
+      bottom: clamp(1rem, 3vw, 2rem);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.5rem;
+      background: rgba(20, 26, 36, 0.88);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
+    }
+    .nav button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav button:hover:not(:disabled) {
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+    .nav button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .dots {
+      display: flex;
+      gap: 0.35rem;
+      padding: 0 0.5rem;
+    }
+    .dots button {
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      background: var(--text-muted);
+      opacity: 0.35;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s, background 0.2s;
+    }
+    .dots button.active {
+      opacity: 1;
+      background: var(--accent);
+      transform: scale(1.15);
+    }
+    .counter {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      min-width: 3.5rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="brand-bar">
+    <span>CARAPACE / CORTEX</span>
+    <span id="counter-top">1 / 10</span>
+  </div>
+  <div class="progress" id="progress" style="width: 10%"></div>
+
+  <main class="deck" id="deck" aria-live="polite"></main>
+
+  <nav class="nav" aria-label="Slide navigation">
+    <button type="button" id="prev" aria-label="Previous slide">←</button>
+    <div class="dots" id="dots" role="tablist"></div>
+    <span class="counter" id="counter">1 / 10</span>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </nav>
+
+  <script>
+    const slides = [
+      {
+        n: 1,
+        img: "1.png",
+        title: "Own Your Intelligence",
+        html: `<p>This is the core idea behind Carapace.</p>
+<p>Every company is being told they need AI, but most AI products ask you to surrender something important: your data, your workflows, your internal knowledge, or your strategic control. Our view is different. We believe your intelligence layer should belong to you.</p>
+<p>Carapace installs and manages a private AI operating layer for your organization. That means you can use the capabilities of frontier AI, local models, agents, and automation without being locked into one vendor or handing over the core of your business.</p>
+<p>The important distinction here is that we are model independent. We are not telling you, “Use this one model forever.” We are building the harness that lets you use the right model for the right job. Sometimes that may be GPT, Claude, Gemini, Qwen, or another frontier model. Sometimes it may be a local model running in your environment. Sometimes it may be a specialized tool or automation.</p>
+<p>The point is control. Your business sits at the center. Carapace becomes the intelligence layer between your business and the AI ecosystem, so you can take advantage of the best available technology without giving up ownership of your data, workflows, or strategy.</p>`
+      },
+      {
+        n: 2,
+        img: "2.png",
+        title: "Your AI Should Never See Your Secrets",
+        html: `<p>This is one of the biggest reasons companies hesitate around AI adoption.</p>
+<p>They are not necessarily afraid of intelligence. They are afraid of exposure. Passwords, API keys, client records, financial data, private files, personal information, business strategy — all of that becomes dangerous if it is casually pushed into a model context.</p>
+<p>Cortex is designed around the idea that the model should only receive what it actually needs. Passwords, tokens, credentials, and sensitive information are isolated and masked until the exact moment they are required for execution. The model does not need to “know” the secret in order for the workflow to work.</p>
+<p>That gives us a very clear principle: the model cannot leak what it never received.</p>
+<p>This also matters because we are not asking the client to trust a black box. The system is designed to be inspectable. You can verify the data path, audit what was accessed, and see how information moved through the workflow.</p>
+<p>And because Cortex is model independent, the client is not trapped. If one provider changes its policies, pricing, availability, or suitability, the organization can route elsewhere. Local models, private cloud models, or frontier APIs can all be part of the same governed environment.</p>
+<p>So the message here is simple: AI capability without surrendering data ownership, operational control, or provider choice.</p>`
+      },
+      {
+        n: 3,
+        img: "3.png",
+        title: "Your Employees Are Acting as APIs",
+        html: `<p>This is the operational pain point.</p>
+<p>Inside most companies, the problem is not that people are lazy or incapable. The problem is that very capable people are spending a huge amount of their time acting as human middleware.</p>
+<p>They copy information from one system to another. They search for files. They move things between email, spreadsheets, CRMs, folders, PDFs, Slack, Notion, accounting systems, and project tools. They chase approvals. They reformat documents. They re-enter information that already exists somewhere else.</p>
+<p>In other words, the employee becomes the API.</p>
+<p>That creates hidden costs. There is lost time, because skilled people are spending hours on low-value tasks. There are more errors, because manual handoffs and copy-paste workflows do not scale. Execution slows down because information gets trapped in bottlenecks. And eventually there is frustration, because people did not join the company to be human plumbing.</p>
+<p>This is where Carapace comes in. We become the intelligence layer between people, software, and AI.</p>
+<p>We connect tools, automate the busywork, unify information, and give people back time to focus on judgment, creativity, clients, strategy, and outcomes.</p>
+<p>The positioning is important: we are not replacing your team. We are removing the low-value connective tissue work that is currently draining them.</p>`
+      },
+      {
+        n: 4,
+        img: "4.png",
+        title: "What Work Shouldn’t Exist Anymore?",
+        html: `<p>This is where the conversation turns from abstract AI to immediate ROI.</p>
+<p>The best automations are usually not futuristic. They are often the most boring, recurring, annoying tasks in the company. The work everyone already knows is wasteful, but no one has had the time, tools, or structure to eliminate.</p>
+<p>So when we come into a business, one of the first questions we ask is: what work should not exist anymore?</p>
+<p>That usually falls into a few categories.</p>
+<p>There is repetitive work: copying data, weekly status updates, manual entry, repetitive document handling.</p>
+<p>There is fragile work: things that depend on one person, tribal knowledge, undocumented processes, or “only Sarah knows how to do that” workflows.</p>
+<p>There is hidden work: searching for files, digging through old proposals, hunting through email threads, trying to find information that technically exists but is not accessible at the moment of need.</p>
+<p>There is coordination work: approval chains, handoffs, status chasing, and work about work.</p>
+<p>And then there is rework: formatting, corrections, rebuilding the same thing, rewriting the same email, recreating the same report.</p>
+<p>The goal is not to automate everything. The goal is to identify the work that drains time, creates risk, and blocks momentum.</p>
+<p>Cortex eliminates low-value work so the team can focus on what moves the business forward.</p>`
+      },
+      {
+        n: 5,
+        img: "5.png",
+        title: "Control the Destination. Not the Vendor.",
+        html: `<p>This slide explains the core architecture in plain business language.</p>
+<p>Cortex is the control plane for AI work. Every request comes in, and Cortex decides where that request should go based on the company’s policies, security rules, cost preferences, speed requirements, context needs, and approval requirements.</p>
+<p>That is very different from simply buying one AI product and hoping it fits every use case.</p>
+<p>Some work should stay local. Some work can safely go to a frontier model. Some work may belong in a private cloud environment. Some work should go to a specialized tool. Some work should require approval before anything happens.</p>
+<p>Cortex gives the company a way to define those rules.</p>
+<p>You decide where data lives. You decide who can access what. You decide what needs approval. You decide how work gets routed. You decide what gets logged.</p>
+<p>Then Cortex enforces those decisions.</p>
+<p>This is the key sovereignty point: the company should control the destination, not the vendor. You should not have to reorganize your business around one AI company’s product roadmap, pricing, policy changes, outages, or limitations.</p>
+<p>Cortex gives you the power to use any model or provider without giving up control of your data, workflows, or strategic direction.</p>`
+      },
+      {
+        n: 6,
+        img: "6.png",
+        title: "You Don’t Need an AI Department",
+        html: `<p>This is where Carapace becomes a consultancy, not just a platform.</p>
+<p>Most businesses know AI matters, but they do not have the time or internal expertise to track every model release, understand hardware requirements, compare benchmarks, evaluate privacy risks, build local infrastructure, manage API routing, configure agents, and maintain governance.</p>
+<p>That is what we do.</p>
+<p>We become your private AI infrastructure team.</p>
+<p>That can include helping you select and right-size hardware. It can include local, private cloud, hybrid, or cloud deployment. It can include secure installation, configuration, integrations, data access, policies, approvals, audit logs, and continuous improvement.</p>
+<p>The client does not need to become an AI lab. They need the benefits of one.</p>
+<p>This is also where our experience becomes valuable. We are already testing models, evaluating tools, watching the frontier, comparing local options, and learning what actually works in practice. We take that moving landscape and translate it into a practical, governed stack for each client.</p>
+<p>What the client gets is no vendor lock-in, less guesswork, fewer surprises, better visibility, and proactive support.</p>
+<p>We handle the complexity. The client gets the competitive advantage.</p>`
+      },
+      {
+        n: 7,
+        img: "7.png",
+        title: "Finding the Right Model for the Right Job",
+        html: `<p>This is one of the most important slides because it explains why model independence is not just a philosophical position. It produces better outcomes.</p>
+<p>Every request is different.</p>
+<p>A summarization task may not need the same model as a legal-style comparison. Extracting dates and amounts from documents is different from drafting a proposal. Fast classification is different from nuanced writing. Some work should prioritize cost. Some should prioritize quality. Some should prioritize privacy. Some should prioritize latency.</p>
+<p>Cortex handles that routing problem.</p>
+<p>Instead of asking employees to know which AI model to use, Cortex can map requests to capability aliases: summarize, extract data, classify, compare, draft, and so on. Behind those aliases, Carapace maintains and evaluates the model roster.</p>
+<p>That roster can include frontier models, local models, private cloud models, open-weight models, specialized models, and future models that are not even on the market yet.</p>
+<p>The value is not just access to models. The value is stewardship.</p>
+<p>We test, benchmark, monitor, recommend, and update the options. Then Cortex routes work based on capability, cost, speed, context, policy, and outcome.</p>
+<p>So instead of the client constantly asking, “Which model should we use now?” they can focus on the work.</p>
+<p>Best outcome, automatically: right capability, right cost, right speed, right for the business.</p>`
+      },
+      {
+        n: 8,
+        img: "8.png",
+        title: "Small Wins First. Scale Later.",
+        html: `<p>This is our adoption strategy.</p>
+<p>A lot of AI initiatives fail because they start too big. They try to transform the whole company before anyone has seen practical value. That creates confusion, resistance, cost, and risk.</p>
+<p>Our approach is the opposite: start small, prove value, then expand with confidence.</p>
+<p>First, we discover. We look for repetitive work, information bottlenecks, SaaS overlap, security requirements, and strong automation candidates. This is where we find the leaks.</p>
+<p>Second, we deploy. We create a private Cortex environment — local, cloud, or hybrid — with security controls, governance policies, model roster, and the right knowledge connections.</p>
+<p>Third, we launch the first wins. These are usually one or two real workflows, not theoretical demos. It could be internal knowledge retrieval, proposal generation, approval routing, reporting automation, document processing, or another high-value workflow.</p>
+<p>Fourth, we measure. We track hours saved, vendor costs reduced, process improvements, user adoption, and operational impact.</p>
+<p>Fifth, we expand. Once there is evidence, then we scale into more departments, more workflows, more operators, and more integrations.</p>
+<p>This makes adoption safer and more believable. We are not asking the client to buy a giant transformation project on faith. We are proving value on real work and growing from there.</p>`
+      },
+      {
+        n: 9,
+        img: "9.png",
+        title: "Trust Should Be Inspectable",
+        html: `<p>This is the trust slide.</p>
+<p>Every AI vendor claims security, governance, and control. The question is: can the company verify those claims?</p>
+<p>Cortex is designed so trust is not just a promise. It is a feature.</p>
+<p>The system is organized around inspectable layers: policies, approvals, routing, models, and audit logs.</p>
+<p>Policies define the company’s rules and boundaries. Approvals keep humans involved where judgment matters. Routing shows why a request went to a specific model, provider, tool, or environment. The model layer remains agnostic, so work can be local, private, or frontier-based depending on need. Audit logs make the process visible after the fact.</p>
+<p>That matters because companies do not just need AI that works. They need AI they can explain, govern, and improve.</p>
+<p>Open governance also makes the platform more resilient. If models change, vendors shift, pricing changes, or regulations evolve, the company is not trapped. The workflow can adapt because the control layer belongs to the company.</p>
+<p>The closing line here is important: community tested, company controlled.</p>
+<p>Transparency is not something we ask clients to believe in. It is something we build into the way the system works.</p>`
+      },
+      {
+        n: 10,
+        img: "10.png",
+        title: "Book the Sprint. Own Your Intelligence.",
+        html: `<p>This is the call to action.</p>
+<p>We do not begin by asking the client to commit to a massive transformation project. We begin with one focused engagement: the Cortex Discovery &amp; Integration Sprint.</p>
+<p>The Sprint is designed to produce measurable results and a clear path forward.</p>
+<p>During the Sprint, we map the client’s workflows and identify the highest-impact opportunities for automation. We deploy a secure Cortex sandbox or private environment. We launch one to two real automations with real users and real workflows. Then we measure ROI and deliver a roadmap for what should happen next.</p>
+<p>This gives the client a practical way to evaluate Carapace without committing to everything upfront.</p>
+<p>It is fixed in scope. It is focused on outcomes. It is designed to reveal where the company is leaking time, money, and energy — and what should be automated first.</p>
+<p>The key promise is not “AI magic.” The promise is a private, governed intelligence layer that starts producing value in a controlled way.</p>
+<p>No giant transformation project. No vendor lock-in. Expert-led, practitioner-delivered, measurable results, and a clear path forward.</p>
+<p>Let’s build what shouldn’t exist anymore.</p>
+<p><strong>Book the Sprint. Own your intelligence.</strong></p>`
+      }
+    ];
+
+    const deck = document.getElementById("deck");
+    const dotsEl = document.getElementById("dots");
+    let current = 0;
+
+    slides.forEach((s, i) => {
+      const section = document.createElement("section");
+      section.className = "slide" + (i === 0 ? " active" : "");
+      section.setAttribute("data-index", String(i));
+      section.setAttribute("aria-label", `Slide ${s.n}: ${s.title}`);
+      section.innerHTML = `
+        <div class="slide-visual">
+          <span class="slide-num">Slide ${s.n}</span>
+          <img src="${s.img}" alt="Slide ${s.n} visual" loading="${i < 2 ? "eager" : "lazy"}" />
+        </div>
+        <div class="slide-copy">
+          <h2>${s.title}</h2>
+          <div class="body">${s.html}</div>
+        </div>`;
+      deck.appendChild(section);
+
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.setAttribute("role", "tab");
+      dot.setAttribute("aria-label", `Go to slide ${s.n}`);
+      dot.addEventListener("click", () => go(i));
+      dotsEl.appendChild(dot);
+    });
+
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    const counter = document.getElementById("counter");
+    const counterTop = document.getElementById("counter-top");
+    const progress = document.getElementById("progress");
+    const dotButtons = [...dotsEl.querySelectorAll("button")];
+
+    function go(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      deck.querySelectorAll(".slide").forEach((el, i) => {
+        el.classList.toggle("active", i === current);
+      });
+      dotButtons.forEach((d, i) => d.classList.toggle("active", i === current));
+      const label = `${current + 1} / ${slides.length}`;
+      counter.textContent = label;
+      counterTop.textContent = label;
+      progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === slides.length - 1;
+    }
+
+    prevBtn.addEventListener("click", () => go(current - 1));
+    nextBtn.addEventListener("click", () => go(current + 1));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
+        e.preventDefault();
+        go(current + 1);
+      } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        e.preventDefault();
+        go(current - 1);
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        go(0);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        go(slides.length - 1);
+      }
+    });
+
+    go(0);
+  </script>
+</body>
+</html>

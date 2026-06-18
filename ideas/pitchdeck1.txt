@@ -1,0 +1,213 @@
+# Carapace / Cortex Pitch Deck — Loose Speaker Script
+
+## Slide 1 — Own Your Intelligence
+
+This is the core idea behind Carapace.
+
+Every company is being told they need AI, but most AI products ask you to surrender something important: your data, your workflows, your internal knowledge, or your strategic control. Our view is different. We believe your intelligence layer should belong to you.
+
+Carapace installs and manages a private AI operating layer for your organization. That means you can use the capabilities of frontier AI, local models, agents, and automation without being locked into one vendor or handing over the core of your business.
+
+The important distinction here is that we are model independent. We are not telling you, “Use this one model forever.” We are building the harness that lets you use the right model for the right job. Sometimes that may be GPT, Claude, Gemini, Qwen, or another frontier model. Sometimes it may be a local model running in your environment. Sometimes it may be a specialized tool or automation.
+
+The point is control. Your business sits at the center. Carapace becomes the intelligence layer between your business and the AI ecosystem, so you can take advantage of the best available technology without giving up ownership of your data, workflows, or strategy.
+
+---
+
+## Slide 2 — Your AI Should Never See Your Secrets
+
+This is one of the biggest reasons companies hesitate around AI adoption.
+
+They are not necessarily afraid of intelligence. They are afraid of exposure. Passwords, API keys, client records, financial data, private files, personal information, business strategy — all of that becomes dangerous if it is casually pushed into a model context.
+
+Cortex is designed around the idea that the model should only receive what it actually needs. Passwords, tokens, credentials, and sensitive information are isolated and masked until the exact moment they are required for execution. The model does not need to “know” the secret in order for the workflow to work.
+
+That gives us a very clear principle: the model cannot leak what it never received.
+
+This also matters because we are not asking the client to trust a black box. The system is designed to be inspectable. You can verify the data path, audit what was accessed, and see how information moved through the workflow.
+
+And because Cortex is model independent, the client is not trapped. If one provider changes its policies, pricing, availability, or suitability, the organization can route elsewhere. Local models, private cloud models, or frontier APIs can all be part of the same governed environment.
+
+So the message here is simple: AI capability without surrendering data ownership, operational control, or provider choice.
+
+---
+
+## Slide 3 — Your Employees Are Acting as APIs
+
+This is the operational pain point.
+
+Inside most companies, the problem is not that people are lazy or incapable. The problem is that very capable people are spending a huge amount of their time acting as human middleware.
+
+They copy information from one system to another. They search for files. They move things between email, spreadsheets, CRMs, folders, PDFs, Slack, Notion, accounting systems, and project tools. They chase approvals. They reformat documents. They re-enter information that already exists somewhere else.
+
+In other words, the employee becomes the API.
+
+That creates hidden costs. There is lost time, because skilled people are spending hours on low-value tasks. There are more errors, because manual handoffs and copy-paste workflows do not scale. Execution slows down because information gets trapped in bottlenecks. And eventually there is frustration, because people did not join the company to be human plumbing.
+
+This is where Carapace comes in. We become the intelligence layer between people, software, and AI.
+
+We connect tools, automate the busywork, unify information, and give people back time to focus on judgment, creativity, clients, strategy, and outcomes.
+
+The positioning is important: we are not replacing your team. We are removing the low-value connective tissue work that is currently draining them.
+
+---
+
+## Slide 4 — What Work Shouldn’t Exist Anymore?
+
+This is where the conversation turns from abstract AI to immediate ROI.
+
+The best automations are usually not futuristic. They are often the most boring, recurring, annoying tasks in the company. The work everyone already knows is wasteful, but no one has had the time, tools, or structure to eliminate.
+
+So when we come into a business, one of the first questions we ask is: what work should not exist anymore?
+
+That usually falls into a few categories.
+
+There is repetitive work: copying data, weekly status updates, manual entry, repetitive document handling.
+
+There is fragile work: things that depend on one person, tribal knowledge, undocumented processes, or “only Sarah knows how to do that” workflows.
+
+There is hidden work: searching for files, digging through old proposals, hunting through email threads, trying to find information that technically exists but is not accessible at the moment of need.
+
+There is coordination work: approval chains, handoffs, status chasing, and work about work.
+
+And then there is rework: formatting, corrections, rebuilding the same thing, rewriting the same email, recreating the same report.
+
+The goal is not to automate everything. The goal is to identify the work that drains time, creates risk, and blocks momentum.
+
+Cortex eliminates low-value work so the team can focus on what moves the business forward.
+
+---
+
+## Slide 5 — Control the Destination. Not the Vendor.
+
+This slide explains the core architecture in plain business language.
+
+Cortex is the control plane for AI work. Every request comes in, and Cortex decides where that request should go based on the company’s policies, security rules, cost preferences, speed requirements, context needs, and approval requirements.
+
+That is very different from simply buying one AI product and hoping it fits every use case.
+
+Some work should stay local. Some work can safely go to a frontier model. Some work may belong in a private cloud environment. Some work should go to a specialized tool. Some work should require approval before anything happens.
+
+Cortex gives the company a way to define those rules.
+
+You decide where data lives. You decide who can access what. You decide what needs approval. You decide how work gets routed. You decide what gets logged.
+
+Then Cortex enforces those decisions.
+
+This is the key sovereignty point: the company should control the destination, not the vendor. You should not have to reorganize your business around one AI company’s product roadmap, pricing, policy changes, outages, or limitations.
+
+Cortex gives you the power to use any model or provider without giving up control of your data, workflows, or strategic direction.
+
+---
+
+## Slide 6 — You Don’t Need an AI Department
+
+This is where Carapace becomes a consultancy, not just a platform.
+
+Most businesses know AI matters, but they do not have the time or internal expertise to track every model release, understand hardware requirements, compare benchmarks, evaluate privacy risks, build local infrastructure, manage API routing, configure agents, and maintain governance.
+
+That is what we do.
+
+We become your private AI infrastructure team.
+
+That can include helping you select and right-size hardware. It can include local, private cloud, hybrid, or cloud deployment. It can include secure installation, configuration, integrations, data access, policies, approvals, audit logs, and continuous improvement.
+
+The client does not need to become an AI lab. They need the benefits of one.
+
+This is also where our experience becomes valuable. We are already testing models, evaluating tools, watching the frontier, comparing local options, and learning what actually works in practice. We take that moving landscape and translate it into a practical, governed stack for each client.
+
+What the client gets is no vendor lock-in, less guesswork, fewer surprises, better visibility, and proactive support.
+
+We handle the complexity. The client gets the competitive advantage.
+
+---
+
+## Slide 7 — Finding the Right Model for the Right Job
+
+This is one of the most important slides because it explains why model independence is not just a philosophical position. It produces better outcomes.
+
+Every request is different.
+
+A summarization task may not need the same model as a legal-style comparison. Extracting dates and amounts from documents is different from drafting a proposal. Fast classification is different from nuanced writing. Some work should prioritize cost. Some should prioritize quality. Some should prioritize privacy. Some should prioritize latency.
+
+Cortex handles that routing problem.
+
+Instead of asking employees to know which AI model to use, Cortex can map requests to capability aliases: summarize, extract data, classify, compare, draft, and so on. Behind those aliases, Carapace maintains and evaluates the model roster.
+
+That roster can include frontier models, local models, private cloud models, open-weight models, specialized models, and future models that are not even on the market yet.
+
+The value is not just access to models. The value is stewardship.
+
+We test, benchmark, monitor, recommend, and update the options. Then Cortex routes work based on capability, cost, speed, context, policy, and outcome.
+
+So instead of the client constantly asking, “Which model should we use now?” they can focus on the work.
+
+Best outcome, automatically: right capability, right cost, right speed, right for the business.
+
+---
+
+## Slide 8 — Small Wins First. Scale Later.
+
+This is our adoption strategy.
+
+A lot of AI initiatives fail because they start too big. They try to transform the whole company before anyone has seen practical value. That creates confusion, resistance, cost, and risk.
+
+Our approach is the opposite: start small, prove value, then expand with confidence.
+
+First, we discover. We look for repetitive work, information bottlenecks, SaaS overlap, security requirements, and strong automation candidates. This is where we find the leaks.
+
+Second, we deploy. We create a private Cortex environment — local, cloud, or hybrid — with security controls, governance policies, model roster, and the right knowledge connections.
+
+Third, we launch the first wins. These are usually one or two real workflows, not theoretical demos. It could be internal knowledge retrieval, proposal generation, approval routing, reporting automation, document processing, or another high-value workflow.
+
+Fourth, we measure. We track hours saved, vendor costs reduced, process improvements, user adoption, and operational impact.
+
+Fifth, we expand. Once there is evidence, then we scale into more departments, more workflows, more operators, and more integrations.
+
+This makes adoption safer and more believable. We are not asking the client to buy a giant transformation project on faith. We are proving value on real work and growing from there.
+
+---
+
+## Slide 9 — Trust Should Be Inspectable
+
+This is the trust slide.
+
+Every AI vendor claims security, governance, and control. The question is: can the company verify those claims?
+
+Cortex is designed so trust is not just a promise. It is a feature.
+
+The system is organized around inspectable layers: policies, approvals, routing, models, and audit logs.
+
+Policies define the company’s rules and boundaries. Approvals keep humans involved where judgment matters. Routing shows why a request went to a specific model, provider, tool, or environment. The model layer remains agnostic, so work can be local, private, or frontier-based depending on need. Audit logs make the process visible after the fact.
+
+That matters because companies do not just need AI that works. They need AI they can explain, govern, and improve.
+
+Open governance also makes the platform more resilient. If models change, vendors shift, pricing changes, or regulations evolve, the company is not trapped. The workflow can adapt because the control layer belongs to the company.
+
+The closing line here is important: community tested, company controlled.
+
+Transparency is not something we ask clients to believe in. It is something we build into the way the system works.
+
+---
+
+## Slide 10 — Book the Sprint. Own Your Intelligence.
+
+This is the call to action.
+
+We do not begin by asking the client to commit to a massive transformation project. We begin with one focused engagement: the Cortex Discovery & Integration Sprint.
+
+The Sprint is designed to produce measurable results and a clear path forward.
+
+During the Sprint, we map the client’s workflows and identify the highest-impact opportunities for automation. We deploy a secure Cortex sandbox or private environment. We launch one to two real automations with real users and real workflows. Then we measure ROI and deliver a roadmap for what should happen next.
+
+This gives the client a practical way to evaluate Carapace without committing to everything upfront.
+
+It is fixed in scope. It is focused on outcomes. It is designed to reveal where the company is leaking time, money, and energy — and what should be automated first.
+
+The key promise is not “AI magic.” The promise is a private, governed intelligence layer that starts producing value in a controlled way.
+
+No giant transformation project. No vendor lock-in. Expert-led, practitioner-delivered, measurable results, and a clear path forward.
+
+Let’s build what shouldn’t exist anymore.
+
+Book the Sprint. Own your intelligence.
