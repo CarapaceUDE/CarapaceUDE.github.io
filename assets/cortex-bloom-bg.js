@@ -1,4 +1,5 @@
 (function () {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function ensureLayers() {
     if (document.querySelector('.cortex-bg-layer')) return;
     const bg = document.createElement('div');
@@ -20,7 +21,7 @@
   function setupCanvas(canvas) {
     const ctx = canvas.getContext('2d');
     function resize() {
-      const ratio = window.devicePixelRatio || 1;
+      const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = window.innerWidth * ratio;
       canvas.height = window.innerHeight * ratio;
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
@@ -52,7 +53,7 @@
         ctx.lineTo(w, h);
         ctx.closePath();
         const alpha = Math.max(0.03 - layer * 0.005, 0.005);
-        ctx.fillStyle = `hsla(180, 100%, 50%, ${alpha})`;
+        ctx.fillStyle = `hsla(207, 100%, 56%, ${alpha})`;
         ctx.fill();
       }
       for (let wl = 0; wl < 4; wl++) {
@@ -62,11 +63,11 @@
           const y = baseY + Math.sin(x * 0.008 + t * 1.0 + wl * 1.5) * 12 + Math.sin(x * 0.004 + t * 0.5 + wl) * 8;
           if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
-        ctx.strokeStyle = `hsla(180, 100%, 55%, ${0.05 - wl * 0.01})`;
+        ctx.strokeStyle = `hsla(207, 100%, 60%, ${0.05 - wl * 0.01})`;
         ctx.lineWidth = 0.6;
         ctx.stroke();
       }
-      requestAnimationFrame(frame);
+      if (!reduceMotion) requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
   }
@@ -84,7 +85,7 @@
         let y = ry * Math.cos(phi) * 0.85;
         let z = rz * Math.sin(phi) * Math.sin(theta);
         if (y > 60) y = 60 + (y - 60) * 0.3;
-        nodes.push({ x, y, z, px: 0, py: 0, connections: [], pulse: Math.random() * Math.PI * 2, layer: side > 0 ? 0 : 1 });
+        nodes.push({ x, y, z, px: 0, py: 0, connections: [], pulse: Math.random() * Math.PI * 2, hue: Math.random() < .12 ? 28 : 207, layer: side > 0 ? 0 : 1 });
       }
     };
     addHemisphere(1); addHemisphere(-1);
@@ -135,7 +136,7 @@
           ctx.beginPath();
           ctx.moveTo(n.px, n.py);
           ctx.lineTo(m.px, m.py);
-          ctx.strokeStyle = `hsla(180, 100%, 50%, ${0.05 + pulseVal * 0.1})`;
+          ctx.strokeStyle = `hsla(${n.hue}, 100%, 60%, ${0.05 + pulseVal * 0.1})`;
           ctx.lineWidth = 0.5;
           ctx.stroke();
         }
@@ -145,14 +146,14 @@
         const size = 1.2 + pulseVal * 1.2;
         ctx.beginPath();
         ctx.arc(node.px, node.py, size + 3, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(180, 100%, 60%, ${pulseVal * 0.1})`;
+        ctx.fillStyle = `hsla(${node.hue}, 100%, 60%, ${pulseVal * 0.1})`;
         ctx.fill();
         ctx.beginPath();
         ctx.arc(node.px, node.py, size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(180, 100%, ${60 + pulseVal * 20}%, ${0.32 + pulseVal * 0.5})`;
+        ctx.fillStyle = `hsla(${node.hue}, 100%, ${60 + pulseVal * 20}%, ${0.32 + pulseVal * 0.5})`;
         ctx.fill();
       }
-      requestAnimationFrame(frame);
+      if (!reduceMotion) requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
   }

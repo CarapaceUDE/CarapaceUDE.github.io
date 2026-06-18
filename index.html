@@ -4,216 +4,158 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Carapace | Own Your Intelligence</title>
-  <meta name="description" content="Carapace installs and manages a private, model-independent AI operating layer so your organization keeps control of its data, workflows, and strategy." />
-  <meta name="theme-color" content="#090c18" />
-  <link rel="stylesheet" href="assets/cortex-bloom-theme.css" />
-  <style>
-    :root { --bg:#070b16; --surface:#101a31; --surface-2:#121f39; --text:#edf1ff; --muted:#a7b3d3; --border:#253554; --primary:#5b6fa6; --primary-2:#475981; --secondary:#cfd8ee; --warn:#f97316; --max:1140px; }
-    *{box-sizing:border-box;} html,body{margin:0;padding:0;} html{scroll-behavior:smooth;}
-    body{color:var(--text);font:16px/1.58 Inter,Segoe UI,Roboto,system-ui,sans-serif;background:linear-gradient(180deg,#0b1122 0%,var(--bg) 100%);overflow-x:hidden;}
-    .wrap{width:min(100% - 2rem,var(--max));margin:0 auto;} a{color:var(--secondary);text-decoration:none;}
-    .nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(9px);background:rgba(7,11,22,.72);border-bottom:1px solid var(--border);} .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.82rem 0;}
-    .brand{display:inline-flex;align-items:center;gap:.7rem;color:var(--text);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.92rem;}
-    .brand img{width:62px;height:62px;border-radius:8px;filter:drop-shadow(0 0 10px rgba(0,234,255,.4));animation:logoPulse 2.2s ease-in-out infinite;}
-    .links{display:flex;gap:.95rem;flex-wrap:wrap;font-size:.9rem;align-items:center;} .links>a,.dropbtn{color:#c8d5f7;}
-    .dropdown{position:relative;display:inline-flex;align-items:center;} .dropbtn{background:transparent;border:0;font:inherit;cursor:pointer;padding:.2rem 0;}
-    .dropdown-menu{position:absolute;top:calc(100% - .1rem);left:50%;transform:translateX(-50%);min-width:220px;border:1px solid var(--border);border-radius:10px;background:rgba(16,26,48,.98);box-shadow:0 10px 26px rgba(0,0,0,.35);display:none;overflow:hidden;padding-top:.35rem;}
-    .dropdown::after{content:'';position:absolute;left:0;right:0;top:100%;height:.55rem;}
-    .dropdown-menu a{display:block;padding:.58rem .8rem;color:#d8e3ff;border-bottom:1px solid rgba(37,53,84,.45);} .dropdown-menu a:last-child{border-bottom:0;} .dropdown-menu a:hover{background:rgba(34,211,238,.1);} .dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu,.dropdown.open .dropdown-menu{display:block;}
-    .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:.85rem 1rem 4rem;overflow:hidden;}
-    .hero-bg{position:absolute;inset:0;background-image:url('assets/hero-bg.jpg');background-size:cover;background-position:center;opacity:.34;transform:scale(1.04);} .hero-overlay{position:absolute;inset:0;background:radial-gradient(1000px 520px at 20% -10%,rgba(139,92,246,.24),transparent 45%),radial-gradient(1000px 520px at 110% 10%,rgba(34,211,238,.16),transparent 42%),linear-gradient(180deg,rgba(8,11,21,.48),rgba(7,11,22,.9));}
-    .scan{position:absolute;inset:0;pointer-events:none;} .scan::before{content:"";position:absolute;left:0;width:100%;height:1px;background:rgba(34,211,238,.34);animation:sweep 4s linear infinite;} @keyframes sweep{from{top:6%;}to{top:94%;}}
-    .hero-content{position:relative;z-index:2;max-width:900px;margin:0 auto;padding-top:0;} .hero-logo{width:clamp(160px,22vw,250px);height:auto;margin:0 auto .25rem;display:block;filter:drop-shadow(0 0 18px rgba(34,211,238,.24));animation:logoPulse 2.2s ease-in-out infinite;}
-    @keyframes logoPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 12px rgba(0,234,255,.24));}50%{transform:scale(1.03);filter:drop-shadow(0 0 20px rgba(0,234,255,.38));}}
-    h1{margin:.2rem 0 .22rem;line-height:.94;font-size:clamp(2.7rem,7.5vw,5rem);letter-spacing:-.05em;text-shadow:0 0 18px rgba(34,211,238,.16);color:#8fd0ff;} .hero-kicker{margin:0 0 .8rem;font-size:clamp(.95rem,1.7vw,1.16rem);letter-spacing:.12em;text-transform:uppercase;color:#d8e6ff;} .lead{color:var(--muted);max-width:54ch;margin:0 auto .65rem;font-size:clamp(1rem,1.55vw,1.14rem);} .sublead{color:#cbd8f8;max-width:55ch;margin:0 auto 1.2rem;font-size:.98rem;}
-    .cta{display:flex;justify-content:center;flex-wrap:wrap;gap:.8rem;margin-bottom:.45rem;} .btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;border-radius:11px;border:1px solid transparent;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem;padding:.86rem 1.12rem;transition:.18s ease;min-width:220px;line-height:1.15;text-align:center;} .btn:hover{transform:translateY(-1px);} .btn small{margin-top:.32rem;font-size:.66rem;letter-spacing:.03em;text-transform:none;font-weight:600;opacity:.9;} .btn.primary{color:#eef3ff;background:linear-gradient(180deg,var(--primary),var(--primary-2));border-color:rgba(207,216,238,.14);box-shadow:0 8px 18px rgba(8,12,22,.28);} .btn.outline{color:#dce8ff;border-color:#334566;background:rgba(15,22,38,.74);} .btn.outline:hover{background:rgba(22,31,52,.9);border-color:#41567e;} .hero-note{color:#95a7d3;font-size:.84rem;max-width:60ch;margin:0 auto;}
-    section{padding:3rem 0;} h2{margin:0 0 1rem;font-size:clamp(1.24rem,2.2vw,1.86rem);letter-spacing:-.01em;} h3{margin:.1rem 0 .55rem;font-size:1.05rem;} .surface{border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,rgba(16,26,48,.94),rgba(14,22,40,.9));padding:1.15rem 1.16rem;box-shadow:0 10px 28px rgba(0,0,0,.14);} .grid{display:grid;gap:1rem;} .two{grid-template-columns:repeat(2,minmax(0,1fr));} .three{grid-template-columns:repeat(3,minmax(0,1fr));}
-    .warn{border-left:4px solid var(--warn);background:linear-gradient(165deg,rgba(52,29,14,.56),rgba(16,23,39,.92));} .shot{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:0 10px 28px rgba(0,0,0,.14);} .shot img{width:100%;display:block;} .shot p{margin:.78rem .98rem 1.05rem;color:var(--muted);font-size:.92rem;} .path-title{margin:0 0 .36rem;} .path-cta{margin-top:.85rem;display:inline-block;font-weight:700;} .proof{padding-top:.4rem;} .proof-list{display:grid;gap:1rem;grid-template-columns:repeat(3,minmax(0,1fr));} .proof-list strong{display:block;margin-bottom:.32rem;}
-    .carousel-shell{position:relative;padding:1rem 4.2rem;overflow:hidden;max-width:760px;margin:0 auto;}
-    .carousel-viewport{position:relative;min-height:250px;overflow:visible;}
-    .carousel-track{display:flex;gap:1rem;transition:transform .55s ease;will-change:transform;}
-    .carousel-slide{min-width:calc(100% - 72px);padding:0 .1rem;opacity:.22;transform:scale(.965);transition:opacity .35s ease,transform .35s ease;}
-    .carousel-slide.is-active{opacity:1;transform:scale(1);}
-    .carousel-card{min-height:230px;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;text-align:left;}
-    .carousel-card strong{display:block;font-size:1.4rem;line-height:1.15;margin-bottom:.45rem;color:#edf1ff;}
-    .carousel-card p{margin:0;color:#cbd8f8;font-size:1rem;max-width:48ch;}
-    .bullet-list{margin:.8rem 0 0;padding-left:1.15rem;color:var(--muted);}
-    .bullet-list li{opacity:0;transform:translateY(8px);animation:bulletIn .38s ease forwards;}
-    .bullet-list li:nth-child(1){animation-delay:.18s;}
-    .bullet-list li:nth-child(2){animation-delay:.42s;}
-    .bullet-list li:nth-child(3){animation-delay:.66s;}
-    @keyframes bulletIn{to{opacity:1;transform:translateY(0);}}
-    .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:999px;border:1px solid #41567e;background:rgba(15,22,38,.86);color:#edf1ff;font-size:1.35rem;display:grid;place-items:center;cursor:pointer;transition:.18s ease;z-index:2;}
-    .carousel-btn:hover{background:rgba(22,31,52,.96);border-color:#8fd0ff;}
-    .carousel-btn.prev{left:1rem;}
-    .carousel-btn.next{right:1rem;}
-    .carousel-dots{display:flex;justify-content:center;gap:.5rem;margin-top:.5rem;}
-    .carousel-dot{width:10px;height:10px;border-radius:999px;border:0;background:#41567e;cursor:pointer;opacity:.9;transition:.18s ease;}
-    .carousel-dot.active{background:#8fd0ff;transform:scale(1.1);}
-    footer{border-top:1px solid var(--border);margin-top:2.2rem;padding:1.45rem 0 2.4rem;color:#9fb0d7;font-size:.9rem;}
-    @media (max-width:960px){.two,.three,.proof-list{grid-template-columns:1fr;} .links{gap:.65rem;} .dropdown-menu{left:auto;right:0;} .btn{min-width:unset;width:100%;max-width:360px;} .carousel-shell{padding:1rem 3.25rem;max-width:100%;} .carousel-viewport{min-height:300px;} .carousel-slide{min-width:calc(100% - 56px);} .carousel-card{min-height:280px;}}
-    @media (max-width:640px){.carousel-shell{padding:1rem 2.8rem;} .carousel-slide{min-width:100%;opacity:1;transform:none;} .carousel-btn{width:38px;height:38px;} .carousel-card strong{font-size:1.22rem;} .carousel-card p{font-size:.96rem;}}
-  </style>
+  <meta name="description" content="Carapace installs and manages a private, governed, model-independent AI operating layer for your organization." />
+  <meta name="theme-color" content="#030711" />
+  <link rel="stylesheet" href="assets/site.css" />
 </head>
 <body class="page-home">
-  <nav class="nav"><div class="wrap nav-inner"><a class="brand" href="#top" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="Carapace logo" /><span>Carapace</span></a><div class="links"><a href="business.html">How We Help</a><a href="solutions.html">Solutions</a><a href="licensing.html">Licensing</a><a href="ideas/">Pitch Deck</a><a href="about.html">About</a><div class="dropdown"><button class="dropbtn" aria-haspopup="true" aria-expanded="false">Platform ▾</button><div class="dropdown-menu" role="menu"><a href="carapace.html">Carapace Platform</a><a href="cortex.html">Cortex</a><a href="core-skills.html">Core Skills</a></div></div></div></div></nav>
-  <header id="top" class="hero"><div class="hero-bg" aria-hidden="true"></div><div class="hero-overlay" aria-hidden="true"></div><div class="scan" aria-hidden="true"></div><div class="hero-content"><img class="hero-logo" src="assets/carapace_logo.svg" alt="Carapace" /><div class="hero-kicker">Private. Governed. Model independent.</div><h1>Own Your Intelligence.</h1><p class="lead">Carapace installs and manages a private AI operating layer for your organization.</p><p class="sublead">Use the best available technology without giving up ownership of your data, workflows, or strategy.</p><div class="cta" id="download"><a class="btn primary" href="business.html#contact">Book the Discovery Sprint<small>one focused engagement, measurable results</small></a><a class="btn outline" href="carapace.html">Explore the Platform<small>see the control plane behind the work</small></a><a class="btn outline" href="ideas/">View the Pitch Deck<small>the complete Carapace / Cortex story</small></a></div><p class="hero-note">Start with one to two real automations. Measure what changes. Expand only when the evidence says to.</p></div></header>
-  <main class="wrap">
-    <section id="overview">
-      <h2>Why businesses work with Carapace</h2>
-      <div class="surface carousel-shell">
-        <button class="carousel-btn prev" type="button" aria-label="Previous card">‹</button>
-        <div class="carousel-viewport">
-          <div class="carousel-track" id="value-carousel-track">
-            <article class="carousel-slide">
-              <div class="carousel-card" data-slide-index="0">
-                <strong>Eliminate work that should not exist</strong>
-                <p>Cut recurring admin, coordination, and rework.</p>
-                <ul class="bullet-list">
-                  <li>Automate follow-up and handoffs</li>
-                  <li>Support routing, reporting, and scheduling</li>
-                  <li>Reduce manual repeat work across the day</li>
-                </ul>
-              </div>
-            </article>
-            <article class="carousel-slide">
-              <div class="carousel-card" data-slide-index="1">
-                <strong>Stop making people act as APIs</strong>
-                <p>Remove the connective-tissue work draining your team.</p>
-                <ul class="bullet-list">
-                  <li>Reduce copy-paste, file hunting, and status chasing</li>
-                  <li>Free people for judgment, creativity, and clients</li>
-                  <li>Give small teams durable operational leverage</li>
-                </ul>
-              </div>
-            </article>
-            <article class="carousel-slide">
-              <div class="carousel-card" data-slide-index="2">
-                <strong>Stay model independent</strong>
-                <p>Route each job by capability, cost, speed, and policy.</p>
-                <ul class="bullet-list">
-                  <li>Use frontier, local, private-cloud, or specialized models</li>
-                  <li>Change providers without reorganizing your business</li>
-                  <li>Keep your workflow and strategy under your control</li>
-                </ul>
-              </div>
-            </article>
-            <article class="carousel-slide">
-              <div class="carousel-card" data-slide-index="3">
-                <strong>Make trust inspectable</strong>
-                <p>Keep approvals, visibility, and control where they matter.</p>
-                <ul class="bullet-list">
-                  <li>Keep people in the loop for sensitive actions</li>
-                  <li>See routing decisions and automated steps</li>
-                  <li>Use audit trails to verify how information moved</li>
-                </ul>
-              </div>
-            </article>
+  <nav class="nav" aria-label="Primary navigation">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="" /><span>Carapace</span></a>
+      <div class="links">
+        <a href="business.html">How We Help</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="licensing.html">Licensing</a>
+        <a href="ideas/">Pitch Deck</a>
+        <a href="about.html">About</a>
+        <div class="dropdown">
+          <button class="dropbtn" type="button" aria-haspopup="true" aria-expanded="false">Cortex ▾</button>
+          <div class="dropdown-menu" role="menu">
+            <a href="carapace.html">Cortex Software</a>
+            <a href="cortex.html">Cortex Architecture</a>
+            <a href="core-skills.html">Core Skills</a>
           </div>
         </div>
-        <button class="carousel-btn next" type="button" aria-label="Next card">›</button>
-        <div class="carousel-dots" id="value-carousel-dots" aria-label="Carousel navigation"></div>
+      </div>
+    </div>
+  </nav>
+
+  <header id="top" class="hero home-hero">
+    <div class="wrap hero-grid">
+      <div class="hero-content">
+        <div class="hero-kicker">Private AI infrastructure · Model independent</div>
+        <h1>Own Your <span class="accent-copper">Intelligence.</span></h1>
+        <p class="lead"><strong>Carapace is the company.</strong> We build, install, and manage Cortex—the private operating layer between your business and the AI ecosystem.</p>
+        <p class="sublead">Use the best available models, agents, and automation without surrendering your data, workflows, or strategic control.</p>
+        <div class="cta">
+          <a class="btn primary" href="business.html#contact">Book the Discovery Sprint</a>
+          <a class="btn outline" href="carapace.html">Explore Cortex software</a>
+        </div>
+        <div class="brand-map"><span>CARAPACE</span><i>builds · deploys · manages</i><span>CORTEX</span></div>
+        <div class="signal-row" aria-label="Platform principles">
+          <span>Private by default</span><span>Inspectable</span><span>No vendor lock-in</span>
+        </div>
+      </div>
+      <a class="hero-visual" href="ideas/#slide-1" aria-label="Open the Carapace pitch deck">
+        <img src="ideas/1.png" alt="Carapace intelligence layer visualized as a secure illuminated system" />
+      </a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="control-layer">
+      <div class="section-head">
+        <div><div class="eyebrow">Cortex software</div><h2>The system between your business and the model.</h2></div>
+        <p>Cortex is the software platform built by Carapace. Every request gets a governed destination based on capability, cost, speed, context, and policy.</p>
+      </div>
+      <div class="control-diagram card" aria-label="Cortex routes business work to governed destinations">
+        <div>
+          <div class="control-node">Documents &amp; files</div>
+          <div class="control-node">Email &amp; web apps</div>
+          <div class="control-node">Approvals &amp; data</div>
+        </div>
+        <div class="control-core"><span>CORTEX<br /><span class="accent-blue">CONTROL PLANE</span></span></div>
+        <div>
+          <div class="control-node">Local models</div>
+          <div class="control-node">Private cloud</div>
+          <div class="control-node">Frontier APIs &amp; tools</div>
+        </div>
+      </div>
+      <div class="capability-list" aria-label="Routable capabilities">
+        <span>summarize</span><span>extract data</span><span>classify</span><span>compare</span><span>draft</span><span>route</span>
       </div>
     </section>
-    <section class="proof"><h2>What work should not exist anymore?</h2><div class="grid three"><article class="surface"><strong>Repetitive work</strong><p>Copying data, weekly updates, manual entry, and document handling.</p></article><article class="surface"><strong>Fragile work</strong><p>Tribal knowledge and processes that depend on one person.</p></article><article class="surface"><strong>Hidden work</strong><p>Searching files, inboxes, proposals, and systems for information that already exists.</p></article><article class="surface"><strong>Coordination work</strong><p>Approval chasing, handoffs, status checks, and work about work.</p></article><article class="surface"><strong>Rework</strong><p>Corrections, reformatting, and rebuilding the same output again.</p></article></div></section>
-    <section id="start-small" style="padding-top:1.8rem;"><h2>Small wins first. Scale later.</h2><div class="surface"><div class="proof-list"><div><strong>Discover</strong><p>Find the leaks: wasted time, information bottlenecks, and strong automation candidates.</p></div><div><strong>Deploy &amp; measure</strong><p>Launch one to two real workflows in a governed environment and measure the impact.</p></div><div><strong>Expand</strong><p>Scale into more workflows only after the first wins prove their value.</p></div></div></div></section>
-    <section id="paths"><h2>How Carapace works</h2><div class="grid two"><article class="surface"><h3 class="path-title">Start with a real workflow</h3><p>We scope a practical pilot around a business problem that is already costing time or attention.</p><a class="path-cta" href="business.html">See how we help &rarr;</a></article><article class="surface"><h3 class="path-title">Build on what works</h3><p>The platform helps successful workflows become more reusable, stable, and easier to deploy again.</p><a class="path-cta" href="carapace.html">View the platform &rarr;</a></article></div></section>
-    <section id="for-whom"><h2>Who it is for</h2><div class="grid three"><article class="surface"><h3>Small businesses</h3><p>For owner-operators who want practical help, not hype.</p></article><article class="surface"><h3>Growing teams</h3><p>For teams that need better workflows and less drag.</p></article><article class="surface"><h3>Business deployments</h3><p>For teams that need licensing, setup, and support options.</p></article></div></section>
-    <section id="safety"><h2>Control the destination, not the vendor</h2><div class="surface warn"><strong>Your business should sit at the center.</strong> If a provider changes pricing, policies, availability, or suitability, route the work elsewhere without rebuilding the business around a different product.</div></section>
-    <section id="screens"><h2>The platform behind the work</h2><div class="grid three"><figure class="shot"><img src="assets/screenshot-command-center.svg" alt="Command center preview" /><p>A clearer place to run AI-assisted work without juggling disconnected tools.</p></figure><figure class="shot"><img src="assets/screenshot-agent-collab.svg" alt="Agent collaboration preview" /><p>Shared context and visibility that make teamwork and oversight easier.</p></figure><figure class="shot"><img src="assets/screenshot-security-boundary.svg" alt="Security boundary preview" /><p>Controls that help keep sensitive work visible and better contained.</p></figure></div></section>
-    <section id="closing-cta" style="padding-top:1.8rem;"><h2>Book the Sprint. Own your intelligence.</h2><div class="surface"><p>One focused engagement. One to two real automations. Measurable results and a clear path forward—without buying a giant transformation project on faith.</p><div class="cta" style="margin-top:1.2rem;"><a class="btn primary" href="business.html#contact">Book the Discovery Sprint<small>tell us where work is leaking time</small></a><a class="btn outline" href="ideas/">See the Full Pitch<small>view the 10-slide deck</small></a></div></div></section>
+
+    <section id="work-wedge">
+      <div class="section-head">
+        <div><div class="eyebrow">Workflow wedge</div><h2>What work should not exist anymore?</h2></div>
+        <p>The best automations are rarely futuristic. They are the recurring tasks that drain time, create risk, and block momentum.</p>
+      </div>
+      <div class="disclosure-grid">
+        <details class="system-detail" name="work-types" open><summary>Repetitive work</summary><p>Copying data, weekly updates, manual entry, and recurring document handling.</p></details>
+        <details class="system-detail" name="work-types"><summary>Fragile work</summary><p>Tribal knowledge and processes that depend on one person being available.</p></details>
+        <details class="system-detail" name="work-types"><summary>Hidden work</summary><p>Searching files, inboxes, proposals, and systems for information that already exists.</p></details>
+        <details class="system-detail" name="work-types"><summary>Coordination work</summary><p>Approval chasing, handoffs, status checks, and work about work.</p></details>
+        <details class="system-detail" name="work-types"><summary>Rework</summary><p>Corrections, reformatting, and rebuilding the same output again.</p></details>
+      </div>
+    </section>
+
+    <section id="routing">
+      <div class="section-head">
+        <div><div class="eyebrow">Policy-driven routing</div><h2>Control the destination. <span class="accent-copper">Not the vendor.</span></h2></div>
+        <div><p>Some work should stay local. Some can use a frontier model. Some requires approval. You define the rules; Cortex enforces them.</p><div class="cta"><a class="btn outline" href="solutions.html">See how work gets routed</a></div></div>
+      </div>
+      <a class="pitch-frame" href="ideas/#slide-5" aria-label="Open control plane slide in the pitch deck">
+        <img src="ideas/5.png" alt="Cortex control plane routes work according to security, policy, cost, and approval requirements" loading="lazy" />
+      </a>
+    </section>
+
+    <section id="trust">
+      <div class="section-head">
+        <div><div class="eyebrow">Open governance</div><h2>Trust should be <span class="accent-blue">inspectable.</span></h2></div>
+        <p>Security is not a line in a sales deck. It is the ability to verify the data path, inspect routing, review approvals, and audit what happened.</p>
+      </div>
+      <div class="grid three">
+        <article class="card"><h3>The model never sees your secrets</h3><p>Credentials and sensitive values remain isolated until the exact moment of execution.</p></article>
+        <article class="card"><h3>Humans stay in control</h3><p>Approval gates, guardrails, and rollback paths keep judgment where it belongs.</p></article>
+        <article class="card"><h3>Every layer leaves evidence</h3><p>Policies, model choices, routing decisions, and actions can be reviewed and improved.</p></article>
+      </div>
+    </section>
+
+    <section id="product">
+      <div class="section-head">
+        <div><div class="eyebrow">Inside the system</div><h2>Minimal at a glance. Detailed when it matters.</h2></div>
+        <p>Operators get a calm control surface with the deeper state, provenance, and intervention points available underneath.</p>
+      </div>
+      <div class="grid three">
+        <figure class="shot"><img src="assets/screenshot-command-center.svg" alt="Carapace command center interface" loading="lazy" /><p>Operational state and active work in one clear command surface.</p></figure>
+        <figure class="shot"><img src="assets/screenshot-agent-collab.svg" alt="Carapace collaboration interface" loading="lazy" /><p>Shared context with human review and intervention close at hand.</p></figure>
+        <figure class="shot"><img src="assets/screenshot-security-boundary.svg" alt="Carapace security boundary interface" loading="lazy" /><p>Sensitive boundaries stay visible instead of disappearing into a black box.</p></figure>
+      </div>
+    </section>
+
+    <section id="adoption">
+      <div class="section-head">
+        <div><div class="eyebrow">Execution strategy</div><h2>Small wins first. Scale later.</h2></div>
+        <p>No giant transformation project on faith. Start with controlled, measurable work and expand from evidence.</p>
+      </div>
+      <div class="adoption-steps">
+        <article class="step"><h3>Discover</h3><p>Find the leaks, bottlenecks, security requirements, and strongest automation candidates.</p></article>
+        <article class="step"><h3>Deploy</h3><p>Build a private local, cloud, or hybrid environment with the right controls.</p></article>
+        <article class="step"><h3>Measure</h3><p>Track hours saved, costs reduced, adoption, and operational impact.</p></article>
+        <article class="step"><h3>Expand</h3><p>Turn proven wins into reusable systems across more workflows and teams.</p></article>
+      </div>
+    </section>
+
+    <section id="closing">
+      <div class="deck-band">
+        <a class="pitch-frame" href="ideas/" aria-label="View the complete Carapace and Cortex pitch deck">
+          <img src="ideas/10.png" alt="Cortex Discovery and Integration Sprint overview" loading="lazy" />
+        </a>
+        <div class="closing-panel">
+          <div class="eyebrow">The next step</div>
+          <h2>Book the Sprint.<br /><span class="accent-gradient">Own your intelligence.</span></h2>
+          <p class="muted">One focused engagement. One to two real automations. Measurable results and a clear path forward.</p>
+          <div class="cta"><a class="btn primary" href="business.html#contact">Start the Discovery Sprint</a><a class="btn outline" href="ideas/">View the full pitch</a></div>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer><div class="wrap"><div>Carapace helps businesses use AI practically through consulting, pilots, and reusable systems.</div><div><a href="business.html">How We Help</a> | <a href="carapace.html">Platform</a> | <a href="https://github.com/CarapaceUDE" target="_blank" rel="noreferrer">CarapaceUDE on GitHub</a></div></div></footer>
-  <script>
-    (function () {
-      const dropdown = document.querySelector('.dropdown');
-      const button = dropdown && dropdown.querySelector('.dropbtn');
-      if (!dropdown || !button) return;
 
-      button.addEventListener('click', function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        dropdown.classList.toggle('open');
-      });
-
-      document.addEventListener('click', function (event) {
-        if (!dropdown.contains(event.target)) {
-          dropdown.classList.remove('open');
-        }
-      });
-    })();
-
-    (function () {
-      const track = document.getElementById('value-carousel-track');
-      const dotsWrap = document.getElementById('value-carousel-dots');
-      const prevBtn = document.querySelector('.carousel-btn.prev');
-      const nextBtn = document.querySelector('.carousel-btn.next');
-      if (!track || !dotsWrap || !prevBtn || !nextBtn) return;
-
-      const slides = Array.from(track.children);
-      let current = 0;
-      let autoTimer = null;
-
-      function restartBullets() {
-        slides.forEach(function (slide, index) {
-          const list = slide.querySelector('.bullet-list');
-          if (!list) return;
-          list.style.visibility = index === current ? 'visible' : 'hidden';
-          if (index === current) {
-            const items = Array.from(list.children);
-            items.forEach(function (item) {
-              item.style.animation = 'none';
-              item.offsetHeight;
-              item.style.animation = '';
-            });
-          }
-        });
-      }
-
-      function renderDots() {
-        dotsWrap.innerHTML = '';
-        slides.forEach(function (_, index) {
-          const dot = document.createElement('button');
-          dot.type = 'button';
-          dot.className = 'carousel-dot' + (index === current ? ' active' : '');
-          dot.setAttribute('aria-label', 'Go to card ' + (index + 1));
-          dot.addEventListener('click', function () {
-            goTo(index);
-          });
-          dotsWrap.appendChild(dot);
-        });
-      }
-
-      function goTo(index) {
-        current = (index + slides.length) % slides.length;
-        const slideWidth = slides[0].getBoundingClientRect().width;
-        const trackGap = parseFloat(getComputedStyle(track).gap || '0');
-        track.style.transform = 'translateX(-' + ((slideWidth + trackGap) * current) + 'px)';
-        slides.forEach(function (slide, slideIndex) {
-          slide.classList.toggle('is-active', slideIndex === current);
-        });
-        renderDots();
-        restartBullets();
-        startAuto();
-      }
-
-      function startAuto() {
-        if (autoTimer) clearInterval(autoTimer);
-        autoTimer = setInterval(function () {
-          goTo(current + 1);
-        }, 6500);
-      }
-
-      prevBtn.addEventListener('click', function () { goTo(current - 1); });
-      nextBtn.addEventListener('click', function () { goTo(current + 1); });
-
-      window.addEventListener('resize', function () {
-        goTo(current);
-      });
-
-      goTo(0);
-    })();
-  </script>
+  <footer>
+    <div class="wrap"><div>Carapace / Cortex · Private AI infrastructure under your control.</div><div><a href="business.html">How We Help</a> · <a href="licensing.html">Licensing</a> · <a href="https://github.com/CarapaceUDE" target="_blank" rel="noreferrer">GitHub</a></div></div>
+  </footer>
   <script src="assets/cortex-bloom-bg.js"></script>
+  <script src="assets/site.js"></script>
 </body>
 </html>
