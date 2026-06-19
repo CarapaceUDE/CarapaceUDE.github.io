@@ -3,16 +3,816 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cortex Architecture | Carapace</title>
-  <meta name="description" content="Cortex is the model-independent software platform built by Carapace for retrieval, routing, governance, and inspectable AI-assisted work." />
+  <title>Cortex | Private AI Control Plane by Carapace</title>
+  <meta name="description" content="Cortex is the private AI control plane for context management, intent-aware routing, model independence, custody-first governance, Fling capture, and signal-to-work intake." />
   <meta name="theme-color" content="#030711" />
   <link rel="stylesheet" href="assets/site.css" />
+  <style>
+    :root {
+      --bg: #030711;
+      --bg-2: #07101f;
+      --surface: rgba(12, 22, 39, .82);
+      --surface-2: rgba(17, 32, 56, .74);
+      --surface-3: rgba(20, 42, 70, .52);
+      --text: #edf3ff;
+      --muted: #a8b6cf;
+      --quiet: #7687a6;
+      --border: rgba(118, 151, 190, .24);
+      --border-strong: rgba(124, 215, 255, .42);
+      --blue: #7cd7ff;
+      --blue-2: #5b8ed8;
+      --copper: #f28b49;
+      --green: #73e3a6;
+      --max: 1120px;
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(900px 460px at 8% -4%, rgba(124, 215, 255, .14), transparent 56%),
+        radial-gradient(720px 420px at 102% 2%, rgba(242, 139, 73, .12), transparent 52%),
+        linear-gradient(180deg, #08101e 0%, var(--bg) 52%, #02050b 100%);
+      color: var(--text);
+      font: 16px/1.62 Inter, Segoe UI, Roboto, system-ui, sans-serif;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(100% - 2rem, var(--max)); margin: 0 auto; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(3, 7, 17, .78);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .8rem 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: .65rem;
+      color: var(--text);
+      font-weight: 750;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-size: .9rem;
+    }
+
+    .brand img {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      filter: drop-shadow(0 0 10px rgba(124, 215, 255, .28));
+    }
+
+    .links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: .95rem;
+      color: #c8d6ef;
+      font-size: .92rem;
+    }
+
+    .links a { opacity: .88; transition: opacity .18s ease, color .18s ease; }
+    .links a:hover { opacity: 1; color: var(--blue); }
+
+    .dropdown { position: relative; }
+    .dropbtn {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: #c8d6ef;
+      font: inherit;
+      cursor: pointer;
+      padding: 0;
+    }
+    .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + .7rem);
+      min-width: 190px;
+      display: none;
+      padding: .65rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(7, 13, 26, .96);
+      box-shadow: 0 20px 50px rgba(0,0,0,.28);
+    }
+    .dropdown:hover .dropdown-menu,
+    .dropdown:focus-within .dropdown-menu { display: grid; gap: .35rem; }
+    .dropdown-menu a { padding: .45rem .55rem; border-radius: 10px; }
+    .dropdown-menu a:hover { background: rgba(124, 215, 255, .08); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(4.5rem, 10vw, 8rem) 0 clamp(3rem, 6vw, 5.5rem);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -8% -42% -8%;
+      height: 70%;
+      background: radial-gradient(closest-side, rgba(124, 215, 255, .11), transparent 72%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(340px, .76fr);
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: center;
+    }
+
+    .eyebrow,
+    .section-eyebrow,
+    .feature-kicker,
+    .adv-label {
+      color: var(--blue);
+      font: 700 .72rem/1.4 "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 9ch;
+      margin-bottom: 1.15rem;
+      font-size: clamp(3.2rem, 8.2vw, 7.1rem);
+      line-height: .94;
+      letter-spacing: -.065em;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      font-size: clamp(2.05rem, 5vw, 4.65rem);
+      line-height: 1;
+      letter-spacing: -.045em;
+    }
+
+    h3 {
+      margin-bottom: .55rem;
+      font-size: clamp(1.25rem, 2.3vw, 1.85rem);
+      line-height: 1.12;
+      letter-spacing: -.025em;
+    }
+
+    .lead {
+      max-width: 66ch;
+      color: #dfe8f7;
+      font-size: clamp(1.08rem, 1.7vw, 1.28rem);
+      line-height: 1.64;
+    }
+
+    .muted { color: var(--muted); }
+    .quiet { color: var(--quiet); }
+
+    .hero-actions,
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      margin-top: 1.35rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: .78rem 1.08rem;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn.primary {
+      background: linear-gradient(180deg, #6e8ed0, #405783);
+      color: #f2f6ff;
+      border-color: rgba(255,255,255,.12);
+      box-shadow: 0 12px 30px rgba(25, 55, 110, .28);
+    }
+    .btn.outline {
+      color: #d8e6ff;
+      border-color: rgba(124, 215, 255, .26);
+      background: rgba(9, 17, 31, .62);
+    }
+    .btn.outline:hover { border-color: var(--blue); background: rgba(16, 29, 51, .78); }
+
+    .pill-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.4rem; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      border: 1px solid rgba(124, 215, 255, .23);
+      border-radius: 999px;
+      background: rgba(18, 34, 58, .62);
+      color: #d8e9ff;
+      padding: .38rem .68rem;
+      font-size: .8rem;
+    }
+    .pill::before {
+      content: "";
+      width: .42rem;
+      height: .42rem;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 14px rgba(115, 227, 166, .42);
+    }
+
+    .hero-panel {
+      position: relative;
+      border: 1px solid rgba(124, 215, 255, .22);
+      border-radius: 30px;
+      background:
+        linear-gradient(145deg, rgba(15, 29, 52, .86), rgba(6, 12, 23, .86)),
+        radial-gradient(420px 240px at 50% 0%, rgba(124, 215, 255, .18), transparent 64%);
+      box-shadow: 0 28px 80px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.06);
+      padding: clamp(1.1rem, 3vw, 1.6rem);
+      isolation: isolate;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      inset: 1rem;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.045);
+      pointer-events: none;
+    }
+
+    .panel-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(124, 215, 255, .16);
+      color: #dce8ff;
+      font-size: .82rem;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      color: var(--green);
+      font: 700 .68rem/1.2 "Roboto Mono", ui-monospace, monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .status::before { content: ""; width: .55rem; height: .55rem; border-radius: 50%; background: var(--green); box-shadow: 0 0 18px rgba(115,227,166,.54); }
+
+    .control-stack { display: grid; gap: .75rem; }
+    .control-row {
+      display: grid;
+      grid-template-columns: 2.15rem minmax(0, 1fr) auto;
+      gap: .7rem;
+      align-items: center;
+      padding: .78rem;
+      border: 1px solid rgba(118,151,190,.2);
+      border-radius: 16px;
+      background: rgba(2, 7, 17, .34);
+    }
+    .control-row strong { display: block; font-size: .92rem; line-height: 1.2; }
+    .control-row span { color: var(--muted); font-size: .76rem; }
+    .control-icon {
+      display: grid;
+      place-items: center;
+      width: 2.15rem;
+      aspect-ratio: 1;
+      border-radius: 12px;
+      background: rgba(124, 215, 255, .1);
+      color: var(--blue);
+      font-weight: 900;
+    }
+    .route-tag {
+      padding: .28rem .48rem;
+      border: 1px solid rgba(242, 139, 73, .24);
+      border-radius: 999px;
+      color: #ffd7be;
+      background: rgba(242, 139, 73, .08);
+      font-size: .68rem;
+      white-space: nowrap;
+    }
+
+    main { padding-bottom: clamp(4rem, 8vw, 7rem); }
+    .section { padding: clamp(4rem, 8vw, 7rem) 0; border-bottom: 1px solid rgba(118,151,190,.18); }
+    .section:last-child { border-bottom: 0; }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(280px, .62fr);
+      gap: clamp(1.4rem, 5vw, 5rem);
+      align-items: end;
+      margin-bottom: clamp(2rem, 5vw, 4rem);
+    }
+    .section-head p { margin-bottom: 0; color: var(--muted); }
+
+    .intro-strip {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, .72fr);
+      gap: clamp(1.5rem, 5vw, 5rem);
+      align-items: start;
+      padding: clamp(1.3rem, 3vw, 2rem);
+      border: 1px solid rgba(124, 215, 255, .19);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, rgba(14, 27, 49, .74), rgba(4, 10, 20, .48));
+      box-shadow: 0 22px 60px rgba(0,0,0,.18);
+    }
+    .intro-strip p:last-child { margin-bottom: 0; }
+    .metrics {
+      display: grid;
+      gap: .8rem;
+    }
+    .metric {
+      padding: 1rem;
+      border-top: 1px solid rgba(118,151,190,.24);
+    }
+    .metric strong {
+      display: block;
+      margin-bottom: .25rem;
+      color: var(--text);
+      font-size: 1.04rem;
+    }
+    .metric span { color: var(--muted); font-size: .92rem; }
+
+    .core-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(.95rem, 2vw, 1.25rem);
+    }
+    .feature-card {
+      position: relative;
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(1.15rem, 2.3vw, 1.45rem);
+      border: 1px solid rgba(118,151,190,.22);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(16, 31, 55, .8), rgba(8, 15, 29, .78));
+      overflow: hidden;
+      box-shadow: 0 18px 46px rgba(0,0,0,.16);
+    }
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), rgba(124, 215, 255, 0), var(--copper));
+      opacity: .72;
+    }
+    .feature-card:nth-child(2n)::before { background: linear-gradient(90deg, var(--copper), rgba(242,139,73,0), var(--blue)); }
+    .feature-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.35rem;
+      aspect-ratio: 1;
+      margin-bottom: 1.15rem;
+      border-radius: 999px;
+      border: 1px solid rgba(124,215,255,.28);
+      color: var(--blue);
+      background: rgba(124,215,255,.08);
+      font: 800 .82rem/1 "Roboto Mono", ui-monospace, monospace;
+    }
+    .feature-card h3 { margin-bottom: .75rem; }
+    .feature-card p { color: var(--muted); }
+    .feature-card ul {
+      margin: auto 0 0;
+      padding: .95rem 0 0;
+      border-top: 1px solid rgba(118,151,190,.18);
+      list-style: none;
+      color: #cad8ee;
+      font-size: .92rem;
+    }
+    .feature-card li { position: relative; padding-left: 1rem; margin-top: .45rem; }
+    .feature-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .62em;
+      width: .36rem;
+      height: .36rem;
+      border-radius: 50%;
+      background: var(--green);
+      opacity: .9;
+    }
+
+    .flow-band {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: .75rem;
+      padding: clamp(1rem, 2.5vw, 1.5rem);
+      border: 1px solid rgba(124,215,255,.18);
+      border-radius: 26px;
+      background: linear-gradient(145deg, rgba(8, 17, 31, .86), rgba(3, 8, 17, .62));
+      overflow: hidden;
+    }
+    .flow-band::before {
+      content: "";
+      position: absolute;
+      left: 7%;
+      right: 7%;
+      top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124,215,255,.42), rgba(242,139,73,.32), transparent);
+      pointer-events: none;
+    }
+    .flow-step {
+      position: relative;
+      z-index: 1;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1rem;
+      border: 1px solid rgba(118,151,190,.19);
+      border-radius: 18px;
+      background: rgba(4, 10, 20, .76);
+    }
+    .flow-step span {
+      color: var(--quiet);
+      font: 700 .68rem/1 "Roboto Mono", ui-monospace, monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .flow-step strong { display: block; font-size: 1.02rem; line-height: 1.18; }
+    .flow-step p { margin: .55rem 0 0; color: var(--muted); font-size: .84rem; line-height: 1.48; }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, .76fr);
+      gap: clamp(1.7rem, 6vw, 6rem);
+      align-items: center;
+    }
+    .proof-panel {
+      padding: clamp(1.5rem, 3vw, 2.4rem);
+      border: 1px solid rgba(242,139,73,.2);
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg, rgba(242,139,73,.09), rgba(14,27,49,.42)),
+        rgba(4, 10, 20, .62);
+    }
+    .proof-panel strong {
+      display: block;
+      margin-bottom: .7rem;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      line-height: 1.1;
+      color: #fff3ea;
+      letter-spacing: -.03em;
+    }
+    .proof-list { display: grid; gap: .75rem; margin-top: 1.25rem; }
+    .proof-item {
+      padding-top: .8rem;
+      border-top: 1px solid rgba(118,151,190,.2);
+      color: var(--muted);
+    }
+    .proof-item b { color: var(--text); }
+
+    .advanced-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .9rem;
+    }
+    .advanced-card {
+      padding: 1.05rem 1.05rem 1rem;
+      border: 1px solid rgba(118,151,190,.18);
+      border-radius: 18px;
+      background: rgba(11, 21, 39, .58);
+    }
+    .advanced-card h3 {
+      margin-bottom: .45rem;
+      font-size: 1.08rem;
+      letter-spacing: -.01em;
+    }
+    .advanced-card p { margin: 0; color: var(--muted); font-size: .92rem; }
+    .adv-label { display: block; margin-bottom: .65rem; color: #f5a56f; font-size: .66rem; }
+
+    .cta-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, .58fr);
+      gap: clamp(1.5rem, 5vw, 5rem);
+      align-items: end;
+      padding: clamp(1.6rem, 4vw, 3rem);
+      border: 1px solid rgba(124,215,255,.22);
+      border-radius: 28px;
+      background:
+        radial-gradient(520px 260px at 0% 0%, rgba(124,215,255,.16), transparent 64%),
+        linear-gradient(145deg, rgba(17, 32, 56, .78), rgba(3, 8, 17, .7));
+      box-shadow: 0 22px 70px rgba(0,0,0,.18);
+    }
+    .cta-panel aside {
+      padding-top: 1rem;
+      border-top: 1px solid rgba(118,151,190,.24);
+      color: var(--muted);
+    }
+    .cta-panel aside strong { display: block; margin-bottom: .55rem; color: var(--text); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.4rem 0 2rem;
+      color: #9fb0d0;
+      font-size: .9rem;
+    }
+    footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    footer a { color: #d7e6ff; }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .section-head,
+      .intro-strip,
+      .split,
+      .cta-panel { grid-template-columns: 1fr; }
+      h1 { max-width: 11ch; }
+      .core-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flow-band { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flow-band::before { display: none; }
+    }
+
+    @media (max-width: 680px) {
+      .links { gap: .7rem; font-size: .86rem; }
+      .dropdown-menu { left: auto; right: 0; }
+      .hero { padding-top: 3.6rem; }
+      h1 { font-size: clamp(3rem, 16vw, 4.9rem); }
+      .core-grid,
+      .advanced-grid,
+      .flow-band { grid-template-columns: 1fr; }
+      .feature-card { min-height: 0; }
+      .control-row { grid-template-columns: 2.15rem 1fr; }
+      .route-tag { grid-column: 2; width: fit-content; }
+      footer .wrap { display: block; }
+      footer .wrap div + div { margin-top: .35rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
 </head>
 <body class="page-cortex">
-  <nav class="nav"><div class="wrap nav-inner"><a class="brand" href="index.html" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="" /><span>Carapace</span></a><div><a href="ideas/">Pitch Deck</a> &nbsp; <a href="index.html">← Back to home</a></div></div></nav>
-  <header class="hero"><div class="wrap"><div class="eyebrow">Software by Carapace</div><h1>Cortex Architecture</h1><p class="lead">Cortex is the software. Carapace is the company that builds, deploys, and manages it.</p><p class="muted">The architecture combines governed model routing, retrieval, security boundaries, operator controls, and auditable workflows in one model-independent layer.</p><span class="pill">Control plane</span><span class="pill">Retrieval layer</span><span class="pill">Open-core software</span><div class="cta"><a class="btn primary" href="carapace.html">Explore Cortex Software</a><a class="btn outline" href="ideas/#slide-7">See the Architecture</a></div></div></header>
-  <main class="wrap"><section class="grid two"><article class="card"><h2>What Cortex does</h2><ul><li>Routes work by capability, cost, speed, context, and policy</li><li>Connects governed retrieval and knowledge to real workflows</li><li>Keeps approvals, provenance, and operator intervention visible</li></ul></article><article class="card"><h2>What Carapace does</h2><ul><li>Designs the deployment around your organization</li><li>Installs, integrates, governs, and improves Cortex</li><li>Provides commercial licensing and ongoing support when needed</li></ul></article></section></main>
-  <footer><div class="wrap"><div>Cortex software · Built by Carapace</div><div><a href="index.html">Home</a> | <a href="carapace.html">Cortex Software</a></div></div></footer>
+  <nav class="nav" aria-label="Primary navigation">
+    <div class="wrap nav-inner">
+      <a class="brand" href="index.html" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="" /><span>Carapace</span></a>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="business.html">How We Help</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="licensing.html">Licensing</a>
+        <a href="ideas/">Pitch Deck</a>
+        <a href="about.html">About</a>
+        <div class="dropdown">
+          <button class="dropbtn" type="button" aria-haspopup="true" aria-expanded="false">Cortex ▾</button>
+          <div class="dropdown-menu" role="menu">
+            <a href="carapace.html">Cortex Software</a>
+            <a href="cortex.html" aria-current="page">Cortex Architecture</a>
+            <a href="core-skills.html">Core Skills</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Software by Carapace</div>
+        <h1>Cortex Architecture</h1>
+        <p class="lead">Cortex is the private AI control plane for real business work: one place to manage context, route intent, choose models, govern actions, and turn incoming signals into useful execution.</p>
+        <p class="muted">The public story is intentionally focused. Cortex earns trust through six core capabilities before expanding into deeper platform surfaces.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="business.html#contact">Book the Discovery Sprint</a>
+          <a class="btn outline" href="#core-features">See Core Features</a>
+        </div>
+        <div class="pill-row" aria-label="Core Cortex features">
+          <span class="pill">Context Management</span>
+          <span class="pill">Intent Routing</span>
+          <span class="pill">Model Independence</span>
+          <span class="pill">Custody + Governance</span>
+          <span class="pill">Fling Capture</span>
+          <span class="pill">Signal-to-Work Intake</span>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Cortex control plane diagram">
+        <div class="panel-topline"><span>Cortex control plane</span><span class="status">Governed</span></div>
+        <div class="control-stack">
+          <div class="control-row"><div class="control-icon">01</div><div><strong>Shape the context</strong><span>Only the useful slice reaches the model.</span></div><span class="route-tag">lower waste</span></div>
+          <div class="control-row"><div class="control-icon">02</div><div><strong>Read the intent</strong><span>Summarize, extract, compare, draft, route, approve, execute.</span></div><span class="route-tag">right path</span></div>
+          <div class="control-row"><div class="control-icon">03</div><div><strong>Select the destination</strong><span>Local, frontier, private cloud, tool, workflow, or human gate.</span></div><span class="route-tag">no lock-in</span></div>
+          <div class="control-row"><div class="control-icon">04</div><div><strong>Keep work inspectable</strong><span>Policies, approvals, transcripts, logs, and feedback.</span></div><span class="route-tag">trust layer</span></div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="section">
+      <div class="intro-strip">
+        <article>
+          <p class="section-eyebrow">The Product Promise</p>
+          <h2>Intelligence you control. Workflows you can trust.</h2>
+          <p class="lead">Cortex is not another AI chat product. It is the layer between your business and the AI ecosystem: context-aware, model-independent, approval-gated, and designed around custody from the start.</p>
+        </article>
+        <aside class="metrics" aria-label="Cortex business outcomes">
+          <div class="metric"><strong>Lower token waste</strong><span>Context is shaped, summarized, cached, and retrieved instead of blindly dumped into prompts.</span></div>
+          <div class="metric"><strong>Better model fit</strong><span>Work is routed by intent, capability, cost, speed, privacy, and approval needs.</span></div>
+          <div class="metric"><strong>Safer execution</strong><span>Sensitive work can stay inside governed client environments with visible approval boundaries.</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="core-features">
+      <div class="section-head">
+        <div>
+          <p class="section-eyebrow">Hero Features</p>
+          <h2>The six capabilities that define Cortex.</h2>
+        </div>
+        <p>These are the public-facing features that carry the main business value: less context waste, smarter routing, provider flexibility, custody-first controls, capture from anywhere, and intake that becomes real work.</p>
+      </div>
+
+      <div class="core-grid">
+        <article class="feature-card">
+          <span class="feature-num">01</span>
+          <p class="feature-kicker">Proprietary Context Management</p>
+          <h3>Control what the model sees.</h3>
+          <p>Cortex decides what context is worth spending and what should stay outside the prompt.</p>
+          <ul>
+            <li>Structured context handling</li>
+            <li>Summaries, cached reads, and retrieval surfaces</li>
+            <li>Cleaner prompts with less unnecessary exposure</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-num">02</span>
+          <p class="feature-kicker">Intent-Aware Routing</p>
+          <h3>Route the work by what it is trying to do.</h3>
+          <p>Cortex evaluates whether a request is asking to summarize, extract, classify, compare, draft, search, route, automate, approve, or execute.</p>
+          <ul>
+            <li>Capability aliases for common work types</li>
+            <li>Routing by cost, speed, privacy, and policy</li>
+            <li>Less burden on employees to choose the model</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-num">03</span>
+          <p class="feature-kicker">Model Independence</p>
+          <h3>Use the right model without marrying the vendor.</h3>
+          <p>Cortex can work across local models, open-weight models, private deployments, and frontier APIs.</p>
+          <ul>
+            <li>Local, private-cloud, and frontier destinations</li>
+            <li>Better cost control as providers change</li>
+            <li>One control layer across changing model markets</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-num">04</span>
+          <p class="feature-kicker">Custody + Governance</p>
+          <h3>Move faster without removing judgment.</h3>
+          <p>Approvals, logs, transcripts, budgets, routing rules, and execution boundaries keep supervised automation visible.</p>
+          <ul>
+            <li>Credential-conscious execution patterns</li>
+            <li>Human-in-the-loop approvals</li>
+            <li>The model cannot leak what it never received</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-num">05</span>
+          <p class="feature-kicker">Fling Capture</p>
+          <h3>Capture useful work from anywhere.</h3>
+          <p>Fling lets an operator grab context from a webpage, feed card, document, browser session, or selected content and send it to the right destination.</p>
+          <ul>
+            <li>Intake, chat, job queue, webhook, feed, agent, or workflow</li>
+            <li>Less manual copy-paste between tabs</li>
+            <li>Fast movement from context to action</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-num">06</span>
+          <p class="feature-kicker">Signal-to-Work Intake</p>
+          <h3>Turn incoming signals into governed tasks.</h3>
+          <p>Browser captures, links, social traffic, email, documents, media, and pasted text can pass through trust checks and landing queues before becoming work.</p>
+          <ul>
+            <li>Operational signal instead of disconnected noise</li>
+            <li>Approval gates before execution</li>
+            <li>Intake that routes toward useful automation</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="section-eyebrow">How Work Moves</p>
+          <h2>From raw signal to governed execution.</h2>
+        </div>
+      </div>
+
+      <div class="flow-band" aria-label="Cortex workflow process">
+        <article class="flow-step"><span>Capture</span><div><strong>Fling or intake</strong><p>Grab context from browser, feeds, files, email, media, or pasted text.</p></div></article>
+        <article class="flow-step"><span>Context</span><div><strong>Shape the prompt</strong><p>Summarize, cache, retrieve, and expose only what is useful.</p></div></article>
+        <article class="flow-step"><span>Intent</span><div><strong>Classify the work</strong><p>Find the task type before choosing model, tool, agent, or workflow.</p></div></article>
+        <article class="flow-step"><span>Govern</span><div><strong>Apply policy</strong><p>Use approvals, budget boundaries, custody rules, and audit paths.</p></div></article>
+        <article class="flow-step"><span>Execute</span><div><strong>Route destination</strong><p>Send work local, remote, private cloud, frontier API, tool, queue, or human.</p></div></article>
+        <article class="flow-step"><span>Improve</span><div><strong>Review the trail</strong><p>Use transcripts, logs, feedback, and outcomes to tune the system.</p></div></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="split">
+        <article>
+          <p class="section-eyebrow">Why It Matters</p>
+          <h2>The business stays at the center.</h2>
+          <p class="lead">Cortex lets a company use AI without reorganizing itself around one hosted black box. Work can happen locally, remotely, or in hybrid patterns depending on security, cost, performance, and integration needs.</p>
+          <p class="muted">Carapace remains the implementation partner: scoping the workflows, deploying the environment, defining approval boundaries, tuning routing behavior, and turning useful patterns into repeatable infrastructure.</p>
+        </article>
+        <aside class="proof-panel">
+          <strong>Control the destination. Not the vendor.</strong>
+          <p class="muted">The company decides what can move, where it can go, who approves it, what is logged, and which model or tool is appropriate for the job.</p>
+          <div class="proof-list">
+            <div class="proof-item"><b>Custody:</b> files, credentials, sessions, and workflows can remain under client governance.</div>
+            <div class="proof-item"><b>Flexibility:</b> local, open-weight, private, frontier, and specialized systems can coexist.</div>
+            <div class="proof-item"><b>Inspectability:</b> decisions, approvals, routing, transcripts, and outcomes become reviewable.</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="advanced-capabilities">
+      <div class="section-head">
+        <div>
+          <p class="section-eyebrow">Advanced Capabilities</p>
+          <h2>The expanding platform surface.</h2>
+        </div>
+      </div>
+
+      <div class="advanced-grid">
+        <article class="advanced-card"><span class="adv-label">Operating Inbox</span><h3>Ranked feeds and work queues</h3><p>Daily briefs, captured content, intake candidates, media, and work-ready signals can be reviewed in one governed flow.</p></article>
+        <article class="advanced-card"><span class="adv-label">Agent Workspace</span><h3>Multi-tool agents</h3><p>Agents can use first-party tools, scripts, workspace search, email, APIs, job queues, and structured workflows under supervision.</p></article>
+        <article class="advanced-card"><span class="adv-label">Repeatable Work</span><h3>Workflow orchestration</h3><p>Complex work can move through phases such as route, plan, execute, critique, archive, and improve.</p></article>
+        <article class="advanced-card"><span class="adv-label">Knowledge Layer</span><h3>Workspace and filemap awareness</h3><p>Cortex can organize project structures, files, documents, and working context so hidden knowledge becomes available at the moment of need.</p></article>
+        <article class="advanced-card"><span class="adv-label">Where Work Happens</span><h3>Email, browser, social, and media integrations</h3><p>Automation connects to the places work already lives instead of forcing a business into one new app.</p></article>
+        <article class="advanced-card"><span class="adv-label">Controlled Scale</span><h3>Team sessions and delegated workers</h3><p>Multiple controlled work sessions can operate with distinct tasks, boundaries, and trust levels.</p></article>
+        <article class="advanced-card"><span class="adv-label">Developer Surface</span><h3>Script SDK, API, and MCP support</h3><p>Cortex can become a shared execution layer underneath custom workflows, internal tools, and future Carapace interfaces.</p></article>
+        <article class="advanced-card"><span class="adv-label">Continuous Governance</span><h3>Auditability and improvement loops</h3><p>Logs, routing decisions, transcripts, approvals, and feedback make AI operations something the business can tune over time.</p></article>
+        <article class="advanced-card"><span class="adv-label">Media Surface</span><h3>Remotion, OBS, and multimodal clipping</h3><p>Emerging media workflows can route captured clips, recordings, scripted edits, and visual assets through governed production paths.</p></article>
+        <article class="advanced-card"><span class="adv-label">Roadmap Surface</span><h3>Self-iteration and roadmap execution</h3><p>Advanced internal loops can use outcome feedback, logs, and known priorities to propose improvements without hiding the approval trail.</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta-panel">
+        <article>
+          <p class="section-eyebrow">Start With a Controlled Win</p>
+          <h2>Do not buy a giant transformation on faith.</h2>
+          <p class="lead">The Cortex Discovery & Integration Sprint maps the workflow, reviews credential and security needs, deploys a secure sandbox, launches one or two working automations, and shows where Cortex should expand next.</p>
+          <div class="cta">
+            <a class="btn primary" href="business.html#contact">Book the Discovery Sprint</a>
+            <a class="btn outline" href="licensing.html">View Licensing</a>
+          </div>
+        </article>
+        <aside><strong>Cortex is the software. Carapace is the partner.</strong> The platform controls the work, and Carapace helps design, deploy, govern, and improve the environment.</aside>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div>Cortex software · Built by Carapace</div>
+      <div><a href="index.html">Home</a> | <a href="business.html">How We Help</a> | <a href="licensing.html">Licensing</a> | <a href="carapace.html">Cortex Software</a></div>
+    </div>
+  </footer>
+
   <script src="assets/cortex-bloom-bg.js"></script>
   <script src="assets/site.js"></script>
 </body>
