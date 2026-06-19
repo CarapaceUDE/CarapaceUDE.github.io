@@ -8,12 +8,20 @@
     if (!nav || !inner || !links) return;
 
     const toggle = document.createElement('button');
+    const menuId = links.id || 'site-navigation';
+    links.id = menuId;
     toggle.className = 'nav-toggle';
     toggle.type = 'button';
     toggle.setAttribute('aria-label', 'Toggle navigation');
     toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', menuId);
     toggle.innerHTML = '<span></span>';
     inner.insertBefore(toggle, links);
+
+    function closeNavigation() {
+      nav.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
 
     toggle.addEventListener('click', function () {
       const open = nav.classList.toggle('is-open');
@@ -22,15 +30,37 @@
 
     links.addEventListener('click', function (event) {
       if (event.target.closest('a')) {
-        nav.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
+        closeNavigation();
       }
     });
 
-    const path = location.pathname.split('/').pop() || 'index.html';
+    document.addEventListener('click', function (event) {
+      if (!nav.contains(event.target)) closeNavigation();
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key !== 'Escape') return;
+      const hadOpenMenu = nav.classList.contains('is-open') || Boolean(document.querySelector('.dropdown.open'));
+      closeNavigation();
+      document.querySelectorAll('.dropdown.open').forEach(function (dropdown) {
+        dropdown.classList.remove('open');
+        const button = dropdown.querySelector('.dropbtn');
+        if (button) button.setAttribute('aria-expanded', 'false');
+      });
+      if (hadOpenMenu && getComputedStyle(toggle).display !== 'none') toggle.focus();
+    });
+
+    window.matchMedia('(min-width: 961px)').addEventListener('change', function (event) {
+      if (event.matches) closeNavigation();
+    });
+
+    const normalizePath = function (pathname) {
+      return pathname.replace(/\/index\.html$/, '/').replace(/\/$/, '') || '/';
+    };
+    const currentPath = normalizePath(location.pathname);
     links.querySelectorAll('a[href]').forEach(function (link) {
-      const href = link.getAttribute('href').split('#')[0].replace(/\/$/, '/index.html');
-      if (href === path || (path === 'index.html' && href === 'index.html')) link.setAttribute('aria-current', 'page');
+      const linkPath = normalizePath(new URL(link.href, location.href).pathname);
+      if (linkPath === currentPath) link.setAttribute('aria-current', 'page');
     });
   }
 
@@ -38,10 +68,19 @@
     document.querySelectorAll('.dropdown').forEach(function (dropdown) {
       const button = dropdown.querySelector('.dropbtn');
       if (!button || button.dataset.siteBound) return;
+      dropdown.querySelectorAll('.dropdown-menu a').forEach(function (link) {
+        link.setAttribute('role', 'menuitem');
+      });
       button.dataset.siteBound = 'true';
       button.addEventListener('click', function (event) {
         event.preventDefault();
         event.stopPropagation();
+        document.querySelectorAll('.dropdown.open').forEach(function (other) {
+          if (other === dropdown) return;
+          other.classList.remove('open');
+          const otherButton = other.querySelector('.dropbtn');
+          if (otherButton) otherButton.setAttribute('aria-expanded', 'false');
+        });
         const open = dropdown.classList.toggle('open');
         button.setAttribute('aria-expanded', String(open));
       });

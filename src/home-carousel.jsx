@@ -7,12 +7,40 @@ import 'swiper/css/effect-creative';
 import './home-carousel.css';
 import { slides } from './deck-slides.generated.js';
 
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const update = () => setMatches(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, [query]);
+
+  return matches;
+}
+
 function HomeCarousel() {
   const swiperRef = useRef(null);
   const autoplayResumeTimer = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const isCompact = useMediaQuery('(max-width: 760px)');
+  const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 
-  useEffect(() => () => window.clearTimeout(autoplayResumeTimer.current), []);
+  useEffect(() => {
+    const handleVisibility = () => {
+      const swiper = swiperRef.current;
+      if (!swiper || reduceMotion) return;
+      document.hidden ? swiper.autoplay?.stop() : swiper.autoplay?.start();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      window.clearTimeout(autoplayResumeTimer.current);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, [reduceMotion]);
 
   const stopAutoplay = (swiper) => {
     window.clearTimeout(autoplayResumeTimer.current);
@@ -21,8 +49,9 @@ function HomeCarousel() {
 
   const resumeAutoplayAfterIdle = (swiper) => {
     stopAutoplay(swiper);
+    if (reduceMotion) return;
     autoplayResumeTimer.current = window.setTimeout(() => {
-      if (!swiper?.destroyed) swiper.autoplay?.start();
+      if (!swiper?.destroyed && !document.hidden) swiper.autoplay?.start();
     }, 1800);
   };
 
@@ -36,7 +65,7 @@ function HomeCarousel() {
   const goTo = (index) => {
     const swiper = swiperRef.current;
     if (!swiper) return;
-    swiper.slideToLoop(index);
+    swiper.params.loop ? swiper.slideToLoop(index) : swiper.slideTo(index);
     resumeAutoplayAfterIdle(swiper);
   };
 
@@ -44,20 +73,19 @@ function HomeCarousel() {
     <div className="home-carousel-react" aria-roledescription="carousel" aria-label="Carapace and Cortex pitch highlights">
       <div className="home-carousel-stage">
         <Swiper
+          key={isCompact ? 'compact' : 'immersive'}
           modules={[A11y, Autoplay, EffectCreative, Keyboard]}
-          effect="creative"
+          effect={isCompact ? 'slide' : 'creative'}
           centeredSlides
-          loop
-          loopAdditionalSlides={3}
-          loopPreventsSliding={false}
+          loop={!reduceMotion}
+          loopAdditionalSlides={isCompact ? 1 : 3}
+          loopPreventsSliding={isCompact}
           grabCursor
-          preventClicks={false}
-          preventClicksPropagation={false}
           slidesPerView={1}
-          speed={1050}
+          speed={reduceMotion ? 0 : (isCompact ? 560 : 1050)}
           keyboard={{ enabled: true, onlyInViewport: true }}
           a11y={{ enabled: true }}
-          autoplay={{
+          autoplay={reduceMotion ? false : {
             delay: 6500,
             disableOnInteraction: false,
             pauseOnMouseEnter: false,
@@ -79,19 +107,28 @@ function HomeCarousel() {
               opacity: 0.62
             }
           }}
-          onSwiper={(swiper) => { swiperRef.current = swiper; }}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+            setActiveIndex(swiper.realIndex || 0);
+          }}
           onRealIndexChange={(swiper) => setActiveIndex(swiper.realIndex)}
           onTouchStart={(swiper) => stopAutoplay(swiper)}
           onTouchEnd={(swiper) => resumeAutoplayAfterIdle(swiper)}
         >
-          {slides.map((slide) => (
+          {slides.map((slide, index) => (
             <SwiperSlide key={slide.image}>
               <a
                 className="home-carousel-card"
                 href={`ideas/?explain=1#slide-${slide.number}`}
                 aria-label={`Open slide ${slide.number}, ${slide.title}, with explanation`}
               >
-                <img src={slide.image} alt={slide.title} />
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
+                />
               </a>
             </SwiperSlide>
           ))}

@@ -16,6 +16,8 @@
       --secondary: #22d3ee;
     }
 
+    *, *::before, *::after { box-sizing: border-box; }
+
     @page { size: Letter; margin: 0.65in; }
 
     body {
@@ -76,8 +78,13 @@
       border-radius: 8px;
       padding: 8px;
       white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      max-width: 100%;
+      overflow-x: auto;
       color: #dfeaff;
     }
+
+    code { overflow-wrap: anywhere; }
 
     ul, ol { margin-top: 5px; margin-bottom: 5px; }
     .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }

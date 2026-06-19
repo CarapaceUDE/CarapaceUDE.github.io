@@ -68,6 +68,10 @@ body::after {
 a { color: var(--blue-soft) !important; text-decoration: none; }
 img { max-width: 100%; }
 button, input, select, textarea { font: inherit; }
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--blue-soft);
+  outline-offset: 3px;
+}
 .wrap { width: min(calc(100% - 2.5rem), var(--max)) !important; margin-inline: auto !important; }
 .nav, .hero, main, footer { position: relative; z-index: 5; }
 
@@ -512,6 +516,7 @@ body:not(.page-home) .cortex-brain-layer { opacity: .12 !important; transform: t
   .form-grid, .intake-intro { grid-template-columns: 1fr !important; }
   .full { grid-column: auto; }
   footer .wrap { align-items: flex-start; flex-direction: column; }
+  footer a { display: inline-block; padding-block: .2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
