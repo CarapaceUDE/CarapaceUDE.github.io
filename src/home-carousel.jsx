@@ -25,13 +25,13 @@ function HomeCarousel() {
   const swiperRef = useRef(null);
   const autoplayResumeTimer = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const isCompact = useMediaQuery('(max-width: 760px)');
+  const isCompact = useMediaQuery('(max-width: 760px), (max-width: 960px) and (max-height: 520px) and (orientation: landscape)');
   const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 
   useEffect(() => {
     const handleVisibility = () => {
       const swiper = swiperRef.current;
-      if (!swiper || reduceMotion) return;
+      if (!swiper) return;
       document.hidden ? swiper.autoplay?.stop() : swiper.autoplay?.start();
     };
 
@@ -49,7 +49,6 @@ function HomeCarousel() {
 
   const resumeAutoplayAfterIdle = (swiper) => {
     stopAutoplay(swiper);
-    if (reduceMotion) return;
     autoplayResumeTimer.current = window.setTimeout(() => {
       if (!swiper?.destroyed && !document.hidden) swiper.autoplay?.start();
     }, 1800);
@@ -73,19 +72,19 @@ function HomeCarousel() {
     <div className="home-carousel-react" aria-roledescription="carousel" aria-label="Carapace and Cortex pitch highlights">
       <div className="home-carousel-stage">
         <Swiper
-          key={isCompact ? 'compact' : 'immersive'}
+          key={`${isCompact ? 'compact' : 'immersive'}-${reduceMotion ? 'reduced' : 'full'}`}
           modules={[A11y, Autoplay, EffectCreative, Keyboard]}
           effect={isCompact ? 'slide' : 'creative'}
           centeredSlides
-          loop={!reduceMotion}
+          loop
           loopAdditionalSlides={isCompact ? 1 : 3}
           loopPreventsSliding={isCompact}
           grabCursor
           slidesPerView={1}
-          speed={reduceMotion ? 0 : (isCompact ? 560 : 1050)}
+          speed={reduceMotion ? 420 : (isCompact ? 560 : 1050)}
           keyboard={{ enabled: true, onlyInViewport: true }}
           a11y={{ enabled: true }}
-          autoplay={reduceMotion ? false : {
+          autoplay={{
             delay: 6500,
             disableOnInteraction: false,
             pauseOnMouseEnter: false,

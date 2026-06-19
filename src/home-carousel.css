@@ -208,7 +208,7 @@
   letter-spacing: .12em;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 760px), (max-width: 960px) and (max-height: 520px) and (orientation: landscape) {
   .home-hero {
     --home-carousel-stage-height: clamp(248px, 64vw, 360px);
     min-height: 0 !important;
@@ -243,11 +243,45 @@
   .home-carousel-pagination .home-carousel-count { display: none; }
 }
 
+@media (max-width: 960px) and (max-height: 520px) and (orientation: landscape) {
+  .home-hero {
+    --home-carousel-pagination-height: 32px;
+    --home-carousel-stage-height: calc(100svh - 68px - var(--home-carousel-pagination-height));
+    min-height: 0 !important;
+  }
+
+  #home-carousel-root {
+    flex-basis: calc(var(--home-carousel-stage-height) + var(--home-carousel-pagination-height));
+    height: calc(var(--home-carousel-stage-height) + var(--home-carousel-pagination-height));
+  }
+
+  .home-hero-actions { display: none !important; }
+
+  .home-carousel-stage .swiper { padding: 6px 0; }
+
+  .home-carousel-card {
+    width: auto;
+    height: calc(100% - 12px);
+    max-width: calc(100vw - 1rem);
+    aspect-ratio: 16 / 9;
+  }
+
+  .home-carousel-pagination {
+    flex-basis: var(--home-carousel-pagination-height);
+    height: var(--home-carousel-pagination-height);
+  }
+
+  .home-carousel-pagination .home-carousel-dots { padding-block: 0; }
+  .home-carousel-dot { width: 24px; height: 28px; }
+  .home-carousel-dot::after { width: 6px; height: 6px; }
+  .home-carousel-stage .home-carousel-arrow { width: 36px; height: 52px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .home-carousel-react .swiper-wrapper,
   .home-carousel-react .swiper-slide,
   .home-carousel-react .swiper-slide-shadow-left,
   .home-carousel-react .swiper-slide-shadow-right {
-    transition-duration: 0s !important;
+    transition-duration: 420ms !important;
   }
 }
