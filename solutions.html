@@ -216,6 +216,23 @@
         margin-top: 4.5rem;
       }
     }
+
+    .page-solutions .hero {
+      display: grid;
+      align-items: end;
+      min-height: clamp(620px, 78vh, 820px) !important;
+      padding: clamp(8rem, 17vh, 12rem) 0 clamp(3rem, 7vw, 6rem) !important;
+      background-image: linear-gradient(90deg, rgba(3, 7, 14, .94) 0%, rgba(3, 7, 14, .72) 42%, rgba(3, 7, 14, .12) 74%), linear-gradient(0deg, rgba(3, 7, 14, .76), transparent 55%), url("assets/solutions-wide_1.png") !important;
+      background-position: center !important;
+      background-size: cover !important;
+    }
+
+    .page-solutions .hero::before,
+    .page-solutions .hero::after { display: none !important; }
+
+    @media (max-width: 640px) {
+      .page-solutions .hero { min-height: 680px !important; background-position: 58% center !important; }
+    }
   </style>
 </head>
 <body class="page-solutions">

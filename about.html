@@ -40,6 +40,17 @@
     footer{border-top:1px solid var(--border);padding:1.3rem 0 2rem;color:#9fb0d7;font-size:.9rem;} @media (max-width:900px){.two{grid-template-columns:1fr;} .carousel-shell{padding:1rem 3.25rem;max-width:100%;} .carousel-viewport{min-height:320px;} .carousel-slide{min-width:calc(100% - 56px);} .carousel-card{min-height:300px;}} @media (max-width:640px){.carousel-shell{padding:1rem 2.8rem;} .carousel-slide{min-width:100%;opacity:1;transform:none;} .carousel-btn{width:38px;height:38px;} .carousel-card strong{font-size:1.22rem;} .carousel-card p{font-size:.96rem;}}
   </style>
   <link rel="stylesheet" href="assets/site.css" />
+  <style>
+    .page-about .hero{position:relative;display:grid;align-items:end;min-height:clamp(620px,78vh,820px)!important;padding:clamp(8rem,17vh,12rem) 0 clamp(3rem,7vw,6rem)!important;background-image:linear-gradient(90deg,rgba(3,7,14,.94) 0%,rgba(3,7,14,.72) 42%,rgba(3,7,14,.12) 74%),linear-gradient(0deg,rgba(3,7,14,.76),transparent 55%),url("assets/about-wide_1.png")!important;background-position:center!important;background-size:cover!important}.page-about .hero::before,.page-about .hero::after{display:none!important}.page-about .hero .wrap{max-width:680px;margin-left:max(1rem,calc((100vw - var(--max))/2))}.page-about .hero .pill{display:none!important}.page-about .hero h1{max-width:9ch;font-size:clamp(3.5rem,8vw,6.8rem)}.page-about .hero .lead{color:#e7ebf2;font-size:clamp(1.08rem,1.8vw,1.32rem)}.page-about .hero .quote{max-width:55ch;color:#aebbd0}.about-legacy{display:none!important}
+    .about-main{padding-bottom:clamp(4rem,8vw,7rem)}.about-section{padding:clamp(4rem,9vw,8rem) 0;border-bottom:1px solid rgba(112,150,192,.2)}.about-eyebrow{margin:0 0 1rem;color:#79a9dd;font:600 .72rem/1.4 Roboto Mono,monospace;letter-spacing:.16em;text-transform:uppercase}.about-intro{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(2.5rem,8vw,8rem);align-items:start}.about-intro h2,.about-mission h2,.about-cta h2{font-size:clamp(2.2rem,5vw,4.6rem);line-height:1;letter-spacing:-.04em}.about-intro__copy{font-size:clamp(1.05rem,1.6vw,1.25rem);color:#cbd5e4}.about-intro__copy p:first-child{margin-top:0}.about-declaration{margin-top:2.5rem;padding:clamp(1.5rem,3vw,2.5rem);border-left:2px solid var(--copper);background:linear-gradient(90deg,rgba(242,139,73,.09),transparent);font-size:clamp(1.2rem,2vw,1.6rem);color:#f0f3f8}
+    .belief-head{display:grid;grid-template-columns:1fr minmax(280px,.65fr);gap:2rem;align-items:end;margin-bottom:clamp(2rem,5vw,4rem)}.belief-head p:last-child{margin:0;color:var(--muted)}.belief-list{counter-reset:belief}.belief{counter-increment:belief;display:grid;grid-template-columns:5rem minmax(220px,.7fr) 1fr;gap:clamp(1rem,4vw,4rem);padding:clamp(1.6rem,3vw,2.5rem) 0;border-top:1px solid rgba(112,150,192,.24);align-items:start}.belief::before{content:"0" counter(belief);color:#729bd0;font:500 .72rem/1.6 Roboto Mono,monospace;letter-spacing:.14em}.belief h3{margin:0;font-size:clamp(1.35rem,2.4vw,2rem);line-height:1.15}.belief p{max-width:50ch;margin:0;color:var(--muted)}
+    .about-mission{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);gap:clamp(2rem,7vw,7rem);align-items:center}.mission-statement{padding:clamp(2rem,4vw,3.5rem);border:1px solid rgba(112,150,192,.2);border-radius:1.25rem;background:linear-gradient(145deg,rgba(18,35,58,.68),rgba(7,14,26,.35));box-shadow:0 28px 70px rgba(0,0,0,.18)}.mission-statement strong{display:block;margin-bottom:.8rem;color:#f3f5f8;font-size:clamp(1.4rem,3vw,2.2rem)}.mission-statement p{margin:0;color:var(--muted)}
+    .identity-split{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(2rem,8vw,8rem)}.identity-block{position:relative;padding-top:1.25rem;border-top:1px solid rgba(112,150,192,.28)}.identity-block::before{content:"";position:absolute;inset:-1px auto auto 0;width:5rem;height:2px;background:linear-gradient(90deg,var(--blue),transparent)}.identity-block:last-child::before{background:linear-gradient(90deg,var(--copper),transparent)}.identity-name{display:block;margin-bottom:1rem;color:#8fbaf4;font:600 .72rem/1.4 Roboto Mono,monospace;letter-spacing:.15em;text-transform:uppercase}.identity-block:last-child .identity-name{color:#f0a36b}.identity-block h3{font-size:clamp(1.7rem,3vw,2.6rem)}.identity-block p{color:var(--muted)}
+    .approach-head{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:end;margin-bottom:3rem}.approach-head p{margin:0;color:var(--muted)}.approach-rail{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1.2rem,3vw,3rem)}.approach-step{padding-top:1.1rem;border-top:1px solid rgba(112,150,192,.26)}.approach-step span{color:#7199ca;font:500 .7rem/1 Roboto Mono,monospace}.approach-step h3{margin-top:1.2rem}.approach-step p{color:var(--muted)}
+    .about-cta{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.55fr);gap:clamp(2rem,6vw,6rem);align-items:end;padding:clamp(4rem,8vw,7rem) 0}.about-cta aside{padding-top:1rem;border-top:1px solid rgba(112,150,192,.25);color:var(--muted)}.about-cta aside strong{display:block;margin-bottom:.6rem;color:var(--text)}
+    @media(max-width:900px){.about-intro,.belief-head,.about-mission,.identity-split,.approach-head,.about-cta{grid-template-columns:1fr}.belief{grid-template-columns:3.5rem 1fr}.belief p{grid-column:2}.approach-rail{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:640px){.page-about .hero{min-height:680px!important;background-position:58% center!important}.page-about .hero h1{font-size:clamp(3rem,17vw,4.7rem)}.belief{grid-template-columns:2.7rem 1fr}.approach-rail{grid-template-columns:1fr}.mission-statement{border-radius:.8rem}}
+  </style>
 </head>
 <body class="page-about">
   <nav class="nav">
@@ -52,8 +63,9 @@
   <header class="hero">
     <div class="wrap">
       <h1>About Carapace</h1>
-      <p class="lead">Carapace is the company: a private AI infrastructure consultancy and the team behind Cortex, our open-core, model-independent software platform.</p>
-      <p class="quote">We are not here to sell AI hype. We are here to help real businesses use automation in ways that save time, improve workflows, and give existing teams more leverage.</p>
+      <p class="lead">We build private AI infrastructure for real businesses—and the open-core software that keeps it governed, adaptable, and under their control.</p>
+      <p class="quote">Technology in service of human capability. No AI theater required.</p>
+      <div class="cta"><a class="btn primary" href="business.html">See How We Help</a><a class="btn outline" href="carapace.html">Explore Cortex</a></div>
       <span class="pill">Carapace · Company</span>
       <span class="pill">Cortex · Software</span>
       <span class="pill">Practical AI</span>
@@ -61,7 +73,59 @@
     </div>
   </header>
 
-  <main class="wrap">
+  <main class="wrap about-main">
+    <section class="about-section about-intro">
+      <div><p class="about-eyebrow">Who We Are</p><h2>Builders first. Consultants where it matters.</h2></div>
+      <div class="about-intro__copy">
+        <p>Carapace is the company behind Cortex. We build the software, deploy it into real workflows, and turn proven patterns into durable systems a business can own.</p>
+        <p>We are not here to sell AI theater. We help teams remove low-value work, protect what is sensitive, and create more room for judgment, care, creativity, and momentum.</p>
+        <div class="about-declaration">Your intelligence layer should belong to you.</div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="belief-head">
+        <div><p class="about-eyebrow">What We Believe</p><h2>Useful technology should make people more capable.</h2></div>
+        <p>Our choices—technical and commercial—follow four durable principles.</p>
+      </div>
+      <div class="belief-list">
+        <article class="belief"><h3>Human capability over replacement</h3><p>Offload repeatable work so people can spend more time on judgment, relationships, and the work that needs a human mind.</p></article>
+        <article class="belief"><h3>Access beyond the enterprise</h3><p>Owner-operators, small businesses, and lean teams deserve serious tools without enterprise overhead or an internal AI department.</p></article>
+        <article class="belief"><h3>Practical over performative</h3><p>A working system that reduces drag matters more than a flashy demo. Real operations are the test.</p></article>
+        <article class="belief"><h3>Value that compounds</h3><p>Good implementation work should become reusable integrations, packages, and operating knowledge—not disappear into a slide deck.</p></article>
+      </div>
+    </section>
+
+    <section class="about-section about-mission">
+      <div><p class="about-eyebrow">Our Mission</p><h2>Put practical AI within reach of everyday businesses.</h2><p class="sublead">We help existing teams become more capable without losing the human strengths that make them valuable—or surrendering control of their data, workflows, and strategy.</p></div>
+      <aside class="mission-statement"><strong>The goal is leverage.</strong><p>Not replacement. Not dependence. A stronger team, supported by systems that absorb the work people should not have to carry.</p></aside>
+    </section>
+
+    <section class="about-section">
+      <p class="about-eyebrow">Company + Software</p>
+      <div class="identity-split">
+        <article class="identity-block"><span class="identity-name">Carapace</span><h3>The infrastructure partner</h3><p>We scope the workflow, install the environment, connect the systems, define the controls, and stay involved where implementation expertise is useful.</p></article>
+        <article class="identity-block"><span class="identity-name">Cortex</span><h3>The control plane</h3><p>Our model-independent software routes work, applies policy, protects sensitive context, and keeps decisions inspectable as tools and providers change.</p></article>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="approach-head"><div><p class="about-eyebrow">How We Work</p><h2>Small wins first. Scale with evidence.</h2></div><p>We do not ask a business to fund a giant transformation on faith. We begin with a bounded workflow and let real outcomes determine what earns expansion.</p></div>
+      <div class="approach-rail">
+        <article class="approach-step"><span>01</span><h3>Discover</h3><p>Map the drag, risk, tools, and strongest first opportunity.</p></article>
+        <article class="approach-step"><span>02</span><h3>Deploy</h3><p>Launch one to two real workflows in a governed environment.</p></article>
+        <article class="approach-step"><span>03</span><h3>Measure</h3><p>Track time saved, adoption, cost, and operational impact.</p></article>
+        <article class="approach-step"><span>04</span><h3>Expand</h3><p>Turn what proves useful into repeatable infrastructure.</p></article>
+      </div>
+    </section>
+
+    <section class="about-cta">
+      <article><p class="about-eyebrow">You Do Not Need an AI Department</p><h2>You need the benefits of one.</h2><p class="sublead">Carapace becomes the private AI infrastructure team. Cortex becomes the layer that keeps the work controlled as the technology changes.</p><div class="cta"><a class="btn primary" href="business.html">See How We Help</a><a class="btn outline" href="licensing.html">View Licensing</a></div></article>
+      <aside><strong>Control the destination, not the vendor.</strong>Use the right local, private-cloud, frontier, or specialized model without rebuilding your strategy around one provider.</aside>
+    </section>
+  </main>
+
+  <main class="wrap about-legacy" hidden aria-hidden="true">
     <section class="grid two">
       <article class="card">
         <h2>Who we are</h2>

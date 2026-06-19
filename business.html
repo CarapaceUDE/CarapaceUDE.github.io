@@ -60,6 +60,17 @@
     @media (max-width:640px){.carousel-shell{padding:1rem 2.8rem;} .carousel-slide{min-width:100%;opacity:1;transform:none;} .carousel-btn{width:38px;height:38px;} .carousel-card strong{font-size:1.22rem;} .carousel-card p{font-size:.96rem;}}
   </style>
   <link rel="stylesheet" href="assets/site.css" />
+  <style>
+    .page-business .hero{position:relative;display:grid;align-items:end;min-height:clamp(620px,78vh,820px)!important;padding:clamp(8rem,17vh,12rem) 0 clamp(3rem,7vw,6rem)!important;overflow:hidden;background-image:linear-gradient(90deg,rgba(4,8,17,.94) 0%,rgba(4,8,17,.74) 38%,rgba(4,8,17,.18) 70%),linear-gradient(0deg,rgba(4,8,17,.82) 0%,transparent 48%),url("assets/how-we-help_wide_1.png")!important;background-position:center!important;background-size:cover!important;border-bottom:1px solid rgba(112,150,192,.25)}.page-business .hero::before,.page-business .hero::after{display:none!important}
+    .page-business .hero .wrap{position:relative;z-index:1}.hero-copy{max-width:660px}.page-business .hero-kicker{margin:0 0 1rem;color:#a9caff;font:600 .75rem/1.4 Roboto Mono,monospace;letter-spacing:.18em;text-transform:uppercase}.page-business .hero h1{max-width:10ch;font-size:clamp(3.5rem,8vw,6.8rem)}.page-business .hero .lead{color:#e1e8f5;font-size:clamp(1.05rem,1.8vw,1.3rem)}.hero-note{max-width:56ch;margin:1rem 0 0;color:#aebbd0}
+    .help-showcase{padding:clamp(4rem,9vw,8rem) 0}.help-showcase__head{display:grid;grid-template-columns:1fr minmax(260px,.65fr);gap:2rem;align-items:end;margin-bottom:clamp(2rem,5vw,4rem);padding-bottom:1.2rem;border-bottom:1px solid rgba(112,150,192,.28)}.help-showcase__head p{margin:0;color:var(--muted)}
+    .page-business .carousel-shell{position:relative;display:block;width:100%;max-width:none;margin:0 auto;padding:0 0 3.5rem;overflow:hidden}.page-business .carousel-viewport{width:100%;min-height:0;margin:0 auto;overflow:hidden}.page-business .carousel-track{gap:0;width:100%}.page-business .carousel-slide{flex:0 0 100%;width:100%;min-width:100%;padding:0;opacity:1;transform:none}.help-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.72fr);gap:clamp(2.5rem,7vw,7rem);align-items:center;width:100%;max-width:1000px;margin-inline:auto}.help-pair--legacy>strong{display:none}.help-pair__copy{padding:clamp(1rem,3vw,2rem) 0}.help-pair__index{display:block;margin-bottom:1.4rem;color:#8fbaf4;font:500 .73rem/1 Roboto Mono,monospace;letter-spacing:.16em}.help-pair h3{margin:0 0 1rem;font-size:clamp(2.2rem,5vw,4.4rem);line-height:.98;letter-spacing:-.04em}.help-pair__lead{max-width:39ch;margin:0 0 2rem;color:#d5dfef;font-size:clamp(1.05rem,1.7vw,1.25rem)}.help-pair__notes{border-top:1px solid rgba(112,150,192,.3)}.help-pair__notes p{display:grid;grid-template-columns:2.2rem 1fr;gap:.65rem;margin:0;padding:.72rem 0;color:var(--muted);border-bottom:1px solid rgba(112,150,192,.15)}.help-pair__notes span{color:#7199ca;font:500 .68rem/1.7 Roboto Mono,monospace}.help-pair__media{margin:0;aspect-ratio:3/4;overflow:hidden}.help-pair__media img{width:100%;height:100%;object-fit:cover}
+    .page-business .carousel-btn{position:absolute;top:auto;bottom:0;width:2.5rem;height:2.5rem;margin:0;padding:0;border:0;border-radius:0;background:none;color:#dce8ff;font:600 1.25rem/1 Roboto Mono,monospace;transform:none}.page-business .carousel-btn:hover{background:none;color:#8fd0ff}.page-business .carousel-btn.prev{left:0}.page-business .carousel-btn.next{right:0}.page-business .carousel-dots{align-items:center;width:calc(100% - 7rem);margin:2rem auto 0;gap:.35rem}.page-business .carousel-dot{width:100%;height:2px;border-radius:0;background:#33445e}.page-business .carousel-dot.active{background:#8fd0ff;transform:none}
+    .engagement-path{padding:clamp(3rem,7vw,6rem) 0;border-top:1px solid rgba(112,150,192,.22)}.engagement-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1.2rem,3vw,3rem);margin-top:2.5rem}.engagement-step{padding-top:1rem;border-top:1px solid rgba(112,150,192,.26)}.engagement-step span{color:#7199ca;font:500 .7rem/1 Roboto Mono,monospace}.engagement-step h3{margin-top:1.1rem}.why-strip{display:grid;grid-template-columns:minmax(0,.7fr) 1fr;gap:clamp(2rem,6vw,6rem);padding:clamp(3rem,7vw,6rem) 0;border-block:1px solid rgba(112,150,192,.22)}.why-strip p{margin-top:0}.page-business #contact{margin-top:clamp(3rem,7vw,6rem)}.page-business #contact .intake-intro{grid-template-columns:1.2fr .8fr;padding-bottom:2rem;border-bottom:1px solid rgba(112,150,192,.22)}.intake-aside{padding-top:.2rem}
+    @media(max-width:900px){.help-showcase__head,.help-pair,.why-strip{grid-template-columns:1fr}.help-pair__media{grid-row:1;width:min(100%,520px);margin-inline:auto}.engagement-steps{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:640px){.page-business .hero{min-height:690px;background-position:62% center}.page-business .hero h1{font-size:clamp(3rem,17vw,4.7rem)}.help-showcase{padding-top:3.5rem}.help-pair{gap:1.7rem}.help-pair__media{width:100%}.engagement-steps{grid-template-columns:1fr}.carousel-controls{gap:.8rem}.page-business #contact .intake-intro{grid-template-columns:1fr}}
+    @media(prefers-reduced-motion:reduce){.page-business .carousel-track{transition:none}}
+  </style>
 </head>
 <body class="page-business">
   <nav class="nav">
@@ -71,69 +82,52 @@
 
   <header class="hero">
     <div class="wrap">
-      <h1>How We Help</h1>
-      <p class="lead">Carapace becomes your private AI infrastructure team. Cortex is the software we deploy to turn messy, repetitive workflows into governed, model-independent systems.</p>
-      <p class="muted">For teams that want useful business systems, not more disconnected AI experiments.</p>
-      <p class="quote">We start with a real workflow, run a practical pilot, and build from what proves useful.</p>
-      <span class="pill">Workflow consulting</span>
-      <span class="pill">Commercial deployment</span>
-      <span class="pill">Reusable integrations</span>
-      <div class="cta">
-        <a class="btn primary" href="#contact">Book the Discovery Sprint</a>
-        <a class="btn outline" href="carapace.html">Explore Cortex Software</a>
+      <div class="hero-copy">
+        <p class="hero-kicker">From workflow drag to working system</p>
+        <h1>How We Help</h1>
+        <p class="lead">Carapace becomes your private AI infrastructure team. We find the work that drains time, then deploy Cortex to make it governed, repeatable, and easier to run.</p>
+        <p class="hero-note">Start with one real workflow. Prove the value. Build outward from evidence.</p>
+        <div class="cta">
+          <a class="btn primary" href="#contact">Book the Discovery Sprint</a>
+          <a class="btn outline" href="carapace.html">Explore Cortex Software</a>
+        </div>
       </div>
     </div>
   </header>
 
   <main class="wrap">
-    <section>
-      <h2>How we help businesses</h2>
-      <div class="card carousel-shell">
+    <section class="help-showcase">
+      <div class="help-showcase__head">
+        <div><p class="eyebrow">A Practical Partnership</p><h2>How we help businesses</h2></div>
+        <p>Four views of the same engagement. Move through them to see the work, the fit, the value, and the path forward.</p>
+      </div>
+      <div class="carousel-shell">
         <button class="carousel-btn prev" type="button" aria-label="Previous card">‹</button>
         <div class="carousel-viewport">
           <div class="carousel-track" id="help-carousel-track">
             <article class="carousel-slide">
-              <div class="carousel-card">
-                <strong>What we do</strong>
-                <p>We help businesses turn useful AI ideas into workflows that actually run.</p>
-                <ul class="bullet-list">
-                  <li>Scope the workflow around a real pain point</li>
-                  <li>Connect tools, approvals, and process</li>
-                  <li>Build reusable integrations and workflow packages</li>
-                </ul>
+              <div class="help-pair">
+                <div class="help-pair__copy"><span class="help-pair__index">01 / 04</span><h3>What we do</h3><p class="help-pair__lead">We turn useful AI ideas into workflows that actually run.</p><div class="help-pair__notes"><p><span>01</span>Scope a real pain point</p><p><span>02</span>Connect tools, approvals, and process</p><p><span>03</span>Build reusable integrations</p></div></div>
+                <figure class="help-pair__media"><img src="assets/how-we-help_vert_1.png" alt="Business operators mapping a complex workflow with connected systems" /></figure>
               </div>
             </article>
             <article class="carousel-slide">
-              <div class="carousel-card">
+              <div class="help-pair help-pair--legacy">
                 <strong>Who it’s for</strong>
-                <p>Best fit for teams that already feel the drag of repetitive work and messy workflows.</p>
-                <ul class="bullet-list">
-                  <li>Owner-operators and small businesses</li>
-                  <li>Growing teams with rising operational complexity</li>
-                  <li>Organizations that need controlled deployments</li>
-                </ul>
+                <div class="help-pair__copy"><span class="help-pair__index">02 / 04</span><h3>Who it’s for</h3><p class="help-pair__lead">Teams that already feel the drag of repetitive work and messy workflows.</p><div class="help-pair__notes"><p><span>01</span>Owner-operators and small businesses</p><p><span>02</span>Growing teams with rising complexity</p><p><span>03</span>Organizations that need controlled deployment</p></div></div>
+                <figure class="help-pair__media"><img src="assets/how-we-help_vert_2.png" alt="A team collaborating around an integrated technical workflow" /></figure>
               </div>
             </article>
             <article class="carousel-slide">
-              <div class="carousel-card">
-                <strong>Why teams hire us</strong>
-                <p>We help teams get to something useful faster, with less trial and error.</p>
-                <ul class="bullet-list">
-                  <li>Faster than building everything from scratch</li>
-                  <li>Less fragmentation across tools and workflows</li>
-                  <li>More leverage for the team you already have</li>
-                </ul>
+              <div class="help-pair">
+                <div class="help-pair__copy"><span class="help-pair__index">03 / 04</span><h3>Why teams hire us</h3><p class="help-pair__lead">Get to something useful faster, with less trial and error.</p><div class="help-pair__notes"><p><span>01</span>Move faster than building from scratch</p><p><span>02</span>Reduce fragmentation across tools</p><p><span>03</span>Create more leverage for the existing team</p></div></div>
+                <figure class="help-pair__media"><img src="assets/how-we-help_vert_3.png" alt="A working session focused on making business systems more useful" /></figure>
               </div>
             </article>
             <article class="carousel-slide">
-              <div class="carousel-card">
-                <strong>Engagement model</strong>
-                <p>We start small, prove value, and build from what works.</p>
-                <ul class="bullet-list">
-                  <li>Consult on the workflow and goals</li>
-                  <li>Run a pilot around a real use case</li>
-                  <li>Package repeatable solutions and support if needed</li>
-                </ul>
+              <div class="help-pair">
+                <div class="help-pair__copy"><span class="help-pair__index">04 / 04</span><h3>How we engage</h3><p class="help-pair__lead">Start small, prove value, and build from what works.</p><div class="help-pair__notes"><p><span>01</span>Consult on the workflow and goals</p><p><span>02</span>Run a pilot around a real use case</p><p><span>03</span>Package what works and support it if needed</p></div></div>
+                <figure class="help-pair__media"><img src="assets/how-we-help_vert_4.png" alt="A focused implementation session for a governed AI workflow" /></figure>
               </div>
             </article>
           </div>
@@ -143,29 +137,26 @@
       </div>
     </section>
 
-    <section style="padding-top:1.8rem;">
+    <section class="engagement-path">
       <h2>How a first engagement usually works</h2>
-      <div class="grid two">
-        <article class="card">
+      <div class="engagement-steps">
+        <article class="engagement-step"><span>01</span>
           <h3>Discover</h3>
           <p class="muted">We map workflows, tools, pain points, security requirements, and the work that should not exist anymore.</p>
         </article>
-        <article class="card">
-          <h3>Deploy</h3>
+        <article class="engagement-step"><span>02</span><h3>Deploy</h3>
           <p class="muted">We launch one to two real automations in a private local, cloud, or hybrid environment.</p>
         </article>
-        <article class="card">
-          <h3>Measure ROI</h3>
+        <article class="engagement-step"><span>03</span><h3>Measure ROI</h3>
           <p class="muted">We track hours saved, costs reduced, adoption, and operational impact.</p>
         </article>
-        <article class="card"><h3>Expand</h3><p class="muted">We turn proven wins into repeatable integrations and scale only where the evidence supports it.</p></article>
+        <article class="engagement-step"><span>04</span><h3>Expand</h3><p class="muted">We turn proven wins into repeatable integrations and scale only where the evidence supports it.</p></article>
       </div>
     </section>
 
-    <section class="card">
+    <section class="why-strip">
       <h2>Why Carapace instead of one AI tool?</h2>
-      <p class="muted">Do not buy one product and hope it fits every job.</p>
-      <p>Carapace routes work to the right model based on capability, cost, speed, privacy, and policy. If a provider changes, your workflows and strategic direction do not have to change with it.</p>
+      <div><p class="sublead">Do not buy one product and hope it fits every job.</p><p class="muted">Carapace routes work to the right model based on capability, cost, speed, privacy, and policy. If a provider changes, your workflows and strategic direction do not have to change with it.</p></div>
     </section>
 
     <section id="contact" class="card">
@@ -174,7 +165,7 @@
         <div>
           <p class="muted">One focused engagement. One to two real automations. Measurable results and a clear path forward—without a giant transformation project on faith.</p>
         </div>
-        <div class="card" style="box-shadow:none;">
+        <div class="intake-aside">
           <strong>What helps us respond faster</strong>
           <ul class="checklist">
             <li>Your team size</li>
