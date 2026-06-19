@@ -4,42 +4,393 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Licensing | Carapace</title>
-  <meta name="description" content="Cortex software is free for personal use. Carapace provides commercial licensing, implementation, and optional support for business deployment." />
+  <meta name="description" content="Cortex is free for personal use. Carapace provides the commercial path, implementation help, optional support, and downloadable current agreements." />
   <meta name="theme-color" content="#090c18" />
-  <style>
-    :root { --bg:#070b16; --surface:#101a31; --surface-2:#121f39; --text:#edf1ff; --muted:#a7b3d3; --border:#253554; --primary:#5b6fa6; --primary-2:#475981; --secondary:#cfd8ee; --warn:#f97316; --max:1020px; }
-    *{box-sizing:border-box;} html,body{margin:0;padding:0;} body{margin:0;font:16px/1.62 Inter,Segoe UI,Roboto,system-ui,sans-serif;background:linear-gradient(180deg,#0b1122 0%,var(--bg) 100%);color:var(--text);} a{color:var(--secondary);text-decoration:none;}
-    .wrap{width:min(100% - 2rem,var(--max));margin:0 auto;} .nav{position:sticky;top:0;z-index:20;background:rgba(7,11,22,.76);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);} .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 0;}
-    .brand{display:inline-flex;align-items:center;gap:.65rem;color:var(--text);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.9rem;} .brand img{width:48px;height:48px;border-radius:8px;filter:drop-shadow(0 0 10px rgba(34,211,238,.35));}
-    .links{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;font-size:.92rem;}
-    .hero{padding:3.9rem 0 2.2rem;border-bottom:1px solid var(--border);background:radial-gradient(900px 440px at 10% -10%,rgba(139,92,246,.22),transparent 46%),radial-gradient(900px 400px at 110% 10%,rgba(34,211,238,.14),transparent 44%);} h1{margin:.3rem 0 .9rem;line-height:1.04;font-size:clamp(2.05rem,4.4vw,3.45rem);letter-spacing:-.03em;} h2{margin:0 0 .85rem;font-size:clamp(1.24rem,2.2vw,1.82rem);} h3{margin:.1rem 0 .5rem;font-size:1.02rem;}
-    .lead{color:var(--muted);max-width:62ch;margin:0 0 1rem;font-size:1.05rem;} .pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:.35rem .7rem;font-size:.82rem;color:#cfe1ff;background:rgba(18,31,57,.7);margin-right:.45rem;margin-bottom:.45rem;}
-    .cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem;} .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:11px;border:1px solid transparent;font-weight:700;letter-spacing:.03em;font-size:.84rem;padding:.78rem 1.05rem;transition:.18s ease;text-transform:uppercase;} .btn:hover{transform:translateY(-1px);} .btn.primary{color:#eef3ff;background:linear-gradient(180deg,var(--primary),var(--primary-2));border-color:rgba(207,216,238,.14);box-shadow:0 8px 18px rgba(8,12,22,.28);} .btn.outline{color:#dce8ff;border-color:#334566;background:rgba(15,22,38,.74);} .btn.outline:hover{background:rgba(22,31,52,.9);border-color:#41567e;}
-    main{padding:1.8rem 0 2.9rem;} .grid{display:grid;gap:1rem;} .two{grid-template-columns:repeat(2,minmax(0,1fr));} .card{border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,rgba(16,26,48,.94),rgba(14,22,40,.9));padding:1.15rem 1.15rem;box-shadow:0 10px 28px rgba(0,0,0,.14);} .muted{color:var(--muted);} .warn{border-left:4px solid var(--warn);background:linear-gradient(165deg,rgba(52,29,14,.56),rgba(16,23,39,.92));}
-    .carousel-shell{position:relative;padding:1rem 4.2rem;overflow:hidden;max-width:760px;margin:0 auto;}
-    .carousel-viewport{position:relative;min-height:285px;overflow:visible;}
-    .carousel-track{display:flex;gap:1rem;transition:transform .55s ease;will-change:transform;}
-    .carousel-slide{min-width:calc(100% - 72px);padding:0 .1rem;opacity:.22;transform:scale(.965);transition:opacity .35s ease,transform .35s ease;}
-    .carousel-slide.is-active{opacity:1;transform:scale(1);}
-    .carousel-card{min-height:265px;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;text-align:left;}
-    .carousel-card strong{display:block;font-size:1.4rem;line-height:1.15;margin-bottom:.45rem;color:#edf1ff;}
-    .carousel-card p{margin:0;color:#cbd8f8;font-size:1rem;max-width:48ch;}
-    .bullet-list{margin:.8rem 0 0;padding-left:1.15rem;color:var(--muted);}
-    .bullet-list li{opacity:0;transform:translateY(8px);animation:bulletIn .38s ease forwards;}
-    .bullet-list li:nth-child(1){animation-delay:.18s;}
-    .bullet-list li:nth-child(2){animation-delay:.42s;}
-    .bullet-list li:nth-child(3){animation-delay:.66s;}
-    @keyframes bulletIn{to{opacity:1;transform:translateY(0);}}
-    .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:999px;border:1px solid #41567e;background:rgba(15,22,38,.86);color:#edf1ff;font-size:1.35rem;display:grid;place-items:center;cursor:pointer;transition:.18s ease;z-index:2;}
-    .carousel-btn:hover{background:rgba(22,31,52,.96);border-color:#8fd0ff;}
-    .carousel-btn.prev{left:1rem;}
-    .carousel-btn.next{right:1rem;}
-    .carousel-dots{display:flex;justify-content:center;gap:.5rem;margin-top:.5rem;}
-    .carousel-dot{width:10px;height:10px;border-radius:999px;border:0;background:#41567e;cursor:pointer;opacity:.9;transition:.18s ease;}
-    .carousel-dot.active{background:#8fd0ff;transform:scale(1.1);}
-    footer{border-top:1px solid var(--border);padding:1.3rem 0 2rem;color:#9fb0d7;font-size:.9rem;} @media (max-width:900px){.two{grid-template-columns:1fr;} .carousel-shell{padding:1rem 3.25rem;max-width:100%;} .carousel-viewport{min-height:320px;} .carousel-slide{min-width:calc(100% - 56px);} .carousel-card{min-height:300px;}} @media (max-width:640px){.carousel-shell{padding:1rem 2.8rem;} .carousel-slide{min-width:100%;opacity:1;transform:none;} .carousel-btn{width:38px;height:38px;} .carousel-card strong{font-size:1.22rem;} .carousel-card p{font-size:.96rem;}}
-  </style>
   <link rel="stylesheet" href="assets/site.css" />
+  <style>
+    .page-licensing .hero {
+      position: relative;
+      display: grid;
+      align-items: end;
+      min-height: clamp(560px, 70vh, 760px) !important;
+      padding: clamp(5.75rem, 11vh, 8rem) 0 clamp(2.5rem, 5vw, 4.5rem) !important;
+      background-image:
+        linear-gradient(90deg, rgba(3, 7, 14, .94) 0%, rgba(3, 7, 14, .74) 40%, rgba(3, 7, 14, .15) 76%),
+        linear-gradient(0deg, rgba(3, 7, 14, .8), transparent 56%),
+        url("assets/about-wide_1.png") !important;
+      background-position: center !important;
+      background-size: cover !important;
+      border-bottom: 1px solid rgba(112, 150, 192, .25);
+    }
+
+    .page-licensing .hero::before,
+    .page-licensing .hero::after {
+      display: none !important;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(320px, .62fr);
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: end;
+    }
+
+    .hero-copy {
+      max-width: 690px;
+    }
+
+    .page-licensing .hero .hero-kicker {
+      margin: 0 0 .55rem;
+      max-width: 58ch;
+      font-size: clamp(.66rem, .8vw, .74rem);
+      line-height: 1.25;
+      letter-spacing: .12em;
+    }
+
+    .page-licensing .hero h1 {
+      max-width: 10ch;
+      margin-bottom: .65rem;
+      font-size: clamp(3.15rem, 7vw, 6rem);
+      line-height: .92;
+    }
+
+    .page-licensing .hero .lead {
+      color: #e1e8f5;
+      font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+    }
+
+    .hero-note {
+      max-width: 57ch;
+      margin: 1rem 0 0;
+      color: #aebbd0;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: .35rem .7rem;
+      border: 1px solid rgba(112, 150, 192, .26);
+      border-radius: 999px;
+      background: rgba(18, 31, 57, .66);
+      color: #d6e4ff;
+      font-size: .82rem;
+    }
+
+    .hero-panel {
+      padding: clamp(1.5rem, 3vw, 2.25rem);
+      border: 1px solid rgba(112, 150, 192, .22);
+      border-radius: 1.2rem;
+      background: linear-gradient(145deg, rgba(16, 26, 48, .9), rgba(10, 16, 30, .72));
+      box-shadow: 0 28px 70px rgba(0, 0, 0, .18);
+      backdrop-filter: blur(8px);
+    }
+
+    .panel-kicker,
+    .section-kicker {
+      margin: 0 0 1rem;
+      color: var(--copper);
+      font: 600 .72rem/1.4 Roboto Mono, monospace;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .hero-panel h2 {
+      font-size: clamp(1.5rem, 2.8vw, 2.3rem);
+      margin-bottom: .6rem;
+    }
+
+    .hero-panel p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .signal-list {
+      display: grid;
+      gap: .8rem;
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(112, 150, 192, .2);
+    }
+
+    .signal-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .8rem;
+      align-items: start;
+    }
+
+    .signal-row strong {
+      display: block;
+      margin-bottom: .15rem;
+      color: var(--text);
+      font-size: .98rem;
+    }
+
+    .signal-row span {
+      display: block;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .signal-mark {
+      display: grid;
+      place-items: center;
+      width: 2.3rem;
+      aspect-ratio: 1;
+      border-radius: .75rem;
+      color: #dce8ff;
+      background: rgba(91, 111, 166, .18);
+      border: 1px solid rgba(143, 186, 244, .18);
+      font: 600 .82rem/1 Roboto Mono, monospace;
+    }
+
+    .licensing-main {
+      padding-bottom: clamp(4rem, 8vw, 7rem);
+    }
+
+    .licensing-section {
+      padding: clamp(4rem, 8vw, 7rem) 0;
+      border-bottom: 1px solid rgba(112, 150, 192, .18);
+    }
+
+    .editorial-intro,
+    .support-split,
+    .cta-band {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(2.5rem, 7vw, 7rem);
+    }
+
+    .editorial-block,
+    .support-block,
+    .document-group {
+      position: relative;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(112, 150, 192, .28);
+    }
+
+    .editorial-block::before,
+    .support-block::before,
+    .document-group::before {
+      content: "";
+      position: absolute;
+      inset: -1px auto auto 0;
+      width: 5rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), transparent);
+    }
+
+    .editorial-block:last-child::before,
+    .support-block:last-child::before,
+    .document-group:nth-child(2n)::before {
+      background: linear-gradient(90deg, var(--copper), transparent);
+    }
+
+    .editorial-block p:last-child,
+    .support-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .brand-key {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .55rem 1rem;
+      margin-top: 1.6rem;
+    }
+
+    .brand-key dt {
+      color: var(--text);
+      font: 600 .72rem/1.6 Roboto Mono, monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .brand-key dd {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .breakout-visual {
+      width: min(calc(100vw - 2rem), 1440px);
+      margin: 0 0 0 50%;
+      transform: translateX(-50%);
+    }
+
+    .breakout-visual figcaption {
+      width: min(calc(100% - 2rem), var(--max));
+      margin: 1rem auto 0;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .section-head {
+      margin-bottom: clamp(2rem, 5vw, 4rem);
+    }
+
+    .license-paths {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(1.4rem, 3vw, 3rem);
+    }
+
+    .license-path {
+      padding-top: 1rem;
+      border-top: 1px solid rgba(112, 150, 192, .24);
+    }
+
+    .license-path span {
+      display: block;
+      margin-bottom: 1.1rem;
+      color: #8fbaf4;
+      font: 500 .72rem/1 Roboto Mono, monospace;
+      letter-spacing: .13em;
+    }
+
+    .license-path p:last-child {
+      margin-bottom: 0;
+    }
+
+    .document-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(1.5rem, 4vw, 4rem);
+    }
+
+    .document-list {
+      display: grid;
+      gap: .9rem;
+      margin-top: 1.4rem;
+    }
+
+    .doc-link {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: .9rem;
+      align-items: center;
+      padding: .95rem 1rem;
+      border: 1px solid rgba(112, 150, 192, .18);
+      border-radius: 1rem;
+      background: rgba(18, 31, 57, .42);
+      color: #dce8ff;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+
+    .doc-link:hover {
+      border-color: rgba(143, 186, 244, .36);
+      background: rgba(22, 31, 52, .82);
+      transform: translateY(-1px);
+    }
+
+    .doc-link strong {
+      display: block;
+      margin-bottom: .12rem;
+      color: #f5f7fb;
+    }
+
+    .doc-link span {
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .doc-link b {
+      color: #8fbaf4;
+      font: 600 .8rem/1 Roboto Mono, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .doc-mark {
+      display: grid;
+      place-items: center;
+      width: 2.3rem;
+      aspect-ratio: 1;
+      border-radius: .72rem;
+      color: #dce8ff;
+      background: rgba(67, 166, 255, .12);
+      border: 1px solid rgba(143, 186, 244, .18);
+      font: 600 .8rem/1 Roboto Mono, monospace;
+    }
+
+    .support-split {
+      align-items: start;
+    }
+
+    .cta-band {
+      align-items: end;
+      padding: clamp(2rem, 5vw, 4rem) 0;
+      border-block: 1px solid rgba(112, 150, 192, .22);
+    }
+
+    .cta-band aside {
+      padding-top: 1rem;
+      border-top: 1px solid rgba(112, 150, 192, .24);
+      color: var(--muted);
+    }
+
+    .cta-band aside strong {
+      display: block;
+      margin-bottom: .6rem;
+      color: var(--text);
+    }
+
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: .75rem 1.5rem;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .editorial-intro,
+      .support-split,
+      .cta-band,
+      .document-grid,
+      .license-paths {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .breakout-visual {
+        width: calc(100vw - 1rem);
+      }
+
+      .doc-link {
+        grid-template-columns: 1fr;
+      }
+
+      .doc-link b {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-licensing .hero {
+        min-height: auto !important;
+        padding-top: 5.25rem !important;
+        padding-bottom: 3rem !important;
+        background-position: 58% center !important;
+      }
+
+      .page-licensing .hero .hero-kicker {
+        margin-bottom: .45rem;
+        font-size: .64rem;
+        letter-spacing: .1em;
+      }
+
+      .page-licensing .hero h1 {
+        font-size: clamp(2.65rem, 14vw, 4.15rem);
+      }
+    }
+  </style>
 </head>
 <body class="page-licensing">
   <nav class="nav">
@@ -50,223 +401,240 @@
   </nav>
 
   <header class="hero">
-    <div class="wrap">
-      <h1>Licensing</h1>
-      <p class="lead">Cortex software is free for personal use. Carapace provides the commercial license, implementation, and optional support when Cortex becomes part of a business workflow.</p>
-      <span class="pill">Free for personal use</span>
-      <span class="pill">Business licensing path</span>
-      <span class="pill">Optional support</span>
-      <div class="cta">
-        <a class="btn primary" href="business.html#contact">Ask About Licensing</a>
-        <a class="btn outline" href="https://github.com/CarapaceUDE/carapace/releases" target="_blank" rel="noreferrer">Free Download</a>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="hero-kicker">Open-core licensing</p>
+        <h1>Licensing built for clarity, not mystery.</h1>
+        <p class="lead">Cortex stays free for personal use. When it becomes part of business work, Carapace provides the commercial path, implementation help, and optional support. Businesses making under 100,000 can continually evaluate it before committing to a larger deployment path.</p>
+        <p class="hero-note">If you want to read the terms before you talk to us, the current agreements are all here. The goal is a page your operator, advisor, or counsel can scan without hunting through bubbles and hidden conditions.</p>
+        <div class="cta">
+          <a class="btn primary" href="business.html#contact">Talk About Licensing</a>
+          <a class="btn outline" href="#agreements">Read the Agreements</a>
+        </div>
+        <div class="hero-tags">
+          <span class="tag">Free personal use</span>
+          <span class="tag">Business evaluation under 100,000</span>
+          <span class="tag">Commercial path when work goes live</span>
+        </div>
       </div>
+
+      <aside class="hero-panel" aria-label="Licensing overview">
+        <p class="panel-kicker">At a glance</p>
+        <h2>The page is the paperwork.</h2>
+        <p>Start with the lane that matches your use, then download the exact document that governs it.</p>
+        <div class="signal-list">
+          <div class="signal-row">
+            <span class="signal-mark">01</span>
+            <div>
+              <strong>Personal use stays simple</strong>
+              <span>Read the community edition license and explore Cortex directly.</span>
+            </div>
+          </div>
+          <div class="signal-row">
+            <span class="signal-mark">02</span>
+            <div>
+              <strong>Smaller businesses can keep evaluating</strong>
+              <span>If revenue is under 100,000, you can keep assessing fit before stepping into a broader commercial structure.</span>
+            </div>
+          </div>
+          <div class="signal-row">
+            <span class="signal-mark">03</span>
+            <div>
+              <strong>Support is additive, not mandatory</strong>
+              <span>Use implementation, NDA, SOW, or retainer terms only when the work actually calls for them.</span>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="grid two">
-      <article class="card">
-        <h2>Simple version</h2>
-        <p class="muted">If you are exploring Cortex for yourself, the free path is the right place to start.</p>
-        <p>If you want to deploy Cortex inside a business workflow, Carapace will help you choose the commercial path.</p>
-      </article>
-      <article class="card warn">
-        <h2>Why this exists</h2>
-        <p>This keeps Cortex accessible for personal use while supporting commercial deployment, implementation, and long-term development—without trapping your organization in one provider, model, or deployment path.</p>
-      </article>
-    </section>
-
-    <section class="card">
-      <h2>Licensing without lock-in</h2>
-      <p class="muted">You control the destination—not us, and not a model vendor.</p>
-      <p>Commercial licensing supports sustainable platform development while preserving model independence. Your data, workflows, policies, and strategic direction remain yours, and your deployment can evolve as providers and requirements change.</p>
-    </section>
-
-    <section>
-      <h2>Choose the path that fits</h2>
-      <div class="grid two">
-        <article class="card">
-          <strong>Personal use</strong>
-          <p>For learning, self-hosting, and individual experimentation.</p>
-          <ul>
-            <li>Free download path</li>
-            <li>Best for exploration and personal workflows</li>
-            <li>Good for getting familiar with Cortex</li>
-          </ul>
+  <main class="wrap licensing-main">
+    <section class="licensing-section">
+      <div class="editorial-intro">
+        <article class="editorial-block">
+          <p class="section-kicker">How the model works</p>
+          <h2>One open entry point. One business path when the work becomes real.</h2>
+          <p class="sublead">The licensing model is designed to feel readable from the outside. Individuals can learn the platform without friction. Businesses can evaluate fit without immediate lock-in. Commercial use gets its own clear agreement once Cortex becomes part of live operations.</p>
         </article>
-        <article class="card">
-          <strong>Business use</strong>
-          <p>For team workflows, commercial deployments, and company operations.</p>
-          <ul>
-            <li>Commercial licensing path</li>
-            <li>Pairs naturally with setup and implementation help</li>
-            <li>Fits teams using Cortex in real business operations</li>
-          </ul>
+
+        <article class="editorial-block">
+          <p class="section-kicker">Why publish everything</p>
+          <p>Good licensing should not depend on a sales call to reveal the basic shape. This page puts the policy, the practical path, and the current agreements in one place so the operational decision is easier to inspect.</p>
+          <dl class="brand-key">
+            <dt>Open</dt><dd>Personal use can begin with the published community edition terms.</dd>
+            <dt>Evaluate</dt><dd>Businesses under 100,000 in revenue can continue evaluating Cortex before stepping into a larger commercial commitment.</dd>
+            <dt>Deploy</dt><dd>Once the system becomes part of real business operations, the commercial agreement becomes the right lane.</dd>
+          </dl>
         </article>
       </div>
     </section>
 
-    <section>
-      <h2>What businesses usually need</h2>
-      <div class="card carousel-shell">
-        <button class="carousel-btn prev" type="button" aria-label="Previous card">‹</button>
-        <div class="carousel-viewport">
-          <div class="carousel-track" id="licensing-carousel-track">
-            <article class="carousel-slide">
-              <div class="carousel-card">
-                <strong>Commercial licensing</strong>
-                <p>The right to use Carapace in real business workflows.</p>
-                <ul class="bullet-list">
-                  <li>Applies when Carapace becomes part of business operations</li>
-                  <li>Keeps the open-core model sustainable</li>
-                  <li>Can be discussed alongside pilots or implementation</li>
-                </ul>
-              </div>
-            </article>
-            <article class="carousel-slide">
-              <div class="carousel-card">
-                <strong>Implementation</strong>
-                <p>Help with setup, workflow fit, and integration work.</p>
-                <ul class="bullet-list">
-                  <li>Consulting around a real workflow</li>
-                  <li>Pilot deployments to prove value</li>
-                  <li>Reusable integrations and workflow package development</li>
-                </ul>
-              </div>
-            </article>
-            <article class="carousel-slide">
-              <div class="carousel-card">
-                <strong>Optional support</strong>
-                <p>Ongoing help if your team wants it.</p>
-                <ul class="bullet-list">
-                  <li>Refinement and troubleshooting</li>
-                  <li>Workflow expansion over time</li>
-                  <li>Not required for every engagement</li>
-                </ul>
-              </div>
-            </article>
-            <article class="carousel-slide">
-              <div class="carousel-card">
-                <strong>Reusable packages</strong>
-                <p>Repeatable solutions can become reusable business assets.</p>
-                <ul class="bullet-list">
-                  <li>Integrations and workflow bundles</li>
-                  <li>Useful patterns from consulting can be packaged</li>
-                  <li>Supports the long-term marketplace direction</li>
-                </ul>
-              </div>
-            </article>
-          </div>
+    <figure class="breakout-visual licensing-section">
+      <div class="infographic-frame breakout-fit">
+        <img src="assets/home_lower_3.png" alt="Diagram showing support as optional around Cortex, with self-serve on one side and optional guided help on the other" loading="lazy" />
+      </div>
+      <figcaption>One of the strongest ideas on this page: you can run Cortex yourself, bring in guided help when useful, and avoid building dependency into the model.</figcaption>
+    </figure>
+
+    <section class="licensing-section">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Choose the lane</p>
+          <h2>Three ways people usually arrive here.</h2>
         </div>
-        <button class="carousel-btn next" type="button" aria-label="Next card">›</button>
-        <div class="carousel-dots" id="licensing-carousel-dots" aria-label="Carousel navigation"></div>
+        <p>The goal is not to force every visitor into the same funnel. It is to make the correct next document obvious.</p>
+      </div>
+
+      <div class="license-paths">
+        <article class="license-path">
+          <span>01 / PERSONAL</span>
+          <h3>I am exploring Cortex for myself.</h3>
+          <p class="muted">Start with the community edition agreement and use the platform for personal learning, self-hosting, and hands-on evaluation.</p>
+        </article>
+        <article class="license-path">
+          <span>02 / EVALUATION</span>
+          <h3>I run a small business and want to keep testing fit.</h3>
+          <p class="muted">If the business makes under 100,000, you can continually evaluate Cortex while you determine whether it should become part of a broader operational rollout.</p>
+        </article>
+        <article class="license-path">
+          <span>03 / COMMERCIAL</span>
+          <h3>I need this in a live business workflow.</h3>
+          <p class="muted">Once Cortex becomes part of real company operations, internal systems, or commercial delivery, move into the commercial license and the related implementation documents.</p>
+        </article>
       </div>
     </section>
 
-    <section class="grid three" style="padding-top:1.8rem;">
-      <article class="card">
-        <h3>If you are exploring</h3>
-        <p class="muted">Start with the free download and get familiar with the platform.</p>
-      </article>
-      <article class="card">
-        <h3>If you are deploying in a business</h3>
-        <p class="muted">Talk to us about the commercial path, licensing, and implementation fit.</p>
-      </article>
-      <article class="card">
-        <h3>If you are not sure</h3>
-        <p class="muted">Bring us the workflow or use case and we can help you sort out the right path.</p>
-      </article>
+    <section id="agreements" class="licensing-section">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Current agreements</p>
+          <h2>Download every current document from here.</h2>
+        </div>
+        <p>These are the live agreements in the `assets` folder, organized by what stage of the relationship they support.</p>
+      </div>
+
+      <div class="document-grid">
+        <article class="document-group">
+          <p class="section-kicker">Licenses</p>
+          <h3>Use rights and evaluation paths</h3>
+          <div class="document-list">
+            <a class="doc-link" href="assets/Cortex_Community_Edition_License_Agreement.pdf" download>
+              <span class="doc-mark">01</span>
+              <span>
+                <strong>Cortex Community Edition License Agreement</strong>
+                <span>Personal use terms for learning, self-hosting, and direct evaluation.</span>
+              </span>
+              <b>PDF</b>
+            </a>
+            <a class="doc-link" href="assets/Cortex_Commercial_License_Agreement.pdf" download>
+              <span class="doc-mark">02</span>
+              <span>
+                <strong>Cortex Commercial License Agreement</strong>
+                <span>Business use path for live operations, internal workflows, and commercial deployment.</span>
+              </span>
+              <b>PDF</b>
+            </a>
+          </div>
+        </article>
+
+        <article class="document-group">
+          <p class="section-kicker">Implementation</p>
+          <h3>Documents for structured working engagements</h3>
+          <div class="document-list">
+            <a class="doc-link" href="assets/Carapace_Discovery_and_Integration_Sprint_Agreement.pdf" download>
+              <span class="doc-mark">03</span>
+              <span>
+                <strong>Carapace Discovery and Integration Sprint Agreement</strong>
+                <span>A focused starting point for workflow discovery, scoping, and implementation planning.</span>
+              </span>
+              <b>PDF</b>
+            </a>
+            <a class="doc-link" href="assets/Carapace_Cortex_Order_Form_and_Statement_of_Work_Sample.pdf" download>
+              <span class="doc-mark">04</span>
+              <span>
+                <strong>Carapace Order Form and Statement of Work Sample</strong>
+                <span>A sample structure showing how a commercial engagement can be framed in practice.</span>
+              </span>
+              <b>PDF</b>
+            </a>
+          </div>
+        </article>
+
+        <article class="document-group">
+          <p class="section-kicker">Protection</p>
+          <h3>Boundary-setting for sensitive work</h3>
+          <div class="document-list">
+            <a class="doc-link" href="assets/Carapace_Mutual_NDA_and_Client_Data_Segregation_Agreement.pdf" download>
+              <span class="doc-mark">05</span>
+              <span>
+                <strong>Carapace Mutual NDA and Client Data Segregation Agreement</strong>
+                <span>Confidentiality, handling rules, and explicit data-boundary language for sensitive environments.</span>
+              </span>
+              <b>PDF</b>
+            </a>
+          </div>
+        </article>
+
+        <article class="document-group">
+          <p class="section-kicker">Optional support</p>
+          <h3>Help that can be added without becoming dependency</h3>
+          <div class="document-list">
+            <a class="doc-link" href="assets/Carapace_Strategy_and_Support_Retainer_Terms.pdf" download>
+              <span class="doc-mark">06</span>
+              <span>
+                <strong>Carapace Strategy and Support Retainer Terms</strong>
+                <span>Ongoing help, refinements, and expert support when a team wants it after implementation.</span>
+              </span>
+              <b>PDF</b>
+            </a>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section class="card" style="margin-top:1.2rem;">
-      <h2>Need the practical answer?</h2>
-      <p class="muted">If you are just exploring, use the free download. If you want Carapace inside a business workflow, talk to us about the commercial path.</p>
-      <div class="cta" style="margin-top:1.2rem;">
-        <a class="btn primary" href="business.html#contact">Talk to Us About Your Use Case</a>
-        <a class="btn outline" href="index.html">Back to Home</a>
+    <section class="licensing-section">
+      <div class="support-split">
+        <article class="support-block">
+          <p class="section-kicker">What stays true</p>
+          <h2>Control should survive growth.</h2>
+          <p class="sublead">Whether you are reading the free license, continuously evaluating as a smaller business, or moving into commercial use, the throughline is the same: the boundaries should be inspectable and the deployment path should stay under your control.</p>
+        </article>
+
+        <article class="support-block">
+          <p class="section-kicker">What does not happen here</p>
+          <p>There is no mandatory support fee disguised as a product requirement. There is no need to pretend a pilot and a scaled deployment are the same thing. The page should make it clear when you are simply exploring, when you are still evaluating, and when you are operationalizing.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="licensing-section">
+      <div class="cta-band">
+        <article>
+          <p class="section-kicker">Need help choosing?</p>
+          <h2>Bring the use case. We will map the document path.</h2>
+          <p class="sublead">If you already know the workflow, the team size, and the stage you are in, we can usually point you to the right agreement quickly.</p>
+          <div class="cta">
+            <a class="btn primary" href="business.html#contact">Talk to Us About Your Use Case</a>
+            <a class="btn outline" href="carapace.html">Explore Cortex</a>
+          </div>
+        </article>
+
+        <aside>
+          <strong>Best fit for a first call</strong>
+          Share whether you are using Cortex personally, evaluating it inside a business under 100,000, or preparing to deploy it into live operations. That is usually enough to get to the right next document.
+        </aside>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap">
-      <div>Carapace licensing for personal use and business deployment</div>
+    <div class="wrap footer-row">
+      <div>Carapace licensing for personal use, business evaluation, and commercial deployment</div>
       <div><a href="index.html">Home</a> | <a href="business.html">How We Help</a> | <a href="carapace.html">Cortex Software</a></div>
     </div>
   </footer>
 
-  <script>
-    (function () {
-      const track = document.getElementById('licensing-carousel-track');
-      const dotsWrap = document.getElementById('licensing-carousel-dots');
-      const prevBtn = document.querySelector('.carousel-btn.prev');
-      const nextBtn = document.querySelector('.carousel-btn.next');
-      if (!track || !dotsWrap || !prevBtn || !nextBtn) return;
-
-      const slides = Array.from(track.children);
-      let current = 0;
-      let autoTimer = null;
-
-      function restartBullets() {
-        slides.forEach(function (slide, index) {
-          const list = slide.querySelector('.bullet-list');
-          if (!list) return;
-          list.style.visibility = index === current ? 'visible' : 'hidden';
-          if (index === current) {
-            const items = Array.from(list.children);
-            items.forEach(function (item) {
-              item.style.animation = 'none';
-              item.offsetHeight;
-              item.style.animation = '';
-            });
-          }
-        });
-      }
-
-      function renderDots() {
-        dotsWrap.innerHTML = '';
-        slides.forEach(function (_, index) {
-          const dot = document.createElement('button');
-          dot.type = 'button';
-          dot.className = 'carousel-dot' + (index === current ? ' active' : '');
-          dot.setAttribute('aria-label', 'Go to card ' + (index + 1));
-          dot.addEventListener('click', function () {
-            goTo(index);
-          });
-          dotsWrap.appendChild(dot);
-        });
-      }
-
-      function goTo(index) {
-        current = (index + slides.length) % slides.length;
-        const slideWidth = slides[0].getBoundingClientRect().width;
-        const trackGap = parseFloat(getComputedStyle(track).gap || '0');
-        track.style.transform = 'translateX(-' + ((slideWidth + trackGap) * current) + 'px)';
-        slides.forEach(function (slide, slideIndex) {
-          slide.classList.toggle('is-active', slideIndex === current);
-        });
-        renderDots();
-        restartBullets();
-        startAuto();
-      }
-
-      function startAuto() {
-        if (autoTimer) clearInterval(autoTimer);
-        autoTimer = setInterval(function () {
-          goTo(current + 1);
-        }, 6500);
-      }
-
-      prevBtn.addEventListener('click', function () { goTo(current - 1); });
-      nextBtn.addEventListener('click', function () { goTo(current + 1); });
-
-      window.addEventListener('resize', function () {
-        goTo(current);
-      });
-
-      goTo(0);
-    })();
-  </script>
   <script src="assets/cortex-bloom-bg.js"></script>
   <script src="assets/site.js"></script>
 </body>
