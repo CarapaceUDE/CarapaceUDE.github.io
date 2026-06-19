@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Compounding value</title>
+  <desc id="desc">Modular blocks accumulating into an upward path.</desc>
+  <g stroke-linecap="round" stroke-linejoin="round" stroke-width="10">
+    <path d="M47 206h160" stroke="#F2F6FF"/>
+    <path d="M58 206v-40h43v40M107 206v-72h43v72M156 206V95h43v111" stroke="#F2F6FF"/>
+    <path d="M58 166 80 151l21 15M107 134l22-15 21 15M156 95l22-15 21 15" stroke="#58A6FF"/>
+    <path d="M54 118c12-40 45-64 84-59 30 4 56 25 67 52" stroke="#F2F6FF"/>
+    <path d="m189 86 16 25 27-13" stroke="#F2F6FF"/>
+    <path d="M54 118c11 5 18 17 18 30" stroke="#FF9B62"/>
+    <circle cx="71" cy="150" r="8" fill="none" stroke="#FF9B62"/>
+    <circle cx="129" cy="118" r="8" fill="none" stroke="#58A6FF"/>
+    <circle cx="177" cy="80" r="8" fill="none" stroke="#58A6FF"/>
+  </g>
+</svg>

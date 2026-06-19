@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Practical results</title>
+  <desc id="desc">A chart with an upward trend and a completed verification mark.</desc>
+  <g stroke-linecap="round" stroke-linejoin="round" stroke-width="10">
+    <path d="M42 209h172" stroke="#F2F6FF"/>
+    <path d="M58 209v-56c0-7 6-13 13-13h24c7 0 13 6 13 13v56M111 209v-89c0-7 6-13 13-13h24c7 0 13 6 13 13v89M164 209V78c0-7 6-13 13-13h24c7 0 13 6 13 13v131" stroke="#F2F6FF"/>
+    <path d="m53 118 45-34 43 19 61-55" stroke="#58A6FF"/>
+    <path d="m183 48h19v19" stroke="#58A6FF"/>
+    <circle cx="184" cy="178" r="44" fill="none" stroke="#F2F6FF"/>
+    <path d="m163 178 14 14 29-31" stroke="#FF9B62"/>
+    <path d="M210 130a51 51 0 0 1 22 23" stroke="#58A6FF"/>
+  </g>
+</svg>

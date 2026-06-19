@@ -299,7 +299,7 @@ li { margin: .38rem 0; }
 .pill { display: inline-flex !important; align-items: center; min-height: 30px; padding: .3rem .65rem !important; border: 1px solid var(--line) !important; border-radius: 999px !important; color: var(--muted-strong) !important; background: rgba(8, 20, 36, .7) !important; font: 500 .69rem/1 Roboto Mono, monospace !important; letter-spacing: .035em; }
 body.page-about { --hero-image: url('../ideas/9.png'); }
 body.page-business { --hero-image: url('../ideas/10.png'); }
-body.page-solutions { --hero-image: url('../ideas/4.png'); }
+body.page-solutions { --hero-image: url('solutions-wide_1.png'); }
 body.page-carapace { --hero-image: url('../ideas/5.png'); }
 body.page-licensing { --hero-image: url('../ideas/1.png'); }
 body.page-cortex { --hero-image: url('../ideas/7.png'); }

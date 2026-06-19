@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Small-business access</title>
+  <desc id="desc">A small storefront connected to an open network.</desc>
+  <g stroke-linecap="round" stroke-linejoin="round" stroke-width="10">
+    <path d="M38 113h126l-12-37H50l-12 37Z" stroke="#F2F6FF"/>
+    <path d="M48 113v80h105v-80" stroke="#F2F6FF"/>
+    <path d="M69 193v-50h32v50m25-48h18v28h-18z" stroke="#F2F6FF"/>
+    <path d="M39 113c4 13 19 13 26 0 7 13 22 13 29 0 7 13 22 13 29 0 7 13 22 13 29 0 7 13 22 13 29 0" stroke="#F2F6FF"/>
+    <path d="M162 142h26m11-18v-20m0 0a15 15 0 1 1 21-14m-21 14 16-16" stroke="#58A6FF"/>
+    <circle cx="199" cy="143" r="11" stroke="#58A6FF"/>
+    <circle cx="223" cy="107" r="11" stroke="#58A6FF"/>
+    <circle cx="218" cy="180" r="11" stroke="#58A6FF"/>
+    <path d="M171 153a29 29 0 0 1 35 34" stroke="#FF9B62"/>
+    <path d="m205 56 4 10 10 4-10 4-4 10-4-10-10-4 10-4 4-10Z" stroke="#FF9B62"/>
+  </g>
+</svg>

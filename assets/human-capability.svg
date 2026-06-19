@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Human capability</title>
+  <desc id="desc">A person supported by a gear, connected nodes, and a spark.</desc>
+  <g stroke-linecap="round" stroke-linejoin="round" stroke-width="10">
+    <circle cx="128" cy="71" r="24" stroke="#F2F6FF"/>
+    <path d="M75 201v-23c0-29 24-52 53-52s53 23 53 52v23" stroke="#F2F6FF"/>
+    <path d="M82 201h92" stroke="#F2F6FF"/>
+    <path d="M53 119a25 25 0 0 1 0-28l11 6 11-6 12 18-11 6v13H53v-9Z" stroke="#F2F6FF"/>
+    <circle cx="63" cy="105" r="10" stroke="#FF9B62"/>
+    <path d="M183 96c8-9 19-13 31-11m-31 20c9 8 13 18 11 30m-18-19c-7 9-17 14-29 14m12-28c1 11-3 21-11 29" stroke="#58A6FF"/>
+    <circle cx="216" cy="84" r="9" stroke="#58A6FF"/>
+    <circle cx="201" cy="139" r="9" stroke="#58A6FF"/>
+    <circle cx="155" cy="132" r="9" stroke="#58A6FF"/>
+    <path d="m194 47 5 12 12 5-12 5-5 12-5-12-12-5 12-5 5-12Z" stroke="#FF9B62"/>
+  </g>
+</svg>
