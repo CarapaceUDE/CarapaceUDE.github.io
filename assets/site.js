@@ -130,10 +130,54 @@
     });
   }
 
+  function getAssetsBase() {
+    const script = document.querySelector('script[src*="site.js"]');
+    if (!script) return 'assets/';
+    return (script.getAttribute('src') || 'assets/site.js').replace(/site\.js(?:\?.*)?$/, '');
+  }
+
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      const baseSrc = src.split('?')[0];
+      if (document.querySelector('script[src="' + src + '"], script[src^="' + baseSrc + '"]')) {
+        resolve();
+        return;
+      }
+      const el = document.createElement('script');
+      el.src = src;
+      el.onload = function () { resolve(); };
+      el.onerror = function () { reject(new Error('script failed: ' + src)); };
+      document.head.appendChild(el);
+    });
+  }
+
+  function setupBrandLogos() {
+    const logos = document.querySelectorAll('[data-cortex-brand-logo]');
+    if (!logos.length) return;
+
+    const base = getAssetsBase();
+    loadScript(base + 'harness-brain-canvas.js?v=20260625')
+      .then(function () {
+        if (typeof window.initCortexHubTabOrbCanvas !== 'function') return;
+        logos.forEach(function (wrap) {
+          if (wrap.dataset.cortexBrandLogoInit === '1') return;
+          const canvas = wrap.querySelector('canvas');
+          if (!canvas) return;
+          wrap.dataset.cortexBrandLogoInit = '1';
+          const api = window.initCortexHubTabOrbCanvas(canvas);
+          if (api) wrap._cortexBrandLogoApi = api;
+        });
+      })
+      .catch(function () {
+        /* ring shell still renders */
+      });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     setupNavigation();
     setupDropdowns();
     setupReveals();
     setupHeroTilt();
+    setupBrandLogos();
   });
 })();
