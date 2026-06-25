@@ -1,0 +1,58 @@
+/* Animated Cortex brand mark — single ring + mini brain canvas (harness-brain-canvas.js) */
+.brand .cortex-brand-logo {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.brand .cortex-brand-logo__ring {
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 45deg,
+    #7c6af7,
+    #5ecfff,
+    #c084fc,
+    rgba(124, 106, 247, 0.35),
+    #7c6af7
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #fff calc(100% - 1.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #fff calc(100% - 1.5px));
+  opacity: 0.82;
+  animation: cortex-brand-ring-spin 14s linear infinite reverse;
+}
+
+.brand .cortex-brand-logo__brain {
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(
+    circle at 42% 36%,
+    rgba(28, 32, 48, 0.35) 0%,
+    rgba(10, 12, 20, 0.92) 72%
+  );
+  box-shadow: inset 0 0 4px rgba(124, 106, 247, 0.35);
+}
+
+.brand .cortex-brand-logo__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+@keyframes cortex-brand-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand .cortex-brand-logo__ring {
+    animation: none !important;
+  }
+}
