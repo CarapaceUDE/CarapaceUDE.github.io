@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Discord Community | Carapace</title>
-  <meta name="description" content="Join the Carapace community on Discord — connect with builders, share Cortex workflows, and stay close to the project." />
+  <meta name="description" content="Join the Carapace community on Discord for the latest on Cortex — our flagship agent harness — plus community conversation and early access updates." />
   <meta name="theme-color" content="#030711" />
   <link rel="stylesheet" href="../assets/site.css?v=20260619" />
   <style>
@@ -17,14 +17,18 @@
     .page-discord .discord-shell {
       flex: 1;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 1.5rem 0 2rem;
+      padding: 1.25rem 0 2.5rem;
+    }
+
+    .page-discord .discord-panel,
+    .page-discord .cortex-details {
+      width: min(calc(100% - 2rem), 560px);
     }
 
     .page-discord .discord-panel {
-      width: min(calc(100% - 2rem), 520px);
-      padding: 1.5rem 1.4rem 1.35rem;
+      padding: 1.35rem 1.3rem 1.2rem;
       border: 1px solid rgba(112, 150, 192, .18);
       border-radius: 8px;
       background: rgba(10, 18, 32, .72);
@@ -32,38 +36,67 @@
     }
 
     .page-discord .discord-panel h1 {
-      margin: 0 0 .55rem !important;
+      margin: 0 0 .5rem !important;
       font-size: 1.45rem !important;
       font-weight: 700 !important;
       line-height: 1.2 !important;
       letter-spacing: -.02em !important;
     }
 
-    .page-discord .discord-panel .lead {
-      margin: 0 auto 1rem;
-      max-width: 42ch;
+    .page-discord .discord-panel .lead,
+    .page-discord .discord-panel .cortex-teaser {
+      margin: 0 auto;
+      max-width: 44ch;
       color: var(--muted);
-      font-size: .94rem;
+      font-size: .92rem;
       line-height: 1.55;
     }
 
-    .page-discord .discord-join {
-      display: inline-flex;
+    .page-discord .discord-panel .lead {
+      margin-bottom: .85rem;
+    }
+
+    .page-discord .discord-panel .cortex-teaser {
+      margin-bottom: .75rem;
+      font-size: .86rem;
+    }
+
+    .page-discord .discord-panel .cortex-teaser strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .page-discord .discord-actions {
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: center;
       gap: .55rem;
-      padding: .62rem 1.1rem;
-      border: 1px solid rgba(255, 255, 255, .06);
-      border-radius: 6px;
-      background: #5865f2;
-      color: #fff !important;
-      font: 600 .78rem/1 Manrope, Inter, sans-serif;
-      letter-spacing: .03em;
-      text-transform: uppercase;
-      transition: background .15s ease;
+      margin-top: .15rem;
     }
 
-    .page-discord .discord-join::after {
+    .page-discord .discord-join,
+    .page-discord .discord-details-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      padding: .58rem 1rem;
+      border-radius: 6px;
+      font: 600 .76rem/1 Manrope, Inter, sans-serif;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      transition: background .15s ease, border-color .15s ease;
+    }
+
+    .page-discord .discord-join {
+      border: 1px solid rgba(255, 255, 255, .06);
+      background: #5865f2;
+      color: #fff !important;
+    }
+
+    .page-discord .discord-join::after,
+    .page-discord .discord-details-btn::after {
       content: none;
     }
 
@@ -73,19 +106,94 @@
       box-shadow: none;
     }
 
+    .page-discord .discord-details-btn {
+      border: 1px solid rgba(112, 150, 192, .28);
+      background: rgba(12, 22, 38, .6);
+      color: var(--muted-strong) !important;
+    }
+
+    .page-discord .discord-details-btn:hover {
+      transform: none;
+      border-color: rgba(124, 215, 255, .35);
+      background: rgba(16, 29, 51, .75);
+      color: var(--text) !important;
+    }
+
     .page-discord .discord-join svg {
-      width: 1.1rem;
-      height: 1.1rem;
+      width: 1.05rem;
+      height: 1.05rem;
       flex-shrink: 0;
     }
 
     .page-discord .discord-note {
-      margin: .75rem 0 0;
+      margin: .7rem 0 0;
       color: var(--muted);
-      font-size: .78rem;
+      font-size: .76rem;
     }
 
     .page-discord .discord-note a {
+      color: var(--blue-soft) !important;
+    }
+
+    .page-discord .cortex-details {
+      margin-top: 1.75rem;
+      padding: 1.25rem 1.2rem 1.1rem;
+      border: 1px solid rgba(112, 150, 192, .14);
+      border-radius: 8px;
+      background: rgba(8, 14, 26, .55);
+      scroll-margin-top: 5rem;
+    }
+
+    .page-discord .cortex-details h2 {
+      margin: 0 0 .45rem !important;
+      font-size: 1.1rem !important;
+      font-weight: 700 !important;
+      line-height: 1.25 !important;
+      letter-spacing: -.02em !important;
+    }
+
+    .page-discord .cortex-details .cortex-intro {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.55;
+    }
+
+    .page-discord .cortex-features {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: .55rem;
+    }
+
+    .page-discord .cortex-features li {
+      padding: .55rem .65rem;
+      border: 1px solid rgba(112, 150, 192, .12);
+      border-radius: 6px;
+      background: rgba(6, 12, 22, .45);
+      font-size: .84rem;
+      line-height: 1.45;
+    }
+
+    .page-discord .cortex-features strong {
+      display: block;
+      margin-bottom: .15rem;
+      color: var(--text);
+      font-size: .86rem;
+      font-weight: 600;
+    }
+
+    .page-discord .cortex-features span {
+      color: var(--muted);
+    }
+
+    .page-discord .cortex-more {
+      margin: .85rem 0 0;
+      font-size: .8rem;
+    }
+
+    .page-discord .cortex-more a {
       color: var(--blue-soft) !important;
     }
 
@@ -96,12 +204,21 @@
 
     @media (max-width: 640px) {
       .page-discord .discord-shell {
-        align-items: flex-start;
-        padding-top: 1.25rem;
+        padding-top: .85rem;
       }
 
       .page-discord .discord-panel h1 {
-        font-size: 1.3rem !important;
+        font-size: 1.28rem !important;
+      }
+
+      .page-discord .discord-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .page-discord .discord-join,
+      .page-discord .discord-details-btn {
+        width: 100%;
       }
     }
   </style>
@@ -128,14 +245,50 @@
   <div class="discord-shell">
     <section class="discord-panel" aria-labelledby="discord-heading">
       <h1 id="discord-heading">Join the Carapace Community</h1>
-      <p class="lead">Connect with builders, share Cortex workflows, and stay close to the project. Our Discord is the best place for community conversation.</p>
-      <a class="discord-join" href="https://discord.gg/cNyEhB4RtP" target="_blank" rel="noreferrer">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path fill="currentColor" d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-        </svg>
-        Join Discord
-      </a>
+      <p class="lead">The Carapace Discord is the best place for community conversation, early access updates, and direct feedback with the team.</p>
+      <p class="cortex-teaser">It is also where we share the latest on <strong>Cortex</strong>, our flagship agent harness — context control, intent-aware routing, governance, and more.</p>
+      <div class="discord-actions">
+        <a class="discord-join" href="https://discord.gg/cNyEhB4RtP" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+          </svg>
+          Join Discord
+        </a>
+        <a class="discord-details-btn" href="#cortex-details">About Cortex</a>
+      </div>
       <p class="discord-note">Invite: <a href="https://discord.gg/cNyEhB4RtP" target="_blank" rel="noreferrer">discord.gg/cNyEhB4RtP</a></p>
+    </section>
+
+    <section class="cortex-details" id="cortex-details" aria-labelledby="cortex-heading">
+      <h2 id="cortex-heading">Cortex — agent harness</h2>
+      <p class="cortex-intro">Cortex is Carapace's flagship product: a governed agent harness for real business work. Discord is where we post the latest releases, roadmap notes, and implementation patterns first.</p>
+      <ul class="cortex-features">
+        <li>
+          <strong>Context management</strong>
+          <span>Control what the model sees — scope, redact, and assemble context deliberately instead of dumping everything in.</span>
+        </li>
+        <li>
+          <strong>Intent-aware routing</strong>
+          <span>Route work by what it is trying to do, not just which model is cheapest or loudest.</span>
+        </li>
+        <li>
+          <strong>Model independence</strong>
+          <span>Swap local, private-cloud, frontier, or specialized models without rebuilding your workflows around one vendor.</span>
+        </li>
+        <li>
+          <strong>Custody and governance</strong>
+          <span>Policies, approvals, audit logs, and boundaries so teams can move faster without removing judgment.</span>
+        </li>
+        <li>
+          <strong>Fling capture</strong>
+          <span>Capture useful work from anywhere — browser, files, email, and other surfaces — into governed execution paths.</span>
+        </li>
+        <li>
+          <strong>Signal-to-work intake</strong>
+          <span>Turn incoming signals into ranked, reviewable tasks instead of letting them die in inboxes and chat threads.</span>
+        </li>
+      </ul>
+      <p class="cortex-more"><a href="../cortex.html">Full Cortex overview →</a></p>
     </section>
   </div>
 
