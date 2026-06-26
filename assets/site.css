@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap');
-@import url('cortex-brand-logo.css?v=20260625');
+@import url('cortex-brand-logo.css?v=20260626');
 
 :root {
   color-scheme: dark;
@@ -456,7 +456,16 @@ textarea { min-height: 140px; resize: vertical; }
 
 /* Footer */
 footer { margin-top: 0 !important; padding: 2.2rem 0 3rem !important; border-top: 1px solid var(--line) !important; background: rgba(2, 6, 13, .42); font-size: .78rem !important; }
-footer .wrap { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; }
+footer .wrap { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+footer .site-copyright {
+  flex: 1 1 100%;
+  margin-top: .75rem;
+  padding-top: .75rem;
+  border-top: 1px solid rgba(112, 150, 192, .12);
+  color: var(--muted) !important;
+  font-size: .68rem !important;
+  letter-spacing: .02em;
+}
 footer a { color: var(--muted-strong) !important; }
 
 /* Atmospheric canvas: visible, but no longer the whole show */

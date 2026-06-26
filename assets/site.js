@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2026 Carapace LLC. All rights reserved.
+ *
+ * Carapace site shell — navigation, Cortex brand logo init, layout helpers.
+ * Proprietary; unauthorized copying or distribution prohibited.
+ */
 (function () {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -151,12 +157,13 @@
     });
   }
 
+  /** Copyright (c) 2026 Carapace LLC — Cortex brand logo initialization. */
   function setupBrandLogos() {
     const logos = document.querySelectorAll('[data-cortex-brand-logo]');
     if (!logos.length) return;
 
     const base = getAssetsBase();
-    loadScript(base + 'harness-brain-canvas.js?v=20260625')
+    loadScript(base + 'harness-brain-canvas.js?v=20260626')
       .then(function () {
         if (typeof window.initCortexHubTabOrbCanvas !== 'function') return;
         logos.forEach(function (wrap) {
@@ -173,11 +180,24 @@
       });
   }
 
+  function setupFooterCopyright() {
+    document.querySelectorAll('footer').forEach(function (footer) {
+      if (footer.querySelector('.site-copyright')) return;
+
+      const wrap = footer.querySelector('.wrap') || footer;
+      const line = document.createElement('div');
+      line.className = 'site-copyright';
+      line.textContent = '\u00A9 2026 Carapace LLC. All rights reserved.';
+      wrap.appendChild(line);
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     setupNavigation();
     setupDropdowns();
     setupReveals();
     setupHeroTilt();
     setupBrandLogos();
+    setupFooterCopyright();
   });
 })();

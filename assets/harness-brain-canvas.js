@@ -1,6 +1,11 @@
 'use strict';
 
 /**
+ * Copyright (c) 2026 Carapace LLC. All rights reserved.
+ *
+ * Cortex brand logo — hex-brain canvas animation for the animated brand mark.
+ * Proprietary; unauthorized copying or distribution prohibited.
+ *
  * Hex-brain canvas for the web harness header hub (same algorithm as electron/splash-renderer.js).
  * Source: carapace-ops cortex-bloom-main HexBrainCanvas.
  */
