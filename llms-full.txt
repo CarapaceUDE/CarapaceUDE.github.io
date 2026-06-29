@@ -15,6 +15,8 @@ Carapace is a desktop control shell for operating AI-assisted workflows. It comb
 
 ## Canonical links
 - Website: https://carapaceai.org
+- Patreon / official builds policy: https://carapaceai.org/patreon
+- Discord community: https://carapaceai.org/discord
 - GitHub org: https://github.com/CarapaceUDE
 - Main repo: https://github.com/CarapaceUDE/carapace
 - Releases: https://github.com/CarapaceUDE/carapace/releases
