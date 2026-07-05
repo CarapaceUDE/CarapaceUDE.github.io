@@ -1386,6 +1386,175 @@ def check_interaction_policy_static() -> tuple[bool, list[str]]:
     return ok, lines
 
 
+def check_click_policy_static() -> tuple[bool, list[str]]:
+    """Empty-space click microinteractions — policy, dispatch registry, orchestrator wiring."""
+    lines = []
+    ok = True
+    interaction_path = ROOT / "assets/effects-interaction.js"
+    click_path = ROOT / "assets/effects-click.js"
+    effects_path = ROOT / "assets/effects-anime.js"
+    hero_core = ROOT / "assets/hero-core.js"
+    contract = load_effects_contract()
+
+    if interaction_path.exists():
+        interaction = interaction_path.read_text(encoding="utf-8")
+        for fn in ("clickAllowed", "isEmptyHeroClick", "isBlockedClickTarget"):
+            if f"export function {fn}" in interaction:
+                lines.append(f"PASS effects-interaction.js: {fn}")
+            else:
+                lines.append(f"FAIL effects-interaction.js: missing {fn}")
+                ok = False
+    else:
+        lines.append("FAIL effects-interaction.js missing")
+        ok = False
+
+    if click_path.exists():
+        click_src = click_path.read_text(encoding="utf-8")
+        if "CLICK_HANDLERS" in click_src and "dispatchClick" in click_src:
+            lines.append("PASS effects-click.js: CLICK_HANDLERS + dispatchClick")
+        else:
+            lines.append("FAIL effects-click.js: missing handler registry")
+            ok = False
+        shipped = contract.get("SHIPPED_EFFECT_IDS", [])
+        missing = [eid for eid in shipped if f"{eid}(" not in click_src and f"{eid}:" not in click_src]
+        if missing:
+            lines.append(f"FAIL effects-click.js: handlers missing {missing}")
+            ok = False
+        else:
+            lines.append(f"PASS effects-click.js: all {len(shipped)} SHIPPED_EFFECT_IDS registered")
+    else:
+        lines.append("FAIL effects-click.js missing")
+        ok = False
+
+    if effects_path.exists():
+        effects = effects_path.read_text(encoding="utf-8")
+        for sym in ("triggerClick", "_dispatchClick", "effects-click.js"):
+            if sym in effects:
+                lines.append(f"PASS effects-anime.js: {sym}")
+            else:
+                lines.append(f"FAIL effects-anime.js: missing {sym}")
+                ok = False
+        if "elementFromPoint" in effects:
+            lines.append("FAIL effects-anime.js: raw elementFromPoint in canvas module")
+            ok = False
+        else:
+            lines.append("PASS effects-anime.js: no elementFromPoint")
+    else:
+        lines.append("FAIL effects-anime.js missing")
+        ok = False
+
+    if hero_core.exists():
+        core = hero_core.read_text(encoding="utf-8")
+        if "clickAllowed" in core and "isEmptyHeroClick" in core and "pointerdown" in core and "triggerClick" in core:
+            lines.append("PASS hero-core.js: click policy + pointerdown + triggerClick")
+        else:
+            lines.append("FAIL hero-core.js: incomplete click wiring")
+            ok = False
+    else:
+        lines.append("FAIL hero-core.js missing")
+        ok = False
+
+    click_ids = contract.get("CLICK_EFFECT_IDS", [])
+    wired = contract.get("CLICK_WIRED_SLIDES", [])
+    if len(click_ids) == len(shipped := contract.get("SHIPPED_EFFECT_IDS", [])):
+        lines.append(f"PASS contract: CLICK_EFFECT_IDS ({len(click_ids)})")
+    else:
+        lines.append(f"FAIL contract: CLICK_EFFECT_IDS {len(click_ids)} != SHIPPED {len(shipped)}")
+        ok = False
+    if len(wired) == len(shipped):
+        lines.append(f"PASS contract: CLICK_WIRED_SLIDES ({len(wired)})")
+    else:
+        lines.append(f"FAIL contract: CLICK_WIRED_SLIDES {len(wired)} != SHIPPED {len(shipped)}")
+        ok = False
+
+    audit = ROOT / "docs/effects-audit.md"
+    if audit.exists() and "§Click interaction contracts" in audit.read_text(encoding="utf-8"):
+        lines.append("PASS docs/effects-audit.md: click contracts section")
+    else:
+        lines.append("FAIL docs/effects-audit.md: missing click contracts section")
+        ok = False
+
+    if effects_path.exists():
+        effects_src = effects_path.read_text(encoding="utf-8")
+        draw_start = effects_src.find("_drawEffect(id, state, alpha)")
+        t0 = effects_src.find('if (id === "trace")', draw_start)
+        t1 = effects_src.find('if (id === "checksum")', t0)
+        trace_draw = effects_src[t0:t1] if t0 >= 0 and t1 > t0 else ""
+        if trace_draw and "clickSegFlash" in trace_draw and "clickProg" in trace_draw:
+            lines.append("PASS trace draw: clickSegFlash transient replay wired")
+        else:
+            lines.append("FAIL trace draw: clickSegFlash not consumed")
+            ok = False
+        f0 = effects_src.find('if (id === "filament")', draw_start)
+        f1 = effects_src.find("drawClickPulses", f0)
+        filament_draw = effects_src[f0:f1] if f0 >= 0 and f1 > f0 else ""
+        if filament_draw and "clickKnots" in filament_draw and "activeClickKnots" in filament_draw:
+            lines.append("PASS filament draw: clickKnots detour wired")
+        else:
+            lines.append("FAIL filament draw: clickKnots not rendered")
+            ok = False
+
+    if click_path.exists():
+        click_src = click_path.read_text(encoding="utf-8")
+        flash_seg_fn = click_src[
+            click_src.find("function flashSeg") : click_src.find("export function spawnClickPulse")
+        ]
+        trace_handler = click_src[click_src.find("trace(field") : click_src.find("branch(field")]
+        if (
+            flash_seg_fn
+            and "p: [proxy.p, 1, 0]" in flash_seg_fn
+            and trace_handler
+            and "flashSeg(field, state, bestSeg)" in trace_handler
+        ):
+            lines.append("PASS trace handler: clickSegFlash decay via flashSeg")
+        else:
+            lines.append("FAIL trace handler: missing clickSegFlash decay pattern")
+            ok = False
+        if "cancelClickAnims" in click_src and "CLICK_COOLDOWN_MS = 200" in click_src:
+            lines.append("PASS click reentry: cancelClickAnims + 200ms cooldown")
+        else:
+            lines.append("FAIL click reentry: missing cancel/baseline guard")
+            ok = False
+        if "field._pc(0.42 * ch.alpha)" in click_src:
+            lines.append("PASS schematic crosshair: explicit strokeStyle")
+        else:
+            lines.append("FAIL schematic crosshair: missing strokeStyle")
+            ok = False
+
+    if hero_core.exists():
+        core_src = hero_core.read_text(encoding="utf-8")
+        if 'removeEventListener("pointerdown", onPointerDown' in core_src:
+            lines.append("PASS hero-core.js: pointerdown dispose")
+        else:
+            lines.append("FAIL hero-core.js: pointerdown dispose missing")
+            ok = False
+
+    prod_log = SCRATCH / "click-production.log"
+    if prod_log.exists() and "prod-click-e2e: OK" in prod_log.read_text(encoding="utf-8"):
+        lines.append("PASS click-production.log: production routes probed")
+    else:
+        lines.append("FAIL click-production.log: production click probe missing or failed")
+        ok = False
+
+    transient_log = SCRATCH / "click-transient.log"
+    if transient_log.exists() and "click-transient: OK" in transient_log.read_text(encoding="utf-8"):
+        lines.append("PASS click-transient.log: trace/filament decay verified")
+    else:
+        lines.append("FAIL click-transient.log: transient decay probe missing or failed")
+        ok = False
+
+    rapid_log = SCRATCH / "click-rapid-burst.log"
+    if rapid_log.exists() and "click-rapid-burst: OK" in rapid_log.read_text(encoding="utf-8"):
+        lines.append("PASS click-rapid-burst.log: rapid re-entry capped")
+    else:
+        lines.append("FAIL click-rapid-burst.log: rapid burst probe missing or failed")
+        ok = False
+
+    lines.append(f"GATE: {'PASS' if ok else 'FAIL'}")
+    (SCRATCH / "click-policy.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return ok, lines
+
+
 def check_d3_import_audit() -> tuple[bool, list[str]]:
     """Plan step 8 — d3-delaunay compute-only at boot for cellscan."""
     lines = []
@@ -1539,6 +1708,8 @@ def run_effects_goal_gate() -> bool:
     audit_ok, _ = check_audit_docs()
     perf_ok, _ = check_perf_caps()
     policy_ok, _ = check_interaction_policy_static()
+    click_aux_ok = run_click_aux_tests()
+    click_ok, _ = check_click_policy_static()
     d3_ok, _ = check_d3_import_audit()
 
     adj_ok = effects_struct_ok and _subgate_pass(SCRATCH / "structural-check.log")
@@ -1556,6 +1727,9 @@ def run_effects_goal_gate() -> bool:
         rm_toggle_ok = "rm-toggle: OK" in st
         rm_isograph_ok = "rm-toggle-isograph: OK" in st
         rm_scroll_static_ok = "rm-scroll-static: OK" in st
+        click_ok_smoke = "click-e2e: OK" in st and all(
+            f"click-{eid}: OK" in st for eid in load_effects_contract()["SHIPPED_EFFECT_IDS"]
+        )
         smoke_ok = (
             smoke_ok
             and not smoke_bypass
@@ -1563,8 +1737,11 @@ def run_effects_goal_gate() -> bool:
             and rm_toggle_ok
             and rm_isograph_ok
             and rm_scroll_static_ok
+            and click_ok_smoke
             and "gating: PASS" in st
         )
+        if not click_ok_smoke:
+            gate_lines.append("FAIL effects-smoke.log: click E2E incomplete")
         if smoke_bypass:
             gate_lines.append("FAIL effects-smoke.log: isolated AnimeEffectsField bypass detected")
         if not draw_ok:
@@ -1577,6 +1754,17 @@ def run_effects_goal_gate() -> bool:
             gate_lines.append("FAIL effects-smoke.log: scroll-static RM (telemetry/trace/checksum)")
     else:
         smoke_ok = False
+
+    ids_log = SCRATCH / "test-effects-ids.log"
+    ids_log_ok = False
+    if ids_log.exists():
+        ids_text = ids_log.read_text(encoding="utf-8")
+        ids_log_ok = "gating: PASS" in ids_text and "click-e2e: OK" in ids_text
+        if not ids_log_ok:
+            gate_lines.append("FAIL test-effects-ids.log: missing gating PASS or click-e2e OK")
+    else:
+        gate_lines.append("FAIL test-effects-ids.log: file not written")
+    smoke_ok = smoke_ok and ids_log_ok
 
     wired_log = SCRATCH / "wired-rm-e2e.log"
     wired_ok = False
@@ -1601,6 +1789,8 @@ def run_effects_goal_gate() -> bool:
         ("audit docs", "audit-docs-check.log", audit_ok),
         ("perf caps", "perf-caps.log", perf_ok),
         ("interaction policy", "interaction-policy.log", policy_ok),
+        ("click aux probes", "click-production.log", click_aux_ok),
+        ("click policy", "click-policy.log", click_ok),
         ("d3 import audit", "d3-audit.log", d3_ok),
         ("RM scroll static", "rm-check.log", rm_scroll_ok),
         ("draw smoke", "effects-smoke.log", smoke_ok),
@@ -1622,6 +1812,8 @@ def run_effects_goal_gate() -> bool:
         and audit_ok
         and perf_ok
         and policy_ok
+        and click_aux_ok
+        and click_ok
         and d3_ok
         and rm_scroll_ok
         and effects_struct_ok
@@ -1649,6 +1841,37 @@ def run_effects_goal_gate() -> bool:
     return gate_ok
 
 
+def run_click_aux_tests() -> bool:
+    """Fast click draw-static + production route probes (not full harness matrix)."""
+    ok = True
+    for script in (
+        "test-click-draw-static.mjs",
+        "test-click-production.mjs",
+        "test-click-transient.mjs",
+        "test-click-probes.mjs",
+        "test-click-registry.mjs",
+    ):
+        path = ROOT / "scripts" / script
+        if not path.exists():
+            (SCRATCH / f"{script}.log").write_text(f"FAIL script missing: {script}\n", encoding="utf-8")
+            ok = False
+            continue
+        try:
+            r = subprocess.run(
+                ["node", str(path), str(SCRATCH), BASE],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                timeout=120,
+            )
+            if r.returncode != 0:
+                ok = False
+        except Exception as e:
+            (SCRATCH / f"{script}.log").write_text(str(e) + "\n", encoding="utf-8")
+            ok = False
+    return ok
+
+
 def run_effects_smoke() -> bool:
     script = ROOT / "scripts/test-effects-ids.mjs"
     if not script.exists():
@@ -1662,8 +1885,16 @@ def run_effects_smoke() -> bool:
             text=True,
             timeout=900,
         )
+        out = (r.stdout or "") + (r.stderr or "")
         if r.stdout.strip():
             print(r.stdout.strip())
+        log_path = SCRATCH / "test-effects-ids.log"
+        body = log_path.read_text(encoding="utf-8") if log_path.exists() else ""
+        if out.strip():
+            suffix = f"\n--- subprocess stdout ---\n{out.rstrip()}\n"
+            log_path.write_text((body.rstrip() + suffix) if body.strip() else out, encoding="utf-8")
+        elif not body.strip():
+            log_path.write_text("(no output)\n", encoding="utf-8")
         return r.returncode == 0
     except Exception as e:
         (SCRATCH / "effects-smoke.log").write_text(str(e) + "\n", encoding="utf-8")

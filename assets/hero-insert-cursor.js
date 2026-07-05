@@ -192,11 +192,32 @@ export class HeroInsertCursor {
     this._onDown = this._onDown.bind(this);
     this._onKey = this._onKey.bind(this);
     this._onVisibility = this._onVisibility.bind(this);
+    this._preventNativeSelect = this._preventNativeSelect.bind(this);
+    this._preventDblClickSelect = this._preventDblClickSelect.bind(this);
 
     window.addEventListener("mousemove", this._onMove, { passive: true });
     window.addEventListener("mousedown", this._onDown, true);
     window.addEventListener("keydown", this._onKey, true);
     document.addEventListener("visibilitychange", this._onVisibility);
+    document.addEventListener("selectstart", this._preventNativeSelect);
+    document.addEventListener("mousedown", this._preventDblClickSelect, true);
+  }
+
+  _isHeroNonInsertSurface(hit) {
+    if (!hit?.closest) return false;
+    return Boolean(hit.closest("#hero-stage, .hero-chrome, .scroll-hint, .slide-rail, .pinned"));
+  }
+
+  _preventNativeSelect(e) {
+    if (!this._isHeroNonInsertSurface(e.target)) return;
+    e.preventDefault();
+  }
+
+  _preventDblClickSelect(e) {
+    if (e.button !== 0 || e.detail < 2) return;
+    if (!this._isHeroNonInsertSurface(e.target)) return;
+    if (this._focusableTarget(e.clientX, e.clientY)) return;
+    e.preventDefault();
   }
 
   setReducedMotion(v) {
@@ -538,6 +559,8 @@ export class HeroInsertCursor {
     window.removeEventListener("mousedown", this._onDown, true);
     window.removeEventListener("keydown", this._onKey, true);
     document.removeEventListener("visibilitychange", this._onVisibility);
+    document.removeEventListener("selectstart", this._preventNativeSelect);
+    document.removeEventListener("mousedown", this._preventDblClickSelect, true);
     if (this.idleTimer) clearTimeout(this.idleTimer);
     this.caretEl.remove();
     document.body.classList.remove("hero-insert-active", "hero-insert-hover");

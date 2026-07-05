@@ -5,6 +5,7 @@ import { HeroChipInteractions } from "./chip-interactions.js";
 import { HeroInsertCursor } from "./hero-insert-cursor.js";
 import { fitHeroSlideCopy } from "./hero-title-fit.js";
 import { INTERACTIVE_EFFECTS } from "./effects-goal-contract.js";
+import { clickAllowed, isEmptyHeroClick } from "./effects-interaction.js";
 
 export { PILOT_NOTE_DISCLAIMER } from "./hero-constants.js";
 
@@ -407,6 +408,17 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
       syncReducedMotionFromMedia();
       requestAnimationFrame(updateScroll);
     }, { passive: true });
+    const onPointerDown = (e) => {
+      if (e.button !== 0) return;
+      syncReducedMotionFromMedia();
+      const { fadeStart } = scrollMetrics(slides.length);
+      const heroPinned = progress <= fadeStart;
+      const ctx = { pinned: heroPinned, reducedMotion: prefersReducedMotion, heroStage };
+      if (!clickAllowed(ctx)) return;
+      if (!isEmptyHeroClick(e.clientX, e.clientY, ctx)) return;
+      effectsField?.triggerClick(e.clientX, e.clientY);
+    };
+    window.addEventListener("pointerdown", onPointerDown, true);
     window.addEventListener("mousemove", (e) => {
       syncReducedMotionFromMedia();
       if (metaCursor && !insertCursor?.isMetaLocked("meta-cursor")) {
@@ -436,6 +448,7 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
     return {
       dispose: () => {
         clearInterval(timeInterval);
+        window.removeEventListener("pointerdown", onPointerDown, true);
         stageObserver?.disconnect();
         visObserver?.disconnect();
         chipInteractions?.dispose();

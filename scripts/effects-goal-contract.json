@@ -434,6 +434,286 @@
       "effect": "checksum"
     }
   ],
+  "CLICK_EFFECT_IDS": [
+    "shield",
+    "cascade",
+    "mesh",
+    "stack",
+    "magnet",
+    "signal",
+    "chrono",
+    "ping",
+    "flowchart",
+    "pcb",
+    "topology",
+    "pipeline",
+    "constellation",
+    "vault",
+    "schematic",
+    "isograph",
+    "sonar",
+    "ledger",
+    "weave",
+    "orbit",
+    "relay",
+    "seal",
+    "glyph",
+    "hexpulse",
+    "parcel",
+    "hashwave",
+    "branch",
+    "telemetry",
+    "trace",
+    "checksum",
+    "cellscan",
+    "beacon",
+    "lattice",
+    "filament"
+  ],
+  "CLICK_WIRED_SLIDES": [
+    {
+      "id": "shield",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 0,
+      "effect": "shield"
+    },
+    {
+      "id": "cascade",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 1,
+      "effect": "cascade"
+    },
+    {
+      "id": "orbit",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 2,
+      "effect": "orbit"
+    },
+    {
+      "id": "hexpulse",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 3,
+      "effect": "hexpulse"
+    },
+    {
+      "id": "magnet",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 4,
+      "effect": "magnet"
+    },
+    {
+      "id": "telemetry",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 5,
+      "effect": "telemetry"
+    },
+    {
+      "id": "chrono",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 6,
+      "effect": "chrono"
+    },
+    {
+      "id": "beacon",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 7,
+      "effect": "beacon"
+    },
+    {
+      "id": "filament",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 0,
+      "effect": "filament"
+    },
+    {
+      "id": "lattice",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 2,
+      "effect": "lattice"
+    },
+    {
+      "id": "constellation",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 3,
+      "effect": "constellation"
+    },
+    {
+      "id": "seal",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 4,
+      "effect": "seal"
+    },
+    {
+      "id": "relay",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 6,
+      "effect": "relay"
+    },
+    {
+      "id": "topology",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 0,
+      "effect": "topology"
+    },
+    {
+      "id": "cellscan",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 2,
+      "effect": "cellscan"
+    },
+    {
+      "id": "signal",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 3,
+      "effect": "signal"
+    },
+    {
+      "id": "branch",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 4,
+      "effect": "branch"
+    },
+    {
+      "id": "hashwave",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 6,
+      "effect": "hashwave"
+    },
+    {
+      "id": "parcel",
+      "route": "scripts/effects-hero-harness/licensing.html",
+      "slideCount": 6,
+      "slideIndex": 3,
+      "effect": "parcel"
+    },
+    {
+      "id": "ledger",
+      "route": "scripts/effects-hero-harness/licensing.html",
+      "slideCount": 6,
+      "slideIndex": 4,
+      "effect": "ledger"
+    },
+    {
+      "id": "checksum",
+      "route": "scripts/effects-hero-harness/licensing.html",
+      "slideCount": 6,
+      "slideIndex": 5,
+      "effect": "checksum"
+    },
+    {
+      "id": "pipeline",
+      "route": "scripts/effects-hero-harness/solutions.html",
+      "slideCount": 10,
+      "slideIndex": 1,
+      "effect": "pipeline"
+    },
+    {
+      "id": "isograph",
+      "route": "scripts/effects-hero-harness/solutions.html",
+      "slideCount": 10,
+      "slideIndex": 2,
+      "effect": "isograph"
+    },
+    {
+      "id": "trace",
+      "route": "scripts/effects-hero-harness/solutions.html",
+      "slideCount": 10,
+      "slideIndex": 4,
+      "effect": "trace"
+    },
+    {
+      "id": "sonar",
+      "route": "scripts/effects-hero-harness/solutions.html",
+      "slideCount": 10,
+      "slideIndex": 5,
+      "effect": "sonar"
+    },
+    {
+      "id": "mesh",
+      "route": "scripts/effects-hero-harness/cortex.html",
+      "slideCount": 10,
+      "slideIndex": 3,
+      "effect": "mesh"
+    },
+    {
+      "id": "stack",
+      "route": "scripts/effects-hero-harness/cortex.html",
+      "slideCount": 10,
+      "slideIndex": 6,
+      "effect": "stack"
+    },
+    {
+      "id": "ping",
+      "route": "scripts/effects-hero-harness/cortex.html",
+      "slideCount": 10,
+      "slideIndex": 9,
+      "effect": "ping"
+    },
+    {
+      "id": "pcb",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 0,
+      "effect": "pcb"
+    },
+    {
+      "id": "weave",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 1,
+      "effect": "weave"
+    },
+    {
+      "id": "flowchart",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 2,
+      "effect": "flowchart"
+    },
+    {
+      "id": "schematic",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 3,
+      "effect": "schematic"
+    },
+    {
+      "id": "vault",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 4,
+      "effect": "vault"
+    },
+    {
+      "id": "glyph",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 5,
+      "effect": "glyph"
+    }
+  ],
+  "CLICK_PULSE_CAPS": {
+    "default": 4,
+    "burst": 12
+  },
   "WIRED_SLIDES": [
     {
       "id": "cascade",

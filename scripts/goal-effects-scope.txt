@@ -1,8 +1,9 @@
-# Goal-scoped files — effects hero background work (28 paths)
+# Goal-scoped files — effects hero background work (35 paths)
 # Includes harness pages for smoke/capture without modifying production HTML shells.
 assets/effects-goal-contract.js
 assets/effects-anime.js
 assets/effects-interaction.js
+assets/effects-click.js
 assets/hero-core.js
 assets/hero-home.js
 assets/hero-about.js
@@ -12,6 +13,7 @@ assets/hero-solutions.js
 assets/hero-cortex.js
 assets/hero-home.css
 docs/effects-audit.md
+docs/click-microinteractions-goal.md
 docs/effects-replacement-plan.md
 scripts/export-effects-contract.mjs
 scripts/stage-effects-goal.mjs
@@ -25,6 +27,11 @@ scripts/effects-hero-harness/cortex.html
 scripts/effects-hero-harness/archive.html
 scripts/effects-goal-contract.json
 scripts/test-effects-ids.mjs
+scripts/test-click-draw-static.mjs
+scripts/test-click-production.mjs
+scripts/test-click-transient.mjs
+scripts/test-click-probes.mjs
+scripts/test-click-registry.mjs
 scripts/capture-inner-heroes.mjs
 scripts/verify-revamp.py
 scripts/goal-effects-scope.txt

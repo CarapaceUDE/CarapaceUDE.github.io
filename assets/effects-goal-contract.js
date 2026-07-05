@@ -149,6 +149,14 @@ export const SCROLL_STATIC_RM_SLIDES = [
   { id: "checksum", route: `${H}/licensing.html`, slideCount: 6, slideIndex: 5, effect: "checksum" }
 ];
 
+/** All shipped effects support empty-space click microinteractions. */
+export const CLICK_EFFECT_IDS = [...SHIPPED_EFFECT_IDS];
+
+/** One harness slide per effect — click E2E smoke (reuse draw matrix). */
+export const CLICK_WIRED_SLIDES = [...EFFECT_DRAW_SLIDES];
+
+export const CLICK_PULSE_CAPS = { default: 4, burst: 12 };
+
 export const WIRED_SLIDES = [
   { id: "cascade", route: `${H}/index.html`, slideCount: 8, slideIndex: 1, effect: "cascade" },
   { id: "mesh", route: `${H}/cortex.html`, slideCount: 10, slideIndex: 3, effect: "mesh" },
@@ -186,5 +194,8 @@ export const EFFECTS_GOAL_CONTRACT = {
   EFFECTS_HARNESS_PREFIX,
   EFFECT_DRAW_SLIDES,
   SCROLL_STATIC_RM_SLIDES,
+  CLICK_EFFECT_IDS,
+  CLICK_WIRED_SLIDES,
+  CLICK_PULSE_CAPS,
   WIRED_SLIDES
 };

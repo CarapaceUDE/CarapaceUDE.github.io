@@ -211,6 +211,62 @@ body[class*="page-"] #meta-time {
   pointer-events: auto;
 }
 
+/* Hero copy is not natively selectable; I-beam only via insert-cursor crosshair on hover */
+body[class*="page-"] .hero-stage,
+body[class*="page-"] .hero-chrome,
+body[class*="page-"] .scroll-hint,
+body[class*="page-"] .slide-rail {
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+body[class*="page-"] .slide-content :is(
+  h1,
+  h2,
+  h3,
+  p,
+  span,
+  div,
+  li,
+  label,
+  .eyebrow,
+  .sub,
+  .note,
+  .pilot-note,
+  .title-char,
+  .title-word
+) {
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body[class*="page-"] .hero-chrome .meta-label,
+body[class*="page-"] .hero-chrome .meta-value,
+body[class*="page-"] .hero-chrome .chrome-mark,
+body[class*="page-"] #meta-time,
+body[class*="page-"] .proof-chip .chip-label,
+body[class*="page-"] .proof-chip .chip-line-label,
+body[class*="page-"] .proof-chip .chip-branch-text,
+body[class*="page-"] .proof-chip .chip-branch-glitch {
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body[class*="page-"] a.proof-chip--source,
+body[class*="page-"] .proof-chip--source {
+  cursor: pointer;
+}
+
+body[class*="page-"] .hero-stage ::selection,
+body[class*="page-"] .hero-chrome ::selection,
+body[class*="page-"] .scroll-hint ::selection {
+  background: transparent;
+  color: inherit;
+}
+
 /* DOS overwrite block caret — hero copy + HUD meta */
 body.hero-insert-hover .slide-content .eyebrow,
 body.hero-insert-hover .slide-content .title-char,
@@ -245,9 +301,15 @@ body.hero-insert-active #meta-time {
   opacity: 0;
   border: none;
   border-radius: 0;
+  /* Dark theme: light invert → DOS block reads as dark cell / light glyph */
   background: var(--fg);
   box-shadow: none;
   mix-blend-mode: difference;
+}
+
+[data-theme="light"] .hero-insert-block-caret {
+  /* Light theme: invert with page bg tone → dark cell / light glyph */
+  background: var(--bg);
 }
 
 .hero-insert-block-caret.is-visible {
@@ -265,6 +327,12 @@ body[class*="page-"] .hero-insert-tainted {
   text-shadow:
     0 0 14px color-mix(in oklch, var(--accent) 30%, transparent),
     -1px 0 color-mix(in oklch, var(--accent) 40%, transparent);
+}
+
+[data-theme="light"] body[class*="page-"] .hero-insert-tainted {
+  color: var(--accent);
+  background: transparent;
+  text-shadow: none;
 }
 
 body.reduced-motion .hero-insert-block-caret.is-visible {
@@ -608,7 +676,7 @@ body[class*="page-"] .proof-chip::before {
 }
 
 body[class*="page-"] .proof-chip--interactive {
-  cursor: crosshair;
+  cursor: default;
 }
 
 body[class*="page-"] .proof-chip--source {

@@ -7,6 +7,7 @@ import {
   SHIPPED_EFFECT_IDS as EFFECT_IDS,
   EFFECT_DRAW_SLIDES,
   SCROLL_STATIC_RM_SLIDES,
+  CLICK_WIRED_SLIDES,
   WIRED_SLIDES
 } from "../assets/effects-goal-contract.js";
 
@@ -66,6 +67,18 @@ try {
     }
     const last = await fieldSnapshot(pg);
     return last.alpha;
+  };
+
+  const waitClickVisible = async (pg, minAlpha = 20, timeoutMs = 2500) => {
+    const start = Date.now();
+    let last = await fieldSnapshot(pg);
+    while (Date.now() - start < timeoutMs) {
+      last = await fieldSnapshot(pg);
+      if (last.alpha >= minAlpha) return last;
+      await pg.waitForTimeout(80);
+      await waitFieldFrame(pg);
+    }
+    return last;
   };
 
   let allOk = true;
@@ -179,6 +192,128 @@ try {
   }
   log.push(`rm-scroll-static: ${scrollStaticOk ? "OK" : "FAIL"}`);
   if (!scrollStaticOk) allOk = false;
+
+  log.push(`--- click E2E: empty-space pointerdown (${CLICK_WIRED_SLIDES.length} slides) ---`);
+  const clickLog = [];
+  let clickOk = true;
+  const clickSummary = [];
+  const sampleIds = new Set(["beacon", "cascade", "trace", "shield"]);
+
+  for (const slide of CLICK_WIRED_SLIDES) {
+    const label = `${slide.route}#${slide.slideIndex + 1}/${slide.effect}`;
+    const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+    page.on("pageerror", (e) => errors.push(String(e)));
+    await page.goto(`${base}/${slide.route}`, { waitUntil: "networkidle", timeout: 45000 });
+    await page.waitForSelector("#field", { state: "attached", timeout: 15000 });
+    let scroll = await wheelScrollToStage(page, slide.slideCount, slide.slideIndex);
+    if (!scroll.ok) {
+      scroll = await wheelScrollToStage(page, slide.slideCount, slide.slideIndex, { timeoutMs: 35000 });
+    }
+    const waitEffect = async () => {
+      await page.waitForFunction(
+        (expected) => document.getElementById("atmosphere")?.dataset?.effect === expected,
+        slide.effect,
+        { timeout: 12000 }
+      ).catch(() => {});
+    };
+    await waitEffect();
+    let effect = await page.evaluate(
+      () => document.getElementById("atmosphere")?.dataset?.effect ?? ""
+    );
+    if (effect !== slide.effect) {
+      await wheelScrollToStage(page, slide.slideCount, slide.slideIndex, { timeoutMs: 35000 });
+      await waitEffect();
+      effect = await page.evaluate(
+        () => document.getElementById("atmosphere")?.dataset?.effect ?? ""
+      );
+    }
+    const minAlpha = slide.effect === "cascade" ? 1 : 50;
+    await waitCanvasReady(page, minAlpha);
+    await page.mouse.move(1050, 420);
+    await waitFieldFrame(page);
+    const before = await fieldSnapshot(page);
+    await page.mouse.click(1050, 420);
+    const after = await waitClickVisible(page);
+    effect = await page.evaluate(
+      () => document.getElementById("atmosphere")?.dataset?.effect ?? ""
+    );
+    const delta = before.key !== after.key;
+    const caseOk = effect === slide.effect && delta && after.alpha > 20;
+    clickLog.push(
+      `click-${slide.id}: ${caseOk ? "OK" : "FAIL"} ${label} delta=${delta} effect=${effect} afterAlpha=${after.alpha}`
+    );
+    if (!caseOk) clickOk = false;
+    clickSummary.push({ id: slide.id, label, caseOk, delta });
+    if (sampleIds.has(slide.id)) {
+      clickLog.push(`click-sample-${slide.id}: ${caseOk ? "OK" : "FAIL"}`);
+    }
+    await page.close();
+  }
+
+  const rmClickPage = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+  await rmClickPage.emulateMedia({ reducedMotion: "reduce" });
+  rmClickPage.on("pageerror", (e) => errors.push(String(e)));
+  await rmClickPage.goto(`${base}/scripts/effects-hero-harness/index.html`, { waitUntil: "networkidle", timeout: 45000 });
+  await rmClickPage.waitForSelector("#field", { state: "attached", timeout: 15000 });
+  await wheelScrollToStage(rmClickPage, 8, 5);
+  await waitCanvasReady(rmClickPage, 50);
+  await rmClickPage.mouse.move(1050, 420);
+  await waitFieldFrame(rmClickPage);
+  await rmClickPage.waitForTimeout(800);
+  await waitFieldFrame(rmClickPage);
+  const rmBefore = await fieldSnapshot(rmClickPage);
+  await rmClickPage.mouse.click(1050, 420);
+  await rmClickPage.waitForTimeout(120);
+  await waitFieldFrame(rmClickPage);
+  const rmMid = await fieldSnapshot(rmClickPage);
+  await rmClickPage.mouse.click(1050, 420);
+  await waitFieldFrame(rmClickPage);
+  const rmAfter = await fieldSnapshot(rmClickPage);
+  const rmFrozen = rmBefore.key === rmMid.key && rmMid.key === rmAfter.key;
+  clickLog.push(`click-rm-telemetry: ${rmFrozen ? "OK" : "FAIL"} frozen=${rmFrozen}`);
+  if (!rmFrozen) clickOk = false;
+  await rmClickPage.close();
+
+  const blockedPage = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+  await blockedPage.emulateMedia({ reducedMotion: "reduce" });
+  blockedPage.on("pageerror", (e) => errors.push(String(e)));
+  await blockedPage.goto(`${base}/scripts/effects-hero-harness/index.html`, { waitUntil: "networkidle", timeout: 45000 });
+  await blockedPage.waitForSelector("#field", { state: "attached", timeout: 15000 });
+  await wheelScrollToStage(blockedPage, 8, 5);
+  await waitCanvasReady(blockedPage, 50);
+  const chipLabel = await blockedPage.$(".proof-chip .chip-label");
+  if (chipLabel) {
+    const box = await chipLabel.boundingBox();
+    if (box) {
+      const cx = box.x + box.width / 2;
+      const cy = box.y + box.height / 2;
+      await blockedPage.mouse.move(cx, cy);
+      await waitFieldFrame(blockedPage);
+      await blockedPage.waitForTimeout(200);
+      await waitFieldFrame(blockedPage);
+      const blockedBefore = await fieldSnapshot(blockedPage);
+      await blockedPage.mouse.click(cx, cy);
+      await waitFieldFrame(blockedPage);
+      await blockedPage.waitForTimeout(120);
+      await waitFieldFrame(blockedPage);
+      const blockedAfter = await fieldSnapshot(blockedPage);
+      const blockedOk = blockedBefore.key === blockedAfter.key;
+      clickLog.push(`click-blocked-chip: ${blockedOk ? "OK" : "FAIL"}`);
+      if (!blockedOk) clickOk = false;
+    } else {
+      clickLog.push("click-blocked-chip: SKIP no box");
+    }
+  } else {
+    clickLog.push("click-blocked-chip: SKIP missing chip");
+  }
+  await blockedPage.close();
+
+  clickLog.push(`click-e2e: ${clickOk ? "OK" : "FAIL"}`);
+  log.push(...clickLog);
+  writeFileSync(resolve(scratch, "click-rm.log"), `rmFrozen=${rmFrozen}\n`);
+  writeFileSync(resolve(scratch, "click-blocked.log"), clickLog.filter((l) => l.includes("blocked")).join("\n") + "\n");
+  writeFileSync(resolve(scratch, "click-sample.log"), clickLog.filter((l) => l.includes("sample")).join("\n") + "\n");
+  if (!clickOk) allOk = false;
 
   log.push(`--- wired E2E: hero-core path (${WIRED_SLIDES.length} slides, real mousemove) ---`);
   const wiredLog = [];
@@ -326,7 +461,9 @@ try {
   errors.forEach((e) => log.push(`  ERR: ${e}`));
   log.push(`gating: ${allOk ? "PASS" : "FAIL"}`);
 
-  writeFileSync(resolve(scratch, "effects-smoke.log"), log.join("\n") + "\n");
+  const logText = log.join("\n") + "\n";
+  writeFileSync(resolve(scratch, "effects-smoke.log"), logText);
+  writeFileSync(resolve(scratch, "test-effects-ids.log"), logText);
   writeFileSync(
     resolve(scratch, "reduced-motion.log"),
     JSON.stringify(
@@ -345,7 +482,9 @@ try {
   console.log(allOk ? "OK" : "FAIL");
   if (!allOk) process.exit(1);
 } catch (err) {
-  writeFileSync(resolve(scratch, "effects-smoke.log"), String(err) + "\n");
+  const errText = String(err) + "\n";
+  writeFileSync(resolve(scratch, "effects-smoke.log"), errText);
+  writeFileSync(resolve(scratch, "test-effects-ids.log"), errText);
   console.error(err);
   process.exit(1);
 } finally {

@@ -11,6 +11,7 @@ import {
   proximity,
   rowProximity
 } from "./effects-interaction.js";
+import { CLICK_COOLDOWN_MS, dispatchClick, drawClickPulses } from "./effects-click.js";
 
 const MATRIX_CHARS = "01アイウエオカキクケコ∞∆∑λ#%&@<>{}[]";
 const GLITCH_CHARS = "█▓▒░╳╱╲│─┼<>[]{}#@$%&01";
@@ -149,6 +150,7 @@ export class AnimeEffectsField {
     this.pointerTarget = { nx: 0, ny: 0 };
     this.interaction = { hover: false, px: 0, py: 0 };
     this.scrollFrac = 0;
+    this._lastClickAt = 0;
     this.onMixChange = options.onMixChange ?? null;
     this._rmNeedsRedraw = true;
 
@@ -211,6 +213,27 @@ export class AnimeEffectsField {
     }
   }
 
+  _syncClickTelemetry(id, state) {
+    const hero = document.getElementById("hero-stage");
+    if (!hero || !state) return;
+    hero.dataset.clickPulseCount = String(state.clickPulses?.length ?? 0);
+    hero.dataset.clickGlowBoost = String(state.clickFx?.glowBoost ?? 0);
+    if (id === "trace") {
+      const flash = state.clickSegFlash ?? [];
+      hero.dataset.clickSegFlashMax = String(Math.max(0, ...flash));
+      delete hero.dataset.clickKnotAlphaMax;
+      return;
+    }
+    delete hero.dataset.clickSegFlashMax;
+    if (id === "filament") {
+      const knots = state.clickKnots ?? [];
+      const alphaMax = knots.reduce((m, k) => Math.max(m, k.alpha ?? 0), 0);
+      hero.dataset.clickKnotAlphaMax = String(alphaMax);
+      return;
+    }
+    delete hero.dataset.clickKnotAlphaMax;
+  }
+
   setHue(h) {
     this.hue = h ?? 210;
   }
@@ -238,6 +261,29 @@ export class AnimeEffectsField {
       this.interaction.py = clientY ?? 0;
     }
     this.interaction.hover = Boolean(hover);
+  }
+
+  _clientToCanvas(clientX, clientY) {
+    const rect = this.canvas?.getBoundingClientRect?.();
+    if (!rect) return { x: clientX ?? 0, y: clientY ?? 0 };
+    return { x: (clientX ?? 0) - rect.left, y: (clientY ?? 0) - rect.top };
+  }
+
+  triggerClick(clientX, clientY) {
+    if (this.reducedMotion) return;
+    const now = performance.now();
+    if (now - this._lastClickAt < CLICK_COOLDOWN_MS) return;
+    this._lastClickAt = now;
+    const { x, y } = this._clientToCanvas(clientX, clientY);
+    const mix = this.mix?.value ?? 0;
+    const primary = mix < 0.5 ? this.effectA : this.effectB;
+    this._dispatchClick(primary, x, y);
+  }
+
+  _dispatchClick(id, x, y) {
+    if (!id) return;
+    const state = this.ensureEffect(id);
+    dispatchClick(this, id, state, x, y);
   }
 
   _proximity(x, y, radius = 160) {
@@ -795,6 +841,7 @@ export class AnimeEffectsField {
         points,
         progress: this.reducedMotion ? 1 : 0,
         segProgress: Array.from({ length: segs }, () => (this.reducedMotion ? 1 : 0)),
+        clickSegFlash: Array.from({ length: segs }, () => 0),
         packetT: 0
       };
     }
@@ -1844,7 +1891,8 @@ export class AnimeEffectsField {
       const amp = h * 0.09;
       const slope = h * 0.28;
       const ptrN = pointerNormX(this.interaction, this.reducedMotion, w);
-      this._glow(0.55 * state.glow);
+      const glowK = state.glow * (1 + (state.clickFx?.glowBoost ?? 0));
+      this._glow(0.55 * glowK);
       c.lineWidth = 2.6;
       c.beginPath();
       for (let x = 0; x <= w; x += 3) {
@@ -1873,7 +1921,10 @@ export class AnimeEffectsField {
       c.stroke();
       this._clearGlow();
       let hand = state.hand;
-      if (this._hoverAllowed()) {
+      const handBlend = state.clickFx?.handBlend ?? 0;
+      if (handBlend > 0.02 && state.clickFx?.handSnap !== undefined) {
+        hand = state.clickFx.handSnap;
+      } else if (this._hoverAllowed()) {
         const ptr = this._pointerXY(ox, cy2);
         hand = Math.atan2(ptr.y - cy2, ptr.x - ox) + Math.PI / 2;
       }
@@ -2049,6 +2100,7 @@ export class AnimeEffectsField {
       const maxR = bgExtent(w, h, 0.5);
       const starOx = ox + w * 0.02;
       const starOy = oy - h * 0.04;
+      const glowK = state.glow * (1 + (state.clickFx?.glowBoost ?? 0));
       const pos = state.nodes.map((n) => ({
         x: starOx + Math.cos(n.a) * maxR * n.d,
         y: starOy + Math.sin(n.a) * maxR * n.d
@@ -2056,7 +2108,7 @@ export class AnimeEffectsField {
       state.links.forEach((link) => {
         const a = pos[link.a];
         const b = pos[link.b];
-        this._glow(0.25 * state.glow);
+        this._glow(0.25 * glowK);
         c.lineWidth = 1;
         c.beginPath();
         c.moveTo(a.x, a.y);
@@ -2068,7 +2120,7 @@ export class AnimeEffectsField {
         const n = state.nodes[i];
         c.beginPath();
         c.arc(p.x, p.y, 5 * n.pulse, 0, Math.PI * 2);
-        c.fillStyle = this._pc(0.55 * n.pulse * state.glow);
+        c.fillStyle = this._pc(0.55 * n.pulse * glowK);
         c.fill();
         if (n.pulse > 1.15) {
           c.beginPath();
@@ -2351,12 +2403,13 @@ export class AnimeEffectsField {
       const maxR = bgExtent(w, h, 0.56);
       const orbitOx = ox + w * 0.03;
       const orbitOy = oy - h * 0.05;
+      const glowK = state.glow * (1 + (state.clickFx?.glowBoost ?? 0));
       state.foci.forEach((f) => {
         const fx = orbitOx + f.x * maxR;
         const fy = orbitOy + f.y * maxR * 0.6;
         c.beginPath();
         c.arc(fx, fy, 3, 0, Math.PI * 2);
-        c.fillStyle = this._pc(0.5 * state.glow);
+        c.fillStyle = this._pc(0.5 * glowK);
         c.fill();
       });
       state.bodies.forEach((body) => {
@@ -2519,6 +2572,7 @@ export class AnimeEffectsField {
       state.packets.forEach((pkt) => {
         const a = pts[pkt.seg];
         const b = pts[pkt.seg + 1];
+        if (!a || !b) return;
         let t = pkt.t;
         if (this._hoverAllowed()) {
           const midX = a.x + (b.x - a.x) * t;
@@ -2622,14 +2676,21 @@ export class AnimeEffectsField {
       c.strokeStyle = this._pc(0.2);
       c.lineWidth = 1;
       for (let i = 0; i < totalSegs; i++) {
-        const segProg = Math.min(1, Math.max(0, drawUpTo - i));
+        const scrollProg = Math.min(1, Math.max(0, drawUpTo - i));
+        const clickProg = state.clickSegFlash?.[i] ?? 0;
+        const segProg = Math.max(scrollProg, clickProg);
         if (segProg <= 0) continue;
         const a = pts[i];
         const b = pts[i + 1];
+        const clickReplay = clickProg > scrollProg + 0.02;
+        c.strokeStyle = this._pc(clickReplay ? 0.48 : 0.2);
+        c.lineWidth = clickReplay ? 1.5 : 1;
+        if (clickReplay) this._glow(0.28 * clickProg);
         c.beginPath();
         c.moveTo(a.x, a.y);
         c.lineTo(a.x + (b.x - a.x) * segProg, a.y + (b.y - a.y) * segProg);
         c.stroke();
+        if (clickReplay) this._clearGlow();
       }
       pts.forEach((p) => {
         c.beginPath();
@@ -2776,6 +2837,34 @@ export class AnimeEffectsField {
         c.lineTo(pts[i + 1].x, pts[i + 1].y);
         c.stroke();
       }
+      const activeClickKnots = (state.clickKnots ?? []).filter((k) => (k.alpha ?? 0) > 0.03);
+      activeClickKnots.forEach((k) => {
+        const kx = k.x * w + off.x * 0.2;
+        const ky = k.y * h + off.y * 0.15;
+        let bestI = 0;
+        let bestD = Infinity;
+        for (let i = 0; i < pts.length - 1; i++) {
+          const mx = (pts[i].x + pts[i + 1].x) * 0.5;
+          const my = (pts[i].y + pts[i + 1].y) * 0.5;
+          const d = Math.hypot(mx - kx, my - ky);
+          if (d < bestD) {
+            bestD = d;
+            bestI = i;
+          }
+        }
+        c.strokeStyle = this._pc(0.22 + (k.alpha ?? 0) * 0.45);
+        c.lineWidth = 1.5;
+        c.beginPath();
+        c.moveTo(pts[bestI].x, pts[bestI].y);
+        c.lineTo(kx, ky);
+        c.lineTo(pts[bestI + 1].x, pts[bestI + 1].y);
+        c.stroke();
+        this._glow(0.3 * (k.alpha ?? 0));
+        c.beginPath();
+        c.arc(kx, ky, 4 + (k.alpha ?? 0) * 2, 0, Math.PI * 2);
+        c.stroke();
+        this._clearGlow();
+      });
       const totalLen = pts.length - 1;
       const pos = t * totalLen;
       const seg = Math.min(totalLen - 1, Math.floor(pos));
@@ -2801,6 +2890,8 @@ export class AnimeEffectsField {
         c.fill();
       });
     }
+
+    drawClickPulses(this, c, state);
 
     c.restore();
   }
@@ -2857,7 +2948,9 @@ export class AnimeEffectsField {
     this._drawEffect(this.effectA, stateA, 1 - mix);
     if (this.effectB !== this.effectA) this._drawEffect(this.effectB, stateB, mix);
     const active = mix > 0.5 ? this.effectB : this.effectA;
-    this._syncDrawableTelemetry(active, this.states[active]);
+    const activeState = this.states[active];
+    this._syncDrawableTelemetry(active, activeState);
+    this._syncClickTelemetry(active, activeState);
     this._drawBokeh();
   }
 }

@@ -176,6 +176,49 @@ Verification plan step 1 lists **16 goal slots**: the 15 named draw IDs below (`
 
 ---
 
+## §Click interaction contracts
+
+Empty-space `pointerdown` on pinned hero (via `isEmptyHeroClick` in `assets/effects-interaction.js`) → `AnimeEffectsField.triggerClick()` → per-effect handler in `assets/effects-click.js`. Reduced motion: `clickAllowed` false — no handlers fire.
+
+| ID | Click behavior | RM |
+|----|----------------|-----|
+| `shield` | Shockwave ring; nearest spark orbit kick | no-op |
+| `vault` | Padlock pulse + 2 lock-ring ripples | no-op |
+| `seal` | Wax impression spike + ripple burst | no-op |
+| `checksum` | 3 staggered verify ticks at click X | no-op |
+| `cascade` | Glitch burst in 1–2 columns near click X | no-op |
+| `stack` | Ephemeral terminal line at nearest row | no-op |
+| `glyph` | Nearest 3 fragments repel + glitch swap | no-op |
+| `hashwave` | Horizontal brighten band from click column | no-op |
+| `mesh` | Nearest node scale pop + link pulse | no-op |
+| `topology` | Hub spoke flash + packet spawn | no-op |
+| `constellation` | Nearest star twinkle + edge highlight | no-op |
+| `cellscan` | Voronoi cell full-bloom at click | no-op |
+| `flowchart` | Packet spawns at nearest box, one edge cycle | no-op |
+| `pipeline` | Sweep jumps to click X; stage pulse | no-op |
+| `schematic` | Dimension crosshair at click | no-op |
+| `trace` | Nearest segment re-draws progress 0→1→0 (`clickSegFlash`) | no-op |
+| `branch` | Nearest fork node reveal bounce | no-op |
+| `pcb` | Nearest via/trace pulse + gridPulse bump | no-op |
+| `hexpulse` | Clicked hex + neighbors center-out scale pop | no-op |
+| `magnet` | Stream burst toward click (≤12) | no-op |
+| `signal` | Waveform spike at click X | no-op |
+| `chrono` | Hand snaps to click angle 600ms | no-op |
+| `ledger` | Column brighten + counter surge | no-op |
+| `telemetry` | Instrument ticks stagger-climb at click X | no-op |
+| `ping` | Blip pop at click bearing | no-op |
+| `sonar` | Echo ring from click origin | no-op |
+| `beacon` | 3 staggered echo rings from click | no-op |
+| `relay` | Baton teleports toward nearest station | no-op |
+| `parcel` | New packet spawns, routes to station | no-op |
+| `weave` | Thread kink at nearest midpoint | no-op |
+| `filament` | Thread detour through click knot | no-op |
+| `isograph` | Highlight cell snaps to click grid cell | no-op |
+| `lattice` | Layer shear impulse from click | no-op |
+| `orbit` | Nearest body radius kick + glow flare | no-op |
+
+---
+
 ## §Slide matrix — post-reassignment (49 rows)
 
 | Route | Slide# | Title | Effect | Cluster | Adjacent dup? |
