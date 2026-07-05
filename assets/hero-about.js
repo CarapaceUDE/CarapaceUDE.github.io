@@ -11,7 +11,7 @@ export const HERO_SLIDES = [
       { label: "Cortex", detail: "Open-core control plane software." }
     ],
     oklch: { L: 0.54, h: 210, rel: 0.32 },
-    effect: "weave",
+    effect: "filament",
     bokeh: 0.3
   },
   {
@@ -39,7 +39,7 @@ export const HERO_SLIDES = [
       { label: "Value that compounds", detail: "Reusable integrations & packages." }
     ],
     oklch: { L: 0.5, h: 145, rel: 0.28 },
-    effect: "isograph",
+    effect: "lattice",
     bokeh: 0.32
   },
   {

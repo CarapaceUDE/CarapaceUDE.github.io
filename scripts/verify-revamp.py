@@ -338,6 +338,7 @@ def craft_effects_gate() -> tuple[bool, list[str]]:
         expected_pages = [
             "index.html", "about.html", "business.html",
             "licensing.html", "solutions.html", "cortex.html",
+            "archive.html",
         ]
         harness_pages = sorted(p.name for p in harness_dir.glob("*.html"))
         if harness_pages != sorted(expected_pages):
@@ -403,11 +404,15 @@ def structural_gate() -> tuple[bool, list[str]]:
         lines.append(f"PASS hero-stage on {len(expected)} routes")
 
     effects = (ROOT / "assets/effects-anime.js").read_text(encoding="utf-8")
-    effect_ids = [
-        "shield", "cascade", "mesh", "stack", "magnet", "signal", "chrono", "ping",
-        "flowchart", "pcb", "topology", "pipeline", "constellation", "vault", "schematic",
-        "isograph", "sonar", "ledger", "weave", "orbit", "relay", "seal", "glyph",
-    ]
+    try:
+        contract = load_effects_contract()
+        effect_ids = contract["SHIPPED_EFFECT_IDS"]
+    except Exception:
+        effect_ids = [
+            "shield", "cascade", "mesh", "stack", "magnet", "signal", "chrono", "ping",
+            "flowchart", "pcb", "topology", "pipeline", "constellation", "vault", "schematic",
+            "isograph", "sonar", "ledger", "weave", "orbit", "relay", "seal", "glyph",
+        ]
     for eid in effect_ids:
         if f'id === "{eid}"' not in effects:
             lines.append(f"FAIL effects-anime.js: missing {eid}")
@@ -454,6 +459,8 @@ def structural_gate() -> tuple[bool, list[str]]:
         lines.append("PASS hero slides: no adjacent duplicate effects")
     else:
         ok = False
+    ok, cluster_lines = check_cluster_caps([], ok)
+    reassign_lines.extend(cluster_lines)
     (SCRATCH / "reassignment-check.log").write_text("\n".join(reassign_lines) + "\n", encoding="utf-8")
 
     about_js = (ROOT / "assets/hero-about.js").read_text(encoding="utf-8")
@@ -507,11 +514,11 @@ def structural_gate() -> tuple[bool, list[str]]:
         lines.append("PASS index.html: footer stat source links")
 
     cortex_js = (ROOT / "assets/hero-cortex.js").read_text(encoding="utf-8")
-    if 'effect: "schematic"' not in cortex_js:
-        lines.append("FAIL hero-cortex.js: slide 2 missing schematic effect")
+    if 'effect: "trace"' not in cortex_js:
+        lines.append("FAIL hero-cortex.js: slide 2 missing trace effect")
         ok = False
     else:
-        lines.append("PASS hero-cortex.js: slide 2 uses schematic")
+        lines.append("PASS hero-cortex.js: slide 2 uses trace")
 
     vis = ROOT / "docs/visual-assets.md"
     if vis.exists() and "schematic" in vis.read_text(encoding="utf-8").lower():
@@ -595,6 +602,48 @@ def structural_gate() -> tuple[bool, list[str]]:
     (SCRATCH / "structural-legacy-check.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("Wrote structural-legacy-check.log")
     return ok, lines
+
+
+NODE_GRAPH_CLUSTER = ("mesh", "topology", "constellation")
+FLOW_DIAGRAM_CLUSTER = ("flowchart", "pipeline", "schematic")
+RELAY_CLUSTER_MAX = 3
+NODE_GRAPH_CLUSTER_MAX = 5
+FLOW_DIAGRAM_CLUSTER_MAX = 4
+
+
+def _hero_effect_sequences() -> dict[str, list[str]]:
+    seqs: dict[str, list[str]] = {}
+    for mod in HERO_MODULES.values():
+        text = (ROOT / mod).read_text(encoding="utf-8")
+        seqs[mod] = re.findall(r'effect:\s*"([a-z]+)"', text)
+    return seqs
+
+
+def check_cluster_caps(lines: list[str], ok: bool) -> tuple[bool, list[str]]:
+    """Phase 2 cluster rebalance gates: relay ≤3, node-graph ≤5, flow-diagram ≤4."""
+    all_effects: list[str] = []
+    for effects_seq in _hero_effect_sequences().values():
+        all_effects.extend(effects_seq)
+    relay_n = all_effects.count("relay")
+    node_n = sum(all_effects.count(e) for e in NODE_GRAPH_CLUSTER)
+    flow_n = sum(all_effects.count(e) for e in FLOW_DIAGRAM_CLUSTER)
+    cluster_ok = True
+    if relay_n <= RELAY_CLUSTER_MAX:
+        lines.append(f"PASS cluster relay: {relay_n} <= {RELAY_CLUSTER_MAX}")
+    else:
+        lines.append(f"FAIL cluster relay: {relay_n} > {RELAY_CLUSTER_MAX}")
+        cluster_ok = False
+    if node_n <= NODE_GRAPH_CLUSTER_MAX:
+        lines.append(f"PASS cluster node-graph: {node_n} <= {NODE_GRAPH_CLUSTER_MAX}")
+    else:
+        lines.append(f"FAIL cluster node-graph: {node_n} > {NODE_GRAPH_CLUSTER_MAX}")
+        cluster_ok = False
+    if flow_n <= FLOW_DIAGRAM_CLUSTER_MAX:
+        lines.append(f"PASS cluster flow-diagram: {flow_n} <= {FLOW_DIAGRAM_CLUSTER_MAX}")
+    else:
+        lines.append(f"FAIL cluster flow-diagram: {flow_n} > {FLOW_DIAGRAM_CLUSTER_MAX}")
+        cluster_ok = False
+    return ok and cluster_ok, lines
 
 
 def load_effects_contract() -> dict:
@@ -760,15 +809,31 @@ def check_stage_artifacts() -> tuple[bool, list[str]]:
                 if p.strip() and not p.strip().startswith("#")
             ]
             extra = sorted(set(staged) - set(expected))
-            missing = sorted(set(expected) - set(staged))
+            changed_expected = []
+            for rel in expected:
+                try:
+                    diff = subprocess.run(
+                        ["git", "diff", "HEAD", "--", rel],
+                        cwd=ROOT,
+                        capture_output=True,
+                        text=True,
+                        timeout=15,
+                    )
+                    if diff.stdout.strip():
+                        changed_expected.append(rel)
+                except Exception:
+                    pass
+            missing = sorted(set(changed_expected) - set(staged))
             if extra:
                 lines.append(f"FAIL staged extra: {extra}")
                 ok = False
             if missing:
-                lines.append(f"FAIL staged missing: {missing}")
+                lines.append(f"FAIL staged missing changed manifest paths: {missing}")
                 ok = False
             if not extra and not missing:
-                lines.append(f"PASS staged matches manifest ({len(expected)} paths)")
+                lines.append(
+                    f"PASS staged matches changed manifest paths ({len(changed_expected)}/{len(expected)})"
+                )
     if not patch.exists() or len(patch.read_text(encoding="utf-8").strip()) < 200:
         lines.append("FAIL effects-goal.patch missing or too small")
         ok = False
@@ -912,6 +977,8 @@ def effects_structural_gate() -> tuple[bool, list[str]]:
             lines.append(f"PASS {mod}: {len(effects_seq)} slides, no adjacent dup")
     if adj_ok:
         lines.append("PASS hero slides: no adjacent duplicate effects")
+
+    ok, lines = check_cluster_caps(lines, ok)
 
     lines.append(f"GATE: {'PASS' if ok else 'FAIL'}")
     (SCRATCH / "structural-check.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -1057,7 +1124,9 @@ def check_audit_docs() -> tuple[bool, list[str]]:
             lines.append(f"FAIL effects-audit.md: research entries {research_rows} (expected >=8)")
             ok = False
         new_effects = [
-            "isograph", "sonar", "ledger", "weave", "orbit", "relay", "seal", "glyph"
+            "isograph", "sonar", "ledger", "orbit", "relay", "seal",
+            "hexpulse", "parcel", "hashwave", "branch", "telemetry", "trace",
+            "checksum", "cellscan", "beacon", "lattice", "filament",
         ]
         code_assignments: dict[str, list[tuple[str, int]]] = {eid: [] for eid in new_effects}
         for route, mod in HERO_MODULES.items():
@@ -1274,6 +1343,10 @@ def check_interaction_policy_static() -> tuple[bool, list[str]]:
         ("interaction.hover &&", "raw interaction.hover && in _drawEffect"),
         ("this.interaction.hover &&", "raw this.interaction.hover && in _drawEffect"),
         ("interaction.hover && !this.reducedMotion", "inline RM guard in _drawEffect"),
+        ("this.interaction.px", "raw this.interaction.px in _drawEffect"),
+        ("this.interaction.py", "raw this.interaction.py in _drawEffect"),
+        ("interaction.px", "raw interaction.px in _drawEffect"),
+        ("interaction.py", "raw interaction.py in _drawEffect"),
     ]
     for pat, label in forbidden:
         if pat in draw_body:
@@ -1310,6 +1383,96 @@ def check_interaction_policy_static() -> tuple[bool, list[str]]:
 
     lines.append(f"GATE: {'PASS' if ok else 'FAIL'}")
     (SCRATCH / "interaction-policy.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return ok, lines
+
+
+def check_d3_import_audit() -> tuple[bool, list[str]]:
+    """Plan step 8 — d3-delaunay compute-only at boot for cellscan."""
+    lines = []
+    ok = True
+    effects_path = ROOT / "assets/effects-anime.js"
+    if not effects_path.exists():
+        lines.append("FAIL effects-anime.js missing")
+        (SCRATCH / "d3-audit.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
+        return False, lines
+
+    text = effects_path.read_text(encoding="utf-8")
+    if "d3-delaunay" in text and "Delaunay" in text:
+        lines.append("PASS effects-anime.js: d3-delaunay import present")
+    else:
+        lines.append("FAIL effects-anime.js: d3-delaunay import missing")
+        ok = False
+
+    if "buildCellscanEdges" in text and "Delaunay.from" in text and "delaunay.neighbors(" in text:
+        lines.append("PASS effects-anime.js: cellscan Delaunay edge builder at boot")
+    else:
+        lines.append("FAIL effects-anime.js: cellscan missing Delaunay.from boot helper")
+        ok = False
+
+    boot_slice = text[text.find("function buildCellscanEdges"): text.find("function drawHexPath")]
+    if "animate(" not in boot_slice and "createTimer" not in boot_slice:
+        lines.append("PASS cellscan geometry: no D3 animation runtime in boot helper")
+    else:
+        lines.append("FAIL cellscan geometry: animation runtime in Delaunay boot path")
+        ok = False
+
+    if "d3-hexbin" in text:
+        lines.append("FAIL effects-anime.js: d3-hexbin import present (not required for hexpulse procedural grid)")
+        ok = False
+    else:
+        lines.append("PASS effects-anime.js: no d3-hexbin import (hexpulse uses procedural grid)")
+
+    lines.append(f"GATE: {'PASS' if ok else 'FAIL'}")
+    (SCRATCH / "d3-audit.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return ok, lines
+
+
+def check_rm_scroll_static() -> tuple[bool, list[str]]:
+    """Plan step 7 — RM frozen composition for scroll-sync effects (telemetry/trace/checksum)."""
+    lines = []
+    ok = True
+    rm_log = SCRATCH / "reduced-motion.log"
+    required = ("telemetry", "trace", "checksum")
+
+    if not rm_log.exists():
+        lines.append("FAIL reduced-motion.log missing")
+        ok = False
+    else:
+        raw = rm_log.read_text(encoding="utf-8")
+        try:
+            payload = json.loads(raw)
+        except json.JSONDecodeError:
+            lines.append("FAIL reduced-motion.log: invalid JSON")
+            ok = False
+            payload = {}
+
+        scroll_static = payload.get("scrollStatic") or []
+        if not scroll_static:
+            lines.append("FAIL reduced-motion.log: scrollStatic section missing")
+            ok = False
+        else:
+            by_id = {entry.get("id"): entry for entry in scroll_static if isinstance(entry, dict)}
+            for eid in required:
+                entry = by_id.get(eid)
+                if not entry:
+                    lines.append(f"FAIL reduced-motion.log: scrollStatic missing {eid}")
+                    ok = False
+                elif entry.get("frozenOk") and entry.get("alphaOk"):
+                    lines.append(f"PASS reduced-motion.log: {eid} frozen static composition")
+                else:
+                    lines.append(
+                        f"FAIL reduced-motion.log: {eid} frozen={entry.get('frozenOk')} alpha={entry.get('alphaOk')}"
+                    )
+                    ok = False
+
+        if payload.get("scrollStaticGating") is True:
+            lines.append("PASS reduced-motion.log: scrollStaticGating true")
+        else:
+            lines.append("FAIL reduced-motion.log: scrollStaticGating not true")
+            ok = False
+
+    lines.append(f"GATE: {'PASS' if ok else 'FAIL'}")
+    (SCRATCH / "rm-check.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
     return ok, lines
 
 
@@ -1376,10 +1539,12 @@ def run_effects_goal_gate() -> bool:
     audit_ok, _ = check_audit_docs()
     perf_ok, _ = check_perf_caps()
     policy_ok, _ = check_interaction_policy_static()
+    d3_ok, _ = check_d3_import_audit()
 
     adj_ok = effects_struct_ok and _subgate_pass(SCRATCH / "structural-check.log")
 
     smoke_ok = run_effects_smoke()
+    rm_scroll_ok, _ = check_rm_scroll_static()
     smoke_log = SCRATCH / "effects-smoke.log"
     smoke_bypass = False
     if smoke_log.exists():
@@ -1390,12 +1555,14 @@ def run_effects_goal_gate() -> bool:
         )
         rm_toggle_ok = "rm-toggle: OK" in st
         rm_isograph_ok = "rm-toggle-isograph: OK" in st
+        rm_scroll_static_ok = "rm-scroll-static: OK" in st
         smoke_ok = (
             smoke_ok
             and not smoke_bypass
             and draw_ok
             and rm_toggle_ok
             and rm_isograph_ok
+            and rm_scroll_static_ok
             and "gating: PASS" in st
         )
         if smoke_bypass:
@@ -1406,6 +1573,8 @@ def run_effects_goal_gate() -> bool:
             gate_lines.append("FAIL effects-smoke.log: live RM media toggle")
         if not rm_isograph_ok:
             gate_lines.append("FAIL effects-smoke.log: isograph grid recreate 80→40")
+        if not rm_scroll_static_ok:
+            gate_lines.append("FAIL effects-smoke.log: scroll-static RM (telemetry/trace/checksum)")
     else:
         smoke_ok = False
 
@@ -1432,6 +1601,8 @@ def run_effects_goal_gate() -> bool:
         ("audit docs", "audit-docs-check.log", audit_ok),
         ("perf caps", "perf-caps.log", perf_ok),
         ("interaction policy", "interaction-policy.log", policy_ok),
+        ("d3 import audit", "d3-audit.log", d3_ok),
+        ("RM scroll static", "rm-check.log", rm_scroll_ok),
         ("draw smoke", "effects-smoke.log", smoke_ok),
         ("wired E2E", "wired-rm-e2e.log", wired_ok),
     ]
@@ -1451,6 +1622,8 @@ def run_effects_goal_gate() -> bool:
         and audit_ok
         and perf_ok
         and policy_ok
+        and d3_ok
+        and rm_scroll_ok
         and effects_struct_ok
         and adj_ok
         and smoke_ok

@@ -51,6 +51,65 @@
     "vault",
     "schematic"
   ],
+  "PHASE2_EFFECT_IDS": [
+    "hexpulse",
+    "parcel",
+    "hashwave",
+    "branch",
+    "telemetry",
+    "trace",
+    "checksum",
+    "cellscan",
+    "beacon",
+    "lattice",
+    "filament"
+  ],
+  "EFFECT_PARTICLE_CAPS": {
+    "hexpulse": {
+      "full": 80,
+      "rm": 40
+    },
+    "parcel": {
+      "full": 24,
+      "rm": 12
+    },
+    "hashwave": {
+      "full": 80,
+      "rm": 40
+    },
+    "branch": {
+      "full": 32,
+      "rm": 16
+    },
+    "telemetry": {
+      "full": 40,
+      "rm": 20
+    },
+    "trace": {
+      "full": 48,
+      "rm": 24
+    },
+    "checksum": {
+      "full": 36,
+      "rm": 18
+    },
+    "cellscan": {
+      "full": 56,
+      "rm": 28
+    },
+    "beacon": {
+      "full": 32,
+      "rm": 16
+    },
+    "lattice": {
+      "full": 64,
+      "rm": 32
+    },
+    "filament": {
+      "full": 28,
+      "rm": 14
+    }
+  },
   "SHIPPED_EFFECT_IDS": [
     "shield",
     "cascade",
@@ -74,7 +133,18 @@
     "orbit",
     "relay",
     "seal",
-    "glyph"
+    "glyph",
+    "hexpulse",
+    "parcel",
+    "hashwave",
+    "branch",
+    "telemetry",
+    "trace",
+    "checksum",
+    "cellscan",
+    "beacon",
+    "lattice",
+    "filament"
   ],
   "INTERACTIVE_EFFECTS": [
     "cascade",
@@ -90,7 +160,15 @@
     "isograph",
     "orbit",
     "seal",
-    "glyph"
+    "glyph",
+    "hexpulse",
+    "parcel",
+    "hashwave",
+    "branch",
+    "beacon",
+    "cellscan",
+    "lattice",
+    "filament"
   ],
   "EFFECTS_HARNESS_PREFIX": "scripts/effects-hero-harness",
   "EFFECT_DRAW_SLIDES": [
@@ -116,11 +194,11 @@
       "effect": "orbit"
     },
     {
-      "id": "pcb",
+      "id": "hexpulse",
       "route": "scripts/effects-hero-harness/index.html",
       "slideCount": 8,
       "slideIndex": 3,
-      "effect": "pcb"
+      "effect": "hexpulse"
     },
     {
       "id": "magnet",
@@ -130,11 +208,11 @@
       "effect": "magnet"
     },
     {
-      "id": "ledger",
+      "id": "telemetry",
       "route": "scripts/effects-hero-harness/index.html",
       "slideCount": 8,
       "slideIndex": 5,
-      "effect": "ledger"
+      "effect": "telemetry"
     },
     {
       "id": "chrono",
@@ -144,25 +222,25 @@
       "effect": "chrono"
     },
     {
-      "id": "sonar",
+      "id": "beacon",
       "route": "scripts/effects-hero-harness/index.html",
       "slideCount": 8,
       "slideIndex": 7,
-      "effect": "sonar"
+      "effect": "beacon"
     },
     {
-      "id": "weave",
+      "id": "filament",
       "route": "scripts/effects-hero-harness/about.html",
       "slideCount": 7,
       "slideIndex": 0,
-      "effect": "weave"
+      "effect": "filament"
     },
     {
-      "id": "isograph",
+      "id": "lattice",
       "route": "scripts/effects-hero-harness/about.html",
       "slideCount": 7,
       "slideIndex": 2,
-      "effect": "isograph"
+      "effect": "lattice"
     },
     {
       "id": "constellation",
@@ -193,11 +271,11 @@
       "effect": "topology"
     },
     {
-      "id": "mesh",
+      "id": "cellscan",
       "route": "scripts/effects-hero-harness/business.html",
       "slideCount": 8,
       "slideIndex": 2,
-      "effect": "mesh"
+      "effect": "cellscan"
     },
     {
       "id": "signal",
@@ -207,18 +285,39 @@
       "effect": "signal"
     },
     {
-      "id": "flowchart",
+      "id": "branch",
       "route": "scripts/effects-hero-harness/business.html",
       "slideCount": 8,
       "slideIndex": 4,
-      "effect": "flowchart"
+      "effect": "branch"
     },
     {
-      "id": "glyph",
+      "id": "hashwave",
       "route": "scripts/effects-hero-harness/business.html",
       "slideCount": 8,
       "slideIndex": 6,
-      "effect": "glyph"
+      "effect": "hashwave"
+    },
+    {
+      "id": "parcel",
+      "route": "scripts/effects-hero-harness/licensing.html",
+      "slideCount": 6,
+      "slideIndex": 3,
+      "effect": "parcel"
+    },
+    {
+      "id": "ledger",
+      "route": "scripts/effects-hero-harness/licensing.html",
+      "slideCount": 6,
+      "slideIndex": 4,
+      "effect": "ledger"
+    },
+    {
+      "id": "checksum",
+      "route": "scripts/effects-hero-harness/licensing.html",
+      "slideCount": 6,
+      "slideIndex": 5,
+      "effect": "checksum"
     },
     {
       "id": "pipeline",
@@ -228,18 +327,32 @@
       "effect": "pipeline"
     },
     {
-      "id": "schematic",
+      "id": "isograph",
+      "route": "scripts/effects-hero-harness/solutions.html",
+      "slideCount": 10,
+      "slideIndex": 2,
+      "effect": "isograph"
+    },
+    {
+      "id": "trace",
       "route": "scripts/effects-hero-harness/solutions.html",
       "slideCount": 10,
       "slideIndex": 4,
-      "effect": "schematic"
+      "effect": "trace"
     },
     {
-      "id": "vault",
-      "route": "scripts/effects-hero-harness/cortex.html",
+      "id": "sonar",
+      "route": "scripts/effects-hero-harness/solutions.html",
       "slideCount": 10,
       "slideIndex": 5,
-      "effect": "vault"
+      "effect": "sonar"
+    },
+    {
+      "id": "mesh",
+      "route": "scripts/effects-hero-harness/cortex.html",
+      "slideCount": 10,
+      "slideIndex": 3,
+      "effect": "mesh"
     },
     {
       "id": "stack",
@@ -254,6 +367,71 @@
       "slideCount": 10,
       "slideIndex": 9,
       "effect": "ping"
+    },
+    {
+      "id": "pcb",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 0,
+      "effect": "pcb"
+    },
+    {
+      "id": "weave",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 1,
+      "effect": "weave"
+    },
+    {
+      "id": "flowchart",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 2,
+      "effect": "flowchart"
+    },
+    {
+      "id": "schematic",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 3,
+      "effect": "schematic"
+    },
+    {
+      "id": "vault",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 4,
+      "effect": "vault"
+    },
+    {
+      "id": "glyph",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 5,
+      "effect": "glyph"
+    }
+  ],
+  "SCROLL_STATIC_RM_SLIDES": [
+    {
+      "id": "telemetry",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 5,
+      "effect": "telemetry"
+    },
+    {
+      "id": "trace",
+      "route": "scripts/effects-hero-harness/solutions.html",
+      "slideCount": 10,
+      "slideIndex": 4,
+      "effect": "trace"
+    },
+    {
+      "id": "checksum",
+      "route": "scripts/effects-hero-harness/licensing.html",
+      "slideCount": 6,
+      "slideIndex": 5,
+      "effect": "checksum"
     }
   ],
   "WIRED_SLIDES": [
@@ -266,9 +444,9 @@
     },
     {
       "id": "mesh",
-      "route": "scripts/effects-hero-harness/business.html",
-      "slideCount": 8,
-      "slideIndex": 2,
+      "route": "scripts/effects-hero-harness/cortex.html",
+      "slideCount": 10,
+      "slideIndex": 3,
       "effect": "mesh"
     },
     {
@@ -301,23 +479,23 @@
     },
     {
       "id": "sonar",
-      "route": "scripts/effects-hero-harness/index.html",
-      "slideCount": 8,
-      "slideIndex": 7,
+      "route": "scripts/effects-hero-harness/solutions.html",
+      "slideCount": 10,
+      "slideIndex": 5,
       "effect": "sonar"
     },
     {
       "id": "weave",
-      "route": "scripts/effects-hero-harness/about.html",
-      "slideCount": 7,
-      "slideIndex": 0,
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 1,
       "effect": "weave"
     },
     {
       "id": "ledger",
-      "route": "scripts/effects-hero-harness/index.html",
-      "slideCount": 8,
-      "slideIndex": 5,
+      "route": "scripts/effects-hero-harness/licensing.html",
+      "slideCount": 6,
+      "slideIndex": 4,
       "effect": "ledger"
     },
     {
@@ -329,9 +507,9 @@
     },
     {
       "id": "isograph",
-      "route": "scripts/effects-hero-harness/business.html",
-      "slideCount": 8,
-      "slideIndex": 1,
+      "route": "scripts/effects-hero-harness/solutions.html",
+      "slideCount": 10,
+      "slideIndex": 2,
       "effect": "isograph"
     },
     {
@@ -350,10 +528,66 @@
     },
     {
       "id": "glyph",
+      "route": "scripts/effects-hero-harness/archive.html",
+      "slideCount": 6,
+      "slideIndex": 5,
+      "effect": "glyph"
+    },
+    {
+      "id": "hexpulse",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 3,
+      "effect": "hexpulse"
+    },
+    {
+      "id": "parcel",
+      "route": "scripts/effects-hero-harness/licensing.html",
+      "slideCount": 6,
+      "slideIndex": 3,
+      "effect": "parcel"
+    },
+    {
+      "id": "hashwave",
       "route": "scripts/effects-hero-harness/business.html",
       "slideCount": 8,
       "slideIndex": 6,
-      "effect": "glyph"
+      "effect": "hashwave"
+    },
+    {
+      "id": "branch",
+      "route": "scripts/effects-hero-harness/licensing.html",
+      "slideCount": 6,
+      "slideIndex": 1,
+      "effect": "branch"
+    },
+    {
+      "id": "beacon",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 7,
+      "effect": "beacon"
+    },
+    {
+      "id": "cellscan",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 2,
+      "effect": "cellscan"
+    },
+    {
+      "id": "lattice",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 2,
+      "effect": "lattice"
+    },
+    {
+      "id": "filament",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 0,
+      "effect": "filament"
     }
   ]
 }

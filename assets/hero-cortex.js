@@ -26,7 +26,7 @@ export const HERO_SLIDES = [
       { label: "Execute", detail: "Governed automation." }
     ],
     oklch: { L: 0.5, h: 175, rel: 0.3 },
-    effect: "schematic",
+    effect: "trace",
     bokeh: 0.32
   },
   {
@@ -39,7 +39,7 @@ export const HERO_SLIDES = [
       { label: "Masking", detail: "Credentials isolated." }
     ],
     oklch: { L: 0.52, h: 230, rel: 0.31 },
-    effect: "pcb",
+    effect: "hexpulse",
     bokeh: 0.31
   },
   {
@@ -78,7 +78,7 @@ export const HERO_SLIDES = [
       { label: "Approvals", detail: "Explicit human gates." }
     ],
     oklch: { L: 0.48, h: 280, rel: 0.28 },
-    effect: "vault",
+    effect: "checksum",
     bokeh: 0.3
   },
   {
@@ -117,7 +117,7 @@ export const HERO_SLIDES = [
       { label: "Compounding", detail: "Reusable intelligence." }
     ],
     oklch: { L: 0.56, h: 160, rel: 0.3 },
-    effect: "glyph",
+    effect: "hashwave",
     bokeh: 0.29
   },
   {

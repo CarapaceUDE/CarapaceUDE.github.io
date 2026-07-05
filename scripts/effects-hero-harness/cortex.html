@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Solutions | Carapace</title>
-  <meta name="description" content="Carapace helps businesses solve real workflow problems with Cortex, from follow-up and approvals to reporting, routing, and knowledge reuse." />
+  <title>Cortex | Private AI Control Plane by Carapace</title>
+  <meta name="description" content="Cortex is the private AI control plane for context management, intent-aware routing, model independence, custody-first governance, Fling capture, and signal-to-work intake." />
   <meta name="theme-color" content="#1a1c24" id="meta-theme-color" />
   <script>
     (function () {
@@ -18,14 +18,15 @@
       } catch (e) { /* private mode */ }
     })();
   </script>
-  <link rel="icon" href="assets/carapace_logo.svg" type="image/svg+xml" />
+  <link rel="icon" href="../../assets/carapace_logo.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/site.css?v=20260705d" />
-  <link rel="stylesheet" href="assets/hero-home.css?v=20260705c" />
+  <link rel="stylesheet" href="../../assets/site.css?v=20260705d" />
+  <link rel="stylesheet" href="../../assets/hero-home.css?v=20260705c" />
+  <link rel="stylesheet" href="../../assets/pages.css?v=20260705c" />
 </head>
-<body class="page-solutions">
+<body class="page-cortex">
   <nav class="nav" aria-label="Primary navigation">
     <div class="wrap nav-inner">
       <a class="brand" href="index.html" aria-label="Carapace home"><span class="cortex-brand-logo" data-cortex-brand-logo aria-hidden="true"><span class="cortex-brand-logo__ring"></span><span class="cortex-brand-logo__brain"><canvas class="cortex-brand-logo__canvas"></canvas></span></span><span>Carapace</span></a>
@@ -49,7 +50,7 @@
     </div>
   </nav>
 
-  <div class="atmosphere" id="atmosphere" data-effect="topology" aria-hidden="true">
+  <div class="atmosphere" id="atmosphere" data-effect="shield" aria-hidden="true">
     <div class="atmosphere-glow"></div>
     <div class="atmosphere-grid" id="grid"></div>
     <canvas id="field"></canvas>
@@ -78,44 +79,73 @@
       <div class="pinned" id="pinned">
         <div class="stage-3d" id="stage-3d">
           <article class="slide-content" id="slide-content" aria-live="polite">
-            <div class="eyebrow text-el" data-layer="eyebrow">Solutions</div>
+            <div class="eyebrow text-el" data-layer="eyebrow">Cortex</div>
             <h1 class="title-block">
-              <span class="title-word" data-word="0">How</span>
-              <span class="title-word" data-word="1">Work</span>
-              <span class="title-word" data-word="2">Gets</span>
-              <span class="title-word" data-word="3">Routable</span>
+              <span class="title-word" data-word="0">Private</span>
+              <span class="title-word" data-word="1">Control</span>
+              <span class="title-word" data-word="2">Plane</span>
             </h1>
-            <p class="sub text-el" data-layer="sub">People ask for work outcomes; Cortex decides where that work should run based on capability, policy, cost, and context.</p>
-            <p class="note text-el" data-layer="note">Carapace builds. Cortex routes.</p>
+            <p class="sub text-el" data-layer="sub">A model-independent layer that decides which model, tool, or environment handles each request based on policy, cost, speed, and context.</p>
+            <p class="note text-el" data-layer="note">Your intelligence layer should belong to you.</p>
             <div class="proof-row text-el" data-layer="proof">
-              <span class="proof-chip" data-chip data-detail="Summarize, extract, draft, route."><span class="chip-label">Capability aliases</span></span>
-              <span class="proof-chip" data-chip data-detail="Data rules &amp; access control."><span class="chip-label">Policy layer</span></span>
+              <span class="proof-chip" data-chip data-detail="Inspectable software boundary."><span class="chip-label">Open core</span></span>
+              <span class="proof-chip" data-chip data-detail="Policy-first execution."><span class="chip-label">Governed</span></span>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="hero-cta-section" id="cta-section">
-      <div class="cta-panel">
-        <div class="eyebrow" style="opacity:1;transform:none">Next step</div>
-        <h2>Start with one wedge</h2>
-        <p>Book a Discovery Sprint to map friction, prototype value, and measure savings on a real workflow.</p>
-        <a class="cta-link" id="cta-link" href="business.html#contact">
-          <span class="cta-label">Book the Discovery Sprint →</span>
-        </a>
+    <section id="cortex-tail" class="hero-tail-section">
+      <div class="wrap">
+      <article class="card warn" style="margin-bottom:1.5rem">
+        <h2>Experimental software</h2>
+        <p>Cortex is still experimental. Use controlled environments, test carefully, and keep human review in the loop.</p>
+      </article>
+
+      <div class="grid two" style="margin-bottom:1.5rem">
+        <article class="card">
+          <h2>Best for</h2>
+          <p class="muted">Teams evaluating a governed control plane.</p>
+          <ul>
+            <li>Operators who want inspectable routing and approvals</li>
+            <li>Businesses testing local or private-cloud AI workflows</li>
+            <li>Builders exploring the open-core evaluate path</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h2>Not for</h2>
+          <p class="muted">When you need a finished SaaS product on day one.</p>
+          <ul>
+            <li>Teams expecting zero setup or governance work</li>
+            <li>Use cases that need vendor-managed multi-tenant AI only</li>
+            <li>Production without human review in experimental builds</li>
+          </ul>
+        </article>
+      </div>
+
+      <article class="card" id="download">
+        <h2>Download &amp; GitHub</h2>
+        <p class="muted">Explore Cortex yourself under the community edition path, or use Carapace for guided deployment.</p>
+        <div class="cta" style="margin-top:1rem">
+          <a class="btn primary" href="https://github.com/CarapaceUDE/carapace/releases" target="_blank" rel="noreferrer">Free Download</a>
+          <a class="btn outline" href="https://github.com/CarapaceUDE/carapace" target="_blank" rel="noreferrer">View on GitHub</a>
+          <a class="btn outline" href="business.html#contact">Book the Discovery Sprint</a>
+          <a class="btn outline" href="licensing.html">Licensing</a>
+        </div>
+      </article>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="wrap">
-      <div>Carapace / Cortex · Private AI infrastructure under your control.</div>
-      <div><a href="business.html">How We Help</a> · <a href="licensing.html">Licensing</a> · <a href="https://github.com/CarapaceUDE" target="_blank" rel="noreferrer">GitHub</a></div>
+      <div>Cortex · Private AI control plane by Carapace.</div>
+      <div><a href="index.html">Home</a> · <a href="licensing.html">Licensing</a> · <a href="https://github.com/CarapaceUDE/carapace" target="_blank" rel="noreferrer">GitHub</a></div>
     </div>
   </footer>
 
-  <script type="module" src="assets/hero-solutions.js?v=20260705c"></script>
-  <script src="assets/site.js?v=20260705d"></script>
+  <script type="module" src="../../assets/hero-cortex.js?v=20260705c"></script>
+  <script src="../../assets/site.js?v=20260705d"></script>
 </body>
 </html>

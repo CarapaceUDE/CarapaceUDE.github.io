@@ -215,9 +215,13 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
 
     onSlideChange(idx);
 
-    effectsField?.setScrollFrac(frac);
+    effectsField?.setScrollFrac(prefersReducedMotion ? 1 : frac);
 
-    if (idx < slides.length - 1 && frac > 0.3) {
+    if (prefersReducedMotion) {
+      effectsField?.setMixTarget(slides[idx].effect, slides[idx].effect, 0);
+      updateBokehIntensity(slides[idx].bokeh ?? 0.3);
+      effectsField?.setIntensity(slides[idx].bokeh ?? 0.3);
+    } else if (idx < slides.length - 1 && frac > 0.3) {
       const mix = smoothstep(0.3, 0.96, frac);
       effectsField?.setMixTarget(slides[idx].effect, slides[nextIdx].effect, mix);
       const bokehLerp = (slides[idx].bokeh ?? 0.3) * (1 - mix) + (slides[nextIdx].bokeh ?? 0.3) * mix;
@@ -351,6 +355,27 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
       resizeField();
       applyCtaCapsule();
     });
+
+    let stageObserver = null;
+    let visObserver = null;
+    if (heroStage && typeof ResizeObserver !== "undefined") {
+      stageObserver = new ResizeObserver(() => {
+        resizeField();
+        applyCtaCapsule();
+      });
+      stageObserver.observe(heroStage);
+    }
+    if (heroStage && typeof IntersectionObserver !== "undefined") {
+      visObserver = new IntersectionObserver(
+        (entries) => {
+          const visible = entries.some((e) => e.isIntersecting && e.intersectionRatio > 0.05);
+          if (visible) effectsField?.start();
+          else effectsField?.stop();
+        },
+        { root: null, threshold: [0, 0.05, 0.2] }
+      );
+      visObserver.observe(heroStage);
+    }
     window.addEventListener("scroll", () => {
       syncReducedMotionFromMedia();
       requestAnimationFrame(updateScroll);
@@ -382,6 +407,8 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
     return {
       dispose: () => {
         clearInterval(timeInterval);
+        stageObserver?.disconnect();
+        visObserver?.disconnect();
         chipInteractions?.dispose();
         effectsField?.stop();
       }

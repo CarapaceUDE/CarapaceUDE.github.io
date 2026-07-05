@@ -10,7 +10,7 @@
     :root { --bg:#070b16; --surface:#101a31; --surface-2:#121f39; --text:#edf1ff; --muted:#a7b3d3; --border:#253554; --primary:#5b6fa6; --primary-2:#475981; --secondary:#cfd8ee; --warn:#f97316; --max:1020px; }
     *{box-sizing:border-box;} html,body{margin:0;padding:0;} body{margin:0;font:16px/1.62 Inter,Segoe UI,Roboto,system-ui,sans-serif;background:linear-gradient(180deg,#0b1122 0%,var(--bg) 100%);color:var(--text);} a{color:var(--secondary);text-decoration:none;}
     .wrap{width:min(100% - 2rem,var(--max));margin:0 auto;} .nav{position:sticky;top:0;z-index:20;background:rgba(7,11,22,.76);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);} .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 0;}
-    .brand{display:inline-flex;align-items:center;gap:.65rem;color:var(--text);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.9rem;} .brand img{width:48px;height:48px;border-radius:8px;filter:drop-shadow(0 0 10px rgba(34,211,238,.35));}
+    .brand{display:inline-flex;align-items:center;gap:.65rem;color:var(--text);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.9rem;}
     .links{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;font-size:.92rem;}
     .hero{padding:3.9rem 0 2.2rem;border-bottom:1px solid var(--border);background:radial-gradient(900px 440px at 10% -10%,rgba(139,92,246,.22),transparent 46%),radial-gradient(900px 400px at 110% 10%,rgba(34,211,238,.14),transparent 44%);} h1{margin:.3rem 0 .9rem;line-height:1.04;font-size:clamp(2.05rem,4.4vw,3.45rem);letter-spacing:-.03em;} h2{margin:0 0 .85rem;font-size:clamp(1.24rem,2.2vw,1.82rem);} h3{margin:.1rem 0 .5rem;font-size:1.02rem;}
     .lead{color:var(--muted);max-width:62ch;margin:0 0 1rem;font-size:1.05rem;} .pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:.35rem .7rem;font-size:.82rem;color:#cfe1ff;background:rgba(18,31,57,.7);margin-right:.45rem;margin-bottom:.45rem;}
@@ -39,12 +39,12 @@
     .carousel-dot.active{background:#8fd0ff;transform:scale(1.1);}
     ul{padding-left:1.15rem;} li{margin:.42rem 0;} footer{border-top:1px solid var(--border);padding:1.3rem 0 2rem;color:#9fb0d7;font-size:.9rem;} @media (max-width:900px){.two{grid-template-columns:1fr;} .carousel-shell{padding:1rem 3.25rem;max-width:100%;} .carousel-viewport{min-height:320px;} .carousel-slide{min-width:calc(100% - 56px);} .carousel-card{min-height:300px;}} @media (max-width:640px){.carousel-shell{padding:1rem 2.8rem;} .carousel-slide{min-width:100%;opacity:1;transform:none;} .carousel-btn{width:38px;height:38px;} .carousel-card strong{font-size:1.22rem;} .carousel-card p{font-size:.96rem;}}
   </style>
-  <link rel="stylesheet" href="assets/site.css?v=20260619" />
+  <link rel="stylesheet" href="assets/site.css?v=20260705d" />
 </head>
 <body class="page-carapace">
   <nav class="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="index.html" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="Carapace logo" /><span>Carapace</span></a>
+      <a class="brand" href="index.html" aria-label="Carapace home"><span class="cortex-brand-logo" data-cortex-brand-logo aria-hidden="true"><span class="cortex-brand-logo__ring"></span><span class="cortex-brand-logo__brain"><canvas class="cortex-brand-logo__canvas"></canvas></span></span><span>Carapace</span></a>
       <div class="links"><a href="index.html">Home</a><a href="business.html">How We Help</a><a href="solutions.html">Solutions</a><a href="licensing.html">Licensing</a><a href="ideas/">Pitch Deck</a><a href="about.html">About</a></div>
     </div>
   </nav>
@@ -280,7 +280,7 @@
     })();
   </script>
   <script src="assets/cortex-bloom-bg.js"></script>
-  <script src="assets/site.js?v=20260619"></script>
+  <script src="assets/site.js?v=20260705d"></script>
 </body>
 </html>
 

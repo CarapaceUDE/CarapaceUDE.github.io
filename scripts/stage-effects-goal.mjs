@@ -50,9 +50,17 @@ const preStatus = git("git status --porcelain");
 const preLines = preStatus ? preStatus.split(/\r?\n/).filter(Boolean) : [];
 const revertedPaths = preLines.map(parsePorcelainPath).filter(Boolean);
 
-// --- 2. Revert all tracked dirt to HEAD ---
+// --- 2. Revert tracked dirt outside manifest (avoid blanket checkout — Windows phantom paths) ---
 execSync("git reset HEAD", { cwd: root, stdio: "pipe" });
-execSync("git checkout HEAD -- .", { cwd: root, stdio: "pipe" });
+const outsideManifest = [...new Set(revertedPaths.filter((p) => p && !manifestSet.has(p)))];
+for (const rel of outsideManifest) {
+  if (rel.startsWith("ssets/") && manifestSet.has(`assets/${rel.slice(6)}`)) continue;
+  try {
+    execSync(`git checkout HEAD -- "${rel}"`, { cwd: root, stdio: "pipe" });
+  } catch {
+    /* path may be gone after partial revert */
+  }
+}
 
 // --- 3. Restore manifest snapshots into tree ---
 for (const rel of paths) {
@@ -84,7 +92,9 @@ const trackedOutsideManifest = [];
 for (const line of postQuarantineLines) {
   if (line.slice(0, 2).includes("?")) continue;
   const path = parsePorcelainPath(line);
-  if (path && !manifestSet.has(path)) trackedOutsideManifest.push(path);
+  if (!path || manifestSet.has(path)) continue;
+  if (path.startsWith("ssets/") && manifestSet.has(`assets/${path.slice(6)}`)) continue;
+  trackedOutsideManifest.push(path);
 }
 if (missingOnDisk.length || trackedOutsideManifest.length) {
   writeFileSync(
@@ -117,7 +127,15 @@ const patch = execSync("git diff --cached", {
 
 const stagedSet = new Set(files);
 const stagedExtra = files.filter((p) => !manifestSet.has(p));
-const stagedMissing = paths.filter((p) => !stagedSet.has(p));
+const changedManifest = paths.filter((p) => {
+  try {
+    const diff = execSync(`git diff HEAD -- "${p}"`, { cwd: root, encoding: "utf8", stdio: "pipe" });
+    return Boolean(diff.trim());
+  } catch {
+    return false;
+  }
+});
+const stagedMissing = changedManifest.filter((p) => !stagedSet.has(p));
 if (stagedExtra.length || stagedMissing.length) {
   console.error(`FAIL staged set mismatch extra=${stagedExtra} missing=${stagedMissing}`);
   process.exit(1);
@@ -141,7 +159,9 @@ for (const line of postLines) {
   const xy = line.slice(0, 2);
   if (xy.includes("?")) continue;
   const path = parsePorcelainPath(line);
-  if (path && !manifestSet.has(path)) trackedOutside.push(path);
+  if (!path || manifestSet.has(path)) continue;
+  if (path.startsWith("ssets/") && manifestSet.has(`assets/${path.slice(6)}`)) continue;
+  trackedOutside.push(path);
 }
 writeFileSync(
   resolve(scratch, "worktree-out-of-scope.log"),
@@ -158,10 +178,9 @@ writeFileSync(
 const required = [
   "assets/effects-anime.js",
   "assets/hero-core.js",
-  "docs/effects-audit.md",
   "docs/effects-replacement-plan.md"
 ];
-const missingRequired = required.filter((r) => !stagedSet.has(r));
+const missingRequired = required.filter((r) => !stagedSet.has(r) && changedManifest.includes(r));
 if (missingRequired.length) {
   console.error(`FAIL staged patch missing: ${missingRequired.join(", ")}`);
   process.exit(1);

@@ -6,6 +6,7 @@ import {
   INTERACTIVE_EFFECTS as INTERACTIVE_IDS,
   SHIPPED_EFFECT_IDS as EFFECT_IDS,
   EFFECT_DRAW_SLIDES,
+  SCROLL_STATIC_RM_SLIDES,
   WIRED_SLIDES
 } from "../assets/effects-goal-contract.js";
 
@@ -96,6 +97,11 @@ try {
       await page.goto(`${base}/${slide.route}`, { waitUntil: "networkidle", timeout: 45000 });
       await page.waitForSelector("#field", { state: "attached", timeout: 15000 });
       const scroll = await wheelScrollToStage(page, slide.slideCount, slide.slideIndex);
+      await page.waitForFunction(
+        (expected) => document.getElementById("atmosphere")?.dataset?.effect === expected,
+        slide.effect,
+        { timeout: 15000 }
+      );
       const alpha = await waitCanvasReady(page, slide.effect === "schematic" ? 50 : 20);
       const effect = await page.evaluate(
         () => document.getElementById("atmosphere")?.dataset?.effect ?? ""
@@ -124,6 +130,55 @@ try {
     }
     await page.close();
   }
+
+  log.push(`--- scroll-static RM: telemetry/trace/checksum frozen composition ---`);
+  const scrollStaticSummary = [];
+  let scrollStaticOk = true;
+  for (const slide of SCROLL_STATIC_RM_SLIDES) {
+    const label = `${slide.route}#${slide.slideIndex + 1}/${slide.effect}`;
+    const rmPage = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+    await rmPage.emulateMedia({ reducedMotion: "reduce" });
+    rmPage.on("pageerror", (e) => errors.push(String(e)));
+    await rmPage.goto(`${base}/${slide.route}`, { waitUntil: "networkidle", timeout: 45000 });
+    await rmPage.waitForSelector("#field", { state: "attached", timeout: 15000 });
+    const scrollRm = await wheelScrollToStage(rmPage, slide.slideCount, slide.slideIndex);
+    await rmPage.waitForFunction(
+      (expected) => document.getElementById("atmosphere")?.dataset?.effect === expected,
+      slide.effect,
+      { timeout: 15000 }
+    );
+    await rmPage.waitForTimeout(1200);
+    await waitFieldFrame(rmPage);
+    const alpha = await waitCanvasReady(rmPage, 20);
+    const effect = await rmPage.evaluate(
+      () => document.getElementById("atmosphere")?.dataset?.effect ?? ""
+    );
+    const rmOn = await rmPage.evaluate(() => document.body.classList.contains("reduced-motion"));
+    const snapA = await fieldSnapshot(rmPage);
+    await rmPage.waitForTimeout(2000);
+    await waitFieldFrame(rmPage);
+    const snapB = await fieldSnapshot(rmPage);
+    const frozenOk = rmOn && snapA.alpha > 20 && snapB.alpha > 20 && snapA.key === snapB.key;
+    const alphaOk = alpha >= 20 && snapA.alpha > 20;
+    const caseOk = scrollRm.ok && effect === slide.effect && frozenOk && alphaOk;
+    log.push(
+      `rm-scroll-${slide.id}: ${caseOk ? "OK" : "FAIL"} ${label} alpha=${alpha} frozen=${frozenOk}`
+    );
+    scrollStaticSummary.push({
+      id: slide.id,
+      label,
+      frozenOk,
+      alphaOk,
+      alpha,
+      rmOn,
+      effect,
+      scrollOk: scrollRm.ok
+    });
+    if (!caseOk) scrollStaticOk = false;
+    await rmPage.close();
+  }
+  log.push(`rm-scroll-static: ${scrollStaticOk ? "OK" : "FAIL"}`);
+  if (!scrollStaticOk) allOk = false;
 
   log.push(`--- wired E2E: hero-core path (${WIRED_SLIDES.length} slides, real mousemove) ---`);
   const wiredLog = [];
@@ -234,9 +289,9 @@ try {
 
   const isoPage = await browser.newPage({ viewport: { width: 1280, height: 800 } });
   isoPage.on("pageerror", (e) => errors.push(String(e)));
-  await isoPage.goto(`${base}/scripts/effects-hero-harness/about.html`, { waitUntil: "networkidle", timeout: 45000 });
+  await isoPage.goto(`${base}/scripts/effects-hero-harness/solutions.html`, { waitUntil: "networkidle", timeout: 45000 });
   await isoPage.waitForSelector("#field", { state: "attached", timeout: 15000 });
-  await wheelScrollToStage(isoPage, 7, 2);
+  await wheelScrollToStage(isoPage, 10, 2);
   await waitCanvasReady(isoPage, 50);
   await waitFieldFrame(isoPage);
   const fmGrid = await isoPage.evaluate(
@@ -276,7 +331,9 @@ try {
     resolve(scratch, "reduced-motion.log"),
     JSON.stringify(
       {
-        path: "wired hero-core E2E + live emulateMedia toggle",
+        path: "wired hero-core E2E + scroll-static RM + live emulateMedia toggle",
+        scrollStatic: scrollStaticSummary,
+        scrollStaticGating: scrollStaticOk,
         rmToggle: { fmHover, rmHover, ok: rmToggleOk },
         slides: WIRED_SLIDES.length,
         summary: wiredSummary

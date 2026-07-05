@@ -51,7 +51,7 @@ export const HERO_SLIDES = [
       { label: "Draft & route", detail: "Human review before send." }
     ],
     oklch: { L: 0.53, h: 230, rel: 0.31 },
-    effect: "relay",
+    effect: "parcel",
     bokeh: 0.31
   },
   {
@@ -64,7 +64,7 @@ export const HERO_SLIDES = [
       { label: "Audit trail", detail: "Every decision logged." }
     ],
     oklch: { L: 0.48, h: 280, rel: 0.28 },
-    effect: "schematic",
+    effect: "trace",
     bokeh: 0.29
   },
   {
@@ -90,7 +90,7 @@ export const HERO_SLIDES = [
       { label: "Reusable", detail: "Packages that compound." }
     ],
     oklch: { L: 0.56, h: 195, rel: 0.32 },
-    effect: "weave",
+    effect: "filament",
     bokeh: 0.31
   },
   {
@@ -117,7 +117,7 @@ export const HERO_SLIDES = [
       { label: "Ops", detail: "Admin drag reduction." }
     ],
     oklch: { L: 0.54, h: 160, rel: 0.3 },
-    effect: "mesh",
+    effect: "cellscan",
     bokeh: 0.29
   },
   {
@@ -130,7 +130,7 @@ export const HERO_SLIDES = [
       { label: "Cortex", detail: "Explore the control plane.", source: "cortex.html" }
     ],
     oklch: { L: 0.57, h: 210, rel: 0.34 },
-    effect: "sonar",
+    effect: "beacon",
     bokeh: 0.3
   }
 ];

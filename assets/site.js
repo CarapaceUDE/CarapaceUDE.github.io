@@ -165,12 +165,69 @@
     syncThemeUi(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
   }
 
+  function getAssetsBase() {
+    const script = document.querySelector('script[src*="site.js"]');
+    if (!script) return 'assets/';
+    return (script.getAttribute('src') || 'assets/site.js').replace(/site\.js(?:\?.*)?$/, '');
+  }
+
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      const baseSrc = src.split('?')[0];
+      if (document.querySelector('script[src="' + src + '"], script[src^="' + baseSrc + '"]')) {
+        resolve();
+        return;
+      }
+      const el = document.createElement('script');
+      el.src = src;
+      el.onload = function () { resolve(); };
+      el.onerror = function () { reject(new Error('script failed: ' + src)); };
+      document.head.appendChild(el);
+    });
+  }
+
+  function refreshBrandLogoPalettes() {
+    document.querySelectorAll('[data-cortex-brand-logo]').forEach(function (wrap) {
+      const api = wrap._cortexBrandLogoApi;
+      if (api && api.refreshPalette) api.refreshPalette();
+    });
+  }
+
+  function setupBrandLogos() {
+    const logos = document.querySelectorAll('[data-cortex-brand-logo]');
+    if (!logos.length) return;
+
+    const base = getAssetsBase();
+    loadScript(base + 'harness-brain-canvas.js?v=20260705d')
+      .then(function () {
+        const init = window.initCortexBrandLogoCanvas || window.initCortexHubTabOrbCanvas;
+        if (typeof init !== 'function') return;
+        logos.forEach(function (wrap) {
+          if (wrap.dataset.cortexBrandLogoInit === '1') return;
+          const canvas = wrap.querySelector('canvas');
+          if (!canvas) return;
+          wrap.dataset.cortexBrandLogoInit = '1';
+          const api = init(canvas);
+          if (api) wrap._cortexBrandLogoApi = api;
+        });
+      })
+      .catch(function () {
+        /* conic ring shell still renders without canvas */
+      });
+
+    if (!window.__carapaceBrandLogoThemeBound) {
+      window.__carapaceBrandLogoThemeBound = true;
+      window.addEventListener('carapace-theme-change', refreshBrandLogoPalettes);
+    }
+  }
+
   function bootSite() {
     setupNavigation();
     setupDropdowns();
     setupReveals();
     setupHeroTilt();
     setupHomeThemeToggle();
+    setupBrandLogos();
   }
 
   if (document.readyState === 'loading') {

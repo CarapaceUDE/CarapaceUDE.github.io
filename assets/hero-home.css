@@ -321,10 +321,59 @@ body[class*="page-"] .atmosphere[data-effect="glyph"] .atmosphere-grid {
   background-size: 12px 14px;
   opacity: 0.48;
 }
+body[class*="page-"] .atmosphere[data-effect="hexpulse"] .atmosphere-grid {
+  background-size: 48px 48px;
+  opacity: 0.62;
+}
+body[class*="page-"] .atmosphere[data-effect="parcel"] .atmosphere-grid {
+  background-size: 40px 40px;
+  opacity: 0.55;
+}
+body[class*="page-"] .atmosphere[data-effect="hashwave"] .atmosphere-grid {
+  background-size: 14px 16px;
+  opacity: 0.46;
+}
+body[class*="page-"] .atmosphere[data-effect="branch"] .atmosphere-grid {
+  background-size: 56px 56px;
+  opacity: 0.52;
+}
+body[class*="page-"] .atmosphere[data-effect="telemetry"] .atmosphere-grid {
+  background-size: 32px 32px;
+  opacity: 0.58;
+}
+body[class*="page-"] .atmosphere[data-effect="trace"] .atmosphere-grid {
+  background-size: 48px 48px;
+  opacity: 0.54;
+}
+body[class*="page-"] .atmosphere[data-effect="checksum"] .atmosphere-grid {
+  background-size: 36px 36px;
+  opacity: 0.5;
+}
+body[class*="page-"] .atmosphere[data-effect="cellscan"] .atmosphere-grid {
+  background-size: 28px 28px;
+  opacity: 0.56;
+}
+body[class*="page-"] .atmosphere[data-effect="beacon"] .atmosphere-grid {
+  background-size: 52px 52px;
+  opacity: 0.5;
+}
+body[class*="page-"] .atmosphere[data-effect="lattice"] .atmosphere-grid {
+  background-size: 44px 44px;
+  opacity: 0.54;
+}
+body[class*="page-"] .atmosphere[data-effect="filament"] .atmosphere-grid {
+  background-size: 40px 40px;
+  opacity: 0.48;
+}
 body[class*="page-"] .hero-stage[data-pointer-hover="true"] .atmosphere[data-effect="sonar"][data-interactive="true"] .atmosphere-grid,
 body[class*="page-"] .hero-stage[data-pointer-hover="true"] .atmosphere[data-effect="weave"][data-interactive="true"] .atmosphere-grid,
 body[class*="page-"] .hero-stage[data-pointer-hover="true"] .atmosphere[data-effect="ledger"][data-interactive="true"] .atmosphere-grid,
-body[class*="page-"] .hero-stage[data-pointer-hover="true"] .atmosphere[data-effect="relay"][data-interactive="true"] .atmosphere-grid {
+body[class*="page-"] .hero-stage[data-pointer-hover="true"] .atmosphere[data-effect="relay"][data-interactive="true"] .atmosphere-grid,
+body[class*="page-"] .hero-stage[data-pointer-hover="true"] .atmosphere[data-effect="hexpulse"][data-interactive="true"] .atmosphere-grid,
+body[class*="page-"] .hero-stage[data-pointer-hover="true"] .atmosphere[data-effect="parcel"][data-interactive="true"] .atmosphere-grid,
+body[class*="page-"] .hero-stage[data-pointer-hover="true"] .atmosphere[data-effect="hashwave"][data-interactive="true"] .atmosphere-grid,
+body[class*="page-"] .hero-stage[data-pointer-hover="true"] .atmosphere[data-effect="beacon"][data-interactive="true"] .atmosphere-grid,
+body[class*="page-"] .hero-stage[data-pointer-hover="true"] .atmosphere[data-effect="cellscan"][data-interactive="true"] .atmosphere-grid {
   opacity: 0.82;
   filter: contrast(1.08);
 }

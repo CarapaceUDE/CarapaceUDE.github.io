@@ -25,7 +25,7 @@ export const HERO_SLIDES = [
       { label: "Build", detail: "Deploy governed automations." }
     ],
     oklch: { L: 0.5, h: 175, rel: 0.3 },
-    effect: "isograph",
+    effect: "lattice",
     bokeh: 0.32
   },
   {
@@ -38,7 +38,7 @@ export const HERO_SLIDES = [
       { label: "Lean ops", detail: "No AI theater required." }
     ],
     oklch: { L: 0.54, h: 230, rel: 0.31 },
-    effect: "mesh",
+    effect: "cellscan",
     bokeh: 0.3
   },
   {
@@ -65,7 +65,7 @@ export const HERO_SLIDES = [
       { label: "Package", detail: "Scale what already works." }
     ],
     oklch: { L: 0.55, h: 45, rel: 0.28 },
-    effect: "flowchart",
+    effect: "branch",
     bokeh: 0.31
   },
   {
@@ -93,7 +93,7 @@ export const HERO_SLIDES = [
       { label: "No lock-in", detail: "Own the workflow path." }
     ],
     oklch: { L: 0.56, h: 250, rel: 0.34 },
-    effect: "glyph",
+    effect: "hashwave",
     bokeh: 0.3
   },
   {
@@ -107,7 +107,7 @@ export const HERO_SLIDES = [
       { label: "Production path", detail: "Expand governed workflows." }
     ],
     oklch: { L: 0.57, h: 280, rel: 0.3 },
-    effect: "ledger",
+    effect: "telemetry",
     bokeh: 0.31
   }
 ];

@@ -24,7 +24,7 @@ export const HERO_SLIDES = [
       { label: "GitHub", detail: "Open-core releases.", source: "https://github.com/CarapaceUDE/carapace" }
     ],
     oklch: { L: 0.5, h: 175, rel: 0.28 },
-    effect: "flowchart",
+    effect: "branch",
     bokeh: 0.31
   },
   {
@@ -52,7 +52,7 @@ export const HERO_SLIDES = [
       { label: "Commercial license", detail: "Business use agreement." }
     ],
     oklch: { L: 0.55, h: 45, rel: 0.28 },
-    effect: "relay",
+    effect: "parcel",
     bokeh: 0.3
   },
   {
@@ -80,7 +80,7 @@ export const HERO_SLIDES = [
       { label: "Cortex", detail: "Explore the product.", source: "cortex.html" }
     ],
     oklch: { L: 0.48, h: 280, rel: 0.28 },
-    effect: "seal",
+    effect: "checksum",
     bokeh: 0.29
   }
 ];

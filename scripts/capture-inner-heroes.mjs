@@ -12,7 +12,7 @@ const ROUTES = [
   { path: `${HARNESS}/business.html`, shot: "business-hero.png", slideCount: 8, scrollIndex: 3 },
   { path: `${HARNESS}/licensing.html`, shot: "licensing-hero.png", slideCount: 6, scrollIndex: 2 },
   { path: `${HARNESS}/solutions.html`, shot: "solutions-hero.png", slideCount: 10, scrollIndex: 4 },
-  { path: `${HARNESS}/cortex.html`, shot: "cortex-schematic.png", slideCount: 10, scrollIndex: 1, expectEyebrow: "Core Flow", expectEffect: "schematic" },
+  { path: `${HARNESS}/cortex.html`, shot: "cortex-trace.png", slideCount: 10, scrollIndex: 1, expectEyebrow: "Core Flow", expectEffect: "trace" },
 ];
 
 if (!scratch) {

@@ -57,7 +57,7 @@ export const HERO_SLIDES = [
       { label: "Your knowledge", detail: "Grounded in your systems — not the public web." }
     ],
     oklch: { L: 0.5, h: 230, rel: 0.32 },
-    effect: "pcb",
+    effect: "hexpulse",
     bokeh: 0.33
   },
   {
@@ -87,7 +87,7 @@ export const HERO_SLIDES = [
       }
     ],
     oklch: { L: 0.56, h: 145, rel: 0.3 },
-    effect: "ledger",
+    effect: "telemetry",
     bokeh: 0.31
   },
   {
@@ -123,7 +123,7 @@ export const HERO_SLIDES = [
       { label: "Measurable wins", detail: "Prove value before you scale." }
     ],
     oklch: { L: 0.57, h: 250, rel: 0.38 },
-    effect: "sonar",
+    effect: "beacon",
     bokeh: 0.3
   }
 ];

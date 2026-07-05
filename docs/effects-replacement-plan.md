@@ -4,7 +4,7 @@ _Last updated: 2026-07-05_
 
 Implements findings from `docs/effects-audit.md`. No slide copy changes.
 
-## Assumed scope (26 manifest paths)
+## Assumed scope (28 manifest paths)
 
 Goal patch and classifier evidence are limited to `scripts/goal-effects-scope.txt` (includes `scripts/effects-hero-harness/*.html` for smoke/capture; production route HTML shells are unchanged).
 
@@ -175,6 +175,47 @@ Reduced motion: `hero-core.js` sets `bgInteractive = false` when `prefers-reduce
 
 Add `[data-effect]` rules in `hero-home.css` for: `isograph`, `sonar`, `ledger`, `weave`, `orbit`, `relay`, `seal`, `glyph` — distinct `background-size` / opacity per DESIGN.md atmosphere grid.
 
+## Phase 2 — cluster rebalance (2026-07-05)
+
+Eleven new effect IDs: `hexpulse`, `parcel`, `hashwave`, `branch`, `telemetry`, `trace`, `checksum`, `cellscan`, `beacon`, `lattice`, `filament`.
+
+Cluster caps after reassignment: `relay` ≤3, node-graph (`mesh`/`topology`/`constellation`) ≤5, flow-diagram (`flowchart`/`pipeline`/`schematic`) ≤4, zero adjacent duplicate pairs per route.
+
+### Phase 2 per-route reassignment
+
+| Route | # | Title (unchanged) | Old | New |
+|-------|---|-------------------|-----|-----|
+| home | 4 | Private AI Infrastructure | pcb | **hexpulse** |
+| home | 6 | 3.7× Average ROI | ledger | **telemetry** |
+| home | 8 | Start Small. Prove Value. | sonar | **beacon** |
+| about | 1 | Builders First | weave | **filament** |
+| about | 3 | Four Durable Principles | isograph | **lattice** |
+| business | 2 | Scope Connect Build | isograph | **lattice** |
+| business | 3 | Teams That Need Leverage | mesh | **cellscan** |
+| business | 5 | Consult Pilot Package | flowchart | **branch** |
+| business | 7 | Not One Tool | glyph | **hashwave** |
+| business | 8 | $12K → $24K+ | ledger | **telemetry** |
+| licensing | 2 | Free For Personal Use | flowchart | **branch** |
+| licensing | 4 | Live Operations Path | relay | **parcel** |
+| licensing | 6 | Inspectable Boundaries | seal | **checksum** |
+| solutions | 4 | Faster Client Response | relay | **parcel** |
+| solutions | 5 | Governed Handoffs | schematic | **trace** |
+| solutions | 7 | Context That Compounds | weave | **filament** |
+| solutions | 9 | Common First Wins | mesh | **cellscan** |
+| solutions | 10 | Start With One Wedge | sonar | **beacon** |
+| cortex | 2 | Capture Route Execute | schematic | **trace** |
+| cortex | 3 | Context Management | pcb | **hexpulse** |
+| cortex | 6 | Custody & Governance | vault | **checksum** |
+| cortex | 9 | Why Not Another Chatbot | glyph | **hashwave** |
+
+**Relay retention (3):** about 7, business 6, cortex 8. Licensing 4 and solutions 4 → `parcel`.
+
+Legacy IDs (`pcb`, `weave`, `flowchart`, `schematic`, `vault`, `glyph`) remain implemented; draw smoke via `scripts/effects-hero-harness/archive.html`.
+
+### Phase 2 `INTERACTIVE_EFFECTS` additions
+
+`hexpulse`, `parcel`, `hashwave`, `branch`, `beacon`, `cellscan`, `lattice`, `filament` (22 total). Scroll-sync: `trace`, `checksum` via `setScrollFrac` — not pointer-interactive.
+
 ## Checklist
 
 - [x] New IDs in `effects-anime.js`
@@ -183,3 +224,4 @@ Add `[data-effect]` rules in `hero-home.css` for: `isograph`, `sonar`, `ledger`,
 - [x] `INTERACTIVE_EFFECTS` ≥8
 - [x] `verify-revamp.py` gates pass
 - [x] Playwright captures non-blank
+- [x] Phase 2 cluster rebalance + 11 new IDs

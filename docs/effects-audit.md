@@ -107,7 +107,7 @@ Verification plan step 1 lists **16 goal slots**: the 15 named draw IDs below (`
 
 ---
 
-## §Inventory — 23 effect IDs (shipped)
+## §Inventory — 34 effect IDs (shipped)
 
 | ID | Visual metaphor | Animation loops | Hover / scroll | Particle cap | Similarity score* | Cluster |
 |----|-----------------|-----------------|----------------|--------------|-------------------|---------|
@@ -134,10 +134,23 @@ Verification plan step 1 lists **16 goal slots**: the 15 named draw IDs below (`
 | `relay` | Station nodes + handoff baton | `baton.t` handoff loop; station `pulse` | **Interactive:** baton eases toward pointer-nearest station; speed ×1.8 | 6 stations | 3 vs pipeline | handoff |
 | `seal` | Wax-ring impression + ripple + label | Ring `pulse`; `rot`; ripple `alpha` | **Interactive:** impression depth via `_proximity(ox, oy, 200)` | 4 ripples | 2 vs vault | security-ring |
 | `glyph` | Drifting mono hash fragments | Fragment `x`/`y` drift | **Interactive:** glitch char swap within 100px of pointer | 18–36 fragments | 2 vs cascade | typographic |
+| `hexpulse` | Hex control-plane lattice pulse | Center-out `stagger` on cell `alpha`/`scale` | **Interactive:** `_proximity` cell brighten | 40–80 cells | 2 vs pcb | circuit |
+| `parcel` | L-path data packets between stations | `animate({ t })` piecewise path | **Interactive:** nearest packet speed boost | ≤24 packets | 2 vs relay | handoff |
+| `hashwave` | Mono glyph grid horizontal brighten band | `stagger` axis-x + scramble | **Interactive:** glyph scramble near pointer | 40–80 glyphs | 2 vs glyph | typographic |
+| `branch` | Binary decision fork node reveal | Timeline `stagger` on `reveal` | **Interactive:** parallax via `_pointerOffset` | 6 nodes | 2 vs flowchart | flow-diagram |
+| `telemetry` | Instrument strip micro-ticks | Timeline stagger on tick `h` | none (metric read) | 10 ticks | 2 vs ledger | metric |
+| `trace` | Orthogonal route self-draw | Segment `progress`; packet loop | **Scroll:** `setScrollFrac` drives draw length | 6 segments | 2 vs schematic | flow-diagram |
+| `checksum` | Verify bar + tick marks | `progress` + staggered marks | **Scroll:** `setScrollFrac` fills bar | 14 marks | 2 vs seal | security-ring |
+| `cellscan` | Voronoi partition sparse edges | `scan` sweep; pointer cell bloom | **Interactive:** nearest-site highlight | ≤16 sites | 2 vs mesh | node-graph |
+| `beacon` | Fixed anchors + echo rings | Ring `r`/`alpha` stagger | **Interactive:** `_proximity` on anchors | 3 anchors | 2 vs sonar | radar |
+| `lattice` | Depth-layered perspective grid | Layer `offset` parallax | **Interactive:** `_pointerOffset` shear | 3 layers | 2 vs isograph | isometric-grid |
+| `filament` | Single luminous thread on grid | Motion-path `t` on knot path | **Interactive:** parallax offset | 6 knots | 2 vs weave | fabric |
 
 \*Similarity score 0–3 within nearest cluster peer (0 = distinct, 3 = near-clone).
 
-**Shipped `INTERACTIVE_EFFECTS` (14):** `cascade`, `mesh`, `stack`, `magnet`, `signal`, `chrono`, `sonar`, `weave`, `ledger`, `relay`, `isograph`, `orbit`, `seal`, `glyph`.
+**Shipped `INTERACTIVE_EFFECTS` (22):** `cascade`, `mesh`, `stack`, `magnet`, `signal`, `chrono`, `sonar`, `weave`, `ledger`, `relay`, `isograph`, `orbit`, `seal`, `glyph`, `hexpulse`, `parcel`, `hashwave`, `branch`, `beacon`, `cellscan`, `lattice`, `filament`.
+
+**Archive-only draw smoke (6):** `pcb`, `weave`, `flowchart`, `schematic`, `vault`, `glyph` — `scripts/effects-hero-harness/archive.html`.
 
 ---
 
@@ -170,51 +183,51 @@ Verification plan step 1 lists **16 goal slots**: the 15 named draw IDs below (`
 | home | 1 | Own Your Intelligence | shield | security-ring | |
 | home | 2 | 60% of Team Time | cascade | typographic | |
 | home | 3 | Let Humans Do Human Work | orbit | orbital | |
-| home | 4 | Private AI Infrastructure | pcb | circuit | |
+| home | 4 | Private AI Infrastructure | hexpulse | circuit | |
 | home | 5 | Replace SaaS Waste | magnet | field | |
-| home | 6 | 3.7× Average ROI | ledger | metric | |
+| home | 6 | 3.7× Average ROI | telemetry | metric | |
 | home | 7 | 5–7+ Hours Back | chrono | metric | |
-| home | 8 | Start Small. Prove Value. | sonar | radar | |
-| about | 1 | Builders First | weave | fabric | |
+| home | 8 | Start Small. Prove Value. | beacon | radar | |
+| about | 1 | Builders First | filament | fabric | |
 | about | 2 | Leverage Not Replacement | magnet | field | |
-| about | 3 | Four Durable Principles | isograph | isometric-grid | |
+| about | 3 | Four Durable Principles | lattice | isometric-grid | |
 | about | 4 | Six Intelligence Layers | constellation | node-graph | |
 | about | 5 | Intelligence Sovereignty | seal | security-ring | |
 | about | 6 | Co-Founders | orbit | orbital | |
 | about | 7 | Carapace → Cortex | relay | handoff | |
 | business | 1 | Your Private AI Team | topology | node-graph | |
-| business | 2 | Scope Connect Build | isograph | isometric-grid | |
-| business | 3 | Teams That Need Leverage | mesh | node-graph | |
+| business | 2 | Scope Connect Build | lattice | isometric-grid | |
+| business | 3 | Teams That Need Leverage | cellscan | node-graph | |
 | business | 4 | Evidence Over Theater | signal | metric | |
-| business | 5 | Consult Pilot Package | flowchart | flow-diagram | |
+| business | 5 | Consult Pilot Package | branch | flow-diagram | |
 | business | 6 | Discover Deploy Expand | relay | handoff | |
-| business | 7 | Not One Tool | glyph | typographic | |
-| business | 8 | $12K → $24K+ | ledger | metric | |
+| business | 7 | Not One Tool | hashwave | typographic | |
+| business | 8 | $12K → $24K+ | telemetry | metric | |
 | licensing | 1 | Clarity Not Mystery | shield | security-ring | |
-| licensing | 2 | Free For Personal Use | flowchart | flow-diagram | |
+| licensing | 2 | Free For Personal Use | branch | flow-diagram | |
 | licensing | 3 | Under $100K Revenue | topology | node-graph | |
-| licensing | 4 | Live Operations Path | relay | handoff | |
+| licensing | 4 | Live Operations Path | parcel | handoff | |
 | licensing | 5 | Optional Retainer | ledger | metric | |
-| licensing | 6 | Inspectable Boundaries | seal | security-ring | |
+| licensing | 6 | Inspectable Boundaries | checksum | security-ring | |
 | solutions | 1 | How Work Gets Routable | topology | node-graph | |
 | solutions | 2 | Discover Deploy Expand | pipeline | flow-diagram | |
 | solutions | 3 | Keep Leads From Slipping | isograph | isometric-grid | |
-| solutions | 4 | Faster Client Response | relay | handoff | |
-| solutions | 5 | Governed Handoffs | schematic | flow-diagram | |
+| solutions | 4 | Faster Client Response | parcel | handoff | |
+| solutions | 5 | Governed Handoffs | trace | flow-diagram | |
 | solutions | 6 | Less Manual Assembly | sonar | radar | |
-| solutions | 7 | Context That Compounds | weave | fabric | |
+| solutions | 7 | Context That Compounds | filament | fabric | |
 | solutions | 8 | Reduce Admin Drag | pipeline | flow-diagram | |
-| solutions | 9 | Common First Wins | mesh | node-graph | |
-| solutions | 10 | Start With One Wedge | sonar | radar | |
+| solutions | 9 | Common First Wins | cellscan | node-graph | |
+| solutions | 10 | Start With One Wedge | beacon | radar | |
 | cortex | 1 | Private Control Plane | shield | security-ring | |
-| cortex | 2 | Capture Route Execute | schematic | flow-diagram | |
-| cortex | 3 | Context Management | pcb | circuit | |
+| cortex | 2 | Capture Route Execute | trace | flow-diagram | |
+| cortex | 3 | Context Management | hexpulse | circuit | |
 | cortex | 4 | Intent Routing | mesh | node-graph | |
 | cortex | 5 | Model Independence | signal | metric | |
-| cortex | 6 | Custody & Governance | vault | security-ring | |
+| cortex | 6 | Custody & Governance | checksum | security-ring | |
 | cortex | 7 | Fling Capture | stack | typographic | |
 | cortex | 8 | Signal To Work | relay | handoff | |
-| cortex | 9 | Why Not Another Chatbot | glyph | typographic | |
+| cortex | 9 | Why Not Another Chatbot | hashwave | typographic | |
 | cortex | 10 | Download Or Deploy | ping | radar | |
 
 **Adjacent duplicate pairs:** none (verified by `verify-revamp.py` grep).
@@ -223,8 +236,19 @@ Verification plan step 1 lists **16 goal slots**: the 15 named draw IDs below (`
 
 | Effect | Slides | Overuse (>4)? |
 |--------|--------|---------------|
-| relay | 5 | yes |
-| mesh | 4 | |
+| relay | 3 | |
+| mesh | 1 | |
+| hexpulse | 2 | |
+| telemetry | 2 | |
+| beacon | 2 | |
+| parcel | 2 | |
+| trace | 2 | |
+| cellscan | 2 | |
+| branch | 2 | |
+| hashwave | 2 | |
+| lattice | 2 | |
+| filament | 2 | |
+| checksum | 2 | |
 | isograph | 3 | |
 | sonar | 3 | |
 | ledger | 3 | |

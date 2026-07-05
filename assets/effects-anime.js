@@ -1,7 +1,8 @@
 /**
  * AnimeEffectsField — canvas effects driven by anime.js v4
  */
-import { animate, createTimer } from "https://esm.sh/animejs@4.0.2";
+import { animate, createTimer, createTimeline, stagger } from "https://esm.sh/animejs@4.0.2";
+import { Delaunay } from "https://esm.sh/d3-delaunay@6";
 import {
   counterSpeedBoost,
   hoverAllowed,
@@ -21,6 +22,79 @@ const TERM_LINES = [
   "route.automate(handoff)",
   "vault.seal(tenant_data)"
 ];
+
+const HASHWAVE_CHARS = "#[]{}01λ∆";
+const PHASE2_IDS = new Set([
+  "hexpulse",
+  "parcel",
+  "hashwave",
+  "branch",
+  "telemetry",
+  "trace",
+  "checksum",
+  "cellscan",
+  "beacon",
+  "lattice",
+  "filament"
+]);
+
+/** Scroll-sync RM probes — draw once per composition, then hold pixels stable. */
+const RM_FROZEN_DRAW_IDS = new Set(["telemetry", "trace", "checksum"]);
+
+function hexCellXY(col, row, size, cx, cy, cols, rows) {
+  const x = cx + (col - (cols - 1) / 2) * size * 1.5;
+  const y = cy + (row - (rows - 1) / 2) * size * Math.sqrt(3) + (col % 2 ? size * 0.866 : 0);
+  return { x, y };
+}
+
+/** Radial/elliptical backgrounds — scale from max edge so motifs fill and may bleed on narrow viewports. */
+function bgExtent(w, h, factor = 0.58) {
+  return Math.max(w, h) * factor;
+}
+
+/** Isometric / diamond grid span — favor width coverage with mild vertical bias. */
+function bgGridSpan(w, h) {
+  return Math.max(w * 0.96, h * 0.52, Math.min(w, h) * 0.86);
+}
+
+function spreadNorm(v, factor = 1.14) {
+  return 0.5 + (v - 0.5) * factor;
+}
+
+/** Resize-time Delaunay edges for cellscan (compute-only, no D3 animation runtime). */
+function buildCellscanEdges(sites) {
+  if (sites.length < 2) return [];
+  const coords = new Float64Array(sites.length * 2);
+  sites.forEach((site, i) => {
+    coords[i * 2] = site.x;
+    coords[i * 2 + 1] = site.y;
+  });
+  const delaunay = Delaunay.from(coords);
+  const seen = new Set();
+  const edges = [];
+  for (let i = 0; i < sites.length; i++) {
+    for (const j of delaunay.neighbors(i)) {
+      if (j <= i) continue;
+      const key = `${i}-${j}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      edges.push({ a: i, b: j, key, alpha: 0.35 });
+    }
+  }
+  return edges.slice(0, 40);
+}
+
+function drawHexPath(c, x, y, r) {
+  c.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const a = (Math.PI / 3) * i - Math.PI / 6;
+    const px = x + Math.cos(a) * r;
+    const py = y + Math.sin(a) * r;
+    if (i === 0) c.moveTo(px, py);
+    else c.lineTo(px, py);
+  }
+  c.closePath();
+}
 
 function rnd(a, b) {
   return a + Math.random() * (b - a);
@@ -76,6 +150,7 @@ export class AnimeEffectsField {
     this.interaction = { hover: false, px: 0, py: 0 };
     this.scrollFrac = 0;
     this.onMixChange = options.onMixChange ?? null;
+    this._rmNeedsRedraw = true;
 
     this.renderTimer = createTimer({
       duration: 60000,
@@ -110,12 +185,16 @@ export class AnimeEffectsField {
     if (this.renderTimer?.frameRate !== fps) {
       this.renderTimer.frameRate = fps;
     }
+    this._rmNeedsRedraw = true;
     this._draw();
   }
 
   _drawableCount(id, state) {
     if (!state) return 0;
     if (id === "isograph") return (state.cols ?? 0) * (state.rows ?? 0);
+    if (id === "hexpulse") return state.cells?.length ?? 0;
+    if (id === "hashwave") return state.glyphs?.length ?? 0;
+    if (id === "cellscan") return state.sites?.length ?? 0;
     if (id === "glyph") return state.fragments?.length ?? 0;
     if (id === "cascade") return state.columns?.length ?? 0;
     if (id === "mesh") return state.nodes?.length ?? 0;
@@ -255,6 +334,10 @@ export class AnimeEffectsField {
     };
   }
 
+  _pointerXY(fallbackX, fallbackY) {
+    return pointerXY(this.interaction, this.reducedMotion, fallbackX, fallbackY);
+  }
+
   start() {
     this.renderTimer.play();
   }
@@ -285,16 +368,31 @@ export class AnimeEffectsField {
     this._initBokeh();
     this.ensureEffect(this.effectA);
     if (this.effectB !== this.effectA) this.ensureEffect(this.effectB);
+    this._rmNeedsRedraw = true;
   }
 
   setMixTarget(effectA, effectB, targetMix) {
+    const mixVal = this.mix?.value ?? 0;
+    if (
+      this.effectA === effectA &&
+      this.effectB === effectB &&
+      Math.abs(mixVal - targetMix) < 1e-5
+    ) {
+      return;
+    }
     this.effectA = effectA;
     this.effectB = effectB;
     this.ensureEffect(effectA);
     if (effectB !== effectA) this.ensureEffect(effectB);
+    this._rmNeedsRedraw = true;
+    if (this.reducedMotion) {
+      this.mix.value = targetMix;
+      this.onMixChange?.(targetMix, effectA, effectB);
+      return;
+    }
     animate(this.mix, {
       value: targetMix,
-      duration: this.reducedMotion ? 0 : 720,
+      duration: 720,
       ease: "outCubic",
       onUpdate: () => this.onMixChange?.(this.mix.value, this.effectA, this.effectB)
     });
@@ -455,7 +553,7 @@ export class AnimeEffectsField {
         hub: { pulse: 1 },
         nodes: Array.from({ length: spokes }, (_, i) => ({
           a: (i / spokes) * Math.PI * 2,
-          d: rnd(0.28, 0.42),
+          d: rnd(0.38, 0.54),
           pulse: 1,
           packet: Math.random()
         }))
@@ -476,7 +574,7 @@ export class AnimeEffectsField {
     if (id === "constellation") {
       const nodes = Array.from({ length: 6 }, (_, i) => ({
         a: (i / 6) * Math.PI * 2 - Math.PI / 2,
-        d: rnd(0.22, 0.38),
+        d: rnd(0.34, 0.5),
         pulse: 1,
         label: i
       }));
@@ -569,11 +667,11 @@ export class AnimeEffectsField {
     if (id === "orbit") {
       return {
         bodies: [
-          { a: 0, rx: 0.34, ry: 0.22, speed: 1, phase: 0 },
-          { a: Math.PI * 0.6, rx: 0.28, ry: 0.18, speed: 1.4, phase: 1.2 },
-          { a: Math.PI * 1.3, rx: 0.2, ry: 0.14, speed: 1.8, phase: 2.4 }
+          { a: 0, rx: 0.46, ry: 0.32, speed: 1, phase: 0 },
+          { a: Math.PI * 0.6, rx: 0.38, ry: 0.26, speed: 1.4, phase: 1.2 },
+          { a: Math.PI * 1.3, rx: 0.3, ry: 0.2, speed: 1.8, phase: 2.4 }
         ],
-        foci: [{ x: -0.08, y: 0 }, { x: 0.08, y: 0 }],
+        foci: [{ x: -0.11, y: 0 }, { x: 0.11, y: 0 }],
         glow: 0.4
       };
     }
@@ -608,6 +706,150 @@ export class AnimeEffectsField {
           display: null
         }))
       };
+    }
+    if (id === "hexpulse") {
+      const cols = this.reducedMotion ? 9 : 12;
+      const rows = this.reducedMotion ? 6 : 9;
+      const size = Math.max(16, Math.min(w, h) / (Math.max(cols, rows) * 0.92));
+      const cells = [];
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          cells.push({ col: c, row: r, alpha: 0.12, scale: 1 });
+        }
+      }
+      const mid = Math.floor(cells.length / 2);
+      if (this.reducedMotion) cells[mid].alpha = 0.55;
+      return { cols, rows, size, cells, anchorX: w * 0.02, anchorY: -h * 0.04 };
+    }
+    if (id === "parcel") {
+      const stations = [
+        { x: 0.12, y: 0.55 },
+        { x: 0.38, y: 0.55 },
+        { x: 0.38, y: 0.28 },
+        { x: 0.72, y: 0.28 },
+        { x: 0.72, y: 0.62 },
+        { x: 0.9, y: 0.62 }
+      ];
+      return {
+        stations,
+        packets: Array.from({ length: this.reducedMotion ? 2 : 4 }, (_, i) => ({
+          seg: i % (stations.length - 1),
+          t: rnd(0, 1),
+          speed: rnd(0.8, 1.4)
+        }))
+      };
+    }
+    if (id === "hashwave") {
+      const cols = this.reducedMotion ? 14 : 22;
+      const rows = this.reducedMotion ? 8 : 12;
+      const glyphs = [];
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          glyphs.push({
+            col: c,
+            row: r,
+            ch: HASHWAVE_CHARS[Math.floor(Math.random() * HASHWAVE_CHARS.length)],
+            alpha: 0.18,
+            scramble: null,
+            scrambleT: 0
+          });
+        }
+      }
+      return { cols, rows, wave: 0, glyphs };
+    }
+    if (id === "branch") {
+      const nodes = [
+        { x: 0.5, y: 0.22, reveal: 1 },
+        { x: 0.32, y: 0.48, reveal: 1 },
+        { x: 0.68, y: 0.48, reveal: 1 },
+        { x: 0.22, y: 0.72, reveal: 1 },
+        { x: 0.5, y: 0.72, reveal: 1 },
+        { x: 0.78, y: 0.72, reveal: 1 }
+      ];
+      const edges = [[0, 1], [0, 2], [1, 3], [1, 4], [2, 4], [2, 5]];
+      if (!this.reducedMotion) nodes.forEach((n) => { n.reveal = 0; });
+      return { nodes, edges, skew: 0 };
+    }
+    if (id === "telemetry") {
+      const tickCount = this.reducedMotion ? 6 : 10;
+      const ticks = Array.from({ length: tickCount }, (_, i) => ({
+        x: 0.08 + (i / (tickCount - 1)) * 0.84,
+        y: 0.55,
+        h: 0
+      }));
+      if (this.reducedMotion) ticks[tickCount - 1].h = 0.28;
+      return { ticks, baseline: 0.55, glow: 0.4 };
+    }
+    if (id === "trace") {
+      const points = [
+        { x: 0.14, y: 0.62 },
+        { x: 0.14, y: 0.38 },
+        { x: 0.42, y: 0.38 },
+        { x: 0.42, y: 0.58 },
+        { x: 0.72, y: 0.58 },
+        { x: 0.72, y: 0.32 },
+        { x: 0.88, y: 0.32 }
+      ];
+      const segs = points.length - 1;
+      return {
+        points,
+        progress: this.reducedMotion ? 1 : 0,
+        segProgress: Array.from({ length: segs }, () => (this.reducedMotion ? 1 : 0)),
+        packetT: 0
+      };
+    }
+    if (id === "checksum") {
+      const markCount = this.reducedMotion ? 8 : 14;
+      const marks = Array.from({ length: markCount }, (_, i) => ({
+        x: 0.1 + (i / (markCount - 1)) * 0.8,
+        alpha: this.reducedMotion ? 0.5 : 0,
+        h: this.reducedMotion ? 0.08 + (i % 5) * 0.028 : rnd(0.08, 0.22)
+      }));
+      return { progress: this.reducedMotion ? 1 : 0, marks, barY: 0.52 };
+    }
+    if (id === "cellscan") {
+      const siteCount = this.reducedMotion ? 10 : 16;
+      const sites = Array.from({ length: siteCount }, () => ({
+        x: rnd(w * 0.08, w * 0.92),
+        y: rnd(h * 0.12, h * 0.88),
+        bloom: 0
+      }));
+      return { sites, edges: buildCellscanEdges(sites), scan: 0, highlight: -1 };
+    }
+    if (id === "beacon") {
+      const anchors = [
+        { x: 0.28, y: 0.42 },
+        { x: 0.62, y: 0.35 },
+        { x: 0.5, y: 0.68 }
+      ].map((a) => ({
+        ...a,
+        rings: Array.from({ length: 4 }, () => ({ r: 0, alpha: 0 }))
+      }));
+      return { anchors };
+    }
+    if (id === "lattice") {
+      const layers = 3;
+      return {
+        layers: Array.from({ length: layers }, (_, i) => ({
+          depth: i / (layers - 1),
+          offsetX: 0,
+          offsetY: 0,
+          shear: 0.12 + i * 0.04
+        })),
+        cols: 12,
+        rows: 8
+      };
+    }
+    if (id === "filament") {
+      const knots = [
+        { x: 0.12, y: 0.5 },
+        { x: 0.28, y: 0.38 },
+        { x: 0.44, y: 0.55 },
+        { x: 0.58, y: 0.32 },
+        { x: 0.74, y: 0.48 },
+        { x: 0.88, y: 0.4 }
+      ];
+      return { knots, t: this.reducedMotion ? 1 : 0, parallax: 0 };
     }
     return { t: 0 };
   }
@@ -1230,6 +1472,141 @@ export class AnimeEffectsField {
         });
       }
     }
+
+    if (id === "hexpulse" && !this.reducedMotion) {
+      this._track(
+        createTimeline({ loop: true, defaults: { duration: 900, ease: "inOutSine" } }).add(state.cells, {
+          alpha: [{ to: 0.08 }, { to: 0.55 }, { to: 0.08 }],
+          scale: [{ to: 1 }, { to: 1.1 }, { to: 1 }],
+          delay: stagger(40, { grid: [state.cols, state.rows], from: "center" })
+        })
+      );
+    }
+
+    if (id === "parcel" && !this.reducedMotion) {
+      state.packets.forEach((pkt) => {
+        const advance = () => {
+          pkt.t = 0;
+          pkt.seg = (pkt.seg + 1) % (state.stations.length - 1);
+          this._track(
+            animate(pkt, {
+              t: 1,
+              duration: (2200 / pkt.speed) * slow,
+              ease: "inOutSine",
+              onComplete: advance
+            })
+          );
+        };
+        pkt.t = rnd(0, 0.6);
+        advance();
+      });
+    }
+
+    if (id === "hashwave" && !this.reducedMotion) {
+      this._track(
+        animate(state, {
+          wave: [0, state.cols, 0],
+          duration: 4800 * slow,
+          loop: true,
+          ease: "inOutSine"
+        })
+      );
+    }
+
+    if (id === "branch" && !this.reducedMotion) {
+      this._track(
+        createTimeline({ defaults: { duration: 600, ease: "outExpo" } }).add(state.nodes, {
+          reveal: 1,
+          delay: stagger(120, { from: "first" })
+        })
+      );
+    }
+
+    if (id === "telemetry" && !this.reducedMotion) {
+      this._track(
+        createTimeline({ loop: true, defaults: { ease: "outExpo" } })
+          .add(state.ticks, {
+            h: (el, i) => 0.08 + (i / state.ticks.length) * 0.22,
+            delay: stagger(10)
+          })
+          .add(state, { glow: [0.35, 0.65, 0.35], duration: 2400, ease: "inOutSine" }, "<")
+      );
+    }
+
+    if (id === "trace" && !this.reducedMotion) {
+      this._track(
+        animate(state, {
+          packetT: 1,
+          duration: 3200 * slow,
+          loop: true,
+          ease: "linear"
+        })
+      );
+    }
+
+    if (id === "checksum" && !this.reducedMotion) {
+      state.marks.forEach((mark, i) => {
+        this._track(
+          animate(mark, {
+            alpha: [0, 0.55, 0.35],
+            duration: 800 * slow,
+            ease: "outExpo",
+            delay: i * 30
+          })
+        );
+      });
+    }
+
+    if (id === "cellscan" && !this.reducedMotion) {
+      this._track(
+        animate(state, {
+          scan: 1,
+          duration: 6000 * slow,
+          loop: true,
+          ease: "linear"
+        })
+      );
+    }
+
+    if (id === "beacon" && !this.reducedMotion) {
+      state.anchors.forEach((anchor) => {
+        this._track(
+          createTimeline({ loop: true }).add(anchor.rings, {
+            r: [0.04, 0.22],
+            alpha: [0.5, 0],
+            duration: 2200 * slow,
+            ease: "outExpo",
+            delay: stagger(200)
+          })
+        );
+      });
+    }
+
+    if (id === "lattice" && !this.reducedMotion) {
+      state.layers.forEach((layer, i) => {
+        this._track(
+          animate(layer, {
+            offsetX: [0, rnd(-8, 8), 0],
+            offsetY: [0, rnd(-6, 6), 0],
+            duration: rnd(4000, 7000) * slow,
+            loop: true,
+            ease: "inOutSine",
+            delay: i * 400
+          })
+        );
+      });
+    }
+
+    if (id === "filament" && !this.reducedMotion) {
+      this._track(
+        animate(state, {
+          t: 1,
+          duration: 5000 * slow,
+          loop: true,
+          ease: "inOutSine"
+        })
+      );
+    }
   }
 
   _initBokeh() {
@@ -1240,17 +1617,19 @@ export class AnimeEffectsField {
       r: 24 + Math.random() * 64,
       alpha: 0.02 + Math.random() * 0.04
     }));
-    this.bokehOrbs.forEach((orb) => {
-      this._track(
-        animate(orb, {
-          x: [orb.x, rnd(0.1, 0.9), rnd(0.1, 0.9), orb.x],
-          y: [orb.y, rnd(0.1, 0.9), rnd(0.1, 0.9), orb.y],
-          duration: rnd(14000, 26000),
-          loop: true,
-          ease: "inOutSine"
-        })
-      );
-    });
+    if (!this.reducedMotion) {
+      this.bokehOrbs.forEach((orb) => {
+        this._track(
+          animate(orb, {
+            x: [orb.x, rnd(0.1, 0.9), rnd(0.1, 0.9), orb.x],
+            y: [orb.y, rnd(0.1, 0.9), rnd(0.1, 0.9), orb.y],
+            duration: rnd(14000, 26000),
+            loop: true,
+            ease: "inOutSine"
+          })
+        );
+      });
+    }
   }
 
   _pc(a, hue = this.hue) {
@@ -1265,6 +1644,12 @@ export class AnimeEffectsField {
 
   _glow(a) {
     const p = effectPalette();
+    if (this.reducedMotion) {
+      this.ctx.shadowBlur = 0;
+      this.ctx.shadowColor = "transparent";
+      this.ctx.strokeStyle = this._lc(a);
+      return;
+    }
     this.ctx.shadowBlur = 18;
     this.ctx.shadowColor = colorAtHue(this.hue, a, p.fillC, p.glowL);
     this.ctx.strokeStyle = this._lc(a);
@@ -1489,7 +1874,8 @@ export class AnimeEffectsField {
       this._clearGlow();
       let hand = state.hand;
       if (this._hoverAllowed()) {
-        hand = Math.atan2(this.interaction.py - cy2, this.interaction.px - ox) + Math.PI / 2;
+        const ptr = this._pointerXY(ox, cy2);
+        hand = Math.atan2(ptr.y - cy2, ptr.x - ox) + Math.PI / 2;
       }
       const hx = ox + Math.cos(hand - Math.PI / 2) * maxR * 0.78;
       const hy = cy2 + Math.sin(hand - Math.PI / 2) * maxR * 0.78;
@@ -1602,29 +1988,31 @@ export class AnimeEffectsField {
     }
 
     if (id === "topology") {
-      const maxR = Math.min(w, h) * 0.42;
+      const maxR = bgExtent(w, h, 0.54);
+      const hubX = ox + w * 0.02;
+      const hubY = oy - h * 0.03;
       c.beginPath();
-      c.arc(ox, oy, 6 * state.hub.pulse, 0, Math.PI * 2);
+      c.arc(hubX, hubY, 6 * state.hub.pulse, 0, Math.PI * 2);
       c.fillStyle = this._pc(0.7);
       c.fill();
       state.nodes.forEach((node) => {
-        const nx = ox + Math.cos(node.a) * maxR * node.d;
-        const ny = oy + Math.sin(node.a) * maxR * node.d * 0.72;
+        const nx = hubX + Math.cos(node.a) * maxR * node.d;
+        const ny = hubY + Math.sin(node.a) * maxR * node.d * 0.72;
         this._glow(0.3 * node.pulse);
         c.lineWidth = 1.2;
         c.beginPath();
-        c.moveTo(ox, oy);
+        c.moveTo(hubX, hubY);
         c.lineTo(nx, ny);
         c.stroke();
         this._clearGlow();
-        const pktX = ox + (nx - ox) * node.packet;
-        const pktY = oy + (ny - oy) * node.packet;
+        const pktX = hubX + (nx - hubX) * node.packet;
+        const pktY = hubY + (ny - hubY) * node.packet;
         c.beginPath();
         c.arc(pktX, pktY, 3, 0, Math.PI * 2);
         c.fillStyle = this._pc(0.65);
         c.fill();
         c.beginPath();
-        c.arc(nx, ny, 4 * node.pulse, 0, Math.PI * 2);
+        c.arc(nx, ny, 5 * node.pulse, 0, Math.PI * 2);
         c.fillStyle = this._pc(0.5);
         c.fill();
       });
@@ -1658,10 +2046,12 @@ export class AnimeEffectsField {
     }
 
     if (id === "constellation") {
-      const maxR = Math.min(w, h) * 0.38;
+      const maxR = bgExtent(w, h, 0.5);
+      const starOx = ox + w * 0.02;
+      const starOy = oy - h * 0.04;
       const pos = state.nodes.map((n) => ({
-        x: ox + Math.cos(n.a) * maxR * n.d,
-        y: oy + Math.sin(n.a) * maxR * n.d
+        x: starOx + Math.cos(n.a) * maxR * n.d,
+        y: starOy + Math.sin(n.a) * maxR * n.d
       }));
       state.links.forEach((link) => {
         const a = pos[link.a];
@@ -1815,14 +2205,15 @@ export class AnimeEffectsField {
     }
 
     if (id === "isograph") {
-      const span = Math.min(w, h) * 0.7;
-      const x0 = ox - span * 0.5;
-      const y0 = oy - span * 0.35;
+      const span = bgGridSpan(w, h);
+      const x0 = ox - span * 0.48 + w * 0.02;
+      const y0 = oy - span * 0.3;
       const tw = span / state.cols;
-      const th = span / state.rows * 0.55;
+      const th = span / state.rows * 0.64;
       if (this._hoverAllowed()) {
-        const hx = Math.floor(((this.interaction.px - x0) / tw + (this.interaction.py - y0) / th) * 0.5);
-        const hy = Math.floor(((this.interaction.py - y0) / th - (this.interaction.px - x0) / tw) * 0.5);
+        const ptr = this._pointerXY(x0 + span * 0.25, y0 + span * 0.25);
+        const hx = Math.floor(((ptr.x - x0) / tw + (ptr.y - y0) / th) * 0.5);
+        const hy = Math.floor(((ptr.y - y0) / th - (ptr.x - x0) / tw) * 0.5);
         state.highlight.col = Math.max(0, Math.min(state.cols - 1, hx));
         state.highlight.row = Math.max(0, Math.min(state.rows - 1, hy));
       }
@@ -1877,7 +2268,8 @@ export class AnimeEffectsField {
         c.stroke();
       });
       if (this._hoverAllowed()) {
-        const ba = Math.atan2(this.interaction.py - oy, this.interaction.px - ox);
+        const ptr = this._pointerXY(ox, oy);
+        const ba = Math.atan2(ptr.y - oy, ptr.x - ox);
         const ex = ox + Math.cos(ba) * maxR * 0.32;
         const ey = oy + Math.sin(ba) * maxR * 0.24;
         c.beginPath();
@@ -1956,10 +2348,12 @@ export class AnimeEffectsField {
     }
 
     if (id === "orbit") {
-      const maxR = Math.min(w, h) * 0.4;
+      const maxR = bgExtent(w, h, 0.56);
+      const orbitOx = ox + w * 0.03;
+      const orbitOy = oy - h * 0.05;
       state.foci.forEach((f) => {
-        const fx = ox + f.x * maxR;
-        const fy = oy + f.y * maxR * 0.6;
+        const fx = orbitOx + f.x * maxR;
+        const fy = orbitOy + f.y * maxR * 0.6;
         c.beginPath();
         c.arc(fx, fy, 3, 0, Math.PI * 2);
         c.fillStyle = this._pc(0.5 * state.glow);
@@ -1967,21 +2361,21 @@ export class AnimeEffectsField {
       });
       state.bodies.forEach((body) => {
         const prox = this._proximity(
-          ox + Math.cos(body.a) * maxR * body.rx,
-          oy + Math.sin(body.a) * maxR * body.ry * 0.72,
-          100
+          orbitOx + Math.cos(body.a) * maxR * body.rx,
+          orbitOy + Math.sin(body.a) * maxR * body.ry * 0.72,
+          120
         );
         c.setLineDash([3, 5]);
         c.strokeStyle = this._pc(0.22 + prox * 0.2);
-        c.lineWidth = 1;
+        c.lineWidth = 1.1;
         c.beginPath();
-        c.ellipse(ox, oy, maxR * body.rx, maxR * body.ry * 0.72, 0, 0, Math.PI * 2);
+        c.ellipse(orbitOx, orbitOy, maxR * body.rx, maxR * body.ry * 0.72, 0, 0, Math.PI * 2);
         c.stroke();
         c.setLineDash([]);
-        const bx = ox + Math.cos(body.a) * maxR * body.rx;
-        const by = oy + Math.sin(body.a) * maxR * body.ry * 0.72;
+        const bx = orbitOx + Math.cos(body.a) * maxR * body.rx;
+        const by = orbitOy + Math.sin(body.a) * maxR * body.ry * 0.72;
         c.beginPath();
-        c.arc(bx, by, 4 + prox * 3, 0, Math.PI * 2);
+        c.arc(bx, by, 5 + prox * 3, 0, Math.PI * 2);
         c.fillStyle = this._pc(0.55 + prox * 0.3);
         c.fill();
       });
@@ -1998,18 +2392,18 @@ export class AnimeEffectsField {
       let batonX = fx + (tx - fx) * state.baton.t;
       if (this._hoverAllowed()) {
         let nearest = 0;
-        let nearD = Infinity;
+        let bestProx = 0;
         state.stations.forEach((st, i) => {
           const sx = x0 + st.x * span;
-          const d = Math.hypot(sx - this.interaction.px, y - this.interaction.py);
-          if (d < nearD) {
-            nearD = d;
+          const prox = this._proximity(sx, y, 120);
+          if (prox > bestProx) {
+            bestProx = prox;
             nearest = i;
           }
         });
         const nsx = x0 + state.stations[nearest].x * span;
         batonX += (nsx - batonX) * 0.12;
-        state.baton.speed = nearD < 120 ? 1.8 : 1;
+        state.baton.speed = bestProx > 0.15 ? 1.8 : 1;
       }
       state.stations.forEach((st, i) => {
         const sx = x0 + st.x * span;
@@ -2079,18 +2473,348 @@ export class AnimeEffectsField {
       });
     }
 
+    if (id === "hexpulse") {
+      const { cols, rows, size, cells } = state;
+      const hx = ox + (state.anchorX ?? 0);
+      const hy = oy + (state.anchorY ?? 0);
+      cells.forEach((cell) => {
+        const { x, y } = hexCellXY(cell.col, cell.row, size, hx, hy, cols, rows);
+        const prox = this._proximity(x, y, 140);
+        const a = cell.alpha + prox * 0.25;
+        const r = size * 0.46 * cell.scale * (1 + prox * 0.08);
+        drawHexPath(c, x, y, r);
+        c.strokeStyle = this._pc(a);
+        c.lineWidth = 1 + prox;
+        c.stroke();
+        if (prox > 0.3 || cell.alpha > 0.4) {
+          this._glow(0.2 + prox * 0.3);
+          drawHexPath(c, x, y, r * 0.55);
+          c.fillStyle = this._pc(a * 0.35);
+          c.fill();
+          this._clearGlow();
+        }
+      });
+    }
+
+    if (id === "parcel") {
+      const pts = state.stations.map((st) => ({ x: st.x * w, y: st.y * h }));
+      c.strokeStyle = this._pc(0.22);
+      c.lineWidth = 1;
+      for (let i = 0; i < pts.length - 1; i++) {
+        c.beginPath();
+        c.moveTo(pts[i].x, pts[i].y);
+        c.lineTo(pts[i + 1].x, pts[i + 1].y);
+        c.stroke();
+      }
+      state.stations.forEach((st) => {
+        const sx = st.x * w;
+        const sy = st.y * h;
+        const prox = this._proximity(sx, sy, 100);
+        this._glow(0.2 + prox * 0.35);
+        c.beginPath();
+        c.arc(sx, sy, 5 + prox * 2, 0, Math.PI * 2);
+        c.stroke();
+        this._clearGlow();
+      });
+      state.packets.forEach((pkt) => {
+        const a = pts[pkt.seg];
+        const b = pts[pkt.seg + 1];
+        let t = pkt.t;
+        if (this._hoverAllowed()) {
+          const midX = a.x + (b.x - a.x) * t;
+          const midY = a.y + (b.y - a.y) * t;
+          const prox = this._proximity(midX, midY, 140);
+          if (prox > 0.2) t = Math.min(1, t + 0.02 * prox);
+        }
+        const px = a.x + (b.x - a.x) * t;
+        const py = a.y + (b.y - a.y) * t;
+        c.fillStyle = this._pc(0.75, 45);
+        c.fillRect(px - 3, py - 3, 6, 6);
+      });
+    }
+
+    if (id === "hashwave") {
+      c.font = "11px IBM Plex Mono, monospace";
+      const cellW = w / state.cols;
+      const cellH = h / state.rows;
+      state.glyphs.forEach((g) => {
+        const gx = g.col * cellW + cellW * 0.5;
+        const gy = g.row * cellH + cellH * 0.5;
+        const waveDist = Math.abs(g.col - state.wave);
+        const waveBoost = Math.max(0, 1 - waveDist / 3) * 0.45;
+        const prox = this._proximity(gx, gy, 90);
+        if (prox > 0.3 && !this.reducedMotion && Math.random() < 0.06 + prox * 0.12) {
+          g.scramble = HASHWAVE_CHARS[Math.floor(Math.random() * HASHWAVE_CHARS.length)];
+          g.scrambleT = 3;
+        }
+        if (g.scrambleT > 0) g.scrambleT--;
+        const ch = g.scrambleT > 0 && g.scramble ? g.scramble : g.ch;
+        const a = g.alpha + waveBoost + prox * 0.35;
+        c.fillStyle = this._pc(a);
+        c.fillText(ch, gx - 4, gy + 4);
+      });
+    }
+
+    if (id === "branch") {
+      const off = this._pointerOffset(0.35);
+      const skew = off.x * 0.0008;
+      const nodeX = (x) => spreadNorm(x, 1.16) * w;
+      const nodeY = (y) => spreadNorm(y, 1.1) * h;
+      state.edges.forEach(([ai, bi]) => {
+        const a = state.nodes[ai];
+        const b = state.nodes[bi];
+        if (a.reveal < 0.05 || b.reveal < 0.05) return;
+        const ax = nodeX(a.x) + skew * h * (a.y - 0.5);
+        const ay = nodeY(a.y) + off.y * 0.15;
+        const bx = nodeX(b.x) + skew * h * (b.y - 0.5);
+        const by = nodeY(b.y) + off.y * 0.15;
+        c.strokeStyle = this._pc(0.22 * Math.min(a.reveal, b.reveal));
+        c.lineWidth = 1;
+        c.beginPath();
+        c.moveTo(ax, ay);
+        c.lineTo(bx, by);
+        c.stroke();
+      });
+      state.nodes.forEach((node) => {
+        const nx = nodeX(node.x) + skew * h * (node.y - 0.5);
+        const ny = nodeY(node.y) + off.y * 0.15;
+        this._glow(0.25 * node.reveal);
+        c.lineWidth = 1.2;
+        c.beginPath();
+        c.arc(nx, ny, 8 * node.reveal, 0, Math.PI * 2);
+        c.stroke();
+        this._clearGlow();
+      });
+    }
+
+    if (id === "telemetry") {
+      const baseY = h * state.baseline;
+      const span = w * 0.84;
+      const x0 = ox - span * 0.5;
+      this._glow(0.35 * state.glow);
+      c.lineWidth = 1.4;
+      c.beginPath();
+      c.moveTo(x0, baseY);
+      c.lineTo(x0 + span, baseY);
+      c.stroke();
+      this._clearGlow();
+      state.ticks.forEach((tick) => {
+        const tx = x0 + tick.x * span;
+        const th = tick.h * h;
+        c.strokeStyle = this._pc(0.35 + tick.h * 1.2);
+        c.lineWidth = 1;
+        c.beginPath();
+        c.moveTo(tx, baseY);
+        c.lineTo(tx, baseY - th);
+        c.stroke();
+        c.beginPath();
+        c.moveTo(tx - 3, baseY);
+        c.lineTo(tx + 3, baseY);
+        c.stroke();
+      });
+    }
+
+    if (id === "trace") {
+      const frac = this.reducedMotion ? 1 : this.scrollFrac ?? 0;
+      const pts = state.points.map((p) => ({ x: p.x * w, y: p.y * h }));
+      const totalSegs = pts.length - 1;
+      const drawUpTo = frac * totalSegs;
+      c.strokeStyle = this._pc(0.2);
+      c.lineWidth = 1;
+      for (let i = 0; i < totalSegs; i++) {
+        const segProg = Math.min(1, Math.max(0, drawUpTo - i));
+        if (segProg <= 0) continue;
+        const a = pts[i];
+        const b = pts[i + 1];
+        c.beginPath();
+        c.moveTo(a.x, a.y);
+        c.lineTo(a.x + (b.x - a.x) * segProg, a.y + (b.y - a.y) * segProg);
+        c.stroke();
+      }
+      pts.forEach((p) => {
+        c.beginPath();
+        c.arc(p.x, p.y, 4, 0, Math.PI * 2);
+        c.fillStyle = this._pc(0.4);
+        c.fill();
+      });
+      if (!this.reducedMotion && drawUpTo > 0) {
+        const seg = Math.min(totalSegs - 1, Math.floor(state.packetT * totalSegs));
+        const localT = (state.packetT * totalSegs) % 1;
+        const a = pts[seg];
+        const b = pts[seg + 1];
+        c.fillStyle = this._pc(0.8, 45);
+        c.fillRect(a.x + (b.x - a.x) * localT - 3, a.y + (b.y - a.y) * localT - 3, 6, 6);
+      }
+    }
+
+    if (id === "checksum") {
+      const frac = this.reducedMotion ? 1 : this.scrollFrac ?? state.progress ?? 0;
+      const barY = h * state.barY;
+      const x0 = w * 0.1;
+      const barW = w * 0.8;
+      c.strokeStyle = this._pc(0.25);
+      c.lineWidth = 1.2;
+      c.strokeRect(x0, barY - 6, barW, 12);
+      const fillW = barW * frac;
+      if (fillW > 0) {
+        this._glow(0.3);
+        c.fillStyle = this._pc(0.35);
+        c.fillRect(x0, barY - 5, fillW, 10);
+        this._clearGlow();
+      }
+      state.marks.forEach((mark) => {
+        if (mark.x > frac + 0.02) return;
+        const mx = x0 + mark.x * barW;
+        c.strokeStyle = this._pc(0.4 + mark.alpha);
+        c.beginPath();
+        c.moveTo(mx, barY - 6 - mark.h * h);
+        c.lineTo(mx, barY + 6);
+        c.stroke();
+      });
+    }
+
+    if (id === "cellscan") {
+      let highlight = -1;
+      let bestProx = 0;
+      const bloomDecay = this.reducedMotion ? 1 : 0.94;
+      state.sites.forEach((site, i) => {
+        const prox = this._proximity(site.x, site.y, 140);
+        site.bloom = Math.max(0, (site.bloom || 0) * bloomDecay + prox * 0.1);
+        if (prox > bestProx) {
+          bestProx = prox;
+          highlight = i;
+        }
+      });
+      state.highlight = highlight;
+      state.edges.forEach((edge) => {
+        const a = state.sites[edge.a];
+        const b = state.sites[edge.b];
+        const bloom = Math.max(a.bloom || 0, b.bloom || 0);
+        const scanBoost = Math.abs((a.y + b.y) * 0.5 / h - state.scan) < 0.06 ? 0.25 : 0;
+        c.strokeStyle = this._pc(edge.alpha * 0.6 + bloom * 0.3 + scanBoost);
+        c.lineWidth = 0.9 + bloom;
+        c.beginPath();
+        c.moveTo(a.x, a.y);
+        c.lineTo(b.x, b.y);
+        c.stroke();
+      });
+      state.sites.forEach((site, i) => {
+        const active = i === highlight;
+        const r = 3 + (site.bloom || 0) * 4 + (active ? 2 : 0);
+        c.beginPath();
+        c.arc(site.x, site.y, r, 0, Math.PI * 2);
+        c.fillStyle = this._pc(0.35 + (site.bloom || 0) * 0.4);
+        c.fill();
+      });
+    }
+
+    if (id === "beacon") {
+      state.anchors.forEach((anchor) => {
+        const ax = anchor.x * w;
+        const ay = anchor.y * h;
+        const prox = this._proximity(ax, ay, 160);
+        c.fillStyle = this._pc(0.55 + prox * 0.3);
+        c.beginPath();
+        c.arc(ax, ay, 4 + prox * 2, 0, Math.PI * 2);
+        c.fill();
+        anchor.rings.forEach((ring) => {
+          if (ring.alpha < 0.03) return;
+          const r = ring.r * Math.min(w, h) * (1 + prox * 0.15);
+          c.beginPath();
+          c.arc(ax, ay, r, 0, Math.PI * 2);
+          c.strokeStyle = this._pc(ring.alpha * (0.5 + prox * 0.3));
+          c.lineWidth = 1;
+          c.stroke();
+        });
+      });
+    }
+
+    if (id === "lattice") {
+      const off = this._pointerOffset(0.4);
+      state.layers.forEach((layer) => {
+        const depth = layer.depth;
+        const cols = state.cols;
+        const rows = state.rows;
+        const gridW = w * (0.72 + depth * 0.38);
+        const gridH = h * (0.62 + depth * 0.34);
+        const gx0 = ox - gridW * 0.48 + layer.offsetX + off.x * depth * 0.4 + w * 0.02;
+        const gy0 = oy - gridH * 0.46 + layer.offsetY + off.y * depth * 0.3 - h * 0.03;
+        const shear = layer.shear + off.x * 0.0003 * depth;
+        c.strokeStyle = this._pc(0.12 + depth * 0.1);
+        c.lineWidth = 0.8;
+        for (let i = 0; i <= cols; i++) {
+          const t = i / cols;
+          const x = gx0 + t * gridW + shear * (gy0 - oy);
+          c.beginPath();
+          c.moveTo(x, gy0);
+          c.lineTo(x + shear * gridH, gy0 + gridH);
+          c.stroke();
+        }
+        for (let j = 0; j <= rows; j++) {
+          const t = j / rows;
+          const y = gy0 + t * gridH;
+          c.beginPath();
+          c.moveTo(gx0 + shear * (y - gy0), y);
+          c.lineTo(gx0 + gridW + shear * (y - gy0), y);
+          c.stroke();
+        }
+      });
+    }
+
+    if (id === "filament") {
+      const off = this._pointerOffset(0.45);
+      const pts = state.knots.map((k) => ({
+        x: k.x * w + off.x * 0.2,
+        y: k.y * h + off.y * 0.15
+      }));
+      const t = state.t;
+      c.strokeStyle = this._pc(0.18);
+      c.lineWidth = 0.8;
+      for (let i = 0; i < pts.length - 1; i++) {
+        c.beginPath();
+        c.moveTo(pts[i].x, pts[i].y);
+        c.lineTo(pts[i + 1].x, pts[i + 1].y);
+        c.stroke();
+      }
+      const totalLen = pts.length - 1;
+      const pos = t * totalLen;
+      const seg = Math.min(totalLen - 1, Math.floor(pos));
+      const local = pos - seg;
+      const ax = pts[seg];
+      const bx = pts[seg + 1];
+      const fx = ax.x + (bx.x - ax.x) * local;
+      const fy = ax.y + (bx.y - ax.y) * local;
+      this._glow(0.45);
+      c.lineWidth = 2.2;
+      c.beginPath();
+      c.moveTo(pts[0].x, pts[0].y);
+      for (let i = 0; i <= seg; i++) {
+        c.lineTo(pts[i + 1].x, pts[i + 1].y);
+      }
+      if (seg < totalLen) c.lineTo(fx, fy);
+      c.stroke();
+      this._clearGlow();
+      pts.forEach((p) => {
+        c.beginPath();
+        c.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+        c.fillStyle = this._pc(0.3);
+        c.fill();
+      });
+    }
+
     c.restore();
   }
 
   _drawBokeh() {
     const { bctx: c, width: w, height: h, intensity } = this;
     const pull = this._pointerOffset(0.55);
+    const orbLerp = this.reducedMotion ? 1 : 0.012;
     c.clearRect(0, 0, w, h);
     this.bokehOrbs.forEach((orb) => {
       const targetX = 0.5 + this.pointer.nx * 0.08;
       const targetY = 0.5 + this.pointer.ny * 0.06;
-      orb.x += (targetX - orb.x) * 0.012;
-      orb.y += (targetY - orb.y) * 0.012;
+      orb.x += (targetX - orb.x) * orbLerp;
+      orb.y += (targetY - orb.y) * orbLerp;
       const x = orb.x * w + pull.x * 0.15;
       const y = orb.y * h + pull.y * 0.15;
       const g = c.createRadialGradient(x, y, 0, x, y, orb.r);
@@ -2117,8 +2841,13 @@ export class AnimeEffectsField {
   }
 
   _draw() {
-    this._lerpPointer();
     const mix = this.mix.value;
+    const activeId = mix > 0.5 ? this.effectB : this.effectA;
+    if (this.reducedMotion && RM_FROZEN_DRAW_IDS.has(activeId)) {
+      if (!this._rmNeedsRedraw) return;
+      this._rmNeedsRedraw = false;
+    }
+    this._lerpPointer();
     if (this._cascadeIsLive(mix)) {
       this._updateCascade(this.ensureEffect("cascade"));
     }
