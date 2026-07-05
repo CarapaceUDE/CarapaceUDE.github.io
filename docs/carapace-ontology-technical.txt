@@ -1,0 +1,2609 @@
+# Cortex Regenerative Process Ontology
+
+## Technical Implementation Specification v0.1
+
+## 0. Purpose
+
+The Cortex Regenerative Process Ontology, or **RPO**, is the operational knowledge layer used by Carapace/Cortex to model a user’s world, processes, decisions, actions, permissions, feedback, and outcomes.
+
+It is designed to support:
+
+* local-first AI reasoning,
+* graph-based process modeling,
+* permissioned agent action,
+* workflow automation,
+* semantic search,
+* process discovery,
+* feedback-driven improvement,
+* cost/yield accounting,
+* and private operational intelligence.
+
+RPO is not only a schema. It is the shared operating grammar used by:
+
+* the local data layer,
+* the knowledge graph,
+* the vector index,
+* the event log,
+* the agent runtime,
+* the workflow engine,
+* the permissions layer,
+* and the UI.
+
+---
+
+# 1. Core Architecture
+
+RPO should be implemented as a layered local-first system.
+
+```text
+External / Local Sources
+Files, folders, email, calendar, contacts, notes, browser data, forms, app APIs
+        ↓
+Ingestion Layer
+Parsers, extractors, classifiers, metadata detectors, sensitivity detectors
+        ↓
+RPO Object Layer
+Entities, Artifacts, Events, Agents, Processes, Flows, Regimes, Boundaries
+        ↓
+Graph Layer
+Typed nodes, typed edges, properties, provenance, permissions
+        ↓
+Vector Layer
+Embeddings for semantic retrieval over artifacts, chunks, summaries, objects
+        ↓
+Event Log
+Append-only record of observations, edits, actions, feedback, approvals
+        ↓
+Agent Runtime
+Read, reason, propose, act, update, escalate
+        ↓
+Workflow / Action Layer
+Typed actions, validation rules, permissions, reversibility, writeback
+        ↓
+Materialized Views
+Dashboards, process maps, task lists, client views, file views, briefs
+```
+
+The system should preserve a strong distinction between:
+
+1. **Source data** — raw files, messages, records, app data.
+2. **Ontology state** — Cortex’s current structured understanding.
+3. **Derived context** — summaries, embeddings, classifications, links.
+4. **Agent proposals** — uncommitted suggested changes.
+5. **Committed actions** — accepted state transitions.
+6. **Feedback** — user corrections, approvals, rejections, overrides.
+7. **Materialized views** — UI-ready projections of the ontology.
+
+---
+
+# 2. Implementation Goals
+
+RPO v1 should be:
+
+## 2.1 Local-First
+
+The default ontology state should live on the user’s device or private deployment.
+
+Cloud should be treated as an escalation boundary, not a default assumption.
+
+## 2.2 Event-Sourced
+
+Every meaningful change should be recorded as an event.
+
+The graph represents current state.
+The event log explains how that state came to be.
+
+## 2.3 Graph-Native
+
+The ontology should model typed nodes and relationships.
+
+Most useful intelligence comes from relationships:
+
+* this email belongs to this client,
+* this invoice belongs to this payment process,
+* this task was created from this conversation,
+* this action requires approval from this user,
+* this repeated pattern suggests a workflow.
+
+## 2.4 Vector-Augmented
+
+Embeddings should support semantic search and fuzzy retrieval.
+
+However, embeddings should not replace the ontology.
+
+Vector search answers:
+
+> What is similar?
+
+The graph answers:
+
+> What is connected?
+
+The process layer answers:
+
+> What is happening?
+
+The permission layer answers:
+
+> What is allowed?
+
+The feedback layer answers:
+
+> What did the user correct?
+
+## 2.5 Permissioned by Default
+
+Agents should never have generic access to everything.
+
+The ontology must distinguish:
+
+* read,
+* reason,
+* transform,
+* propose,
+* act,
+* export,
+* cloud-escalate,
+* delete,
+* and train/use-for-learning permissions.
+
+## 2.6 Actionable
+
+The ontology must support actions, not just descriptions.
+
+An action should have:
+
+* input object types,
+* permission requirements,
+* validation rules,
+* expected yield,
+* risk level,
+* reversibility,
+* feedback path,
+* and event log output.
+
+## 2.7 Regenerative
+
+Every process should be capable of tracking:
+
+* yield,
+* cost,
+* waste,
+* burden,
+* feedback,
+* risk,
+* and improvement over time.
+
+---
+
+# 3. Core Storage Components
+
+## 3.1 Recommended v1 Local Stack
+
+For a desktop/local-first product, a practical starting stack is:
+
+```text
+SQLite
+Primary durable local database.
+
+SQLite FTS5
+Keyword search.
+
+sqlite-vec / LanceDB / Qdrant local
+Vector search.
+
+Graph tables over SQLite
+Typed nodes and typed edges.
+
+Append-only event_log table
+Full state transition history.
+
+Object store / filesystem
+Raw files, extracted text, thumbnails, derived artifacts.
+
+Policy engine
+Permission checks before agent reasoning/action.
+
+Local model runtime
+Ollama, llama.cpp, MLX, ONNX Runtime, or equivalent.
+
+Optional sync layer
+Encrypted cloud sync or user-controlled server.
+```
+
+Do not start with a heavy enterprise graph database unless required.
+
+RPO can be implemented efficiently as relational tables representing graph nodes, graph edges, properties, and events.
+
+---
+
+# 4. Primary Tables
+
+## 4.1 `rpo_node`
+
+Stores every ontology object as a typed node.
+
+```sql
+CREATE TABLE rpo_node (
+  id TEXT PRIMARY KEY,
+  type TEXT NOT NULL,
+  label TEXT,
+  description TEXT,
+  status TEXT DEFAULT 'active',
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  created_by TEXT,
+  source TEXT,
+  confidence REAL DEFAULT 1.0,
+  sensitivity TEXT DEFAULT 'normal',
+  locality TEXT DEFAULT 'local',
+  metadata_json TEXT
+);
+```
+
+Example node types:
+
+```text
+Entity
+Artifact
+Event
+Agent
+Process
+Flow
+Regime
+Edge
+Boundary
+Constraint
+Action
+Decision
+FeedbackLoop
+Yield
+Cost
+Pattern
+Risk
+Tool
+Model
+Device
+```
+
+---
+
+## 4.2 `rpo_edge`
+
+Stores typed relations between nodes.
+
+```sql
+CREATE TABLE rpo_edge (
+  id TEXT PRIMARY KEY,
+  type TEXT NOT NULL,
+  from_node_id TEXT NOT NULL,
+  to_node_id TEXT NOT NULL,
+  label TEXT,
+  confidence REAL DEFAULT 1.0,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  created_by TEXT,
+  source TEXT,
+  metadata_json TEXT,
+  FOREIGN KEY (from_node_id) REFERENCES rpo_node(id),
+  FOREIGN KEY (to_node_id) REFERENCES rpo_node(id)
+);
+```
+
+Core edge types:
+
+```text
+BELONGS_TO
+PARTICIPATES_IN
+GENERATES
+CONSUMES
+YIELDS
+COSTS
+OBSERVES
+ACTS_ON
+REGULATES
+HAS_FEEDBACK
+HAS_BOUNDARY
+HAS_CONSTRAINT
+HAS_PERMISSION
+HAS_RISK
+HAS_STATUS
+TRIGGERED_BY
+DERIVED_FROM
+SUMMARIZES
+MENTIONS
+LINKED_TO
+DEPENDS_ON
+ESCALATES_TO
+APPROVED_BY
+REJECTED_BY
+SUPERSEDES
+IMPLEMENTS
+```
+
+---
+
+## 4.3 `rpo_property`
+
+Stores flexible structured properties.
+
+```sql
+CREATE TABLE rpo_property (
+  id TEXT PRIMARY KEY,
+  node_id TEXT NOT NULL,
+  key TEXT NOT NULL,
+  value_type TEXT NOT NULL,
+  value_text TEXT,
+  value_number REAL,
+  value_bool INTEGER,
+  value_json TEXT,
+  confidence REAL DEFAULT 1.0,
+  source TEXT,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  FOREIGN KEY (node_id) REFERENCES rpo_node(id)
+);
+```
+
+This lets the ontology evolve without requiring schema migrations for every new property.
+
+Common properties:
+
+```text
+amount
+due_date
+status
+priority
+source_uri
+file_path
+mime_type
+email_address
+phone_number
+confidence
+risk_level
+sensitivity
+locality
+requires_human_approval
+is_reversible
+expected_yield
+estimated_cost
+attention_burden
+compute_burden
+ecological_burden
+```
+
+---
+
+## 4.4 `rpo_event`
+
+Append-only event log.
+
+```sql
+CREATE TABLE rpo_event (
+  id TEXT PRIMARY KEY,
+  event_type TEXT NOT NULL,
+  actor_id TEXT,
+  target_node_id TEXT,
+  target_edge_id TEXT,
+  action_id TEXT,
+  timestamp TEXT NOT NULL,
+  status TEXT NOT NULL,
+  input_json TEXT,
+  output_json TEXT,
+  before_json TEXT,
+  after_json TEXT,
+  reason TEXT,
+  confidence REAL,
+  permission_result TEXT,
+  policy_trace_json TEXT,
+  reversible INTEGER DEFAULT 0,
+  reversal_event_id TEXT,
+  metadata_json TEXT
+);
+```
+
+Common event types:
+
+```text
+OBSERVED
+INGESTED
+CLASSIFIED
+EXTRACTED
+SUMMARIZED
+LINK_CREATED
+LINK_REMOVED
+PROPERTY_SET
+PROPERTY_CORRECTED
+ACTION_PROPOSED
+ACTION_APPROVED
+ACTION_REJECTED
+ACTION_EXECUTED
+ACTION_REVERSED
+FEEDBACK_RECEIVED
+BOUNDARY_VIOLATION_BLOCKED
+CLOUD_ESCALATION_REQUESTED
+CLOUD_ESCALATION_APPROVED
+PATTERN_DETECTED
+PROCESS_CREATED
+WORKFLOW_CREATED
+REGIME_CREATED
+```
+
+The event log is critical because it allows Cortex to explain:
+
+* what happened,
+* who or what did it,
+* why it happened,
+* what changed,
+* what permission was checked,
+* whether it was reversible,
+* and how the user responded.
+
+---
+
+## 4.5 `artifact_chunk`
+
+Stores extracted text chunks and semantic retrieval references.
+
+```sql
+CREATE TABLE artifact_chunk (
+  id TEXT PRIMARY KEY,
+  artifact_id TEXT NOT NULL,
+  chunk_index INTEGER NOT NULL,
+  text TEXT NOT NULL,
+  summary TEXT,
+  token_count INTEGER,
+  source_offset_start INTEGER,
+  source_offset_end INTEGER,
+  created_at TEXT NOT NULL,
+  metadata_json TEXT,
+  FOREIGN KEY (artifact_id) REFERENCES rpo_node(id)
+);
+```
+
+The embedding itself may live in a vector store keyed by `chunk_id`.
+
+---
+
+## 4.6 `embedding_index`
+
+If using SQLite-compatible vector storage:
+
+```sql
+CREATE TABLE embedding_index (
+  id TEXT PRIMARY KEY,
+  target_type TEXT NOT NULL,
+  target_id TEXT NOT NULL,
+  embedding_model TEXT NOT NULL,
+  embedding_vector BLOB,
+  created_at TEXT NOT NULL,
+  metadata_json TEXT
+);
+```
+
+Targets may include:
+
+```text
+node
+edge
+event
+chunk
+summary
+process
+pattern
+```
+
+---
+
+## 4.7 `action_type`
+
+Defines allowed verbs.
+
+```sql
+CREATE TABLE action_type (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  description TEXT,
+  input_schema_json TEXT NOT NULL,
+  output_schema_json TEXT,
+  required_permissions_json TEXT NOT NULL,
+  validation_rules_json TEXT,
+  risk_level TEXT DEFAULT 'low',
+  reversible INTEGER DEFAULT 1,
+  requires_human_approval INTEGER DEFAULT 0,
+  expected_yield_schema_json TEXT,
+  cost_schema_json TEXT,
+  handler TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+```
+
+Example action types:
+
+```text
+draft_email
+send_email
+create_task
+update_task_status
+summarize_artifact
+classify_artifact
+link_artifact_to_process
+create_invoice_record
+approve_invoice
+schedule_event
+assign_installer
+generate_quote
+escalate_to_cloud_model
+create_workflow
+archive_file
+delete_file
+```
+
+---
+
+## 4.8 `agent_policy`
+
+Defines what agents may do.
+
+```sql
+CREATE TABLE agent_policy (
+  id TEXT PRIMARY KEY,
+  agent_id TEXT NOT NULL,
+  scope TEXT NOT NULL,
+  permission TEXT NOT NULL,
+  resource_type TEXT,
+  resource_id TEXT,
+  condition_json TEXT,
+  effect TEXT NOT NULL,
+  priority INTEGER DEFAULT 0,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  FOREIGN KEY (agent_id) REFERENCES rpo_node(id)
+);
+```
+
+Permissions:
+
+```text
+read
+reason
+transform
+propose
+act
+export
+delete
+cloud_escalate
+use_for_learning
+modify_schema
+```
+
+Effects:
+
+```text
+allow
+deny
+require_approval
+```
+
+---
+
+# 5. Core Ontology Types
+
+## 5.1 Entity
+
+A stable real-world thing.
+
+Examples:
+
+```text
+Person
+Organization
+Customer
+Vendor
+Employee
+Installer
+Location
+Device
+Product
+Service
+Account
+```
+
+Required properties:
+
+```json
+{
+  "entity_kind": "Person | Organization | Location | Device | Product | Service | Other",
+  "sensitivity": "public | normal | sensitive | restricted",
+  "locality": "local | synced | external",
+  "confidence": 0.0
+}
+```
+
+---
+
+## 5.2 Artifact
+
+A durable information object.
+
+Examples:
+
+```text
+File
+Email
+Message
+Note
+Invoice
+Receipt
+Contract
+Image
+Audio
+Video
+Transcript
+GeneratedDraft
+Report
+```
+
+Required properties:
+
+```json
+{
+  "artifact_kind": "File | Email | Message | Note | Invoice | Contract | Media | Generated",
+  "source_uri": "string",
+  "mime_type": "string",
+  "created_time": "datetime",
+  "modified_time": "datetime",
+  "sensitivity": "normal",
+  "hash": "string"
+}
+```
+
+Important edges:
+
+```text
+Artifact DERIVED_FROM Source
+Artifact PARTICIPATES_IN Process
+Artifact MENTIONS Entity
+Artifact SUMMARIZES Artifact
+Artifact HAS_BOUNDARY Boundary
+```
+
+---
+
+## 5.3 Event
+
+Something that happened.
+
+Examples:
+
+```text
+EmailReceived
+FileCreated
+MeetingHeld
+InvoicePaid
+TaskCompleted
+CustomerCalled
+AgentActionExecuted
+UserCorrectionMade
+```
+
+Required properties:
+
+```json
+{
+  "event_kind": "string",
+  "timestamp": "datetime",
+  "source": "string",
+  "confidence": 1.0
+}
+```
+
+Important edges:
+
+```text
+Event TRIGGERED_BY Event
+Event ACTS_ON Node
+Event PARTICIPATES_IN Process
+Event CAUSED_BY Agent
+Event YIELDS Yield
+Event COSTS Cost
+```
+
+---
+
+## 5.4 Agent
+
+A participant capable of observation, reasoning, or action.
+
+Examples:
+
+```text
+HumanUser
+LocalAIAgent
+CloudAIAgent
+WorkflowAgent
+SoftwareTool
+Organization
+Installer
+Customer
+```
+
+Required properties:
+
+```json
+{
+  "agent_kind": "Human | LocalAI | CloudAI | Tool | Organization | ExternalPerson",
+  "trust_level": "low | normal | trusted | owner",
+  "can_act": true,
+  "can_reason": true,
+  "attention_capacity": "unknown | low | medium | high",
+  "locality": "local | external | cloud"
+}
+```
+
+Important edges:
+
+```text
+Agent OBSERVES Process
+Agent ACTS_ON Artifact
+Agent PARTICIPATES_IN Regime
+Agent HAS_PERMISSION Boundary
+Agent PROVIDES_FEEDBACK FeedbackLoop
+```
+
+---
+
+## 5.5 Process
+
+A transformation across time.
+
+Examples:
+
+```text
+InvoiceProcessing
+CustomerOnboarding
+LeadQualification
+InstallationWorkflow
+SupportResolution
+CreativeDrafting
+DailyPlanning
+KnowledgeCapture
+```
+
+Required properties:
+
+```json
+{
+  "process_kind": "Operational | Creative | Financial | Communication | Support | Installation | Personal | Other",
+  "status": "observed | proposed | active | paused | deprecated",
+  "start_time": "datetime|null",
+  "end_time": "datetime|null",
+  "automation_level": "manual | assisted | semi_automated | automated",
+  "requires_human_approval": true,
+  "risk_level": "low | medium | high",
+  "confidence": 0.0
+}
+```
+
+Important edges:
+
+```text
+Process BELONGS_TO Regime
+Process CONSUMES Flow
+Process YIELDS Yield
+Process COSTS Cost
+Process HAS_FEEDBACK FeedbackLoop
+Process HAS_BOUNDARY Boundary
+Process HAS_CONSTRAINT Constraint
+Process TRIGGERED_BY Event
+Process USES Tool
+Process INVOLVES Agent
+```
+
+---
+
+## 5.6 Flow
+
+Movement of information, money, attention, material, energy, or responsibility.
+
+Examples:
+
+```text
+EmailFlow
+InvoiceFlow
+CashFlow
+TaskFlow
+AttentionFlow
+DataFlow
+CustomerRequestFlow
+HardwareInstallFlow
+```
+
+Required properties:
+
+```json
+{
+  "flow_kind": "Information | Money | Attention | Material | Energy | Responsibility | Data",
+  "direction": "inbound | outbound | internal | circular",
+  "rate": "unknown | low | medium | high",
+  "sensitivity": "normal",
+  "lossiness": "unknown | low | medium | high"
+}
+```
+
+Important edges:
+
+```text
+Flow PARTICIPATES_IN Process
+Flow MOVES_FROM Agent
+Flow MOVES_TO Agent
+Flow CARRIES Artifact
+Flow COSTS Cost
+Flow YIELDS Yield
+```
+
+---
+
+## 5.7 Regime
+
+A stable cluster of related processes.
+
+Examples:
+
+```text
+SmallBusinessFinanceRegime
+ClientRelationshipRegime
+CreativeProductionRegime
+LocalAIOperationsRegime
+InstallationOperationsRegime
+HouseholdManagementRegime
+```
+
+Required properties:
+
+```json
+{
+  "regime_kind": "Business | Personal | Creative | Technical | Financial | Operational | Ecological",
+  "health_status": "unknown | healthy | stressed | brittle | failing | improving",
+  "automation_level": "manual | assisted | semi_automated | automated",
+  "resilience_score": 0.0
+}
+```
+
+Important edges:
+
+```text
+Regime CONTAINS Process
+Regime HAS_BOUNDARY Boundary
+Regime HAS_FEEDBACK FeedbackLoop
+Regime HAS_PATTERN Pattern
+Regime HAS_EDGE Edge
+Regime YIELDS Yield
+Regime COSTS Cost
+```
+
+---
+
+## 5.8 Edge
+
+A high-value boundary/interface between processes, systems, agents, or regimes.
+
+Examples:
+
+```text
+SalesToFulfillmentHandoff
+HumanToAIAutomationBoundary
+LocalToCloudEscalationBoundary
+EmailToTaskConversion
+QuoteToInvoiceTransition
+InstallToSupportTransition
+```
+
+Required properties:
+
+```json
+{
+  "edge_kind": "Handoff | Boundary | Interface | Transition | ExceptionZone | IntegrationPoint",
+  "friction_level": "unknown | low | medium | high",
+  "opportunity_level": "unknown | low | medium | high",
+  "risk_level": "low | medium | high"
+}
+```
+
+Important edges:
+
+```text
+Edge CONNECTS Process
+Edge CONNECTS Regime
+Edge HAS_RISK Risk
+Edge HAS_PATTERN Pattern
+Edge YIELDS Yield
+Edge COSTS Cost
+```
+
+---
+
+## 5.9 Boundary
+
+A permission, privacy, trust, locality, or consent boundary.
+
+Examples:
+
+```text
+LocalOnlyBoundary
+HumanApprovalBoundary
+ReadOnlyBoundary
+DraftOnlyBoundary
+ClientVisibleBoundary
+PrivatePersonalBoundary
+NoCloudBoundary
+HighRiskActionBoundary
+```
+
+Required properties:
+
+```json
+{
+  "boundary_kind": "Privacy | Permission | Locality | Consent | Reversibility | Visibility | Risk",
+  "default_effect": "allow | deny | require_approval",
+  "strictness": "soft | hard",
+  "applies_to": "node | edge | action | process | regime | agent"
+}
+```
+
+Important edges:
+
+```text
+Boundary PROTECTS Node
+Boundary LIMITS Action
+Boundary APPLIES_TO Process
+Boundary REQUIRES Agent
+Boundary ESCALATES_TO Agent
+```
+
+---
+
+## 5.10 Decision
+
+A decision point requiring judgment, selection, approval, or action.
+
+Examples:
+
+```text
+ApproveInvoice
+SendEmail
+EscalateToCloud
+AutomateWorkflow
+AssignInstaller
+ArchiveFile
+CreateQuote
+AcceptClient
+```
+
+Required properties:
+
+```json
+{
+  "decision_kind": "Approve | Select | Escalate | Prioritize | Automate | Send | Delete | Schedule | Assign",
+  "status": "open | proposed | approved | rejected | executed | expired",
+  "risk_level": "low | medium | high",
+  "requires_human_approval": true,
+  "confidence": 0.0
+}
+```
+
+Important edges:
+
+```text
+Decision ABOUT Process
+Decision ACTS_ON Node
+Decision HAS_OPTION Action
+Decision HAS_BOUNDARY Boundary
+Decision HAS_RISK Risk
+Decision APPROVED_BY Agent
+Decision REJECTED_BY Agent
+```
+
+---
+
+## 5.11 Action
+
+A permitted state-changing operation.
+
+Actions are instances of `action_type`.
+
+Examples:
+
+```text
+DraftEmailAction
+SendEmailAction
+CreateTaskAction
+ApproveInvoiceAction
+AssignInstallerAction
+ArchiveFileAction
+CloudEscalationAction
+```
+
+Required properties:
+
+```json
+{
+  "action_type_id": "string",
+  "status": "proposed | approved | executing | executed | failed | reversed",
+  "risk_level": "low | medium | high",
+  "reversible": true,
+  "requires_human_approval": false,
+  "confidence": 0.0
+}
+```
+
+Important edges:
+
+```text
+Action ACTS_ON Node
+Action PERFORMED_BY Agent
+Action APPROVED_BY Agent
+Action YIELDS Yield
+Action COSTS Cost
+Action HAS_FEEDBACK FeedbackLoop
+Action HAS_BOUNDARY Boundary
+```
+
+---
+
+## 5.12 FeedbackLoop
+
+Mechanism for correction and adaptation.
+
+Examples:
+
+```text
+UserCorrectionLoop
+ApprovalLoop
+ErrorRateMonitor
+ConfidenceCalibrationLoop
+CustomerSatisfactionLoop
+WorkflowReviewLoop
+```
+
+Required properties:
+
+```json
+{
+  "feedback_kind": "Correction | Approval | Rejection | Rating | Metric | Review | Error",
+  "frequency": "event_based | daily | weekly | monthly | ad_hoc",
+  "status": "active | inactive | proposed",
+  "learning_scope": "none | local_process | regime | global_template"
+}
+```
+
+Important edges:
+
+```text
+FeedbackLoop REGULATES Process
+FeedbackLoop REGULATES Agent
+FeedbackLoop DERIVED_FROM Event
+FeedbackLoop UPDATES Pattern
+FeedbackLoop IMPROVES Regime
+```
+
+---
+
+## 5.13 Yield
+
+A useful regenerative output.
+
+Examples:
+
+```text
+TimeSaved
+ErrorReduced
+RevenueRecovered
+CustomerTrustImproved
+AttentionFreed
+KnowledgeCaptured
+PrivacyPreserved
+CapacityIncreased
+```
+
+Required properties:
+
+```json
+{
+  "yield_kind": "Time | Money | Trust | Knowledge | Resilience | Privacy | Quality | Capacity | Clarity",
+  "estimated_value": "string|number",
+  "beneficiary": "agent_id|null",
+  "measurement_method": "estimated | observed | user_reported | calculated",
+  "confidence": 0.0
+}
+```
+
+---
+
+## 5.14 Cost
+
+A burden, consumption, risk, or externalized effect.
+
+Examples:
+
+```text
+ComputeCost
+AttentionCost
+PrivacyRisk
+EnergyCost
+MaintenanceBurden
+ComplexityCost
+TrustRisk
+MoneyCost
+TimeCost
+```
+
+Required properties:
+
+```json
+{
+  "cost_kind": "Compute | Attention | Privacy | Energy | Money | Time | Complexity | Maintenance | Trust | Ecological",
+  "estimated_value": "string|number",
+  "borne_by": "agent_id|regime_id|environment|null",
+  "externalized": false,
+  "confidence": 0.0
+}
+```
+
+---
+
+## 5.15 Pattern
+
+A repeated structure or behavior.
+
+Examples:
+
+```text
+MissedFollowUpPattern
+RecurringInvoiceDelay
+RepeatedCustomerQuestion
+WeeklyPlanningPattern
+SupportSpikeAfterInstall
+FrequentManualCorrection
+```
+
+Required properties:
+
+```json
+{
+  "pattern_kind": "Temporal | Behavioral | Operational | Financial | Communication | Error | Opportunity",
+  "frequency": "string",
+  "confidence": 0.0,
+  "first_seen": "datetime",
+  "last_seen": "datetime",
+  "recommendation_status": "none | suggested | accepted | dismissed"
+}
+```
+
+Important edges:
+
+```text
+Pattern EMERGES_FROM Event
+Pattern EMERGES_FROM Process
+Pattern SUGGESTS Action
+Pattern SUGGESTS Workflow
+Pattern IDENTIFIES Edge
+```
+
+---
+
+# 6. Interfaces / Capabilities
+
+Instead of treating every object type as totally separate, RPO should use interfaces.
+
+An interface defines a capability that multiple node types can implement.
+
+## 6.1 Core Interfaces
+
+```text
+Reviewable
+Approvaluable
+Schedulable
+Billable
+Assignable
+Auditable
+Sensitive
+Automatable
+Reversible
+Exportable
+Summarizable
+Classifiable
+Linkable
+FeedbackAware
+YieldBearing
+CostBearing
+LocalOnly
+CloudEscalatable
+HumanApprovalRequired
+```
+
+## 6.2 Interface Examples
+
+### Invoice
+
+```json
+{
+  "implements": [
+    "Reviewable",
+    "Approvaluable",
+    "Billable",
+    "Auditable",
+    "Sensitive",
+    "YieldBearing",
+    "CostBearing"
+  ]
+}
+```
+
+### Email
+
+```json
+{
+  "implements": [
+    "Summarizable",
+    "Classifiable",
+    "Linkable",
+    "Sensitive",
+    "Reviewable"
+  ]
+}
+```
+
+### Installation
+
+```json
+{
+  "implements": [
+    "Schedulable",
+    "Assignable",
+    "Billable",
+    "Auditable",
+    "YieldBearing",
+    "CostBearing",
+    "FeedbackAware"
+  ]
+}
+```
+
+### AI Agent
+
+```json
+{
+  "implements": [
+    "Auditable",
+    "CostBearing",
+    "FeedbackAware",
+    "LocalOnly",
+    "CloudEscalatable"
+  ]
+}
+```
+
+Interfaces should drive UI and action availability.
+
+For example:
+
+* If an object is `Approvaluable`, show approve/reject actions.
+* If it is `Schedulable`, show scheduling actions.
+* If it is `Sensitive`, apply stricter permission checks.
+* If it is `CloudEscalatable`, require explicit boundary validation.
+
+---
+
+# 7. Action Model
+
+Actions are the kinetic layer of RPO.
+
+Every action must pass through the following lifecycle:
+
+```text
+Created → Proposed → Validated → Approved/Rejected → Executed → Observed → Feedback Captured
+```
+
+Some low-risk actions may skip human approval if policy allows.
+
+## 7.1 Action Execution Pipeline
+
+```text
+1. Agent proposes action
+2. Validate input schema
+3. Resolve target nodes
+4. Check boundaries
+5. Check permissions
+6. Estimate cost
+7. Estimate yield
+8. Check reversibility
+9. Require approval if needed
+10. Execute handler
+11. Write event log
+12. Update graph state
+13. Update materialized views
+14. Attach feedback loop
+```
+
+---
+
+## 7.2 Example Action Type: Draft Email
+
+```json
+{
+  "id": "action_type:draft_email",
+  "name": "Draft Email",
+  "input_schema": {
+    "type": "object",
+    "required": ["recipient", "purpose", "context_node_ids"],
+    "properties": {
+      "recipient": { "type": "string" },
+      "purpose": { "type": "string" },
+      "context_node_ids": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "tone": { "type": "string" }
+    }
+  },
+  "required_permissions": ["read", "reason", "transform", "propose"],
+  "risk_level": "low",
+  "reversible": true,
+  "requires_human_approval": false,
+  "handler": "handlers.email.draft"
+}
+```
+
+---
+
+## 7.3 Example Action Type: Send Email
+
+```json
+{
+  "id": "action_type:send_email",
+  "name": "Send Email",
+  "input_schema": {
+    "type": "object",
+    "required": ["draft_artifact_id", "recipient"],
+    "properties": {
+      "draft_artifact_id": { "type": "string" },
+      "recipient": { "type": "string" }
+    }
+  },
+  "required_permissions": ["read", "act"],
+  "risk_level": "medium",
+  "reversible": false,
+  "requires_human_approval": true,
+  "handler": "handlers.email.send"
+}
+```
+
+---
+
+## 7.4 Example Action Type: Escalate to Cloud Model
+
+```json
+{
+  "id": "action_type:escalate_to_cloud_model",
+  "name": "Escalate to Cloud Model",
+  "input_schema": {
+    "type": "object",
+    "required": ["task", "context_node_ids", "reason"],
+    "properties": {
+      "task": { "type": "string" },
+      "context_node_ids": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "reason": { "type": "string" }
+    }
+  },
+  "required_permissions": ["read", "reason", "cloud_escalate"],
+  "risk_level": "high",
+  "reversible": false,
+  "requires_human_approval": true,
+  "handler": "handlers.model.cloud_escalate"
+}
+```
+
+---
+
+# 8. Permission Model
+
+Cortex permissions are not only about data access.
+
+They govern cognition and action.
+
+## 8.1 Permission Types
+
+```text
+read
+Can view or retrieve the object.
+
+reason
+Can use the object as model context.
+
+transform
+Can summarize, classify, extract, embed, or derive new information.
+
+propose
+Can suggest an action.
+
+act
+Can perform a state-changing operation.
+
+export
+Can move data outside the local system.
+
+cloud_escalate
+Can send data or context to a cloud model/service.
+
+delete
+Can delete or archive.
+
+use_for_learning
+Can incorporate feedback into future behavior.
+
+modify_schema
+Can modify ontology structure.
+```
+
+## 8.2 Permission Resolution
+
+Permission should be resolved from:
+
+```text
+User role
+Agent identity
+Node sensitivity
+Process boundary
+Regime policy
+Action risk level
+Locality setting
+Data source policy
+User override
+```
+
+## 8.3 Decision Matrix
+
+```text
+Low-risk local summary:
+read + reason + transform
+
+Draft response:
+read + reason + transform + propose
+
+Send response:
+read + act + human approval
+
+Delete file:
+read + delete + human approval
+
+Cloud escalation:
+read + reason + cloud_escalate + explicit approval
+
+Autonomous workflow:
+read + reason + transform + propose + act + active feedback loop
+```
+
+---
+
+# 9. Boundary Enforcement
+
+Boundaries are first-class ontology objects and policy inputs.
+
+## 9.1 Boundary Types
+
+```text
+LocalOnlyBoundary
+NoCloudBoundary
+HumanApprovalBoundary
+DraftOnlyBoundary
+ReadOnlyBoundary
+SensitiveDataBoundary
+ClientVisibleBoundary
+PrivatePersonalBoundary
+ReversibleOnlyBoundary
+HighRiskActionBoundary
+```
+
+## 9.2 Example Boundary
+
+```json
+{
+  "@type": "Boundary",
+  "id": "boundary:no-cloud-client-data",
+  "label": "No Cloud Processing for Client Data",
+  "boundary_kind": "Locality",
+  "default_effect": "deny",
+  "strictness": "hard",
+  "applies_to": "Artifact",
+  "rule": {
+    "if": {
+      "sensitivity": ["sensitive", "restricted"],
+      "contains_client_data": true
+    },
+    "deny": ["cloud_escalate", "export"]
+  }
+}
+```
+
+## 9.3 Boundary Check Function
+
+Pseudo-code:
+
+```ts
+type Permission =
+  | "read"
+  | "reason"
+  | "transform"
+  | "propose"
+  | "act"
+  | "export"
+  | "cloud_escalate"
+  | "delete"
+  | "use_for_learning"
+  | "modify_schema";
+
+interface BoundaryCheckInput {
+  agentId: string;
+  permission: Permission;
+  targetNodeIds: string[];
+  actionTypeId?: string;
+  context?: Record<string, unknown>;
+}
+
+interface BoundaryCheckResult {
+  allowed: boolean;
+  effect: "allow" | "deny" | "require_approval";
+  reasons: string[];
+  requiredApprovalBy?: string[];
+  policyTrace: unknown[];
+}
+```
+
+All agent actions must call this before execution.
+
+---
+
+# 10. Agent Runtime Contract
+
+Agents should not operate directly on raw files or databases.
+
+They should operate through RPO tools.
+
+## 10.1 Core Agent Tools
+
+```text
+search_nodes(query, filters)
+get_node(node_id)
+get_edges(node_id, filters)
+get_process_context(process_id)
+semantic_search(query, scope)
+propose_action(action_type_id, input)
+execute_action(action_id)
+record_feedback(target_id, feedback)
+create_link(from, to, type)
+set_property(node_id, key, value)
+request_cloud_escalation(task, context)
+```
+
+## 10.2 Tool Safety Rule
+
+Every tool call must declare:
+
+```json
+{
+  "agent_id": "agent:local-cortex",
+  "permission_requested": "reason",
+  "target_scope": ["artifact:email-123", "process:client-followup"],
+  "purpose": "Draft a client follow-up email",
+  "expected_yield": "time_saved",
+  "risk_level": "low"
+}
+```
+
+The runtime should reject tool calls without purpose and scope.
+
+---
+
+# 11. RPO Context Packet
+
+Before calling a model, Cortex should assemble a structured context packet.
+
+This avoids dumping arbitrary data into prompts.
+
+## 11.1 Context Packet Schema
+
+```json
+{
+  "task": {
+    "intent": "draft_email",
+    "user_goal": "Follow up with client about unpaid invoice",
+    "decision_required": "Should a reminder be drafted?"
+  },
+  "agent": {
+    "id": "agent:local-cortex",
+    "permissions": ["read", "reason", "transform", "propose"]
+  },
+  "process": {
+    "id": "process:invoice-followup-001",
+    "label": "Invoice Follow-Up",
+    "regime": "regime:small-business-finance",
+    "status": "active"
+  },
+  "objects": [
+    {
+      "id": "artifact:invoice-123",
+      "type": "Artifact",
+      "label": "Invoice #123",
+      "properties": {
+        "amount": 500,
+        "due_date": "2026-07-01",
+        "status": "unpaid"
+      }
+    }
+  ],
+  "boundaries": [
+    {
+      "id": "boundary:draft-only",
+      "effect": "require_approval_before_send"
+    }
+  ],
+  "feedback": [
+    {
+      "type": "user_preference",
+      "content": "Use friendly but direct language for payment reminders."
+    }
+  ],
+  "cost_yield_frame": {
+    "expected_yield": ["time_saved", "cash_flow_improved"],
+    "costs": ["attention_review_required"],
+    "risk": "medium_if_sent_without_review"
+  }
+}
+```
+
+The model should receive this context packet, not unrestricted raw state.
+
+---
+
+# 12. Process Discovery
+
+Cortex should infer processes from repeated events, artifacts, and user behavior.
+
+## 12.1 Signals
+
+```text
+Repeated file types
+Repeated email patterns
+Repeated task sequences
+Repeated approvals
+Repeated corrections
+Repeated handoffs
+Repeated calendar patterns
+Repeated customer interactions
+Repeated manual transformations
+Repeated searches
+```
+
+## 12.2 Process Detection Rule
+
+```text
+IF similar events occur across time
+AND involve similar agents/artifacts/actions
+AND produce similar outcomes
+THEN propose Pattern
+
+IF Pattern is confirmed or confidence exceeds threshold
+THEN propose Process
+
+IF Process repeats and has feedback/yield/cost
+THEN assign to or create Regime
+```
+
+## 12.3 Example
+
+Observed:
+
+```text
+Email from client
+PDF attached
+User downloads PDF
+User renames PDF
+User enters invoice into spreadsheet
+User creates reminder task
+User follows up after due date
+```
+
+Cortex proposes:
+
+```text
+Process: Invoice Intake and Follow-Up
+Regime: Small Business Finance
+Possible automation: Extract invoice fields and create review task
+Expected yield: Time saved, reduced missed payments
+Boundary: Human approval before any outgoing message
+```
+
+---
+
+# 13. Regenerative Accounting
+
+Every process and action should be able to track cost/yield.
+
+## 13.1 Yield Categories
+
+```text
+time_saved
+money_recovered
+revenue_created
+error_reduced
+privacy_preserved
+attention_freed
+knowledge_captured
+trust_improved
+resilience_increased
+quality_improved
+waste_reduced
+```
+
+## 13.2 Cost Categories
+
+```text
+compute_cost
+energy_cost
+attention_cost
+time_cost
+privacy_risk
+trust_risk
+complexity_cost
+maintenance_burden
+money_cost
+ecological_cost
+opportunity_cost
+```
+
+## 13.3 Action Cost/Yield Record
+
+```json
+{
+  "action_id": "action:draft-email-991",
+  "expected_yield": [
+    {
+      "yield_kind": "time_saved",
+      "estimated_value": "5 minutes",
+      "beneficiary": "agent:user"
+    }
+  ],
+  "costs": [
+    {
+      "cost_kind": "attention_cost",
+      "estimated_value": "user review required",
+      "borne_by": "agent:user"
+    },
+    {
+      "cost_kind": "compute_cost",
+      "estimated_value": "local inference",
+      "borne_by": "device:local"
+    }
+  ],
+  "risk": "low",
+  "feedback_path": "user approves/edits/rejects draft"
+}
+```
+
+---
+
+# 14. Materialized Views
+
+RPO should generate UI-ready views from the graph and event log.
+
+## 14.1 Suggested v1 Views
+
+```text
+Today View
+Open tasks, decisions, follow-ups, approvals.
+
+Client View
+People, files, emails, invoices, notes, tasks, promises, history.
+
+Process View
+Workflow map, active steps, bottlenecks, yields, costs, feedback.
+
+Regime View
+Business finance, client relationships, creative projects, operations.
+
+Agent Activity View
+What each AI agent observed, proposed, did, and learned.
+
+Boundary View
+Privacy, cloud, approval, and permission settings.
+
+Feedback View
+Corrections, repeated errors, accepted automations, rejected suggestions.
+
+Opportunity View
+Detected patterns, edge friction, automation candidates.
+```
+
+---
+
+# 15. Example End-to-End Flow
+
+## Use Case: Invoice Follow-Up
+
+### Step 1: Ingestion
+
+A new email with a PDF invoice arrives.
+
+Created nodes:
+
+```text
+Artifact: Email
+Artifact: PDF Invoice
+Entity: Vendor/Client
+Event: Email Received
+Flow: Invoice Intake Flow
+```
+
+Created edges:
+
+```text
+Email CARRIES PDF
+Email MENTIONS Client
+PDF PARTICIPATES_IN Invoice Intake Process
+Email TRIGGERED Event
+```
+
+---
+
+### Step 2: Classification
+
+Local agent classifies PDF as invoice.
+
+Events:
+
+```text
+CLASSIFIED
+EXTRACTED
+PROPERTY_SET
+```
+
+Properties set:
+
+```text
+amount
+due_date
+invoice_number
+vendor
+payment_status
+confidence
+```
+
+---
+
+### Step 3: Process Assignment
+
+Cortex links invoice to:
+
+```text
+Process: Invoice Processing
+Regime: Small Business Finance
+```
+
+---
+
+### Step 4: Boundary Check
+
+Because invoice contains client/business data:
+
+```text
+Boundary: LocalOnly
+Boundary: HumanApprovalBeforeSend
+```
+
+---
+
+### Step 5: Action Proposal
+
+Agent proposes:
+
+```text
+Action: Create Reminder Task
+Action: Draft Follow-Up Email
+```
+
+But does not send.
+
+---
+
+### Step 6: User Approval
+
+User approves task creation and edits email draft.
+
+Events:
+
+```text
+ACTION_APPROVED
+ACTION_EXECUTED
+FEEDBACK_RECEIVED
+PROPERTY_CORRECTED
+```
+
+---
+
+### Step 7: Learning
+
+Cortex updates:
+
+```text
+Pattern: User prefers friendly direct payment reminders
+FeedbackLoop: Invoice follow-up correction loop
+Yield: Time saved
+Cost: User attention review
+```
+
+---
+
+# 16. Minimal TypeScript Interfaces
+
+## 16.1 Node
+
+```ts
+export type RpoNodeType =
+  | "Entity"
+  | "Artifact"
+  | "Event"
+  | "Agent"
+  | "Process"
+  | "Flow"
+  | "Regime"
+  | "Edge"
+  | "Boundary"
+  | "Constraint"
+  | "Decision"
+  | "Action"
+  | "FeedbackLoop"
+  | "Yield"
+  | "Cost"
+  | "Pattern"
+  | "Risk"
+  | "Tool"
+  | "Model"
+  | "Device";
+
+export interface RpoNode {
+  id: string;
+  type: RpoNodeType;
+  label: string;
+  description?: string;
+  status: "active" | "inactive" | "archived" | "proposed";
+  createdAt: string;
+  updatedAt: string;
+  createdBy?: string;
+  source?: string;
+  confidence: number;
+  sensitivity: "public" | "normal" | "sensitive" | "restricted";
+  locality: "local" | "synced" | "external" | "cloud";
+  metadata?: Record<string, unknown>;
+}
+```
+
+---
+
+## 16.2 Edge
+
+```ts
+export type RpoEdgeType =
+  | "BELONGS_TO"
+  | "PARTICIPATES_IN"
+  | "GENERATES"
+  | "CONSUMES"
+  | "YIELDS"
+  | "COSTS"
+  | "OBSERVES"
+  | "ACTS_ON"
+  | "REGULATES"
+  | "HAS_FEEDBACK"
+  | "HAS_BOUNDARY"
+  | "HAS_CONSTRAINT"
+  | "HAS_PERMISSION"
+  | "HAS_RISK"
+  | "TRIGGERED_BY"
+  | "DERIVED_FROM"
+  | "SUMMARIZES"
+  | "MENTIONS"
+  | "LINKED_TO"
+  | "DEPENDS_ON"
+  | "ESCALATES_TO"
+  | "APPROVED_BY"
+  | "REJECTED_BY"
+  | "SUPERSEDES"
+  | "IMPLEMENTS";
+
+export interface RpoEdge {
+  id: string;
+  type: RpoEdgeType;
+  fromNodeId: string;
+  toNodeId: string;
+  label?: string;
+  confidence: number;
+  createdAt: string;
+  updatedAt: string;
+  createdBy?: string;
+  source?: string;
+  metadata?: Record<string, unknown>;
+}
+```
+
+---
+
+## 16.3 Action Type
+
+```ts
+export interface ActionType {
+  id: string;
+  name: string;
+  description?: string;
+  inputSchema: Record<string, unknown>;
+  outputSchema?: Record<string, unknown>;
+  requiredPermissions: Permission[];
+  validationRules?: Record<string, unknown>;
+  riskLevel: "low" | "medium" | "high" | "critical";
+  reversible: boolean;
+  requiresHumanApproval: boolean;
+  expectedYieldSchema?: Record<string, unknown>;
+  costSchema?: Record<string, unknown>;
+  handler: string;
+}
+```
+
+---
+
+## 16.4 Action Instance
+
+```ts
+export interface ActionInstance {
+  id: string;
+  actionTypeId: string;
+  proposedBy: string;
+  approvedBy?: string;
+  status:
+    | "proposed"
+    | "validated"
+    | "approved"
+    | "rejected"
+    | "executing"
+    | "executed"
+    | "failed"
+    | "reversed";
+  input: Record<string, unknown>;
+  output?: Record<string, unknown>;
+  targetNodeIds: string[];
+  riskLevel: "low" | "medium" | "high" | "critical";
+  reversible: boolean;
+  requiresHumanApproval: boolean;
+  expectedYield?: Record<string, unknown>;
+  estimatedCost?: Record<string, unknown>;
+  createdAt: string;
+  updatedAt: string;
+}
+```
+
+---
+
+## 16.5 Event
+
+```ts
+export interface RpoEvent {
+  id: string;
+  eventType: string;
+  actorId?: string;
+  targetNodeId?: string;
+  targetEdgeId?: string;
+  actionId?: string;
+  timestamp: string;
+  status: "proposed" | "approved" | "executed" | "failed" | "reversed" | "observed";
+  input?: Record<string, unknown>;
+  output?: Record<string, unknown>;
+  before?: Record<string, unknown>;
+  after?: Record<string, unknown>;
+  reason?: string;
+  confidence?: number;
+  permissionResult?: "allow" | "deny" | "require_approval";
+  policyTrace?: unknown[];
+  reversible?: boolean;
+  reversalEventId?: string;
+  metadata?: Record<string, unknown>;
+}
+```
+
+---
+
+# 17. Agent Reasoning Loop
+
+Cortex agents should follow this loop:
+
+```text
+1. Receive user intent or system event.
+2. Resolve relevant process/regime context.
+3. Retrieve graph neighborhood.
+4. Retrieve semantic context only within allowed scope.
+5. Construct RPO context packet.
+6. Reason over decision/action options.
+7. Estimate yield, cost, confidence, risk.
+8. Check boundaries and permissions.
+9. Propose action or execute if allowed.
+10. Write event log.
+11. Update graph state.
+12. Request or capture feedback.
+```
+
+## 17.1 Pseudo-code
+
+```ts
+async function runAgentTask(task: AgentTask) {
+  const scope = await resolveScope(task);
+
+  const permission = await checkPermission({
+    agentId: task.agentId,
+    permission: "reason",
+    targetNodeIds: scope.nodeIds,
+    context: { purpose: task.purpose }
+  });
+
+  if (!permission.allowed) {
+    return blockWithReason(permission.reasons);
+  }
+
+  const graphContext = await getGraphContext(scope);
+  const semanticContext = await semanticSearchWithinScope(task.query, scope);
+  const processContext = await resolveProcessContext(scope);
+
+  const contextPacket = buildRpoContextPacket({
+    task,
+    graphContext,
+    semanticContext,
+    processContext,
+    boundaries: permission.policyTrace
+  });
+
+  const reasoningResult = await callLocalModel(contextPacket);
+
+  const proposedAction = await createActionProposal(reasoningResult);
+
+  const actionPermission = await checkPermission({
+    agentId: task.agentId,
+    permission: proposedAction.requiresAct ? "act" : "propose",
+    targetNodeIds: proposedAction.targetNodeIds,
+    actionTypeId: proposedAction.actionTypeId
+  });
+
+  if (actionPermission.effect === "require_approval") {
+    await writeEvent("ACTION_PROPOSED", proposedAction);
+    return proposedAction;
+  }
+
+  if (!actionPermission.allowed) {
+    await writeEvent("BOUNDARY_VIOLATION_BLOCKED", {
+      proposedAction,
+      reasons: actionPermission.reasons
+    });
+    return blockWithReason(actionPermission.reasons);
+  }
+
+  const result = await executeAction(proposedAction);
+  await writeEvent("ACTION_EXECUTED", result);
+  await updateGraphFromAction(result);
+  await attachFeedbackLoop(result);
+
+  return result;
+}
+```
+
+---
+
+# 18. Schema Evolution
+
+RPO should support controlled evolution.
+
+## 18.1 Schema Resources
+
+```text
+NodeTypeDefinition
+EdgeTypeDefinition
+InterfaceDefinition
+ActionTypeDefinition
+PropertyDefinition
+BoundaryPolicyDefinition
+ValidationRuleDefinition
+MaterializedViewDefinition
+```
+
+## 18.2 Builder vs Runtime Separation
+
+There should be two different capability surfaces.
+
+### Runtime Surface
+
+Used by normal agents:
+
+```text
+read nodes
+search context
+propose actions
+execute approved actions
+record feedback
+update properties within permission
+```
+
+### Builder Surface
+
+Used by developers/admins:
+
+```text
+create node types
+modify schemas
+create action types
+define boundaries
+write validation rules
+define materialized views
+run migrations
+```
+
+Runtime agents should not be able to modify ontology structure unless explicitly granted `modify_schema`.
+
+---
+
+# 19. Validation Rules
+
+Validation rules prevent ontology drift.
+
+## 19.1 Example Rules
+
+```text
+Every Action must have an ActionType.
+
+Every Action must have at least one target node.
+
+Every Process must belong to at least one Regime, unless status = proposed.
+
+Every automated Process must have at least one FeedbackLoop.
+
+Every high-risk Action must require human approval.
+
+Every cloud escalation must pass a Boundary check.
+
+Every generated Artifact must DERIVE_FROM at least one source node or user instruction.
+
+Every Cost must identify a bearer if known.
+
+Every Yield must identify a beneficiary if known.
+
+Every Agent action must produce an Event.
+```
+
+---
+
+# 20. v1 Implementation Roadmap
+
+## Phase 1: Ontology Kernel
+
+Build:
+
+```text
+rpo_node
+rpo_edge
+rpo_property
+rpo_event
+basic CRUD service
+typed TypeScript interfaces
+basic permission service
+event writer
+```
+
+Goal:
+
+```text
+Create, link, query, and event-log ontology objects.
+```
+
+---
+
+## Phase 2: Artifact Ingestion
+
+Build:
+
+```text
+file ingestion
+email/message ingestion if available
+text extraction
+chunking
+metadata extraction
+artifact nodes
+chunk table
+semantic search
+```
+
+Goal:
+
+```text
+Turn files/messages into Artifact nodes with searchable chunks.
+```
+
+---
+
+## Phase 3: Process Mapping
+
+Build:
+
+```text
+Process node type
+Flow node type
+Regime node type
+basic process assignment
+manual UI for linking artifacts to processes
+pattern detection v0
+```
+
+Goal:
+
+```text
+Users and agents can begin mapping real work processes.
+```
+
+---
+
+## Phase 4: Agent Runtime
+
+Build:
+
+```text
+agent identity
+agent policies
+RPO context packet
+local model calls
+search tools
+graph context tools
+action proposal tools
+feedback recording
+```
+
+Goal:
+
+```text
+Agents reason through the ontology rather than raw files.
+```
+
+---
+
+## Phase 5: Action Layer
+
+Build:
+
+```text
+action_type table
+action proposal lifecycle
+approval UI
+action execution handlers
+event logging
+reversal support
+```
+
+Goal:
+
+```text
+Cortex can safely propose and execute low-risk actions.
+```
+
+---
+
+## Phase 6: Boundaries and Privacy
+
+Build:
+
+```text
+Boundary nodes
+policy conditions
+NoCloud rules
+HumanApproval rules
+DraftOnly rules
+SensitiveData detection
+policy traces
+```
+
+Goal:
+
+```text
+Every agent action is governed by visible boundaries.
+```
+
+---
+
+## Phase 7: Regenerative Accounting
+
+Build:
+
+```text
+Yield nodes
+Cost nodes
+cost/yield estimation
+feedback loops
+process health views
+attention burden tracking
+automation value tracking
+```
+
+Goal:
+
+```text
+Cortex can show whether automation is actually improving the user’s system.
+```
+
+---
+
+## Phase 8: Materialized Product Views
+
+Build:
+
+```text
+Today view
+Client view
+Process view
+Regime view
+Agent activity view
+Boundary view
+Automation opportunity view
+```
+
+Goal:
+
+```text
+The ontology becomes visible and useful to the user.
+```
+
+---
+
+# 21. The Minimal Useful v1
+
+The smallest useful RPO implementation should support:
+
+```text
+Artifact ingestion
+Entity extraction
+Graph linking
+Semantic search
+Process creation
+Regime grouping
+Agent context packets
+Action proposals
+Human approval
+Event logging
+Feedback capture
+Boundary enforcement
+```
+
+If v1 does only one thing well, it should do this:
+
+> Let a local AI agent understand a file, message, or task in the context of a user-owned process, propose a safe next action, and record the user’s feedback.
+
+That is the smallest complete loop:
+
+```text
+Observe → Contextualize → Propose → Approve → Act → Record → Learn
+```
+
+---
+
+# 22. Example Minimal Graph
+
+```json
+{
+  "nodes": [
+    {
+      "id": "agent:user-owner",
+      "type": "Agent",
+      "label": "Business Owner"
+    },
+    {
+      "id": "agent:local-cortex",
+      "type": "Agent",
+      "label": "Local Cortex Agent"
+    },
+    {
+      "id": "artifact:invoice-123",
+      "type": "Artifact",
+      "label": "Invoice #123"
+    },
+    {
+      "id": "process:invoice-processing",
+      "type": "Process",
+      "label": "Invoice Processing"
+    },
+    {
+      "id": "regime:business-finance",
+      "type": "Regime",
+      "label": "Business Finance"
+    },
+    {
+      "id": "boundary:human-approval-before-send",
+      "type": "Boundary",
+      "label": "Human Approval Before Sending"
+    },
+    {
+      "id": "yield:time-saved",
+      "type": "Yield",
+      "label": "Time Saved"
+    },
+    {
+      "id": "cost:user-review-attention",
+      "type": "Cost",
+      "label": "User Review Attention"
+    }
+  ],
+  "edges": [
+    {
+      "type": "PARTICIPATES_IN",
+      "from": "artifact:invoice-123",
+      "to": "process:invoice-processing"
+    },
+    {
+      "type": "BELONGS_TO",
+      "from": "process:invoice-processing",
+      "to": "regime:business-finance"
+    },
+    {
+      "type": "HAS_BOUNDARY",
+      "from": "process:invoice-processing",
+      "to": "boundary:human-approval-before-send"
+    },
+    {
+      "type": "YIELDS",
+      "from": "process:invoice-processing",
+      "to": "yield:time-saved"
+    },
+    {
+      "type": "COSTS",
+      "from": "process:invoice-processing",
+      "to": "cost:user-review-attention"
+    },
+    {
+      "type": "OBSERVES",
+      "from": "agent:local-cortex",
+      "to": "process:invoice-processing"
+    }
+  ]
+}
+```
+
+---
+
+# 23. Final Technical Principle
+
+The ontology should not be a decorative philosophy layer.
+
+It should be the runtime substrate.
+
+Every major Cortex feature should ask:
+
+```text
+What node is this?
+What process is it part of?
+What regime does that process belong to?
+What action is being considered?
+What boundary applies?
+What permission is required?
+What yield is expected?
+What cost is created?
+What feedback will be captured?
+What event records the change?
+```
+
+If the system can answer those questions, then Cortex has an actual ontology layer.
+
+If it cannot, it is just another AI assistant with folders and embeddings.
+
+The RPO exists to make Cortex operational, private, accountable, and regenerative.

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "carapace-haoqi",
+  "name": "Carapace × Haoqi",
+  "category": "Product / AI Infrastructure",
+  "description": "Pseudo-scroll hero with Haoqi-style craft: mono spine, OKLCH atmosphere, metadata rail, WASM capsules.",
+  "source": {
+    "type": "bundled",
+    "origin": "hand-authored",
+    "references": [
+      "https://haoqi.design/",
+      "https://github.com/wenhaoqiasd/wasm-utils",
+      "design framework.txt"
+    ]
+  },
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css",
+    "components": "hero.html"
+  },
+  "preview": {
+    "dir": ".",
+    "pages": ["hero.html"]
+  }
+}

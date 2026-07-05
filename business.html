@@ -1,165 +1,104 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>How We Help | Carapace</title>
   <meta name="description" content="Carapace helps businesses adopt practical AI through workflow consulting, pilot deployments, implementation, reusable integrations, and optional support." />
-  <meta name="theme-color" content="#090c18" />
-  <style>
-    :root {
-      --bg:#070b16; --surface:#101a31; --surface-2:#121f39; --text:#edf1ff; --muted:#a7b3d3; --border:#253554;
-      --primary:#5b6fa6; --primary-2:#475981; --secondary:#cfd8ee; --max:1100px;
-    }
-    *{box-sizing:border-box;} html,body{margin:0;padding:0;} body{color:var(--text);font:16px/1.6 Inter,Segoe UI,Roboto,system-ui,sans-serif;background:linear-gradient(180deg,#0b1122 0%,var(--bg) 100%);} a{color:var(--secondary);text-decoration:none;}
-    .wrap{width:min(100% - 2rem,var(--max));margin:0 auto;}
-    .nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(9px);background:rgba(7,11,22,.74);border-bottom:1px solid var(--border);}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.82rem 0;}
-    .brand{display:inline-flex;align-items:center;gap:.7rem;color:var(--text);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.92rem;}
-    .brand img{width:54px;height:54px;border-radius:8px;filter:drop-shadow(0 0 10px rgba(0,234,255,.4));}
-    .links{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;font-size:.92rem;}
-    .hero{padding:4.3rem 0 2.6rem;background:radial-gradient(900px 440px at 10% -10%,rgba(139,92,246,.22),transparent 46%),radial-gradient(900px 400px at 110% 10%,rgba(34,211,238,.14),transparent 44%);border-bottom:1px solid var(--border);}
-    h1{margin:.2rem 0 .95rem;line-height:1.03;font-size:clamp(2.15rem,4.8vw,3.9rem);letter-spacing:-.03em;}
-    h2{margin:0 0 .95rem;font-size:clamp(1.24rem,2.2vw,1.9rem);} h3{margin:.1rem 0 .6rem;font-size:1.05rem;}
-    .lead{color:var(--muted);max-width:66ch;margin:0 0 1rem;font-size:1.08rem;}
-    .pill{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:.35rem .7rem;font-size:.82rem;color:#cfe1ff;background:rgba(18,31,57,.7);margin-right:.45rem;margin-bottom:.45rem;}
-    .cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem;}
-    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:11px;border:1px solid transparent;font-weight:700;letter-spacing:.03em;font-size:.84rem;padding:.8rem 1.08rem;transition:.18s ease;text-transform:uppercase;}
-    .btn:hover{transform:translateY(-1px);} .btn.primary{color:#eef3ff;background:linear-gradient(180deg,var(--primary),var(--primary-2));border-color:rgba(207,216,238,.14);box-shadow:0 8px 18px rgba(8,12,22,.28);} .btn.outline{color:#dce8ff;border-color:#334566;background:rgba(15,22,38,.74);} .btn.outline:hover{background:rgba(22,31,52,.9);border-color:#41567e;}
-    main{padding:1.9rem 0 3rem;} section{padding:1.15rem 0;} .grid{display:grid;gap:1rem;} .two{grid-template-columns:repeat(2,minmax(0,1fr));} .three{grid-template-columns:repeat(3,minmax(0,1fr));}
-    .card{border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,rgba(16,26,48,.94),rgba(14,22,40,.9));padding:1.15rem 1.15rem;box-shadow:0 10px 28px rgba(0,0,0,.14);}
-    .muted{color:var(--muted);} ul,ol{padding-left:1.2rem;} li{margin:.42rem 0;} .quote{font-size:1rem;color:#d8e6ff;line-height:1.7;} .intake-intro{display:grid;gap:1rem;grid-template-columns:1.2fr .8fr;align-items:start;} .checklist{margin:0;padding-left:1.1rem;} .checklist li{margin:.3rem 0;}
-    .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem;}
-    label{display:block;font-size:.9rem;color:#d9e6ff;margin:0 0 .32rem;}
-    input,select,textarea{width:100%;border:1px solid var(--border);border-radius:10px;background:#0d162b;color:var(--text);padding:.8rem .85rem;font:inherit;}
-    textarea{min-height:140px;resize:vertical;}
-    .full{grid-column:1 / -1;} .note{font-size:.9rem;color:#97a8d3;} .form-status{margin-top:.9rem;font-size:.94rem;color:#cfe1ff;min-height:1.2em;}
-    .carousel-shell{position:relative;padding:1rem 4.2rem;overflow:hidden;max-width:760px;margin:0 auto;}
-    .carousel-viewport{position:relative;min-height:285px;overflow:visible;}
-    .carousel-track{display:flex;gap:1rem;transition:transform .55s ease;will-change:transform;}
-    .carousel-slide{min-width:calc(100% - 72px);padding:0 .1rem;opacity:.22;transform:scale(.965);transition:opacity .35s ease,transform .35s ease;}
-    .carousel-slide.is-active{opacity:1;transform:scale(1);}
-    .carousel-card{min-height:265px;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;text-align:left;}
-    .carousel-card strong{display:block;font-size:1.4rem;line-height:1.15;margin-bottom:.45rem;color:#edf1ff;}
-    .carousel-card p{margin:0;color:#cbd8f8;font-size:1rem;max-width:48ch;}
-    .bullet-list{margin:.8rem 0 0;padding-left:1.15rem;color:var(--muted);}
-    .bullet-list li{opacity:0;transform:translateY(8px);animation:bulletIn .38s ease forwards;}
-    .bullet-list li:nth-child(1){animation-delay:.18s;}
-    .bullet-list li:nth-child(2){animation-delay:.42s;}
-    .bullet-list li:nth-child(3){animation-delay:.66s;}
-    @keyframes bulletIn{to{opacity:1;transform:translateY(0);}}
-    .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:999px;border:1px solid #41567e;background:rgba(15,22,38,.86);color:#edf1ff;font-size:1.35rem;display:grid;place-items:center;cursor:pointer;transition:.18s ease;z-index:2;}
-    .carousel-btn:hover{background:rgba(22,31,52,.96);border-color:#8fd0ff;}
-    .carousel-btn.prev{left:1rem;}
-    .carousel-btn.next{right:1rem;}
-    .carousel-dots{display:flex;justify-content:center;gap:.5rem;margin-top:.5rem;}
-    .carousel-dot{width:10px;height:10px;border-radius:999px;border:0;background:#41567e;cursor:pointer;opacity:.9;transition:.18s ease;}
-    .carousel-dot.active{background:#8fd0ff;transform:scale(1.1);}
-    footer{border-top:1px solid var(--border);padding:1.35rem 0 2rem;color:#9fb0d7;font-size:.9rem;}
-    @media (max-width:900px){.two,.three,.form-grid,.intake-intro{grid-template-columns:1fr;} .carousel-shell{padding:1rem 3.25rem;max-width:100%;} .carousel-viewport{min-height:320px;} .carousel-slide{min-width:calc(100% - 56px);} .carousel-card{min-height:300px;}}
-    @media (max-width:640px){.carousel-shell{padding:1rem 2.8rem;} .carousel-slide{min-width:100%;opacity:1;transform:none;} .carousel-btn{width:38px;height:38px;} .carousel-card strong{font-size:1.22rem;} .carousel-card p{font-size:.96rem;}}
-  </style>
-  <link rel="stylesheet" href="assets/site.css?v=20260619" />
-  <style>
-    .page-business .hero{position:relative;display:grid;align-items:end;min-height:clamp(620px,78vh,820px)!important;padding:clamp(8rem,17vh,12rem) 0 clamp(3rem,7vw,6rem)!important;overflow:hidden;background-image:linear-gradient(90deg,rgba(4,8,17,.94) 0%,rgba(4,8,17,.74) 38%,rgba(4,8,17,.18) 70%),linear-gradient(0deg,rgba(4,8,17,.82) 0%,transparent 48%),url("assets/how-we-help_wide_1.png")!important;background-position:center!important;background-size:cover!important;border-bottom:1px solid rgba(112,150,192,.25)}.page-business .hero::before,.page-business .hero::after{display:none!important}
-    .page-business .hero .wrap{position:relative;z-index:1}.hero-copy{max-width:660px}.page-business .hero-kicker{margin:0 0 1rem;color:#a9caff;font:600 .75rem/1.4 Roboto Mono,monospace;letter-spacing:.18em;text-transform:uppercase}.page-business .hero h1{max-width:10ch;font-size:clamp(3.5rem,8vw,6.8rem)}.page-business .hero .lead{color:#e1e8f5;font-size:clamp(1.05rem,1.8vw,1.3rem)}.hero-note{max-width:56ch;margin:1rem 0 0;color:#aebbd0}
-    .help-showcase{padding:clamp(4rem,9vw,8rem) 0}.help-showcase__head{display:grid;grid-template-columns:1fr minmax(260px,.65fr);gap:2rem;align-items:end;margin-bottom:clamp(2rem,5vw,4rem);padding-bottom:1.2rem;border-bottom:1px solid rgba(112,150,192,.28)}.help-showcase__head p{margin:0;color:var(--muted)}
-    .page-business .carousel-shell{position:relative;display:block;width:100%;max-width:none;margin:0 auto;padding:0 0 3.5rem;overflow:hidden}.page-business .carousel-viewport{width:100%;min-height:0;margin:0 auto;overflow:hidden}.page-business .carousel-track{gap:0;width:100%}.page-business .carousel-slide{flex:0 0 100%;width:100%;min-width:100%;padding:0;opacity:1;transform:none}.help-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.72fr);gap:clamp(2.5rem,7vw,7rem);align-items:center;width:100%;max-width:1000px;margin-inline:auto}.help-pair--legacy>strong{display:none}.help-pair__copy{padding:clamp(1rem,3vw,2rem) 0}.help-pair__index{display:block;margin-bottom:1.4rem;color:#8fbaf4;font:500 .73rem/1 Roboto Mono,monospace;letter-spacing:.16em}.help-pair h3{margin:0 0 1rem;font-size:clamp(2.2rem,5vw,4.4rem);line-height:.98;letter-spacing:-.04em}.help-pair__lead{max-width:39ch;margin:0 0 2rem;color:#d5dfef;font-size:clamp(1.05rem,1.7vw,1.25rem)}.help-pair__notes{border-top:1px solid rgba(112,150,192,.3)}.help-pair__notes p{display:grid;grid-template-columns:2.2rem 1fr;gap:.65rem;margin:0;padding:.72rem 0;color:var(--muted);border-bottom:1px solid rgba(112,150,192,.15)}.help-pair__notes span{color:#7199ca;font:500 .68rem/1.7 Roboto Mono,monospace}.help-pair__media{margin:0;aspect-ratio:3/4;overflow:hidden}.help-pair__media img{width:100%;height:100%;object-fit:cover}
-    .page-business .carousel-btn{position:absolute;top:auto;bottom:0;width:2.5rem;height:2.5rem;margin:0;padding:0;border:0;border-radius:0;background:none;color:#dce8ff;font:600 1.25rem/1 Roboto Mono,monospace;transform:none}.page-business .carousel-btn:hover{background:none;color:#8fd0ff}.page-business .carousel-btn.prev{left:0}.page-business .carousel-btn.next{right:0}.page-business .carousel-dots{align-items:center;width:calc(100% - 7rem);margin:2rem auto 0;gap:.35rem}.page-business .carousel-dot{width:100%;height:2px;border-radius:0;background:#33445e}.page-business .carousel-dot.active{background:#8fd0ff;transform:none}
-    .engagement-path{padding:clamp(3rem,7vw,6rem) 0;border-top:1px solid rgba(112,150,192,.22)}.engagement-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1.2rem,3vw,3rem);margin-top:2.5rem}.engagement-step{padding-top:1rem;border-top:1px solid rgba(112,150,192,.26)}.engagement-step span{color:#7199ca;font:500 .7rem/1 Roboto Mono,monospace}.engagement-step h3{margin-top:1.1rem}.why-strip{display:grid;grid-template-columns:minmax(0,.7fr) 1fr;gap:clamp(2rem,6vw,6rem);padding:clamp(3rem,7vw,6rem) 0;border-block:1px solid rgba(112,150,192,.22)}.why-strip p{margin-top:0}.page-business #contact{margin-top:clamp(3rem,7vw,6rem)}.page-business #contact .intake-intro{grid-template-columns:1.2fr .8fr;padding-bottom:2rem;border-bottom:1px solid rgba(112,150,192,.22)}.intake-aside{padding-top:.2rem}
-    @media(max-width:900px){.help-showcase__head,.help-pair,.why-strip{grid-template-columns:1fr}.help-pair__media{grid-row:1;width:min(100%,520px);margin-inline:auto}.engagement-steps{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:640px){.page-business .hero{min-height:690px;background-position:62% center}.page-business .hero h1{font-size:clamp(3rem,17vw,4.7rem)}.help-showcase{padding-top:3.5rem}.help-pair{gap:1.7rem}.help-pair__media{width:100%}.engagement-steps{grid-template-columns:1fr}.carousel-controls{gap:.8rem}.page-business #contact .intake-intro{grid-template-columns:1fr}}
-    @media(prefers-reduced-motion:reduce){.page-business .carousel-track{transition:none}}
-  </style>
+  <meta name="theme-color" content="#1a1c24" id="meta-theme-color" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("carapace-theme");
+        if (t === "light" || t === "dark") {
+          document.documentElement.dataset.theme = t;
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute("content", t === "light" ? "#f5f6f8" : "#1a1c24");
+        }
+      } catch (e) { /* private mode */ }
+    })();
+  </script>
+  <link rel="icon" href="assets/carapace_logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css?v=20260705c" />
+  <link rel="stylesheet" href="assets/hero-home.css?v=20260705c" />
+  <link rel="stylesheet" href="assets/pages.css?v=20260705c" />
 </head>
 <body class="page-business">
-  <nav class="nav">
+  <nav class="nav" aria-label="Primary navigation">
     <div class="wrap nav-inner">
-      <a class="brand" href="index.html" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="Carapace logo" /><span>Carapace</span></a>
-      <div class="links"><a href="index.html">Home</a><a href="solutions.html">Solutions</a><a href="licensing.html">Licensing</a><a href="ideas/">Pitch Deck</a><a href="about.html">About</a><a href="cortex.html">Cortex</a><a href="#contact">Contact</a></div>
+      <a class="brand" href="index.html" aria-label="Carapace home"><img src="assets/carapace_logo.svg" alt="" /><span>Carapace</span></a>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="business.html">How We Help</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="licensing.html">Licensing</a>
+        <a href="about.html">About</a>
+        <a href="cortex.html">Cortex</a>
+        <a href="business.html#contact" class="nav-contact">Contact</a>
+        <div class="nav-utilities">
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode" title="Toggle light / dark theme">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 0 1 9.5 3 7 7 0 1 0 21 14.5z" /></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+            <span class="theme-label" id="theme-label">Dark</span>
+          </button>
+          <div class="meta-block nav-meta hide-mobile"><span class="meta-label">Local</span><span class="meta-value" id="meta-time">—</span></div>
+        </div>
+      </div>
     </div>
   </nav>
 
-  <header class="hero">
-    <div class="wrap">
-      <div class="hero-copy">
-        <p class="hero-kicker">From workflow drag to working system</p>
-        <h1>How We Help</h1>
-        <p class="lead">Carapace becomes your private AI infrastructure team. We find the work that drains time, then deploy Cortex to make it governed, repeatable, and easier to run.</p>
-        <p class="hero-note">Start with one real workflow. Prove the value. Build outward from evidence.</p>
-        <div class="cta">
-          <a class="btn primary" href="#contact">Book the Discovery Sprint</a>
-          <a class="btn outline" href="cortex.html">Explore Cortex</a>
-        </div>
-      </div>
+  <div class="atmosphere" id="atmosphere" data-effect="topology" aria-hidden="true">
+    <div class="atmosphere-glow"></div>
+    <div class="atmosphere-grid" id="grid"></div>
+    <canvas id="field"></canvas>
+  </div>
+  <div class="bokeh-layer" id="bokeh-layer" aria-hidden="true">
+    <canvas id="bokeh"></canvas>
+  </div>
+  <div class="text-veil" id="text-veil" aria-hidden="true"></div>
+
+  <div class="hero-chrome">
+    <div class="chrome-top">
+      <div class="chrome-mark">Carapace ©2026</div>
     </div>
-  </header>
+    <div class="chrome-bottom">
+      <div class="meta-block left"><span class="meta-label">Stage</span><span class="meta-value" id="meta-stage">01 / 08</span></div>
+      <div class="meta-block"><span class="meta-label">Cursor</span><span class="meta-value" id="meta-cursor">— , —</span></div>
+      <div class="meta-block hide-mobile"><span class="meta-label">Scroll</span><span class="meta-value" id="meta-scroll">0%</span></div>
+    </div>
+  </div>
 
-  <main class="wrap">
-    <section class="help-showcase">
-      <div class="help-showcase__head">
-        <div><p class="eyebrow">A Practical Partnership</p><h2>How we help businesses</h2></div>
-        <p>Four views of the same engagement. Move through them to see the work, the fit, the value, and the path forward.</p>
-      </div>
-      <div class="carousel-shell">
-        <button class="carousel-btn prev" type="button" aria-label="Previous card">‹</button>
-        <div class="carousel-viewport">
-          <div class="carousel-track" id="help-carousel-track">
-            <article class="carousel-slide">
-              <div class="help-pair">
-                <div class="help-pair__copy"><span class="help-pair__index">01 / 04</span><h3>What we do</h3><p class="help-pair__lead">We turn useful AI ideas into workflows that actually run.</p><div class="help-pair__notes"><p><span>01</span>Scope a real pain point</p><p><span>02</span>Connect tools, approvals, and process</p><p><span>03</span>Build reusable integrations</p></div></div>
-                <figure class="help-pair__media"><img src="assets/how-we-help_vert_1.png" alt="Business operators mapping a complex workflow with connected systems" loading="lazy" decoding="async" /></figure>
-              </div>
-            </article>
-            <article class="carousel-slide">
-              <div class="help-pair help-pair--legacy">
-                <strong>Who it’s for</strong>
-                <div class="help-pair__copy"><span class="help-pair__index">02 / 04</span><h3>Who it’s for</h3><p class="help-pair__lead">Teams that already feel the drag of repetitive work and messy workflows.</p><div class="help-pair__notes"><p><span>01</span>Owner-operators and small businesses</p><p><span>02</span>Growing teams with rising complexity</p><p><span>03</span>Organizations that need controlled deployment</p></div></div>
-                <figure class="help-pair__media"><img src="assets/how-we-help_vert_3.png" alt="A business leader identifying workflow friction and lost time" loading="lazy" decoding="async" /></figure>
-              </div>
-            </article>
-            <article class="carousel-slide">
-              <div class="help-pair">
-                <div class="help-pair__copy"><span class="help-pair__index">03 / 04</span><h3>Why teams hire us</h3><p class="help-pair__lead">Get to something useful faster, with less trial and error.</p><div class="help-pair__notes"><p><span>01</span>Move faster than building from scratch</p><p><span>02</span>Reduce fragmentation across tools</p><p><span>03</span>Create more leverage for the existing team</p></div></div>
-                <figure class="help-pair__media"><img src="assets/how-we-help_vert_2.png" alt="A team building an integrated technical workflow together" loading="lazy" decoding="async" /></figure>
-              </div>
-            </article>
-            <article class="carousel-slide">
-              <div class="help-pair">
-                <div class="help-pair__copy"><span class="help-pair__index">04 / 04</span><h3>How we engage</h3><p class="help-pair__lead">Start small, prove value, and build from what works.</p><div class="help-pair__notes"><p><span>01</span>Consult on the workflow and goals</p><p><span>02</span>Run a pilot around a real use case</p><p><span>03</span>Package what works and support it if needed</p></div></div>
-                <figure class="help-pair__media"><img src="assets/how-we-help_vert_4.png" alt="A focused implementation session for a governed AI workflow" loading="lazy" decoding="async" /></figure>
-              </div>
-            </article>
-          </div>
+  <nav class="slide-rail" id="slide-rail" aria-hidden="true"></nav>
+  <div class="scroll-hint" id="scroll-hint">Scroll to advance</div>
+
+  <main id="top">
+    <section class="hero-stage" id="hero-stage">
+      <div class="pinned" id="pinned">
+        <div class="stage-3d" id="stage-3d">
+          <article class="slide-content" id="slide-content" aria-live="polite">
+            <div class="eyebrow text-el" data-layer="eyebrow">How We Help</div>
+            <h1 class="title-block">
+              <span class="title-word" data-word="0">Your</span>
+              <span class="title-word" data-word="1">Private</span>
+              <span class="title-word" data-word="2">AI</span>
+              <span class="title-word" data-word="3">Team</span>
+            </h1>
+            <p class="sub text-el" data-layer="sub">Carapace becomes your private AI infrastructure team — the human API between your business and the models, tools, and environments that should serve it.</p>
+            <p class="note text-el" data-layer="note">Start with one real workflow. Prove the value. Build outward from evidence.</p>
+            <div class="proof-row text-el" data-layer="proof">
+              <span class="proof-chip" data-chip data-detail="Email, files, portals → governed execution."><span class="chip-label">Human API</span></span>
+              <span class="proof-chip" data-chip data-detail="Runs inside your environment."><span class="chip-label">Your boundary</span></span>
+            </div>
+          </article>
         </div>
-        <button class="carousel-btn next" type="button" aria-label="Next card">›</button>
-        <div class="carousel-dots" id="help-carousel-dots" aria-label="Carousel navigation"></div>
       </div>
     </section>
 
-    <section class="engagement-path">
-      <h2>How a first engagement usually works</h2>
-      <div class="engagement-steps">
-        <article class="engagement-step"><span>01</span>
-          <h3>Discover</h3>
-          <p class="muted">We map workflows, tools, pain points, security requirements, and the work that should not exist anymore.</p>
-        </article>
-        <article class="engagement-step"><span>02</span><h3>Deploy</h3>
-          <p class="muted">We launch one to two real automations in a private local, cloud, or hybrid environment.</p>
-        </article>
-        <article class="engagement-step"><span>03</span><h3>Measure ROI</h3>
-          <p class="muted">We track hours saved, costs reduced, adoption, and operational impact.</p>
-        </article>
-        <article class="engagement-step"><span>04</span><h3>Expand</h3><p class="muted">We turn proven wins into repeatable integrations and scale only where the evidence supports it.</p></article>
-      </div>
-    </section>
-
-    <section class="why-strip">
-      <h2>Why Carapace instead of one AI tool?</h2>
-      <div><p class="sublead">Do not buy one product and hope it fits every job.</p><p class="muted">Carapace routes work to the right model based on capability, cost, speed, privacy, and policy. If a provider changes, your workflows and strategic direction do not have to change with it.</p></div>
-    </section>
-
-    <section id="contact" class="card">
+    <section id="contact" class="hero-tail-section">
+      <div class="wrap card">
       <h2>Start with the Discovery Sprint</h2>
       <div class="intake-intro">
         <div>
@@ -178,18 +117,9 @@
       <form id="intake-form" action="https://api.carapaceai.org/intake" method="post">
         <input type="hidden" name="source_page" value="business.html" />
         <div class="form-grid">
-          <div>
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" placeholder="Your name" />
-          </div>
-          <div>
-            <label for="company">Company</label>
-            <input id="company" name="company" type="text" placeholder="Company or team" />
-          </div>
-          <div>
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="you@company.com" />
-          </div>
+          <div><label for="name">Name</label><input id="name" name="name" type="text" placeholder="Your name" /></div>
+          <div><label for="company">Company</label><input id="company" name="company" type="text" placeholder="Company or team" /></div>
+          <div><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@company.com" /></div>
           <div>
             <label for="team-size">Team size</label>
             <select id="team-size" name="team-size">
@@ -200,22 +130,10 @@
               <option>100+</option>
             </select>
           </div>
-          <div class="full">
-            <label for="pain">Current workflow pain or goal</label>
-            <textarea id="pain" name="pain" placeholder="What are you trying to improve, automate, or operationalize?"></textarea>
-          </div>
-          <div>
-            <label for="deployment">What do you want to deploy?</label>
-            <input id="deployment" name="deployment" type="text" placeholder="Example: internal assistant, approval workflow, local AI ops setup" />
-          </div>
-          <div>
-            <label for="timeline">Timeline</label>
-            <input id="timeline" name="timeline" type="text" placeholder="Example: this month, next quarter" />
-          </div>
-          <div class="full">
-            <label for="notes">Additional notes</label>
-            <textarea id="notes" name="notes" placeholder="Anything else we should know before a consultation?"></textarea>
-          </div>
+          <div class="full"><label for="pain">Current workflow pain or goal</label><textarea id="pain" name="pain" placeholder="What are you trying to improve, automate, or operationalize?"></textarea></div>
+          <div><label for="deployment">What do you want to deploy?</label><input id="deployment" name="deployment" type="text" placeholder="Example: internal assistant, approval workflow, local AI ops setup" /></div>
+          <div><label for="timeline">Timeline</label><input id="timeline" name="timeline" type="text" placeholder="Example: this month, next quarter" /></div>
+          <div class="full"><label for="notes">Additional notes</label><textarea id="notes" name="notes" placeholder="Anything else we should know before a consultation?"></textarea></div>
         </div>
         <div class="cta" style="margin-top:1.2rem;">
           <button class="btn primary" type="submit">Request the Discovery Sprint</button>
@@ -223,41 +141,34 @@
         </div>
         <div id="form-status" class="form-status" aria-live="polite"></div>
       </form>
+      </div>
     </section>
   </main>
 
   <footer>
     <div class="wrap">
       <div>Carapace helps businesses scope, pilot, and implement practical AI workflows.</div>
-      <div><a href="index.html">Home</a> | <a href="cortex.html">Cortex</a> | <a href="licensing.html">Licensing</a></div>
+      <div><a href="index.html">Home</a> · <a href="cortex.html">Cortex</a> · <a href="licensing.html">Licensing</a></div>
     </div>
   </footer>
+
+  <script type="module" src="assets/hero-business.js?v=20260705c"></script>
+  <script src="assets/site.js?v=20260705c"></script>
   <script>
     (function () {
       const form = document.getElementById('intake-form');
       const status = document.getElementById('form-status');
       if (!form || !status) return;
-
       form.addEventListener('submit', async function (event) {
         event.preventDefault();
         status.textContent = 'Sending...';
-
         const button = form.querySelector('button[type="submit"]');
         if (button) button.disabled = true;
-
         try {
           const formData = new FormData(form);
-          const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-          });
-
+          const response = await fetch(form.action, { method: 'POST', body: formData });
           const data = await response.json().catch(() => ({}));
-
-          if (!response.ok || !data.ok) {
-            throw new Error(data.error || 'Submission failed');
-          }
-
+          if (!response.ok || !data.ok) throw new Error(data.error || 'Submission failed');
           const submissionId = data.submissionId;
           form.reset();
           form.querySelector('input[name="source_page"]').value = 'business.html';
@@ -274,110 +185,6 @@
         }
       });
     })();
-
-    (function () {
-      const track = document.getElementById('help-carousel-track');
-      const dotsWrap = document.getElementById('help-carousel-dots');
-      const prevBtn = document.querySelector('.carousel-btn.prev');
-      const nextBtn = document.querySelector('.carousel-btn.next');
-      const viewport = track && track.closest('.carousel-viewport');
-      if (!track || !dotsWrap || !prevBtn || !nextBtn) return;
-
-      const slides = Array.from(track.children);
-      let current = 0;
-      let autoTimer = null;
-
-      function restartBullets() {
-        slides.forEach(function (slide, index) {
-          const list = slide.querySelector('.bullet-list');
-          if (!list) return;
-          list.style.visibility = index === current ? 'visible' : 'hidden';
-          if (index === current) {
-            const items = Array.from(list.children);
-            items.forEach(function (item) {
-              item.style.animation = 'none';
-              item.offsetHeight;
-              item.style.animation = '';
-            });
-          }
-        });
-      }
-
-      function renderDots() {
-        dotsWrap.innerHTML = '';
-        slides.forEach(function (_, index) {
-          const dot = document.createElement('button');
-          dot.type = 'button';
-          dot.className = 'carousel-dot' + (index === current ? ' active' : '');
-          dot.setAttribute('aria-label', 'Go to card ' + (index + 1));
-          if (index === current) dot.setAttribute('aria-current', 'true');
-          dot.addEventListener('click', function () {
-            goTo(index);
-          });
-          dotsWrap.appendChild(dot);
-        });
-      }
-
-      function goTo(index) {
-        current = (index + slides.length) % slides.length;
-        const slideWidth = slides[0].getBoundingClientRect().width;
-        const trackGap = parseFloat(getComputedStyle(track).gap || '0');
-        track.style.transform = 'translateX(-' + ((slideWidth + trackGap) * current) + 'px)';
-        slides.forEach(function (slide, slideIndex) {
-          slide.classList.toggle('is-active', slideIndex === current);
-          slide.setAttribute('aria-hidden', String(slideIndex !== current));
-        });
-        renderDots();
-        restartBullets();
-        startAuto();
-      }
-
-      function startAuto() {
-        if (autoTimer) clearInterval(autoTimer);
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.hidden) return;
-        autoTimer = setInterval(function () {
-          goTo(current + 1);
-        }, 6500);
-      }
-
-      prevBtn.addEventListener('click', function () { goTo(current - 1); });
-      nextBtn.addEventListener('click', function () { goTo(current + 1); });
-
-      let pointerStartX = null;
-      if (viewport) {
-        viewport.addEventListener('pointerdown', function (event) {
-          if (!event.isPrimary) return;
-          pointerStartX = event.clientX;
-          if (autoTimer) clearInterval(autoTimer);
-        });
-        viewport.addEventListener('pointerup', function (event) {
-          if (pointerStartX === null) return;
-          const distance = event.clientX - pointerStartX;
-          pointerStartX = null;
-          if (Math.abs(distance) > 48) goTo(current + (distance < 0 ? 1 : -1));
-          else startAuto();
-        });
-        viewport.addEventListener('pointercancel', function () {
-          pointerStartX = null;
-          startAuto();
-        });
-        viewport.addEventListener('mouseenter', function () { if (autoTimer) clearInterval(autoTimer); });
-        viewport.addEventListener('mouseleave', startAuto);
-      }
-
-      document.addEventListener('visibilitychange', function () {
-        if (document.hidden && autoTimer) clearInterval(autoTimer);
-        else startAuto();
-      });
-
-      window.addEventListener('resize', function () {
-        goTo(current);
-      });
-
-      goTo(0);
-    })();
   </script>
-  <script src="assets/cortex-bloom-bg.js"></script>
-  <script src="assets/site.js?v=20260619"></script>
 </body>
 </html>

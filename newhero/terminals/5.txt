@@ -1,0 +1,18 @@
+---
+pid: 16164
+cwd: "C:\Users\Studio TM87\.grok\worktrees\github-newhero\newhero"
+command: "python -m http.server 8765"
+started_at: 2026-07-04T20:11:04.032Z
+running_for_ms: 1124999  
+---
+At line:1 char:72
++ ... sers\\Studio TM87\\.grok\\worktrees\\github-newhero\\newhero" ; pytho ...
++                                                                  ~
+Missing closing ')' in expression.
+At line:1 char:101
++ ... ok\\worktrees\\github-newhero\\newhero" ; python -m http.server 8765)
++                                                                         ~
+Unexpected token ')' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingEndParenthesisInExpression
+ 

@@ -1,0 +1,355 @@
+# The Cortex Ontology
+
+## Private Intelligence That Understands How Your World Actually Works
+
+Cortex is built on a different kind of AI foundation.
+
+Most AI tools treat your information as a pile of disconnected files, messages, tasks, and prompts. They can summarize what you give them, but they rarely understand how your work actually fits together.
+
+Cortex is different.
+
+Cortex organizes your information into a living map of your real-world processes: the people you work with, the tasks you repeat, the files you depend on, the decisions you make, the tools you use, the handoffs that create friction, and the outcomes you care about.
+
+We call this the **Cortex Ontology**.
+
+It is the layer that allows your AI to understand not just what your data says, but what your data is doing.
+
+---
+
+# Your Business Is Not a Folder System
+
+A business is not just documents, emails, contacts, invoices, notes, and calendar events.
+
+A business is a living system of processes.
+
+A customer inquiry becomes a conversation.
+A conversation becomes a quote.
+A quote becomes a job.
+A job becomes an invoice.
+An invoice becomes cash flow.
+Cash flow becomes capacity.
+Capacity becomes growth.
+
+Most software breaks these steps apart.
+
+Cortex connects them.
+
+It sees the patterns across your work and helps turn scattered information into useful, private, actionable intelligence.
+
+---
+
+# From Static Data to Living Processes
+
+Traditional software asks:
+
+* Where is the file?
+* What is the contact?
+* What is the task?
+* What is the status?
+
+Cortex asks deeper operational questions:
+
+* What process is this part of?
+* Who is involved?
+* What decision needs to be made?
+* What action is allowed?
+* What context matters?
+* What should stay private?
+* What needs human approval?
+* What outcome are we trying to create?
+* What feedback should improve the process next time?
+
+This is what makes Cortex more than a chatbot.
+
+It is a private operating layer for your work.
+
+---
+
+# The Carapace Difference
+
+Carapace is built around a simple belief:
+
+**Your intelligence should belong to you.**
+
+Your data, workflows, business memory, customer history, creative process, and operational knowledge should not be extracted into someone else’s platform just to make AI useful.
+
+Cortex is designed to run as close to you as possible: locally, privately, and under your control.
+
+That means your AI can help you without turning your business into someone else’s training ground.
+
+Carapace protects the shell.
+Cortex grows the intelligence inside it.
+
+---
+
+# What Cortex Understands
+
+Cortex does not only understand “things.”
+
+It understands how things participate in your work.
+
+A file is not just a file.
+It may be part of a proposal, a contract, a client relationship, or a compliance process.
+
+An email is not just a message.
+It may be part of a sale, a support issue, a scheduling conflict, or a promise that needs follow-up.
+
+An invoice is not just a record.
+It is part of cash flow, customer trust, bookkeeping, and business health.
+
+A task is not just a checkbox.
+It belongs to a process, has a purpose, requires attention, and creates an outcome.
+
+Cortex connects these pieces into a living map that your AI can reason over.
+
+---
+
+# The Six Layers of Cortex Intelligence
+
+## 1. Your World
+
+Cortex starts by understanding the actual things in your world:
+
+* people,
+* customers,
+* vendors,
+* files,
+* emails,
+* messages,
+* invoices,
+* projects,
+* appointments,
+* devices,
+* notes,
+* jobs,
+* and tools.
+
+This gives your AI a grounded map of what exists.
+
+## 2. Your Processes
+
+Cortex then identifies how work moves.
+
+It learns the repeated flows that make up your business or personal system:
+
+* onboarding,
+* quoting,
+* scheduling,
+* installation,
+* fulfillment,
+* customer support,
+* billing,
+* follow-up,
+* planning,
+* documentation,
+* and review.
+
+This allows Cortex to understand work as a sequence of living transformations, not isolated tasks.
+
+## 3. Your Decisions
+
+Cortex helps identify what decision is actually being made.
+
+Should this be approved?
+Should this be sent?
+Should this be scheduled?
+Should this be escalated?
+Should this be automated?
+Should this stay private?
+Should this wait for human review?
+
+By understanding the decision, Cortex can provide better support than a generic AI assistant.
+
+## 4. Your Actions
+
+Cortex does not only answer questions. It can help move work forward.
+
+Depending on your permissions, Cortex can help:
+
+* draft responses,
+* organize files,
+* prepare quotes,
+* summarize conversations,
+* create tasks,
+* update records,
+* schedule follow-ups,
+* flag risks,
+* recommend next steps,
+* and automate repeatable work.
+
+But action is always governed by boundaries.
+
+## 5. Your Boundaries
+
+Cortex is built around consent, privacy, and control.
+
+Every action can be limited by rules such as:
+
+* local-only processing,
+* human approval required,
+* never send externally,
+* draft only,
+* read-only,
+* client-visible,
+* private,
+* reversible,
+* or high-trust action.
+
+This gives you AI that can help without overstepping.
+
+## 6. Your Feedback
+
+Cortex improves through correction.
+
+When you edit, approve, reject, override, or correct something, that feedback becomes part of the system.
+
+Mistakes become learning signals.
+Repeated patterns become workflows.
+Friction points become improvement opportunities.
+Successful outcomes become reusable process knowledge.
+
+Cortex does not just automate your work.
+
+It helps your work become more self-aware over time.
+
+---
+
+# AI That Accounts for Cost
+
+Every action has a cost.
+
+Some actions cost money.
+Some cost time.
+Some cost attention.
+Some cost privacy.
+Some cost energy.
+Some create future maintenance.
+Some create risk if they happen too quickly or without review.
+
+Cortex is designed to make those tradeoffs visible.
+
+Instead of blindly optimizing for speed, Cortex helps optimize for useful yield:
+
+* time saved,
+* errors reduced,
+* trust preserved,
+* privacy protected,
+* revenue recovered,
+* decisions clarified,
+* waste eliminated,
+* and capacity increased.
+
+This is intelligence with accountability.
+
+---
+
+# Regenerative Intelligence
+
+Cortex is inspired by a simple principle from living systems:
+
+A healthy system does not only extract value.
+It regenerates the conditions that allow value to keep growing.
+
+That means Cortex is designed to help your work become:
+
+* clearer,
+* more resilient,
+* less wasteful,
+* more private,
+* more adaptive,
+* more organized,
+* and easier to improve over time.
+
+The goal is not to replace human judgment.
+
+The goal is to reduce unnecessary burden so people can focus on the work that actually requires care, creativity, trust, and decision-making.
+
+---
+
+# Why This Matters for Small Businesses
+
+Small businesses do not need another bloated enterprise platform.
+
+They need intelligence that understands how they actually work.
+
+They need systems that help without demanding months of setup.
+They need automation that does not break trust.
+They need privacy without giving up usefulness.
+They need AI that can grow from their real processes, not force them into someone else’s template.
+
+Cortex gives small businesses a private intelligence layer that learns their operations from the inside out.
+
+It can start small:
+
+* organize a messy folder,
+* summarize a client history,
+* help process invoices,
+* detect missed follow-ups,
+* draft a reply,
+* map a workflow,
+* or identify a recurring bottleneck.
+
+Then it can grow gradually into a living operational map of the business.
+
+Small steps.
+Visible value.
+Human control.
+Compounding intelligence.
+
+---
+
+# A New Kind of AI Relationship
+
+Cortex is not designed to be an all-knowing external assistant.
+
+It is designed to become a trusted participant in your local ecosystem.
+
+It observes with permission.
+It acts within boundaries.
+It learns from feedback.
+It protects sensitive context.
+It helps expose waste.
+It strengthens useful patterns.
+It supports better decisions.
+
+Over time, Cortex becomes less like a chatbot and more like a private operational nervous system for your work.
+
+---
+
+# The Promise
+
+Cortex turns scattered information into living process intelligence.
+
+It helps you understand:
+
+* what is happening,
+* what matters,
+* what needs action,
+* what should stay protected,
+* what is wasting effort,
+* what can be automated,
+* and what is worth improving.
+
+All while keeping your intelligence close to home.
+
+---
+
+# Core Message
+
+**Cortex is private AI that understands your work as a living system.**
+
+It does not just search your files.
+It maps your processes.
+
+It does not just answer questions.
+It supports decisions.
+
+It does not just automate tasks.
+It learns from feedback.
+
+It does not just consume data.
+It helps regenerate your capacity.
+
+That is the Cortex Ontology:
+
+**a private, living map of your people, processes, decisions, actions, boundaries, and outcomes.**

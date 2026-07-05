@@ -1,0 +1,359 @@
+{
+  "PREREQUISITE_DRAW_IDS": [
+    "shield",
+    "cascade",
+    "mesh",
+    "stack",
+    "magnet",
+    "signal",
+    "chrono",
+    "ping",
+    "flowchart",
+    "pcb",
+    "topology",
+    "pipeline",
+    "constellation",
+    "vault",
+    "schematic"
+  ],
+  "ORIGINAL_GOAL_IDS": [
+    "shield",
+    "cascade",
+    "mesh",
+    "stack",
+    "magnet",
+    "signal",
+    "chrono",
+    "ping",
+    "flowchart",
+    "pcb",
+    "topology",
+    "pipeline",
+    "constellation",
+    "vault",
+    "schematic"
+  ],
+  "GOAL_ENUMERATION_ROW_COUNT": 16,
+  "ORIGINAL_PRESHIP_IDS": [
+    "shield",
+    "cascade",
+    "mesh",
+    "stack",
+    "magnet",
+    "signal",
+    "chrono",
+    "ping",
+    "flowchart",
+    "pcb",
+    "topology",
+    "pipeline",
+    "constellation",
+    "vault",
+    "schematic"
+  ],
+  "SHIPPED_EFFECT_IDS": [
+    "shield",
+    "cascade",
+    "mesh",
+    "stack",
+    "magnet",
+    "signal",
+    "chrono",
+    "ping",
+    "flowchart",
+    "pcb",
+    "topology",
+    "pipeline",
+    "constellation",
+    "vault",
+    "schematic",
+    "isograph",
+    "sonar",
+    "ledger",
+    "weave",
+    "orbit",
+    "relay",
+    "seal",
+    "glyph"
+  ],
+  "INTERACTIVE_EFFECTS": [
+    "cascade",
+    "mesh",
+    "stack",
+    "magnet",
+    "signal",
+    "chrono",
+    "sonar",
+    "weave",
+    "ledger",
+    "relay",
+    "isograph",
+    "orbit",
+    "seal",
+    "glyph"
+  ],
+  "EFFECTS_HARNESS_PREFIX": "scripts/effects-hero-harness",
+  "EFFECT_DRAW_SLIDES": [
+    {
+      "id": "shield",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 0,
+      "effect": "shield"
+    },
+    {
+      "id": "cascade",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 1,
+      "effect": "cascade"
+    },
+    {
+      "id": "orbit",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 2,
+      "effect": "orbit"
+    },
+    {
+      "id": "pcb",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 3,
+      "effect": "pcb"
+    },
+    {
+      "id": "magnet",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 4,
+      "effect": "magnet"
+    },
+    {
+      "id": "ledger",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 5,
+      "effect": "ledger"
+    },
+    {
+      "id": "chrono",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 6,
+      "effect": "chrono"
+    },
+    {
+      "id": "sonar",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 7,
+      "effect": "sonar"
+    },
+    {
+      "id": "weave",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 0,
+      "effect": "weave"
+    },
+    {
+      "id": "isograph",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 2,
+      "effect": "isograph"
+    },
+    {
+      "id": "constellation",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 3,
+      "effect": "constellation"
+    },
+    {
+      "id": "seal",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 4,
+      "effect": "seal"
+    },
+    {
+      "id": "relay",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 6,
+      "effect": "relay"
+    },
+    {
+      "id": "topology",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 0,
+      "effect": "topology"
+    },
+    {
+      "id": "mesh",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 2,
+      "effect": "mesh"
+    },
+    {
+      "id": "signal",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 3,
+      "effect": "signal"
+    },
+    {
+      "id": "flowchart",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 4,
+      "effect": "flowchart"
+    },
+    {
+      "id": "glyph",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 6,
+      "effect": "glyph"
+    },
+    {
+      "id": "pipeline",
+      "route": "scripts/effects-hero-harness/solutions.html",
+      "slideCount": 10,
+      "slideIndex": 1,
+      "effect": "pipeline"
+    },
+    {
+      "id": "schematic",
+      "route": "scripts/effects-hero-harness/solutions.html",
+      "slideCount": 10,
+      "slideIndex": 4,
+      "effect": "schematic"
+    },
+    {
+      "id": "vault",
+      "route": "scripts/effects-hero-harness/cortex.html",
+      "slideCount": 10,
+      "slideIndex": 5,
+      "effect": "vault"
+    },
+    {
+      "id": "stack",
+      "route": "scripts/effects-hero-harness/cortex.html",
+      "slideCount": 10,
+      "slideIndex": 6,
+      "effect": "stack"
+    },
+    {
+      "id": "ping",
+      "route": "scripts/effects-hero-harness/cortex.html",
+      "slideCount": 10,
+      "slideIndex": 9,
+      "effect": "ping"
+    }
+  ],
+  "WIRED_SLIDES": [
+    {
+      "id": "cascade",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 1,
+      "effect": "cascade"
+    },
+    {
+      "id": "mesh",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 2,
+      "effect": "mesh"
+    },
+    {
+      "id": "stack",
+      "route": "scripts/effects-hero-harness/cortex.html",
+      "slideCount": 10,
+      "slideIndex": 6,
+      "effect": "stack"
+    },
+    {
+      "id": "magnet",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 1,
+      "effect": "magnet"
+    },
+    {
+      "id": "signal",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 3,
+      "effect": "signal"
+    },
+    {
+      "id": "chrono",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 6,
+      "effect": "chrono"
+    },
+    {
+      "id": "sonar",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 7,
+      "effect": "sonar"
+    },
+    {
+      "id": "weave",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 0,
+      "effect": "weave"
+    },
+    {
+      "id": "ledger",
+      "route": "scripts/effects-hero-harness/index.html",
+      "slideCount": 8,
+      "slideIndex": 5,
+      "effect": "ledger"
+    },
+    {
+      "id": "relay",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 6,
+      "effect": "relay"
+    },
+    {
+      "id": "isograph",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 1,
+      "effect": "isograph"
+    },
+    {
+      "id": "orbit",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 5,
+      "effect": "orbit"
+    },
+    {
+      "id": "seal",
+      "route": "scripts/effects-hero-harness/about.html",
+      "slideCount": 7,
+      "slideIndex": 4,
+      "effect": "seal"
+    },
+    {
+      "id": "glyph",
+      "route": "scripts/effects-hero-harness/business.html",
+      "slideCount": 8,
+      "slideIndex": 6,
+      "effect": "glyph"
+    }
+  ]
+}

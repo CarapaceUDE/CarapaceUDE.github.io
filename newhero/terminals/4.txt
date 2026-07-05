@@ -1,0 +1,8 @@
+---
+pid: 2872
+cwd: "C:\Users\Studio TM87\.grok\worktrees\github-newhero\newhero"
+command: "Set-Location 'C:\\Users\\Studio TM87\\.grok\\worktrees\\github-newhero\\newhero'; python -m http.server 8765"
+started_at: 2026-07-04T19:37:26.140Z
+running_for_ms: 3145000  
+---
+Serving HTTP on :: port 8765 (http://[::]:8765/) ...

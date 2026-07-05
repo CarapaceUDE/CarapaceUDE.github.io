@@ -1,0 +1,94 @@
+/* design-systems/carapace-haoqi/tokens.css
+ * Machine-readable bindings for DESIGN.md — paste :root into artifact <style>. */
+
+:root {
+  /* ─── Surface ─── */
+  --bg: oklch(0.14 0.012 265);
+  --surface: oklch(0.17 0.014 265);
+  --surface-warm: var(--surface);
+
+  /* ─── Foreground ramp ─── */
+  --fg: oklch(0.93 0.01 265);
+  --fg-2: oklch(0.84 0.012 265);
+  --muted: oklch(0.72 0.02 265);
+  --meta: oklch(0.52 0.02 265);
+
+  /* ─── Border & atmosphere ─── */
+  --border: oklch(0.28 0.02 265 / 0.55);
+  --border-soft: oklch(0.35 0.02 265 / 0.35);
+  --grid: oklch(0.35 0.02 265 / 0.08);
+  --glow: oklch(0.55 0.12 210 / 0.12);
+  --slide-glow: transparent;
+
+  /* ─── Accent ─── */
+  --accent: oklch(0.78 0.14 210);
+  --accent-on: oklch(0.14 0.012 265);
+  --accent-dim: oklch(0.55 0.08 210);
+  --accent-hover: oklch(0.82 0.14 210);
+  --accent-active: oklch(0.72 0.14 210);
+
+  /* ─── Semantic (sparingly) ─── */
+  --success: oklch(0.65 0.14 145);
+  --warn: oklch(0.75 0.12 85);
+  --danger: oklch(0.58 0.18 25);
+
+  /* ─── Typography ─── */
+  --font-display: "IBM Plex Mono", ui-monospace, monospace;
+  --font-body: var(--font-display);
+  --font-mono: var(--font-display);
+
+  --text-xs: 0.62rem;
+  --text-sm: 0.72rem;
+  --text-base: 0.82rem;
+  --text-lg: 1.12rem;
+  --text-xl: clamp(2rem, 6.8vw, 4.8rem);
+  --leading-body: 1.55;
+  --leading-tight: 0.92;
+  --tracking-eyebrow: 0.22em;
+  --tracking-meta: 0.14em;
+  --tracking-brand: 0.12em;
+
+  /* ─── Spacing ─── */
+  --space-1: 4px;
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 14px;
+  --space-5: 18px;
+  --space-6: 22px;
+  --space-8: 32px;
+  --chrome-pad: 18px 22px;
+  --hero-pad: 0 8px;
+  --section-y: 80px;
+
+  /* ─── Radius (fallback; capsules use WASM paths) ─── */
+  --radius-pill: 999px;
+
+  /* ─── Motion ─── */
+  --motion-fast: 150ms;
+  --motion-slide: 550ms;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* ─── Layout ─── */
+  --hero-stage-height: 480vh;
+  --hero-width: min(920px, calc(100vw - 48px));
+  --pinned-fade-start: 0.78;
+  --word-stagger: 32ms;
+}
+
+[data-theme="light"] {
+  --bg: oklch(0.97 0.006 265);
+  --surface: oklch(0.94 0.008 265);
+  --fg: oklch(0.18 0.02 265);
+  --fg-2: oklch(0.28 0.02 265);
+  --muted: oklch(0.42 0.02 265);
+  --meta: oklch(0.58 0.02 265);
+  --border: oklch(0.82 0.01 265 / 0.7);
+  --border-soft: oklch(0.88 0.01 265 / 0.5);
+  --grid: oklch(0.75 0.01 265 / 0.18);
+  --glow: oklch(0.62 0.1 210 / 0.1);
+  --accent: oklch(0.48 0.14 210);
+  --accent-on: oklch(0.97 0.006 265);
+  --accent-dim: oklch(0.62 0.08 210);
+  --accent-hover: oklch(0.44 0.14 210);
+  --accent-active: oklch(0.4 0.14 210);
+}

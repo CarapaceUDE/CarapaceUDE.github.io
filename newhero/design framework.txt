@@ -1,0 +1,415 @@
+public repo:wenhaoqiasd/wasm-utils
+
+# Spec: Haoqi-Style Website Framework Layer
+
+## Goal
+
+Build a reusable website design layer inspired by haoqi.design: minimal, precise, taste-heavy, image-aware, systemized, and highly craft-oriented. The system should sit on top of a normal web framework such as Next.js, while using `@wenhaoqi/wasm_design_utils` as the browser-side visual intelligence layer.
+
+## Source Pattern
+
+Haoqi’s site frames itself around “Design & Engineering,” “thinking in systems,” and “craft & taste,” with a portfolio structure built around projects, metadata, contact, theme, and sound controls.
+The underlying utility package exposes three important primitives: RGB ↔ OKLCH conversion, image color extraction, and squircle/capsule SVG path generation.
+The package is ESM, the WASM is normally inline, APIs are async, and Next.js usage should happen in client components or dynamic imports because it depends on `Image` and WebAssembly.
+
+## Core Concept
+
+This should not be treated as “use a premade website template.” Treat it as a **taste engine**:
+
+1. Content stays structured and semantic.
+2. Images generate local atmosphere.
+3. Colors are transformed through OKLCH instead of hacked by HSL/opacity.
+4. Rounded UI uses actual squircle/capsule geometry instead of cheap `border-radius`.
+5. Pages feel quiet, deliberate, tactile, and authored.
+
+## Recommended Stack
+
+Use Next.js as the outer web app layer because it is a React framework for full-stack web applications, while Haoqi’s design utilities remain client-side visual primitives.
+Suggested stack:
+
+* Next.js App Router
+* TypeScript
+* Tailwind or vanilla CSS modules
+* MDX or JSON content files
+* `@wenhaoqi/wasm_design_utils`
+* Framer Motion or Motion One for page transitions
+* Optional: Rive for interactive graphics
+* Optional: local CMS later, but start file-based
+
+## Site Types This Framework Should Build
+
+Primary target:
+
+* Personal portfolio sites
+* Product concept sites
+* project/case-study libraries
+* AI tool landing pages
+* design-engineering blogs
+* agency/consultancy microsites
+* Carapace/Cortex-style product explainer sites
+  Not ideal for:
+* generic SaaS dashboards
+* ecommerce storefronts
+* dense documentation portals
+* sites where content volume matters more than taste
+
+## Design System Rules
+
+### Typography
+
+Use one strong mono or grotesk font as the spine. The site should feel engineered, not corporate. Typography should support:
+
+* oversized sparse headings
+* tiny metadata labels
+* compact project tags
+* editorial case-study text
+* technical blocks
+
+### Color
+
+All color transformation should happen through OKLCH. Do not manually darken colors with arbitrary opacity overlays.
+Required color utilities:
+
+* `extractImagePalette(image)`
+* `dominantToOklch(rgb)`
+* `makeThemeTint(oklch, mode)`
+* `makeOverlayBackground(image, theme)`
+* `makeHoverAccent(image)`
+  Haoqi’s own article page pattern uses image color extraction, OKLCH conversion, theme brightness adjustment, and RGB conversion to create image-matched fullscreen backgrounds.
+
+### Shape
+
+Use squircle/capsule SVG paths for high-touch UI pieces:
+
+* image cards
+* project chips
+* CTA buttons
+* tool pills
+* avatar masks
+* modal backgrounds
+* floating command surfaces
+  Avoid overusing it. Squircle shapes should signal “crafted interface,” not decorate everything.
+
+### Motion
+
+Motion should be restrained:
+
+* slow fade/slide on page entry
+* cursor-aware hover drift
+* project card expansion
+* image lightbox zoom
+* theme transition fade
+* optional sound toggle
+  No bouncy SaaS animation unless the brand calls for it.
+
+## Architecture
+
+```txt
+/app
+  /(site)
+    page.tsx
+    work/page.tsx
+    work/[slug]/page.tsx
+    contact/page.tsx
+/components
+  design/
+    DesignProvider.tsx
+    AdaptiveTheme.tsx
+    Squircle.tsx
+    Capsule.tsx
+    AdaptiveImage.tsx
+    ImageLightbox.tsx
+    MetadataRail.tsx
+    ProjectCard.tsx
+    ProjectIndex.tsx
+  motion/
+    PageTransition.tsx
+    CursorField.tsx
+    SoundToggle.tsx
+/lib
+  design/
+    color.ts
+    palette.ts
+    squircle.ts
+    theme.ts
+    imageAtmosphere.ts
+  content/
+    projects.ts
+    mdx.ts
+/content
+  projects/
+    reunimos.mdx
+    product-site.mdx
+    cortex-skill.mdx
+/public
+  images/
+```
+
+## Component Specs
+
+### `DesignProvider`
+
+Purpose: global client-side provider for theme, motion preference, sound preference, and preloading the WASM utilities.
+Responsibilities:
+
+* detect theme
+* expose `light | dark | auto`
+* expose reduced-motion state
+* optionally call package `init()` early
+* provide shared color conversion helpers
+
+### `AdaptiveImage`
+
+Purpose: image component that extracts dominant palette and exposes CSS variables.
+Inputs:
+
+* `src`
+* `alt`
+* `shape?: "rect" | "squircle" | "capsule"`
+* `atmosphere?: boolean`
+* `priority?: boolean`
+  Outputs CSS variables:
+* `--image-r`
+* `--image-g`
+* `--image-b`
+* `--image-oklch-l`
+* `--image-oklch-c`
+* `--image-oklch-h`
+* `--image-bg`
+* `--image-accent`
+  Behavior:
+* extract palette after load
+* use dominant color for hover glow
+* use adjusted OKLCH background for lightbox
+* degrade gracefully if extraction fails
+
+### `Squircle`
+
+Purpose: render a scalable SVG mask/path generated from `getPath`.
+Inputs:
+
+* `width`
+* `height`
+* `radius`
+* `as?: "svg" | "clipPath" | "background"`
+* `children`
+  Behavior:
+* async-generate path on client
+* cache generated paths by `shape-width-height-radius`
+* fallback to `border-radius` during SSR/hydration
+
+### `ProjectCard`
+
+Purpose: reusable visual unit for portfolio/project listing.
+Fields:
+
+* title
+* year
+* type
+* tags
+* summary
+* image
+* link
+* external flag
+  Behavior:
+* image-derived hover color
+* metadata-first layout
+* squircle image mask
+* quiet hover expansion
+
+### `CaseStudyPage`
+
+Purpose: project detail page with editorial rhythm.
+Required sections:
+
+* title
+* date
+* year range
+* short thesis
+* body content
+* image gallery
+* metadata block
+* related projects
+  Optional:
+* live link
+* source link
+* download link
+* tools used
+* AI involvement note
+
+## Content Model
+
+```ts
+type Project = {
+  slug: string;
+  title: string;
+  date: string;
+  year: string;
+  type: "Coding" | "Design" | "Product" | "Research" | "AI" | "Tool";
+  summary: string;
+  body: string;
+  images: {
+    src: string;
+    alt: string;
+    caption?: string;
+  }[];
+  links?: {
+    label: string;
+    href: string;
+    external?: boolean;
+  }[];
+  metadata?: {
+    lastUpdated?: string;
+    dimensions?: string;
+    characters?: string;
+    tools?: string[];
+  };
+};
+```
+
+## Interaction Requirements
+
+### Theme Toggle
+
+* visible but minimal
+* keyboard accessible
+* persists to local storage
+* transitions via CSS variables
+* does not flash on page load
+
+### Sound Toggle
+
+* optional
+* off by default
+* only use soft UI sounds
+* never autoplay music
+* should be removable per site
+
+### Metadata Rail
+
+Inspired by Haoqi’s timestamp/coordinates/project metadata pattern.
+Possible fields:
+
+* local time
+* build version
+* current route
+* cursor coordinates
+* project count
+* theme state
+* last updated
+  This gives the site a “living instrument panel” feel without becoming a dashboard.
+
+## Implementation Phases
+
+### Phase 1 — Minimal Site Kit
+
+Build:
+
+* homepage
+* work index
+* project detail page
+* contact section
+* theme toggle
+* project content model
+* base typography
+* basic motion
+  No WASM yet except install scaffolding.
+
+### Phase 2 — Haoqi Utility Integration
+
+Add:
+
+* `@wenhaoqi/wasm_design_utils`
+* palette extraction
+* OKLCH theme tints
+* adaptive image cards
+* image lightbox with dominant-color background
+* squircle/capsule components
+
+### Phase 3 — Agent-Ready Website Generator
+
+Add a generator that can create a new site from:
+
+* brand name
+* site purpose
+* project list
+* preferred tone
+* image folder
+* content folder
+  Output:
+* site scaffold
+* content schema
+* starter pages
+* theme tokens
+* project cards
+* deployment notes
+
+### Phase 4 — Cortex/Carapace Extension
+
+Wrap this as a Cortex skill:
+
+* “Generate tasteful portfolio/product site”
+* “Extract palette from uploaded brand images”
+* “Create project case study from notes”
+* “Refine visual system”
+* “Export static site”
+  The skill UI should expose:
+* content tree
+* theme preview
+* image palette map
+* shape/radius controls
+* page preview
+* deploy/export actions
+
+## Agent Workflow
+
+The agent should not start by generating pages. It should first observe the brand/project material.
+Workflow:
+
+1. Ingest user’s images, notes, screenshots, links, and existing copy.
+2. Extract visual vocabulary: colors, shapes, density, tone, contrast.
+3. Propose a site structure.
+4. Generate content model.
+5. Generate visual tokens.
+6. Generate components.
+7. Generate pages.
+8. Run visual QA checklist.
+9. Ask for human taste corrections.
+10. Store corrections as taste training data for future site builds.
+
+## Visual QA Checklist
+
+A site passes only if:
+
+* homepage communicates the core identity in under 5 seconds
+* metadata enhances the aesthetic instead of cluttering it
+* every image has usable alt text
+* theme toggle works without flicker
+* reduced-motion mode is respected
+* mobile layout feels intentionally designed
+* image-derived colors do not reduce text contrast
+* squircle shapes are used consistently
+* project pages feel authored, not template-filled
+* no component looks like default shadcn/Tailwind SaaS filler
+
+## Failure Modes
+
+Avoid:
+
+* overusing blur/glass
+* overusing squircle masks
+* relying on tiny unreadable metadata
+* making everything monochrome just because Haoqi’s site is sparse
+* copying the exact site instead of extracting the framework
+* treating image palettes as brand colors without human review
+* letting the agent fill pages with generic “craft and innovation” copy
+
+## Success Definition
+
+We have succeeded when we can hand the system:
+
+* a founder/product concept
+* a few project notes
+* a few images/screenshots
+* rough brand direction
+  …and it produces a quiet, precise, visually adaptive site that feels designed by a design engineer rather than generated from a marketing template.

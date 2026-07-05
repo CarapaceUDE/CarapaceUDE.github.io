@@ -1,0 +1,14 @@
+---
+pid: 7420
+cwd: "C:\Users\Studio TM87\.grok\worktrees\github-newhero\newhero"
+command: "cd \"C:\\Users\\Studio TM87\\.grok\\worktrees\\github-newhero\\newhero\" && python -m http.server 8765"
+started_at: 2026-07-04T19:35:49.474Z
+running_for_ms: 3240000  
+---
+At line:1 char:66
++ ... \Users\Studio TM87\.grok\worktrees\github-newhero\newhero" && python  ...
++                                                                ~~
+The token '&&' is not a valid statement separator in this version.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : InvalidEndOfLine
+ 
