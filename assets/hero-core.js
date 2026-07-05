@@ -2,6 +2,8 @@ import { init, oklch2rgb_rel, getCapsule } from "https://esm.sh/@wenhaoqi/wasm_d
 import { HeroTextAnime } from "./text-anime.js";
 import { AnimeEffectsField } from "./effects-anime.js";
 import { HeroChipInteractions } from "./chip-interactions.js";
+import { HeroInsertCursor } from "./hero-insert-cursor.js";
+import { fitHeroSlideCopy } from "./hero-title-fit.js";
 import { INTERACTIVE_EFFECTS } from "./effects-goal-contract.js";
 
 export { PILOT_NOTE_DISCLAIMER } from "./hero-constants.js";
@@ -85,8 +87,10 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
   let textAnime = null;
   let effectsField = null;
   let chipInteractions = null;
+  let insertCursor = null;
   let slideRenderToken = 0;
   let wasmReady = Promise.resolve();
+
 
   slides.forEach((_, i) => {
     const dot = document.createElement("div");
@@ -139,8 +143,9 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
   async function renderSlide(index) {
     const s = slides[index];
     if (!s || !textAnime) return;
+    insertCursor?.onSlideChange();
     const token = ++slideRenderToken;
-    if (metaStage) {
+    if (metaStage && !insertCursor?.isMetaLocked("meta-stage")) {
       metaStage.textContent = `${String(index + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
     }
     slideRail?.querySelectorAll(".slide-dot").forEach((dot, i) => {
@@ -157,6 +162,13 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
     await wasmReady;
     applySquircleChips(chips);
     chipInteractions?.bind(slideContent.querySelector(".proof-row"));
+    scheduleSlideCopyFit();
+  }
+
+  function scheduleSlideCopyFit() {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => fitHeroSlideCopy(slideContent));
+    });
   }
 
   function updateBokehIntensity(intensity) {
@@ -233,7 +245,9 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
       effectsField?.setIntensity(slides[idx].bokeh ?? 0.3);
     }
 
-    if (metaScroll) metaScroll.textContent = `${Math.round(progress * 100)}%`;
+    if (metaScroll && !insertCursor?.isMetaLocked("meta-scroll")) {
+      metaScroll.textContent = `${Math.round(progress * 100)}%`;
+    }
 
     const fadeLayers = (t) => {
       const opacity = String(1 - t);
@@ -266,7 +280,7 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
   }
 
   function updateMetaTime() {
-    if (!metaTime) return;
+    if (!metaTime || insertCursor?.isMetaLocked("meta-time")) return;
     metaTime.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
   }
 
@@ -328,6 +342,13 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
 
     textAnime = new HeroTextAnime(stage3d, slideContent, { reducedMotion: prefersReducedMotion });
     chipInteractions = new HeroChipInteractions({ reducedMotion: prefersReducedMotion });
+    insertCursor = new HeroInsertCursor({
+      reducedMotion: prefersReducedMotion,
+      isHeroPinned: () => {
+        const { fadeStart } = scrollMetrics(slides.length);
+        return progress <= fadeStart;
+      }
+    });
 
     effectsField = new AnimeEffectsField(fieldCanvas, bokehCanvas, {
       reducedMotion: prefersReducedMotion,
@@ -342,7 +363,10 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
     effectsField.setIntensity(slides[0]?.bokeh ?? 0.28);
     updateBokehIntensity(slides[0]?.bokeh ?? 0.28);
     effectsField.start();
-    rmMedia.addEventListener("change", (ev) => applyReducedMotionPreference(ev.matches));
+    rmMedia.addEventListener("change", (ev) => {
+      applyReducedMotionPreference(ev.matches);
+      insertCursor?.setReducedMotion(ev.matches);
+    });
     activeIndex = -1;
     onSlideChange(0);
     updateScroll();
@@ -354,6 +378,7 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
     window.addEventListener("resize", () => {
       resizeField();
       applyCtaCapsule();
+      scheduleSlideCopyFit();
     });
 
     let stageObserver = null;
@@ -362,8 +387,10 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
       stageObserver = new ResizeObserver(() => {
         resizeField();
         applyCtaCapsule();
+        scheduleSlideCopyFit();
       });
       stageObserver.observe(heroStage);
+      if (pinned) stageObserver.observe(pinned);
     }
     if (heroStage && typeof IntersectionObserver !== "undefined") {
       visObserver = new IntersectionObserver(
@@ -382,7 +409,9 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
     }, { passive: true });
     window.addEventListener("mousemove", (e) => {
       syncReducedMotionFromMedia();
-      if (metaCursor) metaCursor.textContent = `${e.clientX}, ${e.clientY}`;
+      if (metaCursor && !insertCursor?.isMetaLocked("meta-cursor")) {
+        metaCursor.textContent = `${e.clientX}, ${e.clientY}`;
+      }
       const nx = width ? e.clientX / width - 0.5 : 0;
       const ny = height ? e.clientY / height - 0.5 : 0;
       if (grid) {
@@ -410,6 +439,7 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
         stageObserver?.disconnect();
         visObserver?.disconnect();
         chipInteractions?.dispose();
+        insertCursor?.dispose();
         effectsField?.stop();
       }
     };

@@ -205,6 +205,73 @@ body[class*="page-"] .meta-value {
   font-variant-numeric: tabular-nums;
 }
 
+body[class*="page-"] .hero-chrome .meta-value,
+body[class*="page-"] .hero-chrome .chrome-mark,
+body[class*="page-"] #meta-time {
+  pointer-events: auto;
+}
+
+/* DOS overwrite block caret — hero copy + HUD meta */
+body.hero-insert-hover .slide-content .eyebrow,
+body.hero-insert-hover .slide-content .title-char,
+body.hero-insert-hover .slide-content .title-word,
+body.hero-insert-hover .slide-content .sub,
+body.hero-insert-hover .slide-content .note,
+body.hero-insert-hover .slide-content .pilot-note,
+body.hero-insert-hover .chip-tree .chip-branch-text,
+body.hero-insert-hover .chip-tree .chip-branch-glitch,
+body.hero-insert-hover .hero-chrome .meta-value,
+body.hero-insert-hover .hero-chrome .chrome-mark,
+body.hero-insert-hover #meta-time,
+body.hero-insert-active .slide-content .eyebrow,
+body.hero-insert-active .slide-content .title-char,
+body.hero-insert-active .slide-content .title-word,
+body.hero-insert-active .slide-content .sub,
+body.hero-insert-active .slide-content .note,
+body.hero-insert-active .slide-content .pilot-note,
+body.hero-insert-active .chip-tree .chip-branch-text,
+body.hero-insert-active .chip-tree .chip-branch-glitch,
+body.hero-insert-active .hero-chrome .meta-value,
+body.hero-insert-active .hero-chrome .chrome-mark,
+body.hero-insert-active #meta-time {
+  cursor: crosshair;
+  user-select: none;
+}
+
+.hero-insert-block-caret {
+  position: fixed;
+  z-index: 220;
+  pointer-events: none;
+  opacity: 0;
+  border: none;
+  border-radius: 0;
+  background: var(--fg);
+  box-shadow: none;
+  mix-blend-mode: difference;
+}
+
+.hero-insert-block-caret.is-visible {
+  opacity: 1;
+  animation: hero-insert-blink 1.05s steps(1, end) infinite;
+}
+
+@keyframes hero-insert-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.2; }
+}
+
+body[class*="page-"] .hero-insert-tainted {
+  color: color-mix(in oklch, var(--accent) 72%, var(--fg));
+  text-shadow:
+    0 0 14px color-mix(in oklch, var(--accent) 30%, transparent),
+    -1px 0 color-mix(in oklch, var(--accent) 40%, transparent);
+}
+
+body.reduced-motion .hero-insert-block-caret.is-visible {
+  animation: none;
+  opacity: 0.95;
+}
+
 body[class*="page-"] .theme-toggle {
   appearance: none;
   display: inline-flex;
@@ -412,6 +479,9 @@ body[class*="page-"] .slide-content {
   display: grid;
   gap: 14px;
   transform-style: preserve-3d;
+  container-type: inline-size;
+  container-name: hero-slide;
+  min-width: 0;
 }
 
 body[class*="page-"] .slide-content:not(.is-visible):not(.is-glitch-entering) .text-el[data-layer],
@@ -437,17 +507,22 @@ body[class*="page-"] .slide-content .eyebrow {
 
 body[class*="page-"] .slide-content h1 {
   margin: 0;
-  font-size: clamp(2rem, 6.8vw, 4.8rem);
+  font-size: calc(clamp(2rem, 6.8vw, 4.8rem) * var(--title-fit-scale, 1));
   font-weight: 600;
-  line-height: 0.92;
+  line-height: 0.96;
   letter-spacing: -0.04em;
   color: var(--fg);
   transform-style: preserve-3d;
+  text-wrap: balance;
+  max-width: 100%;
+  min-width: 0;
 }
 
 body[class*="page-"] .title-block {
   display: block;
   transform-style: preserve-3d;
+  max-width: 100%;
+  min-width: 0;
 }
 
 body[class*="page-"] .title-word {
@@ -455,6 +530,7 @@ body[class*="page-"] .title-word {
   margin-right: 0.14em;
   transform-style: preserve-3d;
   opacity: 1;
+  white-space: nowrap;
 }
 
 body[class*="page-"] .title-char {
@@ -465,18 +541,24 @@ body[class*="page-"] .title-char {
 
 body[class*="page-"] .slide-content .sub {
   margin: 0;
-  max-width: 58ch;
+  max-width: min(58ch, 100%);
   font-size: clamp(0.92rem, 1.8vw, 1.12rem);
   line-height: 1.55;
   color: var(--muted);
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
 }
 
 body[class*="page-"] .slide-content .note {
   margin: 0;
-  max-width: 52ch;
+  max-width: min(52ch, 100%);
   font-size: 0.82rem;
   line-height: 1.6;
   color: var(--meta);
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
 }
 
 body[class*="page-"] .slide-content .pilot-note {
@@ -689,17 +771,26 @@ body[class*="page-"] .proof-chip .chip-branch-stem {
   align-self: flex-start;
 }
 
+body[class*="page-"] .proof-chip .chip-label,
+body[class*="page-"] .proof-chip .chip-detail {
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
 body[class*="page-"] .proof-chip .chip-branch-text {
   display: flex;
   align-items: flex-start;
   gap: 5px;
   flex: 1;
   min-width: 0;
-  max-width: 220px;
+  max-width: min(220px, 72cqw);
   padding-left: 4px;
   font: inherit;
   color: var(--meta);
   white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
 }
 
 body[class*="page-"] .proof-chip .chip-branch-text::before {
@@ -717,6 +808,8 @@ body[class*="page-"] .proof-chip .chip-branch-glitch {
   line-height: 1.4;
   opacity: 0;
   will-change: transform, opacity;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 body[class*="page-"] .proof-chip.is-hovered .chip-branch-text,
@@ -1035,7 +1128,45 @@ body[class*="page-"] .cta-link .cta-label {
   color: inherit;
 }
 
+@container hero-slide (max-width: 640px) {
+  body[class*="page-"] .slide-content h1 {
+    font-size: calc(clamp(1.55rem, 9.5cqw, 2.55rem) * var(--title-fit-scale, 1));
+    line-height: 1;
+  }
+
+  body[class*="page-"] .slide-content .sub {
+    font-size: clamp(0.84rem, 3.9cqw, 1.02rem);
+  }
+
+  body[class*="page-"] .slide-content .note {
+    font-size: clamp(0.76rem, 3.2cqw, 0.82rem);
+  }
+
+  body[class*="page-"] .slide-content .eyebrow {
+    font-size: clamp(0.58rem, 2.9cqw, 0.68rem);
+    letter-spacing: 0.18em;
+  }
+}
+
+@container hero-slide (max-width: 380px) {
+  body[class*="page-"] .slide-content h1 {
+    font-size: calc(clamp(1.32rem, 10.5cqw, 2rem) * var(--title-fit-scale, 1));
+  }
+
+  body[class*="page-"] .title-word {
+    margin-right: 0.1em;
+  }
+}
+
 @media (max-width: 720px) {
+  body[class*="page-"] {
+    --hero-width: min(920px, calc(100vw - 28px));
+  }
+
+  body[class*="page-"] .pinned {
+    padding: 0 4px;
+  }
+
   body[class*="page-"] .hero-chrome {
     padding: 14px 16px;
   }
