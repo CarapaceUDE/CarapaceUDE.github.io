@@ -653,6 +653,15 @@ footer { margin-top: 0 !important; padding: 2.2rem 0 3rem !important; border-top
 }
 footer .wrap { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 footer .footer-sources { flex-basis: 100%; line-height: 1.55; }
+footer .site-copyright {
+  flex: 1 1 100%;
+  margin-top: .75rem;
+  padding-top: .75rem;
+  border-top: 1px solid rgba(112, 150, 192, .12);
+  color: var(--muted) !important;
+  font-size: .68rem !important;
+  letter-spacing: .02em;
+}
 footer a { color: var(--muted-strong) !important; }
 
 /* Home: sources → rule → reserved band for fixed hero chrome */

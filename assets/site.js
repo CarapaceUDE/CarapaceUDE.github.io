@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2026 Carapace LLC. All rights reserved.
+ *
+ * Carapace site shell — navigation, Cortex brand logo init, layout helpers.
+ * Proprietary; unauthorized copying or distribution prohibited.
+ */
 (function () {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -164,7 +170,6 @@
 
     syncThemeUi(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
   }
-
   function getAssetsBase() {
     const script = document.querySelector('script[src*="site.js"]');
     if (!script) return 'assets/';
@@ -186,12 +191,13 @@
     });
   }
 
+  /** Copyright (c) 2026 Carapace LLC — Cortex brand logo initialization. */
   function setupBrandLogos() {
     const logos = document.querySelectorAll('[data-cortex-brand-logo]');
     if (!logos.length) return;
 
     const base = getAssetsBase();
-    loadScript(base + 'harness-brain-canvas.js?v=20260706a')
+    loadScript(base + 'harness-brain-canvas.js?v=20260706b')
       .then(function () {
         const init = window.initCortexBrandLogoCanvas || window.initCortexHubTabOrbCanvas;
         if (typeof init !== 'function') return;
@@ -207,7 +213,18 @@
       .catch(function () {
         /* conic ring shell still renders without canvas */
       });
+  }
 
+  function setupFooterCopyright() {
+    document.querySelectorAll('footer').forEach(function (footer) {
+      if (footer.querySelector('.site-copyright')) return;
+
+      const wrap = footer.querySelector('.wrap') || footer;
+      const line = document.createElement('div');
+      line.className = 'site-copyright';
+      line.textContent = '\u00A9 2026 Carapace LLC. All rights reserved.';
+      wrap.appendChild(line);
+    });
   }
 
   function bootSite() {
@@ -217,6 +234,7 @@
     setupHeroTilt();
     setupHomeThemeToggle();
     setupBrandLogos();
+    setupFooterCopyright();
     if (typeof window.setupChromeSocial === "function") window.setupChromeSocial();
   }
 

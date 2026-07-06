@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Official Builds &amp; Patreon | Carapace</title>
+  <meta name="description" content="How Carapace distributes official pre-compiled binaries through Patreon early access — without restricting your right to build, modify, or distribute from source under the MIT License." />
+  <meta name="theme-color" content="#030711" />
+  <link rel="stylesheet" href="../assets/site.css?v=20260626" />
+  <style>
+    .page-patreon {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .page-patreon .patreon-shell {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.25rem 0 2.5rem;
+    }
+
+    .page-patreon .patreon-panel,
+    .page-patreon .patreon-section {
+      width: min(calc(100% - 2rem), 680px);
+    }
+
+    .page-patreon .patreon-panel {
+      padding: 1.5rem 1.35rem 1.25rem;
+      border: 1px solid rgba(112, 150, 192, .18);
+      border-radius: 8px;
+      background: rgba(10, 18, 32, .72);
+    }
+
+    .page-patreon .patreon-panel h1 {
+      margin: 0 0 .55rem !important;
+      font-size: 1.55rem !important;
+      font-weight: 700 !important;
+      line-height: 1.2 !important;
+      letter-spacing: -.02em !important;
+    }
+
+    .page-patreon .patreon-kicker {
+      margin: 0 0 .75rem;
+      color: var(--copper);
+      font: 600 .68rem/1.4 Roboto Mono, monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .page-patreon .lead {
+      margin: 0 0 1rem;
+      color: #e1e8f5;
+      font-size: .98rem;
+      line-height: 1.6;
+    }
+
+    .page-patreon .rights-callout {
+      margin: 0 0 1rem;
+      padding: .9rem 1rem;
+      border: 1px solid rgba(124, 215, 255, .22);
+      border-radius: 6px;
+      background: rgba(67, 166, 255, .08);
+      color: #dce8ff;
+      font-size: .9rem;
+      line-height: 1.55;
+    }
+
+    .page-patreon .rights-callout strong {
+      display: block;
+      margin-bottom: .35rem;
+      color: #f5f7fb;
+      font-size: .92rem;
+    }
+
+    .page-patreon .patreon-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .55rem;
+      margin-top: .25rem;
+    }
+
+    .page-patreon .patreon-join,
+    .page-patreon .patreon-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      padding: .58rem 1rem;
+      border-radius: 6px;
+      font: 600 .76rem/1 Manrope, Inter, sans-serif;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      transition: background .15s ease, border-color .15s ease;
+    }
+
+    .page-patreon .patreon-join {
+      border: 1px solid rgba(255, 255, 255, .06);
+      background: #ff424d;
+      color: #fff !important;
+    }
+
+    .page-patreon .patreon-join::after,
+    .page-patreon .patreon-secondary::after {
+      content: none;
+    }
+
+    .page-patreon .patreon-join:hover {
+      transform: none;
+      background: #ff5a63;
+      box-shadow: none;
+    }
+
+    .page-patreon .patreon-secondary {
+      border: 1px solid rgba(112, 150, 192, .28);
+      background: rgba(12, 22, 38, .6);
+      color: var(--muted-strong) !important;
+    }
+
+    .page-patreon .patreon-secondary:hover {
+      transform: none;
+      border-color: rgba(124, 215, 255, .35);
+      background: rgba(16, 29, 51, .75);
+      color: var(--text) !important;
+    }
+
+    .page-patreon .patreon-section {
+      margin-top: 1.5rem;
+      padding: 1.25rem 1.2rem 1.1rem;
+      border: 1px solid rgba(112, 150, 192, .14);
+      border-radius: 8px;
+      background: rgba(8, 14, 26, .55);
+      scroll-margin-top: 5rem;
+    }
+
+    .page-patreon .patreon-section h2 {
+      margin: 0 0 .55rem !important;
+      font-size: 1.12rem !important;
+      font-weight: 700 !important;
+      line-height: 1.25 !important;
+      letter-spacing: -.02em !important;
+    }
+
+    .page-patreon .patreon-section p,
+    .page-patreon .patreon-section li {
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.58;
+    }
+
+    .page-patreon .patreon-section p {
+      margin: 0 0 .85rem;
+    }
+
+    .page-patreon .patreon-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .page-patreon .patreon-section ul {
+      margin: .5rem 0 .85rem;
+      padding-left: 1.15rem;
+    }
+
+    .page-patreon .patreon-section li {
+      margin-bottom: .45rem;
+    }
+
+    .page-patreon .patreon-section li:last-child {
+      margin-bottom: 0;
+    }
+
+    .page-patreon .example-grid {
+      display: grid;
+      gap: .55rem;
+      margin: .75rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .page-patreon .example-grid li {
+      margin: 0;
+      padding: .6rem .7rem;
+      border: 1px solid rgba(112, 150, 192, .12);
+      border-radius: 6px;
+      background: rgba(6, 12, 22, .45);
+    }
+
+    .page-patreon .example-grid strong {
+      display: block;
+      margin-bottom: .15rem;
+      color: var(--text);
+      font-size: .86rem;
+      font-weight: 600;
+    }
+
+    .page-patreon .example-grid span {
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .page-patreon .patreon-section a {
+      color: var(--blue-soft) !important;
+    }
+
+    .page-patreon footer {
+      padding: 1rem 0 1.25rem !important;
+      font-size: .72rem !important;
+    }
+
+    @media (max-width: 640px) {
+      .page-patreon .patreon-shell {
+        padding-top: .85rem;
+      }
+
+      .page-patreon .patreon-panel h1 {
+        font-size: 1.32rem !important;
+      }
+
+      .page-patreon .patreon-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .page-patreon .patreon-join,
+      .page-patreon .patreon-secondary {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body class="page-patreon">
+  <nav class="nav" aria-label="Primary navigation">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html" aria-label="Carapace home">
+        <span class="cortex-brand-logo" data-cortex-brand-logo aria-hidden="true">
+          <span class="cortex-brand-logo__ring"></span>
+          <span class="cortex-brand-logo__brain">
+            <canvas class="cortex-brand-logo__canvas"></canvas>
+          </span>
+        </span>
+        <span>Carapace</span>
+      </a>
+      <div class="links">
+        <a href="../index.html">Home</a>
+        <a href="../business.html">How We Help</a>
+        <a href="../solutions.html">Solutions</a>
+        <a href="../licensing.html">Licensing</a>
+        <a href="../ideas/">Pitch Deck</a>
+        <a href="../about.html">About</a>
+        <a href="../cortex.html">Cortex</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="patreon-shell">
+    <section class="patreon-panel" aria-labelledby="patreon-heading">
+      <p class="patreon-kicker">Official build distribution</p>
+      <h1 id="patreon-heading">Patreon Early Access Builds</h1>
+      <p class="lead">
+        Carapace open-sources its projects under the MIT License. Patreon is how we distribute
+        <strong>official pre-compiled binaries</strong> during early access — not a paywall on the software itself.
+      </p>
+
+      <div class="rights-callout" role="note">
+        <strong>You are not gated from building or distributing binaries.</strong>
+        Anyone may view, modify, compile, and share builds from our source code. If you distribute a
+        community build, remove Carapace branding (the Carapace name and marks) so it is not presented
+        as an official release, and retain the MIT copyright notice for Carapace LLC.
+      </div>
+
+      <div class="patreon-actions">
+        <a class="patreon-join" href="https://www.patreon.com/c/CarapaceAI" target="_blank" rel="noreferrer">
+          Support on Patreon
+        </a>
+        <a class="patreon-secondary" href="../discord/">Community Discord</a>
+        <a class="patreon-secondary" href="https://github.com/CarapaceUDE" target="_blank" rel="noreferrer">Source on GitHub</a>
+      </div>
+    </section>
+
+    <section class="patreon-section" id="why-patreon" aria-labelledby="why-heading">
+      <h2 id="why-heading">Why we do this</h2>
+      <p>
+        When we open-source a new project, we are usually months into development with limited runway.
+        Distributing official binaries through Patreon serves two practical goals at once:
+      </p>
+      <ul>
+        <li>
+          <strong>Early access for capable users.</strong> Pre-compiled builds let developers and power
+          users try the software immediately, file useful feedback, and help us harden releases before
+          wider distribution — without requiring everyone to compile on day one.
+        </li>
+        <li>
+          <strong>Financial support when it matters most.</strong> Patreon is primarily a way to fund
+          ongoing development during the fragile early phase of each open-source project. It is support,
+          not a license to use the source.
+        </li>
+      </ul>
+      <p>
+        We are working toward making official binaries available directly from Carapace for everyone.
+        Patreon is the bridge until those releases are ready.
+      </p>
+    </section>
+
+    <section class="patreon-section" id="your-rights" aria-labelledby="rights-heading">
+      <h2 id="rights-heading">Your rights</h2>
+      <p><strong>Source code — everyone.</strong> Our open-source repositories are MIT-licensed. You may use, modify, build, and distribute software compiled from that source, provided you include the copyright notice for Carapace LLC and the MIT license text.</p>
+      <p><strong>Community builds.</strong> You may share binaries you compile yourself or receive from another community member. Those builds are not official Carapace releases. Do not use Carapace branding in a way that implies endorsement or origin from Carapace LLC.</p>
+      <p><strong>Official binaries — supporters.</strong> If you obtain an official binary from Carapace LLC through Patreon, you receive a personal, non-transferable license to install and run that binary for your own use. You may not redistribute, resell, or publicly host official binaries unless we give written permission.</p>
+    </section>
+
+    <section class="patreon-section" id="build-from-source" aria-labelledby="build-heading">
+      <h2 id="build-heading">Building from source</h2>
+      <p>
+        You do not need Patreon to use our software. Clone the repository, follow the README build
+        instructions, and run your own binary. If you get stuck, join our
+        <a href="../discord/">community Discord</a> — we offer limited setup and build help there for
+        both supporters and anyone compiling from source.
+      </p>
+    </section>
+
+    <section class="patreon-section" id="others-do-this" aria-labelledby="others-heading">
+      <h2 id="others-heading">A common pattern in open source</h2>
+      <p>
+        Keeping source fully open while offering supporter channels for convenience, early access, or
+        funding is well established. Other projects you may already use take a similar approach:
+      </p>
+      <ul class="example-grid">
+        <li>
+          <strong>Godot Engine</strong>
+          <span>Free and open source under the MIT License, with Patreon and other supporter channels funding core development.</span>
+        </li>
+        <li>
+          <strong>OBS Studio</strong>
+          <span>Completely open source; official project funding and contributor support run partly through Patreon and sponsorships.</span>
+        </li>
+        <li>
+          <strong>Home Assistant</strong>
+          <span>The platform is open source and self-hostable; Nabu Casa provides a paid supporter path that funds development without locking out builders.</span>
+        </li>
+        <li>
+          <strong>Krita</strong>
+          <span>Free, GPL-licensed creative software sustained by donations and community funding while remaining fully buildable from source.</span>
+        </li>
+      </ul>
+      <p>
+        We follow the same principle: the source stays open, the community can always build, and
+        supporter channels help us ship faster while the project is still finding its footing.
+      </p>
+    </section>
+
+    <section class="patreon-section" id="questions" aria-labelledby="questions-heading">
+      <h2 id="questions-heading">Questions</h2>
+      <p>
+        Licensing questions: <a href="mailto:security@carapaceai.org">security@carapaceai.org</a>.
+        Build help and community support: <a href="../discord/">Discord</a>.
+        Cortex commercial licensing is separate — see <a href="../licensing.html">Licensing</a>.
+      </p>
+    </section>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div>Carapace LLC · Copyright © 2026</div>
+      <div>
+        <a href="../business.html">How We Help</a> ·
+        <a href="../licensing.html">Licensing</a> ·
+        <a href="https://github.com/CarapaceUDE" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/cortex-bloom-bg.js"></script>
+  <script src="../assets/site.js?v=20260626"></script>
+</body>
+</html>
