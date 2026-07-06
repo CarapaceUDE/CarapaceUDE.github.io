@@ -1,2 +1,6 @@
 node_modules/
 npm-debug.log*
+
+# Dev-only pitch archives (too large for GitHub Pages artifact limit)
+ideas/Carapace_Cortex_Final_Refined_Slideshow_STANDALONE.html
+ideas/Carapace_Cortex_Final_Refined_Web_Deck.zip
