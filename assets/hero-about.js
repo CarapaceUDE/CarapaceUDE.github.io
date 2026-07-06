@@ -1,10 +1,10 @@
-import { initScrollHero } from "./hero-core.js";
+import { initScrollHero } from "./hero-core.js?v=20260706b";
 
 export const HERO_SLIDES = [
   {
     eyebrow: "Who We Are",
     title: "Builders First",
-    sub: "Carapace is the company behind Cortex — we build the software, deploy it into real workflows, and turn proven patterns into durable systems a business can own.",
+    sub: "Carapace is the company behind Cortex. We build the software, deploy it into real workflows, and turn proven patterns into durable systems a business can own.",
     note: "Technology in service of human capability. No AI theater required.",
     proof: [
       { label: "Carapace", detail: "Infrastructure partner & implementation." },
@@ -18,7 +18,7 @@ export const HERO_SLIDES = [
     eyebrow: "Our Mission",
     title: "Leverage Not Replacement",
     sub: "Put practical AI within reach of everyday businesses without surrendering control of data, workflows, or strategy.",
-    note: "The goal is leverage — a stronger team supported by systems that absorb work people should not carry.",
+    note: "The goal is leverage: a stronger team supported by systems that absorb work people should not carry.",
     proof: [
       { label: "Human-centered", detail: "Judgment, care, and craft stay human." },
       { label: "Owner-operators", detail: "Serious tools without enterprise overhead." }
@@ -31,7 +31,7 @@ export const HERO_SLIDES = [
     eyebrow: "What We Believe",
     title: "Four Durable Principles",
     sub: "Our technical and commercial choices follow beliefs that compound over time.",
-    note: "Useful technology should make people more capable — not more dependent.",
+    note: "Useful technology should make people more capable, not more dependent.",
     proof: [
       { label: "Human capability", detail: "Offload repeatable work." },
       { label: "Access beyond enterprise", detail: "Tools for lean teams." },
@@ -46,7 +46,7 @@ export const HERO_SLIDES = [
     eyebrow: "Cortex Ontology",
     title: "Six Intelligence Layers",
     sub: "Cortex organizes information into a living map of how your business actually works.",
-    note: "Not a folder system — a private operating layer for real processes.",
+    note: "Not a folder system, a private operating layer for real processes.",
     proof: [
       { label: "Your World", detail: "People, tools, and context." },
       { label: "Your Processes", detail: "Repeatable operational flows." },
@@ -63,9 +63,9 @@ export const HERO_SLIDES = [
     eyebrow: "Why We Exist",
     title: "Intelligence Sovereignty",
     sub: "Your data, workflows, business memory, and operational knowledge should not be extracted into someone else's platform just to make AI useful.",
-    note: "Trust you can inspect — policies, routing, and audit trails stay visible.",
+    note: "Trust you can inspect: policies, routing, and audit trails stay visible.",
     proof: [
-      { label: "Private boundary", detail: "Runs close to you — locally or in your VPC." },
+      { label: "Private boundary", detail: "Runs close to you, locally or in your VPC." },
       { label: "Inspectable", detail: "No mystery-box governance." }
     ],
     oklch: { L: 0.48, h: 280, rel: 0.28 },
@@ -85,7 +85,7 @@ export const HERO_SLIDES = [
       },
       {
         label: "@ascendism",
-        detail: "UI expert and developer — interfaces, product craft, and implementation.",
+        detail: "UI expert and developer: interfaces, product craft, and implementation.",
         source: "https://github.com/ascendism"
       }
     ],

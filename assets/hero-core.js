@@ -1,19 +1,19 @@
 import { init, oklch2rgb_rel, getCapsule } from "https://esm.sh/@wenhaoqi/wasm_design_utils@0.2.0";
-import { DEFAULT_EFFECT_HUE } from "./hero-constants.js";
+import { DEFAULT_EFFECT_HUE } from "./hero-constants.js?v=20260706b";
 import {
   heroStageHeightVh,
   progressToSlide,
   effectMixFromFrac,
   pinnedFadeT,
   scrollMetrics
-} from "./hero-scroll-math.js";
-import { HeroTextAnime } from "./text-anime.js";
-import { AnimeEffectsField } from "./effects-anime.js";
-import { HeroChipInteractions } from "./chip-interactions.js";
-import { HeroInsertCursor } from "./hero-insert-cursor.js";
-import { fitHeroSlideCopy } from "./hero-title-fit.js";
-import { INTERACTIVE_EFFECTS } from "./effects-goal-contract.js";
-import { clickAllowed, isEmptyHeroClick } from "./effects-interaction.js";
+} from "./hero-scroll-math.js?v=20260706b";
+import { HeroTextAnime } from "./text-anime.js?v=20260706b";
+import { AnimeEffectsField } from "./effects-anime.js?v=20260706b";
+import { HeroChipInteractions } from "./chip-interactions.js?v=20260706b";
+import { HeroInsertCursor } from "./hero-insert-cursor.js?v=20260706b";
+import { fitHeroSlideCopy } from "./hero-title-fit.js?v=20260706b";
+import { INTERACTIVE_EFFECTS } from "./effects-goal-contract.js?v=20260706b";
+import { clickAllowed, isEmptyHeroClick } from "./effects-interaction.js?v=20260706b";
 
 export {
   PILOT_NOTE_DISCLAIMER,

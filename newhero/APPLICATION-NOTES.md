@@ -1,4 +1,4 @@
-# /newhero/ — Design Evaluation & Application Notes
+# /newhero/, Design Evaluation & Application Notes
 
 Notes for carrying the Carapace × Haoqi hero design into the live site or another framework.
 
@@ -6,13 +6,13 @@ Notes for carrying the Carapace × Haoqi hero design into the live site or anoth
 
 **Canonical artifact:** `hero.html` (+ `tokens.css`, `text-anime.js`, `effects-anime.js`)
 
-**Deprecated reference:** `carapace-final.html` — earlier Inter/sky-violet particle experiment. Do **not** port its aesthetic; keep only shared slide copy if useful.
+**Deprecated reference:** `carapace-final.html`, earlier Inter/sky-violet particle experiment. Do **not** port its aesthetic; keep only shared slide copy if useful.
 
 ---
 
 ## 1. What this design is
 
-A **pseudo-scroll narrative hero**: the user scrolls through a tall stage (`480vh`) while headline content stays pinned center-screen. Scroll progress maps to **8 discrete slides** + a final **CTA section** (`100vh`). The feel is "instrument panel / design engineer" — not SaaS marketing.
+A **pseudo-scroll narrative hero**: the user scrolls through a tall stage (`480vh`) while headline content stays pinned center-screen. Scroll progress maps to **8 discrete slides** + a final **CTA section** (`100vh`). The feel is "instrument panel / design engineer", not SaaS marketing.
 
 Inspired by [haoqi.design](https://haoqi.design/) **patterns** (mono spine, metadata chrome, quiet motion), not a pixel clone.
 
@@ -21,19 +21,14 @@ Inspired by [haoqi.design](https://haoqi.design/) **patterns** (mono spine, meta
 | Axis | Target |
 |------|--------|
 | Mood | Quiet, deliberate, engineered |
-| Typography | IBM Plex Mono everywhere — UI spine, not display + body split |
+| Typography | IBM Plex Mono everywhere, UI spine, not display + body split |
 | Color | OKLCH-native; per-slide atmosphere via hue shifts |
 | Motion | Restrained; threshold-based slides; word stagger ≤ 32ms |
-| Depth | Borders only — no glass, no neumorphism, no card shadows |
+| Depth | Borders only, no glass, no neumorphism, no card shadows |
 | Craft signals | WASM capsule SVG paths on chips + CTA only |
 
-### Anti-patterns (explicitly rejected)
-
-- Inter + sky/violet gradients (`carapace-final.html` style)
-- `backdrop-filter` blur cards
-- Bouncy springs, heavy particle fireworks
-- Squircle/capsule on every element
-- Generic "craft and innovation" filler
+### Anti-patterns (explicitly rejected), Inter + sky/violet gradients (`carapace-final.html` style)
+- `backdrop-filter` blur cards, Bouncy springs, heavy particle fireworks, Squircle/capsule on every element, Generic "craft and innovation" filler
 
 ---
 
@@ -48,7 +43,7 @@ newhero/
 ├── hero.html              # ★ Canonical implementation
 ├── text-anime.js          # Slide typography choreography (anime.js v4)
 ├── effects-anime.js       # Canvas background effects (anime.js v4)
-├── carapace-final.html    # ✗ Old prototype — Inter, particles, glass
+├── carapace-final.html    # ✗ Old prototype, Inter, particles, glass
 └── APPLICATION-NOTES.md   # This file
 ```
 
@@ -58,7 +53,7 @@ newhero/
 |---------|---------|----------|
 | `@wenhaoqi/wasm_design_utils` | 0.2.0 | `init()`, `oklch2rgb_rel()`, `getCapsule()` |
 | `animejs` | 4.0.2 | Timelines, canvas animation loops |
-| Google Fonts | — | IBM Plex Mono 400–700 |
+| Google Fonts | - | IBM Plex Mono 400-700 |
 
 ---
 
@@ -105,10 +100,7 @@ Paste `:root` + `[data-theme="light"]` into any target stylesheet. Reference onl
 
 ### Theme switching
 
-- `document.documentElement.dataset.theme = "dark" | "light"`
-- Persist: `localStorage.setItem("carapace-theme", theme)`
-- Init before paint to avoid flash
-- Toggle updates `--bg`, `--fg`, accent inversion (light mode accent is darker)
+- `document.documentElement.dataset.theme = "dark" | "light"`, Persist: `localStorage.setItem("carapace-theme", theme)`, Init before paint to avoid flash, Toggle updates `--bg`, `--fg`, accent inversion (light mode accent is darker)
 
 ---
 
@@ -130,7 +122,7 @@ Paste `:root` + `[data-theme="light"]` into any target stylesheet. Reference onl
 
 ```js
 const stageTop = -stage.getBoundingClientRect().top;
-const stageHeight = stage.offsetHeight - window.innerHeight;
+const stageHeight = stage.offsetHeight, window.innerHeight;
 progress = clamp(stageTop / stageHeight, 0, 1);
 ```
 
@@ -140,11 +132,11 @@ progress = clamp(stageTop / stageHeight, 0, 1);
 const idx = Math.min(slides.length - 1, Math.floor(progress * slides.length));
 ```
 
-Slide changes only when `idx` changes — **not** on fractional scroll within a slide.
+Slide changes only when `idx` changes - **not** on fractional scroll within a slide.
 
 ### Cross-slide effect mixing
 
-When `frac = (progress * slides.length) - idx > 0.3` and not on last slide:
+When `frac = (progress * slides.length), idx > 0.3` and not on last slide:
 
 ```js
 mix = smoothstep(0.3, 0.96, frac);
@@ -155,11 +147,7 @@ Also lerps `bokeh` intensity between slides.
 
 ### Pinned fade-out
 
-At `progress > 0.78` (`--pinned-fade-start`):
-
-- Pinned opacity → 0 via smoothstep
-- Scroll hint hidden
-- CTA section (`min-height: 100vh`) takes over below stage
+At `progress > 0.78` (`--pinned-fade-start`):, Pinned opacity → 0 via smoothstep, Scroll hint hidden, CTA section (`min-height: 100vh`) takes over below stage
 
 ### Scroll hint
 
@@ -180,7 +168,7 @@ Each slide is a plain object:
   proof: ["Private", "..."],       // Max 3 chips
   oklch: { L: 0.55, h: 210, rel: 0.35 },  // Atmosphere hue
   effect: "shield",                // Canvas effect id
-  bokeh: 0.28                      // 0–1 intensity
+  bokeh: 0.28                      // 0-1 intensity
 }
 ```
 
@@ -194,7 +182,7 @@ Each slide is a plain object:
 | 4 | The Layer | Private AI Infrastructure | stack | 230 |
 | 5 | The Business Case | Replace SaaS Waste | magnet | 45 |
 | 6 | The ROI Signal | 3.7× Average ROI | signal | 145 |
-| 7 | The Time Dividend | 5–7+ Hours Back | chrono | 195 |
+| 7 | The Time Dividend | 5-7+ Hours Back | chrono | 195 |
 | 8 | The Entry Point | Start Small. Prove Value. | ping | 250 |
 
 **CTA (not a slide):** "Ready to own your intelligence?" → Discovery Sprint mailto.
@@ -227,11 +215,11 @@ Slide 3 title differs: final uses "Stop Using People as Glue"; canonical hero us
 
 ### Text hierarchy CSS
 
-- `.eyebrow` — accent, 0.68rem, tracking 0.22em, subtle accent text-shadow
-- `h1` — weight 600, lh 0.92, tracking -0.04em
-- `.sub` — muted, clamp body size, max-width 58ch
-- `.note` — meta color, 0.82rem, max-width 52ch
-- `.proof-chip` — surface fill, 1px border; WASM capsule SVG stroke overlaid
+- `.eyebrow`, accent, 0.68rem, tracking 0.22em, subtle accent text-shadow
+- `h1`, weight 600, lh 0.92, tracking -0.04em
+- `.sub`, muted, clamp body size, max-width 58ch
+- `.note`, meta color, 0.82rem, max-width 52ch
+- `.proof-chip`, surface fill, 1px border; WASM capsule SVG stroke overlaid
 
 ---
 
@@ -243,13 +231,9 @@ Slide 3 title differs: final uses "Stop Using People as Glue"; canonical hero us
 
 8 preset pairs (`ENTER[]` / `EXIT[]`) indexed by `slideIndex % 8`. Each uses 3D transforms:
 
-- `z`, `rotateX`, `rotateY`, `rotateZ`, `x`, `y`, `opacity`
-- Easing: `outExpo` / `inExpo` / `out(3)`
+- `z`, `rotateX`, `rotateY`, `rotateZ`, `x`, `y`, `opacity`, Easing: `outExpo` / `inExpo` / `out(3)`
 
-**Special slides:**
-
-- Index 5 (ROI): scatter enter/exit — elements fly from computed offsets
-- Index 7 (Entry): orbit enter/exit — circular arrival paths
+**Special slides:**, Index 5 (ROI): scatter enter/exit, elements fly from computed offsets, Index 7 (Entry): orbit enter/exit, circular arrival paths
 
 ### Word-level animation
 
@@ -257,22 +241,17 @@ Separate `WORD_ENTER[]` / `WORD_EXIT[]` presets; stagger from center (`stagger(4
 
 ### Stage 3D tilt
 
-`STAGE_TILT[]` — per-slide `rotateX`/`rotateY` on `.stage-3d` during transitions; settles to 0 after enter.
+`STAGE_TILT[]`, per-slide `rotateX`/`rotateY` on `.stage-3d` during transitions; settles to 0 after enter.
 
 ### Timing
 
 | Mode | Enter | Exit |
 |------|-------|------|
 | Normal | 900ms | 580ms |
-| Slides 5, 7 | 1040ms | — |
+| Slides 5, 7 | 1040ms | - |
 | Reduced motion | 120ms | 80ms |
 
-### Application notes
-
-- Requires `perspective: 1500px` on `.pinned` and `transform-style: preserve-3d` on stage/content
-- After each enter, `settleTransforms()` zeroes all transforms (prevents drift)
-- Exit runs before DOM swap when slide index changes
-- Import as ES module; needs `type="module"` script tag
+### Application notes, Requires `perspective: 1500px` on `.pinned` and `transform-style: preserve-3d` on stage/content, After each enter, `settleTransforms()` zeroes all transforms (prevents drift), Exit runs before DOM swap when slide index changes, Import as ES module; needs `type="module"` script tag
 
 ---
 
@@ -307,13 +286,9 @@ Grid appearance is also controlled via `.atmosphere[data-effect="…"]` CSS over
 
 ### Hue
 
-`setHue(slide.oklch.h)` — all canvas draws use `hsla(hue, …)`.
+`setHue(slide.oklch.h)`, all canvas draws use `hsla(hue, …)`.
 
-### Reduced motion
-
-- Particle/column counts ~halved
-- Animation durations × 1.8
-- Frame rate 30fps vs 60fps
+### Reduced motion, Particle/column counts ~halved, Animation durations × 1.8, Frame rate 30fps vs 60fps
 
 ---
 
@@ -355,26 +330,18 @@ Fixed inset padding `18px 22px`. Pointer-events none except theme toggle.
 
 Left edge vertical ticks: 1px × 18px; active extends to 28px + accent color.
 
-### Mobile (`max-width: 720px`)
-
-- Hide slide rail
-- Hide time + scroll meta blocks (`.hide-mobile`)
-- Hide theme label text (icon only)
-- Reduce chrome padding
+### Mobile (`max-width: 720px`), Hide slide rail, Hide time + scroll meta blocks (`.hide-mobile`), Hide theme label text (icon only), Reduce chrome padding
 
 ---
 
-## 12. Atmosphere & grid parallax
-
-- Radial glow: `--glow` + per-slide `--slide-glow`
-- Grid: 48px default; cursor drift ±6px via `--grid-x/y` on mousemove
+## 12. Atmosphere & grid parallax, Radial glow: `--glow` + per-slide `--slide-glow`, Grid: 48px default; cursor drift ±6px via `--grid-x/y` on mousemove
 - `color-mix(in oklch, …)` on text veil for theme-aware scrim
 
 ---
 
 ## 13. CTA section pattern
 
-Separate from pinned hero — normal document flow after `.hero-stage`.
+Separate from pinned hero, normal document flow after `.hero-stage`.
 
 ```html
 <section class="cta-section">
@@ -385,12 +352,8 @@ Separate from pinned hero — normal document flow after `.hero-stage`.
     <a class="cta-link" href="…">Book the Discovery Sprint →</a>
   </div>
 </section>
-```
-
-- Left-aligned, `min(640px, 100%)` panel
-- `border-top: 1px solid var(--border)` separates from hero
-- CTA uses capsule WASM fill, uppercase, `var(--accent-on)` text on accent bg
-- No gradient, no glow shadow (per DESIGN.md)
+```, Left-aligned, `min(640px, 100%)` panel
+- `border-top: 1px solid var(--border)` separates from hero, CTA uses capsule WASM fill, uppercase, `var(--accent-on)` text on accent bg, No gradient, no glow shadow (per DESIGN.md)
 
 ---
 
@@ -399,18 +362,14 @@ Separate from pinned hero — normal document flow after `.hero-stage`.
 ### Recommended integration path
 
 1. **Replace** `index.html` hero (`#home-carousel-root` + Swiper) with newhero scroll stage OR offer as alternate route (`/hero`).
-2. **Import** `tokens.css` variables into `assets/site.css` `:root` — merge, don't duplicate conflicting `--bg`/`--text`.
+2. **Import** `tokens.css` variables into `assets/site.css` `:root`, merge, don't duplicate conflicting `--bg`/`--text`.
 3. **Swap font:** site currently uses Inter + Roboto Mono accents → hero requires **IBM Plex Mono only** for the hero region at minimum.
 4. **Bundle JS:** Move `text-anime.js` + `effects-anime.js` to `assets/` or `src/`; add build step or keep ESM imports.
 5. **Self-host WASM dep** or pin CDN version in production.
 6. **Align CTA** with `business.html#contact` intake form instead of mailto if that's the production path.
-7. **Reconcile narrative:** 8 scroll slides vs current 10-slide home carousel + pitch deck — decide single source of truth for copy.
+7. **Reconcile narrative:** 8 scroll slides vs current 10-slide home carousel + pitch deck, decide single source of truth for copy.
 
-### What can stay from current site
-
-- Nav links, footer structure, `cortex-bloom-bg.js` (only if not competing visually — likely remove in hero zone)
-- Discovery Sprint CTA destination
-- Carapace/Cortex naming split
+### What can stay from current site, Nav links, footer structure, `cortex-bloom-bg.js` (only if not competing visually, likely remove in hero zone), Discovery Sprint CTA destination, Carapace/Cortex naming split
 
 ### What must change
 
@@ -426,11 +385,10 @@ Separate from pinned hero — normal document flow after `.hero-stage`.
 
 See `design framework.txt` for target architecture:
 
-- `DesignProvider` — theme, reduced-motion, WASM init
-- `MetadataRail` — chrome component
-- `AdaptiveImage` — optional palette extraction (not used in current hero)
-- `Squircle` / `Capsule` — wrap WASM path generation
-- Hero as client component with scroll listener + `HeroTextAnime` class
+- `DesignProvider`, theme, reduced-motion, WASM init
+- `MetadataRail`, chrome component
+- `AdaptiveImage`, optional palette extraction (not used in current hero)
+- `Squircle` / `Capsule`, wrap WASM path generation, Hero as client component with scroll listener + `HeroTextAnime` class
 
 ### Open Design workflow
 
@@ -449,40 +407,22 @@ See `design framework.txt` for target architecture:
 - [ ] Decorative canvases `aria-hidden="true"` (present)
 - [ ] `prefers-reduced-motion` disables grid drift, cuts particles, shortens all transitions (present)
 - [ ] Ensure OKLCH contrast in light mode (accent-on vs accent)
-- [ ] Keyboard users can't advance slides without scroll — consider arrow keys or skip link
+- [ ] Keyboard users can't advance slides without scroll, consider arrow keys or skip link
 - [ ] Proof chips need meaningful text (not icon-only) ✓
 
 ---
 
-## 16. Performance notes
-
-- Two full-viewport canvases + anime.js timers run continuously — pause when hero off-screen if porting to multi-page site
+## 16. Performance notes, Two full-viewport canvases + anime.js timers run continuously, pause when hero off-screen if porting to multi-page site
 - `slideGlowCache` prevents repeated WASM color calls
-- `slideRenderToken` prevents race on fast scroll
-- DPR capped at 2 for canvas
-- Resize re-inits effect state + CTA capsule
+- `slideRenderToken` prevents race on fast scroll, DPR capped at 2 for canvas, Resize re-inits effect state + CTA capsule
 
 ---
 
 ## 17. Quick "do / don't" for implementers
 
-**Do**
+**Do**, Keep hero width editorial (`920px` max), not full-bleed, Use threshold-based slide jumps, Let metadata chrome feel alive (clock, cursor, scroll %), Cap proof chips at 3, Test light + dark theme on every slide, Graceful degrade without WASM
 
-- Keep hero width editorial (`920px` max), not full-bleed
-- Use threshold-based slide jumps
-- Let metadata chrome feel alive (clock, cursor, scroll %)
-- Cap proof chips at 3
-- Test light + dark theme on every slide
-- Graceful degrade without WASM
-
-**Don't**
-
-- Port `carapace-final.html` glass/blur/gradient CTA
-- Add Inter or sky-violet palette
-- Make slides continuous/scrubbable — discrete is intentional
-- Put squircles on headings or nav
-- Use image palettes as brand colors without review
-- Stack hero carousel AND scroll hero on same page
+**Don't**, Port `carapace-final.html` glass/blur/gradient CTA, Add Inter or sky-violet palette, Make slides continuous/scrubbable, discrete is intentional, Put squircles on headings or nav, Use image palettes as brand colors without review, Stack hero carousel AND scroll hero on same page
 
 ---
 

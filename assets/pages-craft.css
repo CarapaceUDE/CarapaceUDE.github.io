@@ -1,4 +1,4 @@
-/* Photo-hero craft layer — scrims stay dark for legibility in both themes */
+/* Photo-hero craft layer, scrims stay dark for legibility in both themes */
 
 :root {
   --hero-scrim-strong: color-mix(in oklch, oklch(0.14 0.012 265) 94%, transparent);

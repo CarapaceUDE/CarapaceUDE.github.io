@@ -2,6 +2,7 @@
  * Contextual second/third lines for proof-chip dropdowns (from site copy).
  * Used when a chip has no explicit `nodes` array.
  */
+import { sanitizeCopyText } from "./copy-sanitize.js?v=20260706b";
 export const CHIP_LABEL_EXTRAS = {
   Private: ["Your data stays inside your boundary.", "Not a shared multi-tenant layer."],
   "Model-independent": ["Route across frontier, local, and private cloud.", "No rewrite when providers change."],
@@ -11,7 +12,7 @@ export const CHIP_LABEL_EXTRAS = {
   "Less routing": ["Connect email, files, and portals once.", "Governed execution instead of inbox babysitting."],
   "Less copy/paste": ["Humans stay on judgment and craft.", "Systems absorb repeatable glue work."],
   "Your workflows": ["Encoded as reusable operational intelligence.", "Compounds inside your organization."],
-  "Your knowledge": ["Grounded in your systems — not the public web.", "Private boundary by default."],
+  "Your knowledge": ["Grounded in your systems, not the public web.", "Private boundary by default."],
   Consolidation: ["Replace overlapping SaaS overhead.", "One automation layer across tools."],
   Automation: ["Savings compound as workflows reuse patterns.", "Measure wins before you scale."],
   "IDC / Microsoft": ["IDC 2024 Business Opportunity of AI study.", "$3.70 return per $1 invested in generative AI."],
@@ -24,12 +25,12 @@ export const CHIP_LABEL_EXTRAS = {
   Cortex: ["Open-core control plane software.", "Model-independent routing under your policies."],
   "Human-centered": ["Judgment, care, and craft stay human.", "Technology in service of human capability."],
   "Owner-operators": ["Serious tools without enterprise overhead.", "Access beyond the enterprise tier."],
-  "Human capability": ["Offload repeatable work — not judgment.", "Useful systems make teams more capable."],
+  "Human capability": ["Offload repeatable work, not judgment.", "Useful systems make teams more capable."],
   "Access beyond enterprise": ["Practical AI for lean teams.", "Owner-operators deserve serious tooling."],
   "Practical over performative": ["Real operations are the test.", "No AI theater required."],
   "Value that compounds": ["Reusable integrations and packages.", "Patterns improve with every deployment."],
   "Your World": ["People, tools, and operating context.", "The living map of how work actually runs."],
-  "Your Processes": ["Repeatable operational flows.", "Not a folder system — a process layer."],
+  "Your Processes": ["Repeatable operational flows.", "Not a folder system, a process layer."],
   "Your Decisions": ["Judgment points and policy gates.", "Explicit human checkpoints."],
   "Your Actions": ["Approved execution paths only.", "Governed automation after review."],
   "Your Boundaries": ["Custody, privacy, and governance.", "Data rules you can inspect."],
@@ -45,7 +46,7 @@ export const CHIP_LABEL_EXTRAS = {
   Connect: ["Bridge tools and data paths.", "Unified context for routing."],
   Build: ["Deploy governed automations.", "Prove one wedge before scaling."],
   "Small business": ["Access beyond enterprise pricing.", "Serious capability for lean teams."],
-  "Lean ops": ["No AI theater — practical operations.", "Human judgment stays in the loop."],
+  "Lean ops": ["No AI theater. Practical operations.", "Human judgment stays in the loop."],
   "Measured wins": ["Prove value before you scale.", "Pilot-phase outcomes you can inspect."],
   Governed: ["Policy, custody, and inspectability.", "Trust is a feature, not a promise."],
   Pilot: ["Controlled deployment and measurement.", "Validate fit in your environment."],
@@ -77,11 +78,11 @@ export const CHIP_LABEL_EXTRAS = {
   "Open-core": ["Inspectable agreements and software boundary.", "Read terms before you deploy."],
   "Personal free": ["Community edition for learning.", "No sales conversation to start."],
   "Community edition": ["Read and download the license.", "Self-host and evaluate fit."],
-  Evaluate: ["Assess fit in your environment.", "Under $100K revenue — continuous evaluation."],
-  "Platform license": ["$499/mo Cortex commercial access.", "Pilot-phase figure — subject to change."],
-  "Strategy retainer": ["$399/mo — up to 10 hours support.", "Additive to platform license."],
+  Evaluate: ["Assess fit in your environment.", "Under $100K revenue: continuous evaluation."],
+  "Platform license": ["$499/mo Cortex commercial access.", "Pilot-phase figure, subject to change."],
+  "Strategy retainer": ["$399/mo, up to 10 hours support.", "Additive to platform license."],
   "Commercial license": ["Business use agreement for live ops.", "Order form structures the engagement."],
-  "Extended support": ["$199/mo — 15 hours add-on.", "Optional; not a forced dependency."],
+  "Extended support": ["$199/mo, 15 hours add-on.", "Optional; not a forced dependency."],
   "Retainer terms": ["Ongoing refinements and help.", "Support stays additive to the product."],
   "No forced dependency": ["Support is optional after implementation.", "You control the deployment path."],
   "PDF grid": ["Downloadable agreements below.", "Inspectable boundaries for counsel and ops."],
@@ -97,7 +98,7 @@ export const CHIP_LABEL_EXTRAS = {
   "Living map": ["Processes, not folders.", "How the business actually works."],
   Reusable: ["Packages and patterns compound.", "Operational memory improves over time."],
   "Repeat work": ["Automate the glue between tools.", "Free humans for judgment."],
-  "Human judgment": ["Decisions stay explicit.", "AI assists — humans govern."],
+  "Human judgment": ["Decisions stay explicit.", "AI assists; humans govern."],
   "Follow-up": ["Leads and client touchpoints.", "Keep work from slipping."],
   Intake: ["Signal-to-work routing.", "Email, chat, and portal signals."],
   Ops: ["Admin drag reduction.", "Handoffs without babysitting."],
@@ -151,8 +152,8 @@ export function enrichProofChip(chip, slide, index) {
     const prev = slide.proof[index - 1];
     if (next?.detail) nodes.push(next.detail);
     else if (prev?.detail) nodes.push(prev.detail);
-    else if (slide.note) nodes.push(slide.note);
-    else if (slide.sub) nodes.push(slide.sub);
+    else if (slide.note) nodes.push(sanitizeCopyText(slide.note));
+    else if (slide.sub) nodes.push(sanitizeCopyText(slide.sub));
   }
 
   const expanded = expandDetailLines(chip.detail);
@@ -184,9 +185,9 @@ function looksLikeListItem(part) {
 
 export function expandDetailLines(detail) {
   if (!detail) return [];
-  const text = detail.trim();
-  if (text.includes(" — ")) {
-    return text.split(" — ").map(cleanListPart).filter(Boolean);
+  const text = sanitizeCopyText(detail.trim());
+  if (text.includes("; ")) {
+    return text.split("; ").map(cleanListPart).filter(Boolean);
   }
   if (text.includes(" → ")) {
     return text.split(" → ").map(cleanListPart).filter(Boolean);

@@ -1,10 +1,10 @@
-import { initScrollHero } from "./hero-core.js";
+import { initScrollHero } from "./hero-core.js?v=20260706b";
 
 export const HERO_SLIDES = [
   {
     eyebrow: "How We Help",
     title: "Your Private AI Team",
-    sub: "Carapace becomes your private AI infrastructure team — the human API between your business and the models, tools, and environments that should serve it.",
+    sub: "Carapace becomes your private AI infrastructure team: the human API between your business and the models, tools, and environments that should serve it.",
     note: "Start with one real workflow. Prove the value. Build outward from evidence.",
     proof: [
       { label: "Human API", detail: "Email, files, portals → governed execution." },
@@ -18,7 +18,7 @@ export const HERO_SLIDES = [
     eyebrow: "What We Do",
     title: "Scope Connect Build",
     sub: "We map friction, connect systems, and encode workflows as reusable operational intelligence inside Cortex.",
-    note: "Consulting where it matters — building where it compounds.",
+    note: "Consulting where it matters; building where it compounds.",
     proof: [
       { label: "Scope", detail: "Map workflows & quick wins." },
       { label: "Connect", detail: "Bridge tools & data paths." },
@@ -72,7 +72,7 @@ export const HERO_SLIDES = [
     eyebrow: "The Path",
     title: "Discover Deploy Expand",
     sub: "Map work, deploy safely inside your boundary, measure impact, then expand with governance intact.",
-    note: "Carapace guides adoption — Cortex carries the workflow layer.",
+    note: "Carapace guides adoption; Cortex carries the workflow layer.",
     proof: [
       { label: "Discover", detail: "Map friction & prioritize." },
       { label: "Deploy", detail: "Secure, isolated, governed." },
@@ -100,7 +100,7 @@ export const HERO_SLIDES = [
     eyebrow: "Commercial Path",
     title: "$12K → $24K+",
     sub: "Discovery Sprint entry, then pilot deployment and production package as value is proven.",
-    note: "Pilot-phase figures — subject to change after validation.",
+    note: "Pilot-phase figures, subject to change after validation.",
     pilotNote: true,
     proof: [
       { label: "Discovery Sprint", detail: "Focused scoping & first automations." },

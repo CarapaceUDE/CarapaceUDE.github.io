@@ -1,11 +1,11 @@
-import { initScrollHero } from "./hero-core.js";
+import { initScrollHero } from "./hero-core.js?v=20260706b";
 
 export const HERO_SLIDES = [
   {
     eyebrow: "Licensing",
     title: "Clarity Not Mystery",
     sub: "Cortex stays free for personal use. Carapace provides the commercial path, implementation help, and optional support when work goes live.",
-    note: "Read the terms before you talk to us — every agreement is downloadable below.",
+    note: "Read the terms before you talk to us. Every agreement is downloadable below.",
     proof: [
       { label: "Open-core", detail: "Inspectable software boundary." },
       { label: "Personal free", detail: "Community edition path." }
@@ -17,7 +17,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Personal Lane",
     title: "Free For Personal Use",
-    sub: "Explore Cortex directly under the community edition license — no sales conversation required to start learning.",
+    sub: "Explore Cortex directly under the community edition license with no sales conversation required to start learning.",
     note: "Download agreements and evaluate fit on your own timeline.",
     proof: [
       { label: "Community edition", detail: "Read & download the license." },
@@ -31,7 +31,7 @@ export const HERO_SLIDES = [
     eyebrow: "Evaluation Lane",
     title: "Under $100K Revenue",
     sub: "Smaller businesses can keep evaluating Cortex inside real operations before stepping into a broader commercial structure.",
-    note: "Continuous evaluation — not a forced conversion moment.",
+    note: "Continuous evaluation, not a forced conversion moment.",
     proof: [
       { label: "Evaluate", detail: "Assess fit in your environment." },
       { label: "Inspectable", detail: "Agreements you can scan." }
@@ -47,8 +47,8 @@ export const HERO_SLIDES = [
     note: "Tier figures reflect our current pilot testing phase.",
     pilotNote: true,
     proof: [
-      { label: "Platform license", detail: "$499/mo — Cortex commercial access." },
-      { label: "Strategy retainer", detail: "$399/mo — up to 10 hours support." },
+      { label: "Platform license", detail: "$499/mo for Cortex commercial access." },
+      { label: "Strategy retainer", detail: "$399/mo, up to 10 hours support." },
       { label: "Commercial license", detail: "Business use agreement." }
     ],
     oklch: { L: 0.55, h: 45, rel: 0.28 },
@@ -58,11 +58,11 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Support Additive",
     title: "Optional Retainer",
-    sub: "Strategy and support help that can be added after implementation — without becoming a disguised product requirement.",
-    note: "Pilot-phase pricing — subject to change after validation.",
+    sub: "Strategy and support help that can be added after implementation, without becoming a disguised product requirement.",
+    note: "Pilot-phase pricing, subject to change after validation.",
     pilotNote: true,
     proof: [
-      { label: "Extended support", detail: "$199/mo — 15 hours add-on." },
+      { label: "Extended support", detail: "$199/mo, 15 hours add-on." },
       { label: "Retainer terms", detail: "$399/mo strategy & support." },
       { label: "No forced dependency", detail: "Support is additive." }
     ],
@@ -73,7 +73,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Agreements",
     title: "Inspectable Boundaries",
-    sub: "NDAs, data segregation, sprint agreements, and commercial licenses — all downloadable for counsel and operators.",
+    sub: "NDAs, data segregation, sprint agreements, and commercial licenses, all downloadable for counsel and operators.",
     note: "Control should survive growth.",
     proof: [
       { label: "PDF grid", detail: "Current agreements below." },

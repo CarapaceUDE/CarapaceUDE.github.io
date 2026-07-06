@@ -43,6 +43,7 @@
   --chrome-footer-reserve: 120px;
   --hero-stage-height: 380vh;
   --hero-width: min(920px, calc(100vw - 48px));
+  --cta-inset-inline: max(24px, calc(env(safe-area-inset-left, 0px) + 20px), calc(env(safe-area-inset-right, 0px) + 20px));
   --section-y: 80px;
 
   /* Surface fills & scrims (theme-aware; no hardcoded rgba) */
@@ -593,7 +594,7 @@ body.page-core-skills { --hero-image: url('../ideas/8.png'); }
 .system-detail summary::-webkit-details-marker { display: none; }
 .system-detail summary::after { content: "+"; color: var(--blue); font: 400 1.3rem/1 var(--font-mono); }
 .system-detail[open] { border-color: var(--line-strong); background: var(--fill-surface-86); }
-.system-detail[open] summary::after { content: "−"; }
+.system-detail[open] summary::after { content: ", "; }
 .system-detail p { margin: 0; padding: 0 1.15rem 1.2rem; color: var(--muted); font-size: .9rem; }
 
 .pitch-frame { position: relative; display: block; overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: var(--ink-soft); box-shadow: var(--shadow); }
@@ -670,7 +671,7 @@ body.page-home .page-end-rule {
   margin: 0;
 }
 
-/* Hero chrome social — shared across hero and minimal pages */
+/* Hero chrome social, shared across hero and minimal pages */
 body[class*="page-"] {
   --chrome-social-hit: 2.85rem;
   --chrome-social-icon: 1.72rem;
@@ -760,7 +761,7 @@ body:not(.page-home) .cortex-brain-layer { opacity: .12 !important; transform: t
   .wrap { width: min(calc(100% - 1.4rem), var(--max)) !important; }
   h1 { font-size: clamp(2.65rem, 15vw, 4.3rem) !important; }
   h2 { font-size: clamp(1.7rem, 9vw, 2.7rem) !important; }
-  main > section { padding: 4.4rem 0 !important; }
+  main > section:not(.hero-cta-section):not(.hero-tail-section) { padding: 4.4rem 0 !important; }
   .hero { padding: 5rem 0 3.8rem !important; }
   .home-hero { min-height: calc(100svh - 68px) !important; }
   .home-hero-actions { min-height: 126px; flex-direction: column; gap: .55rem; }

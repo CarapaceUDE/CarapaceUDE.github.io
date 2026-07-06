@@ -1,6 +1,6 @@
-# Carapace / Cortex Pitch Deck — Loose Speaker Script
+# Carapace / Cortex Pitch Deck, Loose Speaker Script
 
-## Slide 1 — Own Your Intelligence
+## Slide 1, Own Your Intelligence
 
 This is the core idea behind Carapace.
 
@@ -14,11 +14,11 @@ The point is control. Your business sits at the center. Carapace becomes the int
 
 ---
 
-## Slide 2 — Your AI Should Never See Your Secrets
+## Slide 2, Your AI Should Never See Your Secrets
 
 This is one of the biggest reasons companies hesitate around AI adoption.
 
-They are not necessarily afraid of intelligence. They are afraid of exposure. Passwords, API keys, client records, financial data, private files, personal information, business strategy — all of that becomes dangerous if it is casually pushed into a model context.
+They are not necessarily afraid of intelligence. They are afraid of exposure. Passwords, API keys, client records, financial data, private files, personal information, business strategy: all of that becomes dangerous if it is casually pushed into a model context.
 
 Cortex is designed around the idea that the model should only receive what it actually needs. Passwords, tokens, credentials, and sensitive information are isolated and masked until the exact moment they are required for execution. The model does not need to “know” the secret in order for the workflow to work.
 
@@ -32,7 +32,7 @@ So the message here is simple: AI capability without surrendering data ownership
 
 ---
 
-## Slide 3 — Your Employees Are Acting as APIs
+## Slide 3, Your Employees Are Acting as APIs
 
 This is the operational pain point.
 
@@ -52,7 +52,7 @@ The positioning is important: we are not replacing your team. We are removing th
 
 ---
 
-## Slide 4 — What Work Shouldn’t Exist Anymore?
+## Slide 4, What Work Shouldn’t Exist Anymore?
 
 This is where the conversation turns from abstract AI to immediate ROI.
 
@@ -78,7 +78,7 @@ Cortex eliminates low-value work so the team can focus on what moves the busines
 
 ---
 
-## Slide 5 — Control the Destination. Not the Vendor.
+## Slide 5, Control the Destination. Not the Vendor.
 
 This slide explains the core architecture in plain business language.
 
@@ -100,7 +100,7 @@ Cortex gives you the power to use any model or provider without giving up contro
 
 ---
 
-## Slide 6 — You Don’t Need an AI Department
+## Slide 6, You Don’t Need an AI Department
 
 This is where Carapace becomes a consultancy, not just a platform.
 
@@ -122,7 +122,7 @@ We handle the complexity. The client gets the competitive advantage.
 
 ---
 
-## Slide 7 — Finding the Right Model for the Right Job
+## Slide 7, Finding the Right Model for the Right Job
 
 This is one of the most important slides because it explains why model independence is not just a philosophical position. It produces better outcomes.
 
@@ -146,7 +146,7 @@ Best outcome, automatically: right capability, right cost, right speed, right fo
 
 ---
 
-## Slide 8 — Small Wins First. Scale Later.
+## Slide 8, Small Wins First. Scale Later.
 
 This is our adoption strategy.
 
@@ -156,7 +156,7 @@ Our approach is the opposite: start small, prove value, then expand with confide
 
 First, we discover. We look for repetitive work, information bottlenecks, SaaS overlap, security requirements, and strong automation candidates. This is where we find the leaks.
 
-Second, we deploy. We create a private Cortex environment — local, cloud, or hybrid — with security controls, governance policies, model roster, and the right knowledge connections.
+Second, we deploy. We create a private Cortex environment (local, cloud, or hybrid) with security controls, governance policies, model roster, and the right knowledge connections.
 
 Third, we launch the first wins. These are usually one or two real workflows, not theoretical demos. It could be internal knowledge retrieval, proposal generation, approval routing, reporting automation, document processing, or another high-value workflow.
 
@@ -168,7 +168,7 @@ This makes adoption safer and more believable. We are not asking the client to b
 
 ---
 
-## Slide 9 — Trust Should Be Inspectable
+## Slide 9, Trust Should Be Inspectable
 
 This is the trust slide.
 
@@ -190,7 +190,7 @@ Transparency is not something we ask clients to believe in. It is something we b
 
 ---
 
-## Slide 10 — Book the Sprint. Own Your Intelligence.
+## Slide 10, Book the Sprint. Own Your Intelligence.
 
 This is the call to action.
 
@@ -202,7 +202,7 @@ During the Sprint, we map the client’s workflows and identify the highest-impa
 
 This gives the client a practical way to evaluate Carapace without committing to everything upfront.
 
-It is fixed in scope. It is focused on outcomes. It is designed to reveal where the company is leaking time, money, and energy — and what should be automated first.
+It is fixed in scope. It is focused on outcomes. It is designed to reveal where the company is leaking time, money, and energy, and what should be automated first.
 
 The key promise is not “AI magic.” The promise is a private, governed intelligence layer that starts producing value in a controlled way.
 

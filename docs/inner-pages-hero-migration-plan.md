@@ -1,10 +1,10 @@
-> Extract a shared scroll-hero engine from the home page, add pilot pricing disclaimers and Phase 1 canvas effects, then migrate About/Business/Licensing/Solutions/Cortex to the pseudo-scroll system with deduplicated copy—making About the authoritative philosophy/ontology/team page and merging carapace.html into Cortex.
+> Extract a shared scroll-hero engine from the home page, add pilot pricing disclaimers and Phase 1 canvas effects, then migrate About/Business/Licensing/Solutions/Cortex to the pseudo-scroll system with deduplicated copy, making About the authoritative philosophy/ontology/team page and merging carapace.html into Cortex.
 
 # Inner Pages Scroll-Hero Migration
 
-_Session plan mirror — also stored under Grok sessions. Last updated: 2026-07-05._
+_Session plan mirror, also stored under Grok sessions. Last updated: 2026-07-05._
 
-**Goal execution brief (turn slices, parallel subagents, G1–G13 criteria):** [inner-pages-hero-migration-goal.md](inner-pages-hero-migration-goal.md)
+**Goal execution brief (turn slices, parallel subagents, G1-G13 criteria):** [inner-pages-hero-migration-goal.md](inner-pages-hero-migration-goal.md)
 
 ## Current state
 
@@ -32,14 +32,13 @@ flowchart LR
 
 ---
 
-## Phase 0 — Shared infrastructure
+## Phase 0, Shared infrastructure
 
 ### 1. Extract `hero-core.js`
 
 Refactor [assets/hero-home.js](../assets/hero-home.js) (~320 lines of orchestration) into [assets/hero-core.js](../assets/hero-core.js):
 
-- `initScrollHero({ slides, pageClass, stageHeight?, ctaSection? })` — scroll math, atmosphere, theme toggle, meta chrome, WASM chips, fade-out into CTA
-- Keep [assets/hero-home.js](../assets/hero-home.js) as a thin wrapper: `HERO_SLIDES` + `initScrollHero(...)`
+- `initScrollHero({ slides, pageClass, stageHeight?, ctaSection? })`, scroll math, atmosphere, theme toggle, meta chrome, WASM chips, fade-out into CTA, Keep [assets/hero-home.js](../assets/hero-home.js) as a thin wrapper: `HERO_SLIDES` + `initScrollHero(...)`
 
 Shared slide schema (extend current shape in `HERO_SLIDES`):
 
@@ -50,7 +49,7 @@ Shared slide schema (extend current shape in `HERO_SLIDES`):
   oklch: { L, h, rel },
   effect,           // canvas effect id
   bokeh,
-  pilotNote: false   // NEW — see below
+  pilotNote: false   // NEW, see below
 }
 ```
 
@@ -70,20 +69,15 @@ Style in [assets/hero-home.css](../assets/hero-home.css) (rename to `hero.css` o
 
 | Page | Slides with `pilotNote: true` |
 |------|-------------------------------|
-| Business | Slide 8 (commercial path: $12K → $24K+) — figures from slide-05 OCR |
-| Licensing | Slides 4–5 (tier pricing); plus static line above PDF grid in post-hero tail |
+| Business | Slide 8 (commercial path: $12K → $24K+), figures from slide-05 OCR |
+| Licensing | Slides 4-5 (tier pricing); plus static line above PDF grid in post-hero tail |
 | Home / Cortex / Solutions / About | Only if dollar figures added later |
 
 ### 3. Shared HTML shell (per page)
 
-Replace each page’s `<header class="hero">` + carousel blocks with the same layer stack as [index.html](../index.html) lines 43–155:
+Replace each page’s `<header class="hero">` + carousel blocks with the same layer stack as [index.html](../index.html) lines 43-155:
 
-- `#atmosphere`, `#bokeh-layer`, `#text-veil`, `.hero-chrome`, `#slide-rail`, `#scroll-hint`, `#hero-stage` → `#pinned` → `#slide-content`
-- SSR first slide in HTML for SEO
-- Early theme script + favicon (currently missing on inner pages)
-- Load `assets/hero.css` + page module `assets/hero-{page}.js`
-- Drop `cortex-bloom-bg.js` on migrated pages (effects engine replaces it)
-- Remove all inline carousel JS (~90 lines × 3 files)
+- `#atmosphere`, `#bokeh-layer`, `#text-veil`, `.hero-chrome`, `#slide-rail`, `#scroll-hint`, `#hero-stage` → `#pinned` → `#slide-content`, SSR first slide in HTML for SEO, Early theme script + favicon (currently missing on inner pages), Load `assets/hero.css` + page module `assets/hero-{page}.js`, Drop `cortex-bloom-bg.js` on migrated pages (effects engine replaces it), Remove all inline carousel JS (~90 lines × 3 files)
 
 ### 4. OCR investor slides
 
@@ -91,14 +85,11 @@ Add [scripts/ocr-slides.py](../scripts/ocr-slides.py) (or extend [scripts/extrac
 
 **Priority:** slide-08-team (confirm @triphosphatedev, @ascendism roles), slide-05-business-model ($12K→$24K path), slide-04-traction. **Do not publish** slide-07/10 financials/ARR on marketing pages unless explicitly approved after OCR review.
 
-### 5. Unify nav + verification
-
-- Standard nav on all pages: Home · How We Help · Solutions · Licensing · Pitch Deck · About · Cortex · Contact (business only)
-- Update [scripts/verify-revamp.py](../scripts/verify-revamp.py): expect `hero-stage` on all primary routes; drop carousel checks
+### 5. Unify nav + verification, Standard nav on all pages: Home · How We Help · Solutions · Licensing · Pitch Deck · About · Cortex · Contact (business only), Update [scripts/verify-revamp.py](../scripts/verify-revamp.py): expect `hero-stage` on all primary routes; drop carousel checks
 
 ---
 
-## Phase 1 — Canvas effects (before page migrations)
+## Phase 1, Canvas effects (before page migrations)
 
 Extend [assets/effects-anime.js](../assets/effects-anime.js) with four procedural effects (wireframe-tinted, ambient, never photorealistic):
 
@@ -115,7 +106,7 @@ Extend [assets/effects-anime.js](../assets/effects-anime.js) with four procedura
 
 ---
 
-## Phase 1b — Source free schematic & 3D assets (parallel with Phase 1)
+## Phase 1b, Source free schematic & 3D assets (parallel with Phase 1)
 
 **Goal:** Find usable, license-clear tech-oriented visuals before building custom geometry. If sourcing succeeds, wire assets in; if not, procedural canvas effects remain the fallback (no blocker).
 
@@ -123,19 +114,13 @@ Extend [assets/effects-anime.js](../assets/effects-anime.js) with four procedura
 
 | Tier | What to hunt | Likely sources | License requirement |
 |------|----------------|----------------|---------------------|
-| **A — SVG schematics** | PCB outlines, chip die, motherboard wireframes, block diagrams | Wikimedia Commons, OpenClipart, GitHub OSS repos (KiCad exports, SVG icon sets), Figma community exports | CC0, CC-BY (attribution in docs), MIT, or equivalent commercial-safe |
-| **B — glTF / GLB** | Low-poly chip, SoC, motherboard, server blade | Sketchfab (CC0 filter), Poly Pizza, Kenney, Khronos glTF sample repo | CC0 or explicit commercial use; prefer <150KB per model |
-| **C — Skip** | STEP/CAD, photorealistic renders, trademarked part numbers | — | Do not use |
+| **A, SVG schematics** | PCB outlines, chip die, motherboard wireframes, block diagrams | Wikimedia Commons, OpenClipart, GitHub OSS repos (KiCad exports, SVG icon sets), Figma community exports | CC0, CC-BY (attribution in docs), MIT, or equivalent commercial-safe |
+| **B, glTF / GLB** | Low-poly chip, SoC, motherboard, server blade | Sketchfab (CC0 filter), Poly Pizza, Kenney, Khronos glTF sample repo | CC0 or explicit commercial use; prefer <150KB per model |
+| **C, Skip** | STEP/CAD, photorealistic renders, trademarked part numbers | - | Do not use |
 
 **Search queries to run:** `site:sketchfab.com CC0 chip`, `site:commons.wikimedia.org circuit board svg`, `github pcb svg wireframe`, `glb motherboard low poly CC0`.
 
-### 2. Acceptance criteria per asset
-
-- Wireframe or line-art style (not photorealistic)
-- Works behind text veil + bokeh at low opacity
-- Single-color or easily OKLCH-tinted via CSS/canvas
-- File size: SVG <50KB; glTF/GLB <150KB
-- License recorded in `docs/visual-assets.md` (name, URL, license, attribution line if required)
+### 2. Acceptance criteria per asset, Wireframe or line-art style (not photorealistic), Works behind text veil + bokeh at low opacity, Single-color or easily OKLCH-tinted via CSS/canvas, File size: SVG <50KB; glTF/GLB <150KB, License recorded in `docs/visual-assets.md` (name, URL, license, attribution line if required)
 
 ### 3. Repo layout if assets are found
 
@@ -155,15 +140,15 @@ docs/visual-assets.md  # manifest + license log
 
 ### 5. Fallback rule
 
-If no suitable asset is found after the search pass, **do not delay page migrations** — procedural `pcb`, `flowchart`, and `schematic` canvas effects cover the same metaphors. Revisit sourcing when Cortex Phase 2 lands.
+If no suitable asset is found after the search pass, **do not delay page migrations**, procedural `pcb`, `flowchart`, and `schematic` canvas effects cover the same metaphors. Revisit sourcing when Cortex Phase 2 lands.
 
 **Gate:** Complete search + manifest before Cortex merge (Phase 6). SVG tier-A can ship earlier on Cortex if found during Phase 1b.
 
 ---
 
-## Phase 2 — About (authoritative identity page)
+## Phase 2, About (authoritative identity page)
 
-**Goal:** About becomes the single home for ontology, philosophy, mission, team, and sovereignty—no duplicated engagement/product depth.
+**Goal:** About becomes the single home for ontology, philosophy, mission, team, and sovereignty, no duplicated engagement/product depth.
 
 **Remove:** hidden `about-legacy` block + carousel JS, belief grid duplication, full Discover→Deploy rail (replace with one slide + link), documentary figure, Carapace/Cortex split essay (one slide suffices).
 
@@ -174,18 +159,18 @@ If no suitable asset is found after the search pass, **do not delay page migrati
 | 1 | `mesh` | Builders first | Existing about intro + “No AI theater” |
 | 2 | `magnet` | Mission / leverage | Mission block + “goal is leverage” |
 | 3 | `flowchart` | Four principles | Four belief pillars (OCR SVG labels) |
-| 4 | `constellation` | Cortex Ontology | Six layers from [docs/carapace-ontology.txt](carapace-ontology.txt) — proof chips name each layer |
+| 4 | `constellation` | Cortex Ontology | Six layers from [docs/carapace-ontology.txt](carapace-ontology.txt), proof chips name each layer |
 | 5 | `vault` | Intelligence sovereignty | Merge hidden legacy “why we exist” + “trust you can inspect” |
 | 6 | `mesh` | Team | **@triphosphatedev**, **@ascendism** (GitHub handles only; roles from slide-08 OCR) |
 | 7 | `pipeline` | Carapace → Cortex | Diagram concepts from `about-carapace-cortex.png` OCR |
 
-**Post-hero CTA** (normal flow, not scroll): “See How We Help” + “Explore Cortex” — no Sprint form.
+**Post-hero CTA** (normal flow, not scroll): “See How We Help” + “Explore Cortex”, no Sprint form.
 
 ---
 
-## Phase 3 — Business (conversion page)
+## Phase 3, Business (conversion page)
 
-**8 scroll slides** — absorb current carousel + engagement steps:
+**8 scroll slides**, absorb current carousel + engagement steps:
 
 | # | Effect | Content |
 |---|--------|---------|
@@ -198,11 +183,11 @@ If no suitable asset is found after the search pass, **do not delay page migrati
 | 7 | `pipeline` | Why Carapace not one tool |
 | 8 | `pipeline` | Commercial path **$12K → $24K+** with **`pilotNote: true`** |
 
-**Post-hero tail (keep):** Discovery Sprint intake form at `#contact` — only non-scroll section on this page.
+**Post-hero tail (keep):** Discovery Sprint intake form at `#contact`, only non-scroll section on this page.
 
 ---
 
-## Phase 4 — Licensing
+## Phase 4, Licensing
 
 **6 scroll slides:**
 
@@ -211,15 +196,15 @@ If no suitable asset is found after the search pass, **do not delay page migrati
 | 1 | `shield` | Open-core clarity headline |
 | 2 | `flowchart` | Personal free lane |
 | 3 | `topology` | Evaluate under $100k |
-| 4 | `pipeline` | Commercial deploy + tier figures — **`pilotNote: true`** |
-| 5 | `pipeline` | Support additive / recurring bundle — **`pilotNote: true`** |
+| 4 | `pipeline` | Commercial deploy + tier figures - **`pilotNote: true`** |
+| 5 | `pipeline` | Support additive / recurring bundle - **`pilotNote: true`** |
 | 6 | `vault` | Inspectable agreements / no mystery box |
 
 **Post-hero tail:** PDF download grid with pilot disclaimer line above `#agreements`. Fix existing bug: CTA pointing to `carapace.html` → `cortex.html`.
 
 ---
 
-## Phase 5 — Solutions (slides only)
+## Phase 5, Solutions (slides only)
 
 Per your choice: **convert all six workflow infographics into scroll slides**; remove image gallery and lightbox.
 
@@ -227,7 +212,7 @@ Per your choice: **convert all six workflow infographics into scroll slides**; r
 
 1. Routable work / capability aliases (`topology`)
 2. Adoption path overview (`pipeline`)
-3–8. One slide per workflow infographic (leads, proposals, approvals, reporting, knowledge, small-team automation) — rotate `flowchart`, `pipeline`, `topology`; include approval checkpoint on approvals slide
+3-8. One slide per workflow infographic (leads, proposals, approvals, reporting, knowledge, small-team automation), rotate `flowchart`, `pipeline`, `topology`; include approval checkpoint on approvals slide
 9. Common starting points (`mesh`)
 10. CTA slide → business `#contact`
 
@@ -235,16 +220,12 @@ Remove: `Solutions-*.png` `<img>` gallery, inline lightbox script.
 
 ---
 
-## Phase 6 — Cortex (+ carapace merge)
+## Phase 6, Cortex (+ carapace merge)
 
 ### Merge [carapace.html](../carapace.html) into [cortex.html](../cortex.html)
 
-Unique carapace content to preserve in Cortex post-hero or slides:
-
-- Experimental status notice
-- GitHub release / download links (`CarapaceUDE/carapace`)
-- “Best for / not for” evaluator framing
-- Open-core evaluate path
+Unique carapace content to preserve in Cortex post-hero or slides:, Experimental status notice, GitHub release / download links (`CarapaceUDE/carapace`)
+- “Best for / not for” evaluator framing, Open-core evaluate path
 
 Then **redirect** `carapace.html` → `cortex.html` (meta refresh + `location.replace` or server config).
 
@@ -254,7 +235,7 @@ Then **redirect** `carapace.html` → `cortex.html` (meta refresh + `location.re
 |---|--------|---------|
 | 1 | `shield` | Control plane promise |
 | 2 | `flowchart` | Capture → Route → Approve → Execute |
-| 3–8 | rotate `pcb` / `mesh` / `signal` | Six core features (one slide each) |
+| 3-8 | rotate `pcb` / `mesh` / `signal` | Six core features (one slide each) |
 | 9 | `flowchart` | Competition / differentiation graph (background) |
 | 10 | `ping` | Download + Sprint CTA |
 
@@ -270,7 +251,7 @@ Then **redirect** `carapace.html` → `cortex.html` (meta refresh + `location.re
 |-------|----------------|--------|
 | Mission, beliefs, ontology, team | About | Link only |
 | Discover→Deploy→Measure→Expand (detail) | Business | About: 1 slide + link |
-| Workflow proof / examples | Solutions (slides) | — |
+| Workflow proof / examples | Solutions (slides) | - |
 | Product architecture / features | Cortex | About: 1 pipeline slide |
 | Pricing / license tiers | Licensing (+ Business slide 8) | `pilotNote` where $ appears |
 | Third-party stats (Asana, IDC) | Home | Cite with `source` chips if reused |
@@ -313,35 +294,29 @@ About first validates the pattern and content strategy; Business/Licensing exerc
 
 ---
 
-## Acceptance criteria
-
-- All six routes render scroll-pinned hero with theme toggle, slide rail, and canvas effects
-- About has ontology + team (GitHub handles) with no duplicated engagement/product walls
-- Business slide 8 and Licensing slides 4–5 show pilot disclaimer; PDF appendix has disclaimer line
-- Solutions has no infographic gallery; workflow copy lives in slides
+## Acceptance criteria, All six routes render scroll-pinned hero with theme toggle, slide rail, and canvas effects, About has ontology + team (GitHub handles) with no duplicated engagement/product walls, Business slide 8 and Licensing slides 4-5 show pilot disclaimer; PDF appendix has disclaimer line, Solutions has no infographic gallery; workflow copy lives in slides
 - `carapace.html` redirects to `cortex.html` with download content merged
 - `verify-revamp.py` passes on all routes; no inline carousel JS remains
-- `docs/visual-assets.md` documents sourced assets (or records “procedural fallback” if search finds nothing)
-- Cortex slide 2 uses sourced SVG/glTF only when license + visual criteria pass; otherwise canvas effects only
+- `docs/visual-assets.md` documents sourced assets (or records “procedural fallback” if search finds nothing), Cortex slide 2 uses sourced SVG/glTF only when license + visual criteria pass; otherwise canvas effects only
 
 ## Todos
 
-- [x] **hero-core** — Extract hero-core.js from hero-home.js; add pilotNote rendering in text-anime.js + CSS
-- [x] **ocr-slides** — OCR assets/slide-01–11; append to site-copy-ocr.md; confirm team handles and $12K→$24K figures
-- [x] **effects-phase1** — Add flowchart, pcb, topology, pipeline (+ constellation, vault) to effects-anime.js; retune home slides 3–4
-- [x] **source-visual-assets** — Search CC0/MIT SVG schematics + low-poly glTF; log in docs/visual-assets.md; add to assets/schematics/ or assets/models/ if suitable
-- [x] **about-migrate** — Rebuild about.html with 7-slide hero-about.js; dedupe content; remove legacy/carousel
-- [x] **business-migrate** — Rebuild business.html with 8-slide hero; pilotNote on slide 8; keep intake form tail
-- [x] **licensing-migrate** — Rebuild licensing.html with 6-slide hero; pilotNote slides 4–5; PDF appendix disclaimer
-- [x] **solutions-migrate** — Rebuild solutions.html as ~10 scroll slides from OCR copy; remove infographic gallery
-- [x] **cortex-merge** — Merge carapace download content into cortex.html; ~10 slides; redirect carapace.html
-- [x] **nav-verify** — Unify nav across pages; update verify-revamp.py for hero-stage on all routes
+- [x] **hero-core**, Extract hero-core.js from hero-home.js; add pilotNote rendering in text-anime.js + CSS
+- [x] **ocr-slides**, OCR assets/slide-01-11; append to site-copy-ocr.md; confirm team handles and $12K→$24K figures
+- [x] **effects-phase1**, Add flowchart, pcb, topology, pipeline (+ constellation, vault) to effects-anime.js; retune home slides 3-4
+- [x] **source-visual-assets**, Search CC0/MIT SVG schematics + low-poly glTF; log in docs/visual-assets.md; add to assets/schematics/ or assets/models/ if suitable
+- [x] **about-migrate**, Rebuild about.html with 7-slide hero-about.js; dedupe content; remove legacy/carousel
+- [x] **business-migrate**, Rebuild business.html with 8-slide hero; pilotNote on slide 8; keep intake form tail
+- [x] **licensing-migrate**, Rebuild licensing.html with 6-slide hero; pilotNote slides 4-5; PDF appendix disclaimer
+- [x] **solutions-migrate**, Rebuild solutions.html as ~10 scroll slides from OCR copy; remove infographic gallery
+- [x] **cortex-merge**, Merge carapace download content into cortex.html; ~10 slides; redirect carapace.html
+- [x] **nav-verify**, Unify nav across pages; update verify-revamp.py for hero-stage on all routes
 
 ## Completion slices (post-migration polish)
 
 See [inner-pages-hero-completion-plan.md](inner-pages-hero-completion-plan.md).
 
-- [x] **completion-slice-a** — About founders: GitHub `source` links, Co-Founders title, OCR role copy, `constellation` effect
-- [x] **completion-slice-b** — Licensing slides 4–5 pilot tier figures ($499/$399/$199) with `pilotNote: true`
-- [x] **completion-slice-c** — Procedural `schematic` blueprint effect; Cortex slide 2 wired; `visual-assets.md` updated
-- [x] **completion-slice-e** — `verify-revamp.py` hardened (founders/pricing/schematic gates); cache-bust `20260705c`; doc cross-links
+- [x] **completion-slice-a**, About founders: GitHub `source` links, Co-Founders title, OCR role copy, `constellation` effect
+- [x] **completion-slice-b**, Licensing slides 4-5 pilot tier figures ($499/$399/$199) with `pilotNote: true`
+- [x] **completion-slice-c**, Procedural `schematic` blueprint effect; Cortex slide 2 wired; `visual-assets.md` updated
+- [x] **completion-slice-e** - `verify-revamp.py` hardened (founders/pricing/schematic gates); cache-bust `20260705c`; doc cross-links

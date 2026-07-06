@@ -1,7 +1,10 @@
 /**
- * Hero chrome social links — GitHub, Discord, Patreon (left) · X, YouTube, TikTok (right).
+ * Hero chrome social links, GitHub, Discord, Patreon (left) · X, YouTube, TikTok (right).
+ * Wide: flanks cursor in chrome-bottom-hub. Narrow: stack row above copyright.
  */
 (function () {
+  const STACK_MQ = "(max-width: 720px)";
+
   const LEFT = [
     {
       href: "https://github.com/CarapaceUDE",
@@ -44,6 +47,13 @@
     }
   ];
 
+  let layoutBound = false;
+  let hubRef = null;
+  let cursorRef = null;
+  let leftNavRef = null;
+  let rightNavRef = null;
+  let stackRef = null;
+
   function buildSocialNav(side, links) {
     const nav = document.createElement("nav");
     nav.className = "chrome-social chrome-social--" + side;
@@ -60,12 +70,47 @@
     return nav;
   }
 
+  function applySocialLayout() {
+    if (!hubRef || !leftNavRef || !rightNavRef || !stackRef || !cursorRef) return;
+    const narrow = window.matchMedia(STACK_MQ).matches;
+    const chrome = hubRef.closest(".hero-chrome");
+    if (chrome) chrome.dataset.socialLayout = narrow ? "stack" : "flank";
+
+    if (narrow) {
+      stackRef.appendChild(leftNavRef);
+      stackRef.appendChild(rightNavRef);
+      return;
+    }
+
+    if (!hubRef.contains(cursorRef)) hubRef.appendChild(cursorRef);
+    hubRef.insertBefore(leftNavRef, cursorRef);
+    hubRef.appendChild(rightNavRef);
+  }
+
+  function bindSocialLayout() {
+    if (layoutBound) return;
+    layoutBound = true;
+    const mq = window.matchMedia(STACK_MQ);
+    const onChange = function () {
+      applySocialLayout();
+    };
+    if (mq.addEventListener) mq.addEventListener("change", onChange);
+    else mq.addListener(onChange);
+    window.addEventListener("resize", onChange, { passive: true });
+    applySocialLayout();
+  }
+
   function mountInChromeBottom(bottom) {
     if (bottom.dataset.socialMounted === "1") return;
+    const chrome = bottom.closest(".hero-chrome");
     const cursorBlock = bottom.querySelector("#meta-cursor")?.closest(".meta-block");
-    if (!cursorBlock) return;
+    if (!chrome || !cursorBlock) return;
 
     cursorBlock.classList.add("meta-block--center");
+
+    const stack = document.createElement("div");
+    stack.className = "chrome-social-stack";
+    chrome.insertBefore(stack, bottom);
 
     const hub = document.createElement("div");
     hub.className = "chrome-bottom-hub";
@@ -77,7 +122,14 @@
     hub.appendChild(cursorBlock);
     hub.appendChild(rightNav);
 
+    hubRef = hub;
+    cursorRef = cursorBlock;
+    leftNavRef = leftNav;
+    rightNavRef = rightNav;
+    stackRef = stack;
+
     bottom.dataset.socialMounted = "1";
+    bindSocialLayout();
   }
 
   function mountMinimalChrome() {

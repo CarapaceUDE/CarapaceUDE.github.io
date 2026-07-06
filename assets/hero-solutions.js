@@ -1,4 +1,4 @@
-import { initScrollHero } from "./hero-core.js";
+import { initScrollHero } from "./hero-core.js?v=20260706b";
 
 export const HERO_SLIDES = [
   {
@@ -45,7 +45,7 @@ export const HERO_SLIDES = [
     eyebrow: "Proposals & Quotes",
     title: "Faster Client Response",
     sub: "Compress proposal assembly from scattered context into a governed draft-ready flow.",
-    note: "Pull facts, compare options, draft responses — route for approval.",
+    note: "Pull facts, compare options, draft responses, then route for approval.",
     proof: [
       { label: "Context pull", detail: "Files, CRM, notes unified." },
       { label: "Draft & route", detail: "Human review before send." }
@@ -57,7 +57,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Approvals",
     title: "Governed Handoffs",
-    sub: "Sensitive actions pause at explicit approval checkpoints — inspectable, reversible, logged.",
+    sub: "Sensitive actions pause at explicit approval checkpoints: inspectable, reversible, logged.",
     note: "Policy governs what can run automatically vs. what needs a human.",
     proof: [
       { label: "Checkpoint", detail: "Review, approve, choose channel." },
@@ -71,7 +71,7 @@ export const HERO_SLIDES = [
     eyebrow: "Reporting",
     title: "Less Manual Assembly",
     sub: "Turn recurring report updates into governed flows that pull, summarize, and route for review.",
-    note: "Keep humans on judgment — not copy/paste assembly.",
+    note: "Keep humans on judgment, not copy/paste assembly.",
     proof: [
       { label: "Auto-ingest", detail: "Pull from systems of record." },
       { label: "Summarize", detail: "Draft insights for review." }
@@ -83,7 +83,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Knowledge Ops",
     title: "Context That Compounds",
-    sub: "Capture operational knowledge as reusable intelligence — not scattered notes that evaporate after each project.",
+    sub: "Capture operational knowledge as reusable intelligence, not scattered notes notes that evaporate after each project.",
     note: "Your business memory stays inside your boundary.",
     proof: [
       { label: "Living map", detail: "Processes, not folders." },
@@ -109,7 +109,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Starting Points",
     title: "Common First Wins",
-    sub: "Most teams begin with one workflow wedge — follow-up, intake routing, or internal ops — then expand from measured evidence.",
+    sub: "Most teams begin with one workflow wedge (follow-up, intake routing, or internal ops), then expand from measured evidence.",
     note: "See How We Help for the engagement path.",
     proof: [
       { label: "Follow-up", detail: "Leads & client touchpoints." },

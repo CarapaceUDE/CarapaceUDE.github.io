@@ -1,8 +1,9 @@
 /**
- * HeroTextAnime — DOM typography choreographed with anime.js v4
+ * HeroTextAnime, DOM typography choreographed with anime.js v4
  */
 import { animate, createTimeline, stagger } from "https://esm.sh/animejs@4.0.2";
-import { enrichProofChip } from "./chip-bullet-enrich.js";
+import { enrichProofChip } from "./chip-bullet-enrich.js?v=20260706b";
+import { sanitizeCopyText, sanitizeSlide } from "./copy-sanitize.js?v=20260706b";
 import { PILOT_NOTE_DISCLAIMER } from "./hero-constants.js";
 
 const EXIT = [
@@ -178,6 +179,11 @@ function normalizeProof(item) {
 
 function renderChip(item) {
   const chip = normalizeProof(item);
+  if (chip.label) chip.label = sanitizeCopyText(chip.label);
+  if (chip.detail) chip.detail = sanitizeCopyText(chip.detail);
+  if (Array.isArray(chip.nodes)) {
+    chip.nodes = chip.nodes.map((line) => (line ? sanitizeCopyText(line) : line));
+  }
   const tag = chip.source ? "a" : "span";
   const attrs = chip.source
     ? ` href="${chip.source}" target="_blank" rel="noreferrer"`
@@ -242,10 +248,15 @@ export class HeroTextAnime {
     this.stage = stageEl;
     this.content = contentEl;
     this.reducedMotion = options.reducedMotion ?? false;
+    this.onContentMount = options.onContentMount ?? null;
     this.slideIndex = -1;
     this.activeTl = null;
     this._transitioning = false;
     this._requestId = 0;
+  }
+
+  _syncCopyFit() {
+    this.onContentMount?.();
   }
 
   _chipNodes() {
@@ -257,6 +268,7 @@ export class HeroTextAnime {
   }
 
   mount(slide) {
+    slide = sanitizeSlide(slide);
     const words = slide.title.split(" ");
     const pilotHtml = slide.pilotNote
       ? `<p class="pilot-note text-el" data-layer="pilot-note">${PILOT_NOTE_DISCLAIMER}</p>`
@@ -285,6 +297,7 @@ export class HeroTextAnime {
   }
 
   async showSlide(slide, index) {
+    slide = sanitizeSlide(slide);
     const req = ++this._requestId;
     const stale = () => req !== this._requestId;
     const hasContent = this.content.querySelector(".text-el");
@@ -309,6 +322,7 @@ export class HeroTextAnime {
       this.slideIndex = index;
       this._transitioning = true;
       try {
+        this._syncCopyFit();
         await this._enter(index, req);
         if (stale()) return this._chipNodes();
         await holdAfterEnter(this.reducedMotion);
@@ -331,6 +345,9 @@ export class HeroTextAnime {
 
       this.slideIndex = index;
       this.mount(slide);
+      if (stale()) return this._chipNodes();
+
+      this._syncCopyFit();
       if (stale()) return this._chipNodes();
 
       await this._enter(index, req);

@@ -1,4 +1,4 @@
-# Slide Background Effects — Research (anime.js v4)
+# Slide Background Effects, Research (anime.js v4)
 
 _Research turn · 2026-07-05 · Targets scroll-hero `AnimeEffectsField` only (not `/ideas/` pitch slideshow)._
 
@@ -16,28 +16,25 @@ The hero background stack is a layered instrument panel, not wallpaper:
 | Canvas field | `assets/effects-anime.js` | 23 procedural effect IDs via `createTimer` → `_draw()` |
 | Text veil | `.text-veil` | Readability scrim over copy |
 
-`AnimeEffectsField` (`assets/effects-anime.js`) boots per-effect state in `_createState`, drives loops with `animate()` in `_bootLoops`, and renders at 30–60 fps through a single `createTimer({ onUpdate: () => this._draw() })`. Crossfade between slides uses `smoothstep` mix in `assets/hero-core.js`. Pointer policy is centralized in `assets/effects-interaction.js` (`hoverAllowed`, `proximity`, `rowProximity`, etc.).
+`AnimeEffectsField` (`assets/effects-anime.js`) boots per-effect state in `_createState`, drives loops with `animate()` in `_bootLoops`, and renders at 30-60 fps through a single `createTimer({ onUpdate: () => this._draw() })`. Crossfade between slides uses `smoothstep` mix in `assets/hero-core.js`. Pointer policy is centralized in `assets/effects-interaction.js` (`hoverAllowed`, `proximity`, `rowProximity`, etc.).
 
-Palette resolution uses OKLCH via `colorAtHue()` and `effectPalette()` — aligned with `ideas/website_design_direction.md`: near-black navy, electric blue for control/routing, copper for action, green for verified states, violet for expansion. Glow is semantic, not decorative neon.
+Palette resolution uses OKLCH via `colorAtHue()` and `effectPalette()`, aligned with `ideas/website_design_direction.md`: near-black navy, electric blue for control/routing, copper for action, green for verified states, violet for expansion. Glow is semantic, not decorative neon.
 
 ### Brand constraints (minimal, techy)
 
 From `ideas/website_design_direction.md` and `docs/effects-audit.md`:
 
-1. **Motion explains hierarchy** — animation orients; it does not replace comprehension.
-2. **Glow has meaning** — blue = control layer; copper = action; avoid constant neon.
-3. **Reduced motion is complete** — `prefers-reduced-motion` drops non-essential canvas movement; `effects-interaction.js` returns zero proximity when RM is on.
-4. **No decorative wallpaper** — diagrams expose how work moves (security rings, handoffs, metrics, schematics).
-5. **One strong visual per section** — background stays subordinate to hero copy (veil + low alpha canvas).
-6. **Performance-first** — procedural 2D canvas, particle caps per effect; no WebGL/Three.js/particles.js.
+1. **Motion explains hierarchy**, animation orients; it does not replace comprehension.
+2. **Glow has meaning**, blue = control layer; copper = action; avoid constant neon.
+3. **Reduced motion is complete** - `prefers-reduced-motion` drops non-essential canvas movement; `effects-interaction.js` returns zero proximity when RM is on.
+4. **No decorative wallpaper**, diagrams expose how work moves (security rings, handoffs, metrics, schematics).
+5. **One strong visual per section**, background stays subordinate to hero copy (veil + low alpha canvas).
+6. **Performance-first**, procedural 2D canvas, particle caps per effect; no WebGL/Three.js/particles.js.
 
 ### Preserve (do not regress)
 
-- `createTimer` render loop + `animate()` state tweens (already matches anime.js v4 best practice).
-- OKLCH token reads + 48px grid atmosphere (anchors “techy” without clutter).
-- Cluster metaphors with semantic fit: `relay` handoff, `vault`/`seal` custody, `schematic` scroll-scan, `ledger`/`signal` metrics.
-- `effects-interaction.js` policy layer — all new interactives should use `_proximity` / `hoverAllowed`, not ad-hoc pointer checks.
-- Bokeh + vignette caps — keep backgrounds legible behind hero text.
+- `createTimer` render loop + `animate()` state tweens (already matches anime.js v4 best practice)., OKLCH token reads + 48px grid atmosphere (anchors “techy” without clutter)., Cluster metaphors with semantic fit: `relay` handoff, `vault`/`seal` custody, `schematic` scroll-scan, `ledger`/`signal` metrics.
+- `effects-interaction.js` policy layer, all new interactives should use `_proximity` / `hoverAllowed`, not ad-hoc pointer checks., Bokeh + vignette caps, keep backgrounds legible behind hero text.
 
 ### Cluster gap analysis (over-represented)
 
@@ -47,19 +44,12 @@ Post-ship matrix (`docs/effects-audit.md` §Slide matrix) still clusters heavily
 |---------|--------------------:|---------|-----|
 | **node-graph** | 8 | `mesh`, `topology`, `constellation` | Too many hub-and-spoke variants; need non-graph metaphors on adjacent slots |
 | **flow-diagram** | 6 | `flowchart`, `pipeline`, `schematic` | Box-and-arrow family still dominates solutions/cortex routes |
-| **handoff** | 5 | `relay` (sole ID) | Single metaphor repeated site-wide — needs alternate transport patterns |
+| **handoff** | 5 | `relay` (sole ID) | Single metaphor repeated site-wide, needs alternate transport patterns |
 | **radar** | 4 | `sonar`, `ping` | Arc/sweep family OK but `sonar` ×3 risks sameness |
 
 Under-represented clusters ripe for new IDs: **circuit** (only `pcb` ×2), **fabric** (`weave` ×2), **field** (`magnet` ×2), **isometric-grid** (`isograph` ×3 but no stagger-wave variant).
 
-### External patterns to reject
-
-- Full-screen particle explosions, fluid sims, galaxy swarms (Jotform roundup, One Page Love particles.js showcases).
-- Organic blob gradients, anti-grid liquid layouts (Elementor 2026 trend #1).
-- WebGL particle heads, 40k-particle demos, confetti (Jotform / Awwwards spectacle sites).
-- Letterize DOM text effects as full-background wallpaper (WojciechWKROPCE pen is hero-title scale, not canvas field).
-- Cyberpunk node-graph navigation as primary BG (Orpetron Bilal Şanlı portfolio).
-- Decorative stagger grids with no system metaphor (raw LMrRNW demo).
+### External patterns to reject, Full-screen particle explosions, fluid sims, galaxy swarms (Jotform roundup, One Page Love particles.js showcases)., Organic blob gradients, anti-grid liquid layouts (Elementor 2026 trend #1)., WebGL particle heads, 40k-particle demos, confetti (Jotform / Awwwards spectacle sites)., Letterize DOM text effects as full-background wallpaper (WojciechWKROPCE pen is hero-title scale, not canvas field)., Cyberpunk node-graph navigation as primary BG (Orpetron Bilal Şanlı portfolio)., Decorative stagger grids with no system metaphor (raw LMrRNW demo).
 
 ---
 
@@ -69,11 +59,11 @@ Under-represented clusters ripe for new IDs: **circuit** (only `pcb` ×2), **fab
 
 **Fetched:** [animejs.com](https://animejs.com) (full showcase), [Timer docs](https://animejs.com/documentation/timer/), [Stagger grid docs](https://animejs.com/documentation/utilities/stagger/stagger-parameters/stagger-grid/).
 
-**Blocked (Cloudflare):** All five CodePen URLs — [LMrRNW](https://codepen.io/juliangarnier/pen/LMrRNW), [XvjWvx](https://codepen.io/juliangarnier/pen/XvjWvx), [gmOwJX](https://codepen.io/juliangarnier/pen/gmOwJX), [VwLePLy](https://codepen.io/WojciechWKROPCE/pen/VwLePLy), [NWGJvqW](https://codepen.io/web2033/pen/NWGJvqW). Techniques inferred from pen titles, embed metadata, anime.js docs, and [Abduzeedo 10-year article](https://abduzeedo.com/celebrating-10-years-animejs-web-animation).
+**Blocked (Cloudflare):** All five CodePen URLs - [LMrRNW](https://codepen.io/juliangarnier/pen/LMrRNW), [XvjWvx](https://codepen.io/juliangarnier/pen/XvjWvx), [gmOwJX](https://codepen.io/juliangarnier/pen/gmOwJX), [VwLePLy](https://codepen.io/WojciechWKROPCE/pen/VwLePLy), [NWGJvqW](https://codepen.io/web2033/pen/NWGJvqW). Techniques inferred from pen titles, embed metadata, anime.js docs, and [Abduzeedo 10-year article](https://abduzeedo.com/celebrating-10-years-animejs-web-animation).
 
 | Source | Technique | Map to Carapace |
 |--------|-----------|-----------------|
-| animejs.com homepage | `createTimer` frame loop | **Adopted** — already `AnimeEffectsField.renderTimer` |
+| animejs.com homepage | `createTimer` frame loop | **Adopted**, already `AnimeEffectsField.renderTimer` |
 | animejs.com | `stagger()` grid `[cols, rows]` + `from: 'center'` | → proposed `hexpulse`, `hashwave` (grid-cell activation waves) |
 | animejs.com | `createTimeline` + staggered positions | → proposed `branch`, `telemetry` (sequenced instrument ticks) |
 | animejs.com | `createDrawable` + `draw: '0 1'` + `onScroll({ sync: true })` | → proposed `trace`, `checksum` (progressive path/bar reveal on scroll) |
@@ -83,20 +73,20 @@ Under-represented clusters ripe for new IDs: **circuit** (only `pcb` ×2), **fab
 | XvjWvx (inferred) | SVG stroke draw / firework paths | **Adapt** as canvas segment `progress` tween (schematic family) |
 | gmOwJX (inferred) | Logo choreography / multi-part stagger | **Reject** as literal logo animation; **adapt** timing cadence for `telemetry` ticks |
 | VwLePLy (inferred) | Letterize.js per-character stagger | **Adapt** as mono glyph grid wave (`hashwave`), not DOM Letterize |
-| NWGJvqW (inferred) | DOM particle field | **Reject** — use capped canvas nodes instead (`scatter` at low fit) |
+| NWGJvqW (inferred) | DOM particle field | **Reject**, use capped canvas nodes instead (`scatter` at low fit) |
 
 ### (b) Particle inspiration roundup (Jotform + One Page Love)
 
 **Fetched:** [Jotform particles roundup](https://www.jotform.com/blog/particles-animation-codepen-97659/), [One Page Love particles p.3](https://onepagelove.com/tag/particles/page/3).
 
-Jotform catalogues fluid sims, WebGL heads, particle fountains, galaxies, confetti, particles.js configs. One Page Love page 3 lists legacy particles.js portfolios (Cleverbird Art, Turing Inc., Fabio Lamanna, etc.) — mouse-linked starfields behind full-viewport heroes.
+Jotform catalogues fluid sims, WebGL heads, particle fountains, galaxies, confetti, particles.js configs. One Page Love page 3 lists legacy particles.js portfolios (Cleverbird Art, Turing Inc., Fabio Lamanna, etc.), mouse-linked starfields behind full-viewport heroes.
 
 | Pattern | Verdict | Carapace mapping |
 |---------|---------|------------------|
 | Mouse-reactive starfield (particles.js) | **Reject** | Too wallpaper; violates “glow has meaning” |
 | Particle swarm / flocking | **Reject** at full density | **Adapt** as ≤24 capped nodes snapping to 48px grid (`scatter`, low fit) |
 | Text particle (Gthibaud) | **Reject** | Competes with hero typography |
-| Vibrating particles / springy dots | **Adapt** | Pointer-proximity micro-jitter on existing nodes (`mesh` pattern) — new IDs should differ |
+| Vibrating particles / springy dots | **Adapt** | Pointer-proximity micro-jitter on existing nodes (`mesh` pattern), new IDs should differ |
 | Simple canvas dots with lines on proximity | **Adapt** | Already `mesh` / `constellation`; propose `beacon` (fixed anchors, not force graph) |
 
 ### (c) 2026 trend articles (Elementor + Orpetron + Awwwards)
@@ -151,31 +141,31 @@ Eight new effect IDs (not in `docs/effects-audit.md` §Inventory). All implement
 
 ### Per-effect notes
 
-**`hexpulse`** — Diversifies **circuit** cluster without another PCB trace clone. Hex centers snap to 48px grid multiples. Pointer brightens nearest hex column. Reduces pressure to assign another `topology`/`mesh` on infrastructure slides.
+**`hexpulse`**, Diversifies **circuit** cluster without another PCB trace clone. Hex centers snap to 48px grid multiples. Pointer brightens nearest hex column. Reduces pressure to assign another `topology`/`mesh` on infrastructure slides.
 
-**`trace`** — borrows XvjWvx / `createDrawable` semantics without SVG DOM: each segment has `state.progress`. Pairs with `schematic` scroll-scan but shows *route completion* not blueprint blocks. Cuts **flow-diagram** repetition vs another `flowchart`/`pipeline`.
+**`trace`**, borrows XvjWvx / `createDrawable` semantics without SVG DOM: each segment has `state.progress`. Pairs with `schematic` scroll-scan but shows *route completion* not blueprint blocks. Cuts **flow-diagram** repetition vs another `flowchart`/`pipeline`.
 
-**`hashwave`** — Letterize + stagger (VwLePLy) adapted to canvas glyphs already used in `cascade`/`glyph`. Wave is horizontal band, not vertical rain — distinct similarity score.
+**`hashwave`**, Letterize + stagger (VwLePLy) adapted to canvas glyphs already used in `cascade`/`glyph`. Wave is horizontal band, not vertical rain, distinct similarity score.
 
-**`branch`** — Timeline stagger for *decision* metaphor; replaces implicit “another box diagram” on licensing/business consult slides.
+**`branch`**, Timeline stagger for *decision* metaphor; replaces implicit “another box diagram” on licensing/business consult slides.
 
-**`telemetry`** — anime.js homepage ticker / timeline demo adapted to metric cluster. Distinct from `signal` waveform and `ledger` columns.
+**`telemetry`**, anime.js homepage ticker / timeline demo adapted to metric cluster. Distinct from `signal` waveform and `ledger` columns.
 
-**`parcel`** — **handoff** cluster alternative to `relay` baton (5× site-wide). L-shaped motion paths echo `pcb` grammar without adding circuit slides.
+**`parcel`** - **handoff** cluster alternative to `relay` baton (5× site-wide). L-shaped motion paths echo `pcb` grammar without adding circuit slides.
 
-**`beacon`** — Radar cluster variant that is *point-source* not wedge-sweep (`sonar` ×3). Low ring count preserves minimalism.
+**`beacon`**, Radar cluster variant that is *point-source* not wedge-sweep (`sonar` ×3). Low ring count preserves minimalism.
 
-**`checksum`** — Security-ring metaphor for verification/custody without another rotating `shield`/`vault`/`seal`.
+**`checksum`**, Security-ring metaphor for verification/custody without another rotating `shield`/`vault`/`seal`.
 
-**`lattice`** — Fills **isometric-grid** gap with depth parallax (Elementor “subtle motion”) — not a third `isograph` diamond hop.
+**`lattice`**, Fills **isometric-grid** gap with depth parallax (Elementor “subtle motion”), not a third `isograph` diamond hop.
 
-**`filament`** — **fabric** alternative to `weave` interlace; one thread = less visual noise.
+**`filament`** - **fabric** alternative to `weave` interlace; one thread = less visual noise.
 
 ### Ranked implementation order (next pass)
 
-1. `parcel`, `trace`, `hexpulse` — highest cluster-gap impact (handoff, flow-diagram, circuit).
-2. `hashwave`, `checksum`, `telemetry` — typographic/metric/security diversity.
-3. `branch`, `beacon`, `lattice`, `filament` — polish + medium-fit slots.
+1. `parcel`, `trace`, `hexpulse`, highest cluster-gap impact (handoff, flow-diagram, circuit).
+2. `hashwave`, `checksum`, `telemetry`, typographic/metric/security diversity.
+3. `branch`, `beacon`, `lattice`, `filament`, polish + medium-fit slots.
 
 ---
 
@@ -202,12 +192,12 @@ Explicit rejections from cited sources (do not implement as slide backgrounds):
 
 ## Next implementation pass
 
-1. **Contract** — Add IDs to `assets/effects-goal-contract.js` `PREREQUISITE_DRAW_IDS` (or successor list) with particle caps and `INTERACTIVE_EFFECTS` membership.
-2. **Scaffold** — For each ID: `_createState`, `_bootLoops`, `_drawEffect` branches in `assets/effects-anime.js`; follow `pcb`/`relay`/`schematic` patterns.
-3. **Interaction** — Wire `hoverAllowed` / `proximity` / `setScrollFrac` per §Interaction contracts in `docs/effects-audit.md`.
-4. **Assignment** — Rebalance matrix per `docs/effects-audit.md`: target `relay` ≤3, node-graph ≤5, flow-diagram ≤4 using new IDs on slots called out above.
-5. **Verify** — Extend `scripts/verify-revamp.py` / goal gates: adjacent-dup check, RM static snapshot, particle cap grep.
-6. **Stagger utility** — Import `stagger` + `createTimeline` from `animejs@4.0.2` (already used in `assets/text-anime.js`) for `hexpulse`, `hashwave`, `branch`, `telemetry` loop bootstraps.
+1. **Contract**, Add IDs to `assets/effects-goal-contract.js` `PREREQUISITE_DRAW_IDS` (or successor list) with particle caps and `INTERACTIVE_EFFECTS` membership.
+2. **Scaffold**, For each ID: `_createState`, `_bootLoops`, `_drawEffect` branches in `assets/effects-anime.js`; follow `pcb`/`relay`/`schematic` patterns.
+3. **Interaction**, Wire `hoverAllowed` / `proximity` / `setScrollFrac` per §Interaction contracts in `docs/effects-audit.md`.
+4. **Assignment**, Rebalance matrix per `docs/effects-audit.md`: target `relay` ≤3, node-graph ≤5, flow-diagram ≤4 using new IDs on slots called out above.
+5. **Verify**, Extend `scripts/verify-revamp.py` / goal gates: adjacent-dup check, RM static snapshot, particle cap grep.
+6. **Stagger utility**, Import `stagger` + `createTimeline` from `animejs@4.0.2` (already used in `assets/text-anime.js`) for `hexpulse`, `hashwave`, `branch`, `telemetry` loop bootstraps.
 
 ### APIs to import (v4)
 
@@ -219,8 +209,4 @@ import { animate, createTimer, createTimeline, stagger } from "https://esm.sh/an
 
 ---
 
-## References
-
-- In-repo: `assets/effects-anime.js`, `assets/effects-interaction.js`, `assets/effects-goal-contract.js`, `assets/hero-core.js`, `docs/effects-audit.md`, `ideas/website_design_direction.md`, `assets/hero-home.css`
-- External (consulted): animejs.com, Jotform particles roundup, One Page Love particles p.3, Elementor 2026 trends, Orpetron May 2026, Awwwards, GitHub microinteractions topic, Abduzeedo anime.js 10-year article
-- External (blocked): five OBJECTIVE CodePens (Cloudflare) — techniques inferred from titles + anime.js documentation
+## References, In-repo: `assets/effects-anime.js`, `assets/effects-interaction.js`, `assets/effects-goal-contract.js`, `assets/hero-core.js`, `docs/effects-audit.md`, `ideas/website_design_direction.md`, `assets/hero-home.css`, External (consulted): animejs.com, Jotform particles roundup, One Page Love particles p.3, Elementor 2026 trends, Orpetron May 2026, Awwwards, GitHub microinteractions topic, Abduzeedo anime.js 10-year article, External (blocked): five OBJECTIVE CodePens (Cloudflare), techniques inferred from titles + anime.js documentation

@@ -1,5 +1,5 @@
-import { initScrollHero } from "./hero-core.js";
-import { SOURCE_LINKS } from "./hero-constants.js";
+import { initScrollHero } from "./hero-core.js?v=20260706b";
+import { SOURCE_LINKS } from "./hero-constants.js?v=20260706b";
 
 export const HERO_SLIDES = [
   {
@@ -8,7 +8,7 @@ export const HERO_SLIDES = [
     sub: "Build a private AI layer around your business.",
     note: "Your data. Your workflows. Your control.",
     proof: [
-      { label: "Private", detail: "Runs inside your boundary — not a shared tenant." },
+      { label: "Private", detail: "Runs inside your boundary, not a shared tenant." },
       { label: "Model-independent", detail: "Route across providers without rewrites." },
       { label: "No lock-in", detail: "Own the workflows and the data path." }
     ],
@@ -54,7 +54,7 @@ export const HERO_SLIDES = [
     note: "Reusable operational intelligence.",
     proof: [
       { label: "Your workflows", detail: "Encoded as reusable operational intelligence." },
-      { label: "Your knowledge", detail: "Grounded in your systems — not the public web." }
+      { label: "Your knowledge", detail: "Grounded in your systems, not the public web." }
     ],
     oklch: { L: 0.5, h: 230, rel: 0.32 },
     effect: "hexpulse",
@@ -92,7 +92,7 @@ export const HERO_SLIDES = [
   },
   {
     eyebrow: "The Time Dividend",
-    title: "5–7+ Hours Back",
+    title: "5-7+ Hours Back",
     sub: "Meaningful weekly time savings with trained AI.",
     note: "Focus on summaries, routing, and repetitive decisions.",
     proof: [

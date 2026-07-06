@@ -1,4 +1,4 @@
-# Hero Background Effects — Replacement Plan
+# Hero Background Effects, Replacement Plan
 
 _Last updated: 2026-07-05_
 
@@ -12,55 +12,55 @@ Goal patch and classifier evidence are limited to `scripts/goal-effects-scope.tx
 
 | ID | Metaphor | OKLCH tint | Hover (`setInteraction`) | Scroll / mix | Reduced motion | Target slides |
 |----|----------|------------|--------------------------|--------------|----------------|---------------|
-| `isograph` | Isometric diamond grid + wandering highlight cell | `colorAtHue(h, α, 0.11, 0.4)` on cell fill | Highlight cell snaps toward pointer column | — | Static highlight, no cell hop | business 2, solutions 3 |
-| `sonar` | Arc wedge sweep + echo ring returns | Echo rings at hue+15 | Echoes spawn on pointer bearing | — | Slower sweep, no echoes | home 8, solutions 10 |
-| `ledger` | Vertical tick columns + running totals | Ticks at `_pc`; totals at hue 145 | Column under pointer brightens; counter accelerates | — | Frozen counters | home 6, business 8, licensing 5 |
-| `weave` | Interlaced H/V threads with lift | Thread stroke `_lc` | Threads near pointer separate (proximity lift) | — | No lift offset | about 1, solutions 7 |
-| `orbit` | Kepler ellipses + focal nodes | Orbit path `_pc(0.25)`; nodes `_pc(0.6)` | Nearest node glows; body speeds up | — | Static ellipses | home 3, about 6 |
-| `relay` | Station handoff baton | Stations `_glow`; baton accent hue 45 | Baton jumps toward pointer-near station | — | Single slow baton | about 7, business 6, licensing 4, solutions 4 |
-| `seal` | Wax-ring impression + ripple | Ring `_pc(0.5)`; ripple `_lc` | Impression deepens at pointer | — | Static ring | about 5, licensing 6 |
-| `glyph` | Drifting hash fragments (not vertical rain) | Mono fragments `_pc` | Fragments glitch within 100px of pointer | — | Fewer fragments, no glitch | business 7, cortex 9 |
+| `isograph` | Isometric diamond grid + wandering highlight cell | `colorAtHue(h, α, 0.11, 0.4)` on cell fill | Highlight cell snaps toward pointer column | - | Static highlight, no cell hop | business 2, solutions 3 |
+| `sonar` | Arc wedge sweep + echo ring returns | Echo rings at hue+15 | Echoes spawn on pointer bearing | - | Slower sweep, no echoes | home 8, solutions 10 |
+| `ledger` | Vertical tick columns + running totals | Ticks at `_pc`; totals at hue 145 | Column under pointer brightens; counter accelerates | - | Frozen counters | home 6, business 8, licensing 5 |
+| `weave` | Interlaced H/V threads with lift | Thread stroke `_lc` | Threads near pointer separate (proximity lift) | - | No lift offset | about 1, solutions 7 |
+| `orbit` | Kepler ellipses + focal nodes | Orbit path `_pc(0.25)`; nodes `_pc(0.6)` | Nearest node glows; body speeds up | - | Static ellipses | home 3, about 6 |
+| `relay` | Station handoff baton | Stations `_glow`; baton accent hue 45 | Baton jumps toward pointer-near station | - | Single slow baton | about 7, business 6, licensing 4, solutions 4 |
+| `seal` | Wax-ring impression + ripple | Ring `_pc(0.5)`; ripple `_lc` | Impression deepens at pointer | - | Static ring | about 5, licensing 6 |
+| `glyph` | Drifting hash fragments (not vertical rain) | Mono fragments `_pc` | Fragments glitch within 100px of pointer | - | Fewer fragments, no glitch | business 7, cortex 9 |
 
 Particle caps: each new effect ≤40 drawables under `reducedMotion`; ≤80 full-screen at full motion (E12). `isograph` uses 8×5 (40) / 10×8 (80).
 
 ## Retire / merge decisions
 
-**Effect IDs retired:** none — all 15 prerequisite draw IDs remain implemented.
+**Effect IDs retired:** none, all 15 prerequisite draw IDs remain implemented.
 
-**Effect IDs merged:** none — no ID consolidation.
+**Effect IDs merged:** none, no ID consolidation.
 
 Per-ID decisions (E4). Retirements apply to *slide assignments* only when noted. Full table: `docs/effects-audit.md` §ID retire / merge decisions.
 
 | ID | Retire effect ID? | Merge into | ID fate | Assignment change (pre → post) |
 |----|-------------------|------------|---------|--------------------------------|
-| `shield` | no | — | **keep** | 3 → 3 |
-| `cascade` | no | — | **keep** | 1 → 1 |
-| `mesh` | no | — | **keep** | 7 → 4 |
-| `stack` | no | — | **keep** | 0 → 1 (cortex 7) |
-| `magnet` | no | — | **keep** | 2 → 2 |
-| `signal` | no | — | **keep** | 2 → 2 |
-| `chrono` | no | — | **keep** | 1 → 1 |
-| `ping` | no | — | **keep** | 1 → 1 |
-| `flowchart` | no | — | **keep** | 8 → 2 |
-| `pcb` | no | — | **keep** | 2 → 2 |
-| `topology` | no | — | **keep** | 7 → 3 |
-| `pipeline` | no | — | **keep** | 9 → 2 |
-| `constellation` | no | — | **keep** | 2 → 1 |
-| `vault` | no | — | **keep** | 1 → 1 |
-| `schematic` | no | — | **keep** | 2 → 2 |
-| `isograph` | no | — | **add** | 0 → 3 |
-| `sonar` | no | — | **add** | 0 → 3 |
-| `ledger` | no | — | **add** | 0 → 3 |
-| `weave` | no | — | **add** | 0 → 2 |
-| `orbit` | no | — | **add** | 0 → 2 |
-| `relay` | no | — | **add** | 0 → 5 |
-| `seal` | no | — | **add** | 0 → 2 |
-| `glyph` | no | — | **add** | 0 → 2 |
+| `shield` | no | - | **keep** | 3 → 3 |
+| `cascade` | no | - | **keep** | 1 → 1 |
+| `mesh` | no | - | **keep** | 7 → 4 |
+| `stack` | no | - | **keep** | 0 → 1 (cortex 7) |
+| `magnet` | no | - | **keep** | 2 → 2 |
+| `signal` | no | - | **keep** | 2 → 2 |
+| `chrono` | no | - | **keep** | 1 → 1 |
+| `ping` | no | - | **keep** | 1 → 1 |
+| `flowchart` | no | - | **keep** | 8 → 2 |
+| `pcb` | no | - | **keep** | 2 → 2 |
+| `topology` | no | - | **keep** | 7 → 3 |
+| `pipeline` | no | - | **keep** | 9 → 2 |
+| `constellation` | no | - | **keep** | 2 → 1 |
+| `vault` | no | - | **keep** | 1 → 1 |
+| `schematic` | no | - | **keep** | 2 → 2 |
+| `isograph` | no | - | **add** | 0 → 3 |
+| `sonar` | no | - | **add** | 0 → 3 |
+| `ledger` | no | - | **add** | 0 → 3 |
+| `weave` | no | - | **add** | 0 → 2 |
+| `orbit` | no | - | **add** | 0 → 2 |
+| `relay` | no | - | **add** | 0 → 5 |
+| `seal` | no | - | **add** | 0 → 2 |
+| `glyph` | no | - | **add** | 0 → 2 |
 
 **Plan deviations (documented in scope):**
-- `assets/effects-interaction.js` — centralized hover/RM policy module
-- `assets/effects-goal-contract.js` — single source of truth for IDs, wired slides, interactivity
-- `scripts/stage-effects-goal.mjs`, `scripts/export-effects-contract.mjs` — scoped patch + contract export
+- `assets/effects-interaction.js`, centralized hover/RM policy module
+- `assets/effects-goal-contract.js`, single source of truth for IDs, wired slides, interactivity
+- `scripts/stage-effects-goal.mjs`, `scripts/export-effects-contract.mjs`, scoped patch + contract export
 
 ## Per-route reassignment
 
@@ -74,7 +74,7 @@ Per-ID decisions (E4). Retirements apply to *slide assignments* only when noted.
 | 4 | Private AI Infrastructure | pcb | pcb |
 | 5 | Replace SaaS Waste | magnet | magnet |
 | 6 | 3.7× Average ROI | signal | **ledger** |
-| 7 | 5–7+ Hours Back | chrono | chrono |
+| 7 | 5-7+ Hours Back | chrono | chrono |
 | 8 | Start Small. Prove Value. | ping | **sonar** |
 
 ### about (7)
@@ -145,7 +145,7 @@ Per-ID decisions (E4). Retirements apply to *slide assignments* only when noted.
 
 ## Interaction expansion (`INTERACTIVE_EFFECTS`)
 
-Target ≥8 (shipped **14** — every new ID with hover draw code is wired in `hero-core.js`):
+Target ≥8 (shipped **14**, every new ID with hover draw code is wired in `hero-core.js`):
 
 ```
 cascade, mesh, stack, magnet, signal, chrono, sonar, weave, ledger, relay,
@@ -173,9 +173,9 @@ Reduced motion: `hero-core.js` sets `bgInteractive = false` when `prefers-reduce
 
 ## CSS grid variants
 
-Add `[data-effect]` rules in `hero-home.css` for: `isograph`, `sonar`, `ledger`, `weave`, `orbit`, `relay`, `seal`, `glyph` — distinct `background-size` / opacity per DESIGN.md atmosphere grid.
+Add `[data-effect]` rules in `hero-home.css` for: `isograph`, `sonar`, `ledger`, `weave`, `orbit`, `relay`, `seal`, `glyph`, distinct `background-size` / opacity per DESIGN.md atmosphere grid.
 
-## Phase 2 — cluster rebalance (2026-07-05)
+## Phase 2, cluster rebalance (2026-07-05)
 
 Eleven new effect IDs: `hexpulse`, `parcel`, `hashwave`, `branch`, `telemetry`, `trace`, `checksum`, `cellscan`, `beacon`, `lattice`, `filament`.
 
@@ -214,7 +214,7 @@ Legacy IDs (`pcb`, `weave`, `flowchart`, `schematic`, `vault`, `glyph`) remain i
 
 ### Phase 2 `INTERACTIVE_EFFECTS` additions
 
-`hexpulse`, `parcel`, `hashwave`, `branch`, `beacon`, `cellscan`, `lattice`, `filament` (22 total). Scroll-sync: `trace`, `checksum` via `setScrollFrac` — not pointer-interactive.
+`hexpulse`, `parcel`, `hashwave`, `branch`, `beacon`, `cellscan`, `lattice`, `filament` (22 total). Scroll-sync: `trace`, `checksum` via `setScrollFrac`, not pointer-interactive.
 
 ## Checklist
 

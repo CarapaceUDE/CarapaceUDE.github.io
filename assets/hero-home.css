@@ -1,7 +1,8 @@
-/* Home scroll hero — ported from newhero/hero.html */
+/* Home scroll hero, ported from newhero/hero.html */
 
 body[class*="page-"] {
   --slide-duration: var(--motion-slide);
+  --pinned-y-offset: 34px;
 }
 
 body[class*="page-"] html,
@@ -130,7 +131,7 @@ body[class*="page-"] .text-veil {
   background: color-mix(in oklch, var(--accent) 8%, var(--surface));
 }
 
-/* Chrome / metadata rail — sits above sticky nav, top row clears nav height */
+/* Chrome / metadata rail, sits above sticky nav, top row clears nav height */
 body[class*="page-"] .hero-chrome {
   position: fixed;
   z-index: 100;
@@ -202,6 +203,21 @@ body[class*="page-"] .chrome-bottom-hub .meta-block--center .meta-value {
 
 body[class*="page-"] .chrome-bottom-hub .chrome-social {
   flex: 0 0 auto;
+}
+
+body[class*="page-"] .chrome-social-stack {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--chrome-social-gap);
+  width: 100%;
+  pointer-events: none;
+  padding: 2px 0 4px;
+}
+
+body[class*="page-"] .chrome-social-stack > * {
+  pointer-events: auto;
 }
 
 body[class*="page-"] .chrome-bottom--social-only {
@@ -327,7 +343,7 @@ body[class*="page-"] .scroll-hint ::selection {
   color: inherit;
 }
 
-/* DOS overwrite block caret — hero copy + HUD meta */
+/* DOS overwrite block caret, hero copy + HUD meta */
 body.hero-insert-hover .slide-content .eyebrow,
 body.hero-insert-hover .slide-content .title-char,
 body.hero-insert-hover .slide-content .title-word,
@@ -582,7 +598,7 @@ body[class*="page-"] .hero-stage {
 
 body[class*="page-"] .pinned {
   position: fixed;
-  top: calc(50% + 34px);
+  top: calc(50% + var(--pinned-y-offset, 34px));
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 25;
@@ -596,6 +612,8 @@ body[class*="page-"] .pinned {
 
 body[class*="page-"] .pinned .slide-content {
   pointer-events: auto;
+  width: 100%;
+  max-width: 100%;
 }
 
 body[class*="page-"] .stage-3d {
@@ -605,7 +623,7 @@ body[class*="page-"] .stage-3d {
 
 body[class*="page-"] .slide-content {
   display: grid;
-  gap: 14px;
+  gap: var(--slide-content-gap, 14px);
   transform-style: preserve-3d;
   container-type: inline-size;
   container-name: hero-slide;
@@ -633,11 +651,11 @@ body[class*="page-"] .slide-content .eyebrow {
   text-shadow: 0 0 24px color-mix(in oklch, var(--accent) 35%, transparent);
 }
 
-body[class*="page-"] .slide-content h1 {
+body[class*="page-"] .slide-content h1.title-block {
   margin: 0;
-  font-size: calc(clamp(2rem, 6.8vw, 4.8rem) * var(--title-fit-scale, 1));
+  font-size: calc(clamp(2rem, 6.8vw, 4.8rem) * var(--title-fit-scale, 1)) !important;
   font-weight: 600;
-  line-height: 0.96;
+  line-height: 0.96 !important;
   letter-spacing: -0.04em;
   color: var(--fg);
   transform-style: preserve-3d;
@@ -675,7 +693,8 @@ body[class*="page-"] .slide-content .sub {
   color: var(--muted);
   overflow-wrap: break-word;
   word-break: normal;
-  hyphens: auto;
+  hyphens: manual;
+  text-wrap: pretty;
 }
 
 body[class*="page-"] .slide-content .note {
@@ -705,6 +724,19 @@ body[class*="page-"] .proof-row {
   margin-top: 8px;
   min-height: 2.4rem;
   overflow: visible;
+}
+
+body[class*="page-"] .proof-row[data-chip-wrap="true"] {
+  margin-top: 14px;
+  row-gap: 10px;
+}
+
+body[class*="page-"] .proof-row[data-chip-wrap="true"] .proof-chip {
+  transition:
+    color 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out),
+    transform 0.2s var(--ease-out),
+    opacity var(--chip-row-show-ms, 160ms) var(--ease-out);
 }
 
 body[class*="page-"] .proof-chip {
@@ -737,6 +769,8 @@ body[class*="page-"] .proof-chip::before {
 
 body[class*="page-"] .proof-chip--interactive {
   cursor: default;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body[class*="page-"] .proof-chip--source {
@@ -829,11 +863,51 @@ body[class*="page-"] .proof-chip .chip-tree {
   transform: translateX(-0.5px);
   width: max-content;
   min-width: 0;
-  max-width: 248px;
+  max-width: min(248px, calc(100cqw - 12px));
   pointer-events: auto;
   z-index: 3;
   padding-top: 6px;
   padding-bottom: 6px;
+}
+
+body[class*="page-"] .proof-chip .chip-tree.chip-tree--flip {
+  left: auto;
+  right: 50%;
+  transform: translateX(0.5px);
+}
+
+body[class*="page-"] .proof-chip .chip-tree.chip-tree--flip .chip-spine-block {
+  flex-direction: row-reverse;
+}
+
+body[class*="page-"] .proof-chip .chip-tree.chip-tree--flip .chip-branch {
+  flex-direction: row-reverse;
+}
+
+body[class*="page-"] .proof-chip .chip-tree.chip-tree--flip .chip-branch-stem {
+  margin-left: 0;
+  margin-right: -1px;
+  transform-origin: right center;
+}
+
+body[class*="page-"] .proof-chip .chip-tree.chip-tree--flip .chip-branch-text {
+  padding-left: 0;
+  padding-right: 4px;
+  text-align: right;
+}
+
+body[class*="page-"] .proof-row--chip-active .proof-chip.is-hovered {
+  z-index: 14;
+}
+
+body[class*="page-"] .proof-row--chip-active .proof-chip.chip-row--below-active {
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    color 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out),
+    transform 0.2s var(--ease-out),
+    opacity var(--chip-row-fade-ms, 240ms) var(--ease-out) var(--chip-row-fade-delay, 100ms);
 }
 
 body[class*="page-"] .proof-chip .chip-spine-block {
@@ -911,7 +985,7 @@ body[class*="page-"] .proof-chip .chip-branch-text {
   gap: 5px;
   flex: 1;
   min-width: 0;
-  max-width: min(220px, 72cqw);
+  max-width: var(--chip-branch-max, min(220px, 72cqw));
   padding-left: 4px;
   font: inherit;
   color: var(--meta);
@@ -1031,11 +1105,13 @@ body[class*="page-"] .hero-cta-section {
   min-height: min(68vh, 560px);
   display: grid;
   place-items: center;
-  padding: 48px 24px 56px;
+  padding: 48px var(--cta-inset-inline) 56px;
+  box-sizing: border-box;
 }
 
 body[class*="page-"] .hero-tail-section {
-  padding: clamp(3rem, 8vw, 5rem) 0 clamp(4rem, 8vw, 6rem);
+  padding: clamp(3rem, 8vw, 5rem) var(--cta-inset-inline) clamp(4rem, 8vw, 6rem);
+  box-sizing: border-box;
 }
 
 body[class*="page-"] .hero-tail-section .wrap {
@@ -1194,9 +1270,11 @@ body[class*="page-"] .page-business .hero-tail-section .card {
 
 body[class*="page-"] .cta-panel {
   width: min(640px, 100%);
+  max-width: 100%;
   display: grid;
   gap: 16px;
   text-align: left;
+  min-width: 0;
 }
 
 body[class*="page-"] .cta-panel h2 {
@@ -1268,9 +1346,9 @@ body[class*="page-"] .cta-link .cta-label {
 }
 
 @container hero-slide (max-width: 640px) {
-  body[class*="page-"] .slide-content h1 {
-    font-size: calc(clamp(1.55rem, 9.5cqw, 2.55rem) * var(--title-fit-scale, 1));
-    line-height: 1;
+  body[class*="page-"] .slide-content h1.title-block {
+    font-size: calc(clamp(1.55rem, 9.5cqw, 2.55rem) * var(--title-fit-scale, 1)) !important;
+    line-height: 1 !important;
   }
 
   body[class*="page-"] .slide-content .sub {
@@ -1288,8 +1366,8 @@ body[class*="page-"] .cta-link .cta-label {
 }
 
 @container hero-slide (max-width: 380px) {
-  body[class*="page-"] .slide-content h1 {
-    font-size: calc(clamp(1.32rem, 10.5cqw, 2rem) * var(--title-fit-scale, 1));
+  body[class*="page-"] .slide-content h1.title-block {
+    font-size: calc(clamp(1.32rem, 10.5cqw, 2rem) * var(--title-fit-scale, 1)) !important;
   }
 
   body[class*="page-"] .title-word {
@@ -1297,9 +1375,27 @@ body[class*="page-"] .cta-link .cta-label {
   }
 }
 
+@container hero-slide (max-width: 400px) {
+  body[class*="page-"] .slide-content h1.title-block {
+    font-size: calc(clamp(1.65rem, 12.8cqw, 2.95rem) * var(--title-fit-scale, 1)) !important;
+    line-height: 1.02 !important;
+  }
+}
+
+@container hero-slide (max-width: 340px) {
+  body[class*="page-"] .slide-content h1.title-block {
+    font-size: calc(clamp(1.45rem, 12.2cqw, 2.55rem) * var(--title-fit-scale, 1)) !important;
+    line-height: 1.02 !important;
+  }
+}
+
 @media (max-width: 720px) {
   body[class*="page-"] {
     --hero-width: min(920px, calc(100vw - 28px));
+    --cta-inset-inline: max(22px, calc(env(safe-area-inset-left, 0px) + 18px), calc(env(safe-area-inset-right, 0px) + 18px));
+    --pinned-y-offset: 28px;
+    --title-fit-scale: 0.96;
+    --slide-content-gap: 12px;
   }
 
   body[class*="page-"] .pinned {
@@ -1309,12 +1405,52 @@ body[class*="page-"] .cta-link .cta-label {
   body[class*="page-"] .hero-chrome {
     padding: 14px 16px;
   }
+
+  body[class*="page-"] .hero-chrome[data-social-layout="stack"] .chrome-social-stack {
+    display: flex;
+  }
+
+  body[class*="page-"] .hero-chrome[data-social-layout="stack"] .chrome-bottom-hub .chrome-social {
+    display: none;
+  }
+
+  body[class*="page-"] .hero-chrome[data-social-layout="stack"] .chrome-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 8px 10px;
+    width: 100%;
+  }
+
+  body[class*="page-"] .hero-chrome[data-social-layout="stack"] .chrome-bottom > .meta-block.left {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Thin viewports: scroll % over cursor (touch users have no pointer coordinates) */
+  body[class*="page-"] .nav-meta.hide-mobile,
+  body[class*="page-"] .chrome-bottom .meta-block:has(#meta-cursor),
+  body[class*="page-"] .chrome-bottom-hub {
+    display: none;
+  }
+
+  body[class*="page-"] .chrome-bottom > .meta-block:has(#meta-scroll) {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    margin-left: auto;
+    text-align: right;
+  }
+
+  body[class*="page-"] {
+    --chrome-footer-reserve: 148px;
+  }
+
   body[class*="page-"] .scroll-hint {
-    --chrome-footer-reserve: 108px;
     bottom: calc(var(--chrome-footer-reserve) + 10px);
   }
   body[class*="page-"] .slide-rail { display: none; }
-  body[class*="page-"] .meta-block.hide-mobile { display: none; }
   body[class*="page-"] {
     --chrome-social-hit: 2.55rem;
     --chrome-social-icon: 1.55rem;
@@ -1325,7 +1461,189 @@ body[class*="page-"] .cta-link .cta-label {
     --chrome-cursor-slot: 5.25rem;
   }
   body[class*="page-"] .theme-toggle .theme-label { display: none; }
-  body[class*="page-"] .pinned { top: calc(50% + 28px); }
+}
+
+@media (max-width: 640px) {
+  body[class*="page-"] {
+    --cta-inset-inline: max(24px, calc(env(safe-area-inset-left, 0px) + 20px), calc(env(safe-area-inset-right, 0px) + 20px));
+  }
+
+  body[class*="page-"] .hero-cta-section {
+    padding-block: 3rem 3.5rem !important;
+    padding-inline: var(--cta-inset-inline) !important;
+  }
+
+  body[class*="page-"] .hero-tail-section {
+    padding-block: 3rem 3.5rem !important;
+    padding-inline: var(--cta-inset-inline) !important;
+  }
+
+  body[class*="page-"] .hero-tail-section .wrap {
+    width: 100% !important;
+    margin-inline: 0 !important;
+  }
+}
+
+@media (max-width: 420px) {
+  body[class*="page-"] {
+    --pinned-y-offset: 10px;
+    --slide-content-gap: 10px;
+    --title-fit-scale: 0.9;
+  }
+}
+
+/* Short landscape, use horizontal space, compact chrome/chips; title scale only when needed (JS) */
+body[class*="page-"].hero-landscape-short {
+  --hero-width: min(94vw, 1120px);
+  --pinned-y-offset: 2px;
+  --nav-height: calc(56px * var(--hero-ui-scale, 1));
+  --chrome-pad: calc(8px * var(--hero-ui-scale, 1)) calc(14px * var(--hero-ui-scale, 1));
+  --chrome-footer-reserve: calc(92px * var(--hero-ui-scale, 1));
+  --chrome-social-hit: calc(2rem * var(--hero-ui-scale, 1));
+  --chrome-social-icon: calc(1.2rem * var(--hero-ui-scale, 1));
+  --chrome-social-gap: calc(8px * var(--hero-ui-scale, 1));
+  --chrome-social-flank-gap: calc(10px * var(--hero-ui-scale, 1));
+  --chrome-cursor-slot: calc(4rem * var(--hero-ui-scale, 1));
+}
+
+body[class*="page-"].hero-landscape-short .slide-content {
+  grid-template-columns: minmax(0, 1.44fr) minmax(212px, 0.56fr);
+  column-gap: clamp(14px, 2.8vw, 32px);
+  row-gap: var(--slide-content-gap, 3px);
+  align-content: start;
+  padding-top: 0;
+}
+
+body[class*="page-"].hero-landscape-short .slide-content .eyebrow {
+  grid-column: 1 / -1;
+  margin: 0 !important;
+  padding: 0;
+  font-size: 0.58rem;
+  line-height: 1.05;
+  letter-spacing: 0.16em;
+}
+
+body[class*="page-"].hero-landscape-short .slide-content h1.title-block {
+  grid-column: 1;
+  font-size: calc(clamp(2.1rem, 6.4cqw, 3.6rem) * var(--title-fit-scale, 1)) !important;
+  line-height: 0.98 !important;
+}
+
+body[class*="page-"].hero-landscape-short .slide-content .sub {
+  grid-column: 1;
+  max-width: 100%;
+  font-size: clamp(0.86rem, 1.35vw, 1.02rem);
+  line-height: 1.38;
+}
+
+body[class*="page-"].hero-landscape-short .slide-content .note,
+body[class*="page-"].hero-landscape-short .slide-content .pilot-note {
+  grid-column: 1;
+  max-width: 100%;
+  line-height: 1.4;
+}
+
+body[class*="page-"].hero-landscape-short .slide-content .note {
+  font-size: 0.76rem;
+}
+
+body[class*="page-"].hero-landscape-short .slide-content .pilot-note {
+  margin-top: 0.15rem;
+  font-size: 0.66rem;
+  line-height: 1.35;
+}
+
+body[class*="page-"].hero-landscape-short .slide-content .proof-row {
+  grid-column: 2;
+  grid-row: 2 / span 4;
+  justify-self: stretch;
+  align-self: center;
+  width: 100%;
+  max-width: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  margin-top: 0;
+  min-height: 0;
+  gap: 5px;
+  overflow: visible;
+  z-index: 6;
+}
+
+body[class*="page-"].hero-landscape-short .proof-chip {
+  overflow: visible;
+}
+
+body[class*="page-"].hero-landscape-short .proof-chip .chip-tree,
+body[class*="page-"].hero-landscape-short .proof-chip .chip-tree.chip-tree--left-anchor {
+  left: 0;
+  right: auto;
+  transform: none;
+  z-index: 24;
+  max-width: min(420px, calc(100vw - 12px));
+}
+
+body[class*="page-"].hero-landscape-short .proof-chip .chip-branch-text {
+  max-width: var(--chip-branch-max, min(380px, calc(100vw - 24px)));
+}
+
+body[class*="page-"].hero-landscape-short .proof-row--chip-active .proof-chip.chip-row--below-active {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body[class*="page-"].hero-landscape-short .proof-chip {
+  width: max-content;
+  max-width: none;
+  align-self: flex-start;
+  padding: 2px 10px;
+  font-size: 0.6rem;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+body[class*="page-"].hero-landscape-short .proof-row[data-chip-wrap="true"] {
+  margin-top: 0;
+  row-gap: 5px;
+}
+
+body[class*="page-"].hero-landscape-short .nav-inner {
+  min-height: var(--nav-height) !important;
+  padding-block: calc(0.32rem * var(--hero-ui-scale, 1)) !important;
+}
+
+body[class*="page-"].hero-landscape-short .brand {
+  font-size: calc(0.68rem * var(--hero-ui-scale, 1)) !important;
+  gap: calc(0.45rem * var(--hero-ui-scale, 1)) !important;
+}
+
+body[class*="page-"].hero-landscape-short .brand .cortex-brand-logo {
+  width: calc(28px * var(--hero-ui-scale, 1));
+  height: calc(28px * var(--hero-ui-scale, 1));
+}
+
+body[class*="page-"].hero-landscape-short .nav-toggle {
+  width: calc(34px * var(--hero-ui-scale, 1));
+  height: calc(34px * var(--hero-ui-scale, 1));
+}
+
+body[class*="page-"].hero-landscape-short .hero-chrome {
+  font-size: calc(0.64rem * var(--hero-ui-scale, 1));
+}
+
+body[class*="page-"].hero-landscape-short .chrome-mark {
+  font-size: calc(0.58rem * var(--hero-ui-scale, 1));
+}
+
+body[class*="page-"].hero-landscape-short .meta-label {
+  font-size: calc(0.56rem * var(--hero-ui-scale, 1));
+}
+
+body[class*="page-"].hero-landscape-short .scroll-hint {
+  font-size: calc(0.62rem * var(--hero-ui-scale, 1));
+  bottom: calc(var(--chrome-footer-reserve) + 6px);
 }
 
 @media (prefers-reduced-motion: reduce) {

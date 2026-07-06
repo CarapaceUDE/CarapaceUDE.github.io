@@ -1,15 +1,18 @@
-/** Shared hero constants — no imports from hero-core or text-anime. */
+/** Shared hero constants, no imports from hero-core or text-anime. */
+
+/** Bump when hero module graph changes (cache-bust local ES imports + page entry scripts). */
+export const HERO_MODULE_V = "20260706b";
 
 /** Baseline vh-per-slide before scroll-distance multiplier (pre-1.30 era). */
 export const BASE_VH_PER_SLIDE = 47.5;
-/** Scroll-distance multiplier — 100% hero progress requires ~30% more physical scroll. */
+/** Scroll-distance multiplier - 100% hero progress requires ~30% more physical scroll. */
 export const SCROLL_DISTANCE_MULTIPLIER = 1.3;
 export const VH_PER_SLIDE = BASE_VH_PER_SLIDE * SCROLL_DISTANCE_MULTIPLIER;
 
 /** Effect crossfade band within each slide's fractional progress (wider = smoother handoff). */
 export const EFFECT_MIX_ONSET = 0.18;
 export const EFFECT_MIX_END = 0.98;
-/** Pinned-layer fade acceleration — lower = gentler tail handoff. */
+/** Pinned-layer fade acceleration, lower = gentler tail handoff. */
 export const PINNED_FADE_ACCEL = 1.65;
 
 /** OKLCH hue anchors aligned with Cortex site tokens (violet / cyan / purple family). */

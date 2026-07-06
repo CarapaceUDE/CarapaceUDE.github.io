@@ -114,7 +114,7 @@
       function pointFromEvent(event) {
         const rect = canvas.getBoundingClientRect();
         const source = event.touches ? event.touches[0] : event;
-        return { x: source.clientX - rect.left, y: source.clientY - rect.top };
+        return { x: source.clientX, rect.left, y: source.clientY, rect.top };
       }
       function start(event) {
         drawing = true;

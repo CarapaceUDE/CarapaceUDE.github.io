@@ -1,4 +1,4 @@
-import { initScrollHero } from "./hero-core.js";
+import { initScrollHero } from "./hero-core.js?v=20260706b";
 
 export const HERO_SLIDES = [
   {
@@ -18,7 +18,7 @@ export const HERO_SLIDES = [
     eyebrow: "Core Flow",
     title: "Capture Route Execute",
     sub: "Incoming signals become structured work: capture context, route by intent, approve sensitive steps, then execute.",
-    note: "Procedural schematic effect — see docs/visual-assets.md.",
+    note: "Procedural schematic effect (see docs/visual-assets.md).",
     proof: [
       { label: "Capture", detail: "Fling & signal intake." },
       { label: "Route", detail: "Intent-aware dispatch." },
@@ -32,7 +32,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Feature 01",
     title: "Context Management",
-    sub: "Sensitive context stays segmented until the exact moment of execution — models receive only what the task requires.",
+    sub: "Sensitive context stays segmented until the exact moment of execution; models receive only what the task requires.",
     note: "The model cannot leak what it never received.",
     proof: [
       { label: "Segmentation", detail: "Custody-first design." },
@@ -45,7 +45,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Feature 02",
     title: "Intent Routing",
-    sub: "Business intent maps to capability aliases — summarize, extract, classify, draft, route — then dispatches to the best-fit destination.",
+    sub: "Business intent maps to capability aliases (summarize, extract, classify, draft, route), then dispatches to the best-fit destination.",
     note: "Frontier, local, private cloud, or specialized systems.",
     proof: [
       { label: "Aliases", detail: "Intent → capability map." },
@@ -58,7 +58,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Feature 03",
     title: "Model Independence",
-    sub: "Maintain a roster spanning frontier APIs, local models, private cloud, and specialized tools — route elsewhere when providers change.",
+    sub: "Maintain a roster spanning frontier APIs, local models, private cloud, and specialized tools; route elsewhere when providers change.",
     note: "No strategic rewrite when a vendor shifts.",
     proof: [
       { label: "Roster", detail: "Multi-provider routing." },
@@ -71,7 +71,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Feature 04",
     title: "Custody & Governance",
-    sub: "Policies, approvals, routing decisions, and audit logs are designed to be inspected — trust is a feature, not a promise.",
+    sub: "Policies, approvals, routing decisions, and audit logs are designed to be inspected. Trust is a feature, not a promise.",
     note: "Explain, govern, and improve how AI work gets done.",
     proof: [
       { label: "Audit trail", detail: "Inspectable & reversible." },
@@ -84,7 +84,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Feature 05",
     title: "Fling Capture",
-    sub: "Drop files, links, and snippets into a governed intake path — structured for routing instead of lost in chat history.",
+    sub: "Drop files, links, and snippets into a governed intake path, structured for routing instead of lost in chat history.",
     note: "Signals become work items with context attached.",
     proof: [
       { label: "Intake", detail: "Structured capture surface." },
@@ -97,7 +97,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Feature 06",
     title: "Signal To Work",
-    sub: "Email, chat, and portal signals route into governed workflows — not another inbox to babysit.",
+    sub: "Email, chat, and portal signals route into governed workflows, not another inbox to babysit.",
     note: "Turn incoming noise into actionable execution.",
     proof: [
       { label: "Email & chat", detail: "Inbound signal routing." },
@@ -110,7 +110,7 @@ export const HERO_SLIDES = [
   {
     eyebrow: "Differentiation",
     title: "Why Not Another Chatbot",
-    sub: "Cortex connects processes — customer inquiry to quote to job to invoice — not just summarizes disconnected files.",
+    sub: "Cortex connects processes (customer inquiry to quote to job to invoice), not just summarizes disconnected files.",
     note: "A private operating layer, not a folder with a prompt box.",
     proof: [
       { label: "Processes", detail: "Living operational map." },
@@ -124,7 +124,7 @@ export const HERO_SLIDES = [
     eyebrow: "Get Started",
     title: "Download Or Deploy",
     sub: "Explore Cortex yourself via GitHub, or use Carapace to deploy it into governed business workflows.",
-    note: "Experimental software — test in controlled environments.",
+    note: "Experimental software; test in controlled environments.",
     proof: [
       { label: "GitHub", detail: "Free download & releases.", source: "https://github.com/CarapaceUDE/carapace/releases" },
       { label: "Discovery Sprint", detail: "Guided deployment.", source: "business.html#contact" }

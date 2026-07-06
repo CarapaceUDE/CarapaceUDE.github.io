@@ -1,5 +1,5 @@
 /**
- * HeroTextAnime — DOM typography choreographed with anime.js v4
+ * HeroTextAnime, DOM typography choreographed with anime.js v4
  */
 import { animate, createTimeline, stagger } from "https://esm.sh/animejs@4.0.2";
 
@@ -9,9 +9,9 @@ const ENTER = [
   { rotateX: ["-72deg", "0deg"], y: ["-72px", "0px"], opacity: [0, 1], ease: "out(3)" },
   { x: ["-140px", "0px"], rotateY: ["55deg", "0deg"], opacity: [0, 1], ease: "outExpo" },
   { rotateX: ["92deg", "0deg"], z: ["120px", "0px"], opacity: [0, 1], ease: "out(3)" },
-  null, // scatter — per-element in buildScatterEnter()
+  null, // scatter, per-element in buildScatterEnter()
   { y: ["96px", "0px"], rotateZ: ["36deg", "0deg"], rotateY: ["-68deg", "0deg"], opacity: [0, 1], ease: "out(3)" },
-  null // orbit — per-element in buildOrbitEnter()
+  null // orbit, per-element in buildOrbitEnter()
 ];
 
 const EXIT = [

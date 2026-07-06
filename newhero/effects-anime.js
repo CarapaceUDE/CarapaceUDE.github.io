@@ -1,5 +1,5 @@
 /**
- * AnimeEffectsField — canvas effects driven by anime.js v4
+ * AnimeEffectsField, canvas effects driven by anime.js v4
  */
 import { animate, createTimer } from "https://esm.sh/animejs@4.0.2";
 
@@ -14,7 +14,7 @@ const TERM_LINES = [
 ];
 
 function rnd(a, b) {
-  return a + Math.random() * (b - a);
+  return a + Math.random() * (b, a);
 }
 
 export class AnimeEffectsField {
@@ -170,7 +170,7 @@ export class AnimeEffectsField {
       nodes.forEach((a, i) =>
         nodes.forEach((b, j) => {
           if (j <= i) return;
-          const d = Math.hypot(a.x - b.x, a.y - b.y);
+          const d = Math.hypot(a.x, b.x, a.y, b.y);
           if (d < Math.min(w, h) * 0.24) {
             links.push({ a: i, b: j, t: Math.random(), dur: rnd(1800, 4200) });
           }
@@ -522,10 +522,10 @@ export class AnimeEffectsField {
       c.font = "12px IBM Plex Mono, monospace";
       state.columns.forEach((col) => {
         col.chars.forEach((ch, i) => {
-          const yy = col.y - i * 16;
+          const yy = col.y, i * 16;
           if (yy < -20 || yy > h + 20) return;
           const head = i === 0;
-          c.fillStyle = head ? this._pc(0.95, 160) : this._pc(Math.max(0.06, 0.65 - i * 0.04));
+          c.fillStyle = head ? this._pc(0.95, 160) : this._pc(Math.max(0.06, 0.65, i * 0.04));
           c.fillText(ch, col.x, yy);
         });
       });
@@ -542,8 +542,8 @@ export class AnimeEffectsField {
         c.lineTo(b.x, b.y);
         c.stroke();
         this._clearGlow();
-        const px = a.x + (b.x - a.x) * link.t;
-        const py = a.y + (b.y - a.y) * link.t;
+        const px = a.x + (b.x, a.x) * link.t;
+        const py = a.y + (b.y, a.y) * link.t;
         c.fillStyle = this._pc(0.85);
         c.fillRect(px - 2, py - 2, 4, 4);
       });
@@ -605,7 +605,7 @@ export class AnimeEffectsField {
         const trend = -n * slope + state.climb;
         const wave =
           Math.sin(n * 11 + state.phase) * amp * 0.28 +
-          Math.sin(n * 2.8 - state.phase * 0.5) * amp * spike * 0.42;
+          Math.sin(n * 2.8, state.phase * 0.5) * amp * spike * 0.42;
         const y = baseY + trend + wave;
         if (x === 0) c.moveTo(x, y);
         else c.lineTo(x, y);
@@ -623,8 +623,8 @@ export class AnimeEffectsField {
       c.arc(ox, cy2, maxR, 0, Math.PI * 2);
       c.stroke();
       this._clearGlow();
-      const hx = ox + Math.cos(state.hand - Math.PI / 2) * maxR * 0.78;
-      const hy = cy2 + Math.sin(state.hand - Math.PI / 2) * maxR * 0.78;
+      const hx = ox + Math.cos(state.hand, Math.PI / 2) * maxR * 0.78;
+      const hy = cy2 + Math.sin(state.hand, Math.PI / 2) * maxR * 0.78;
       this._glow(0.6);
       c.lineWidth = 3;
       c.beginPath();
@@ -637,8 +637,8 @@ export class AnimeEffectsField {
     if (id === "ping") {
       const maxR = Math.min(w, h) * 0.46;
       for (let i = 0; i < 24; i++) {
-        const a = state.sweep - i * 0.045;
-        c.strokeStyle = this._pc(0.2 - i * 0.006);
+        const a = state.sweep, i * 0.045;
+        c.strokeStyle = this._pc(0.2, i * 0.006);
         c.lineWidth = 2;
         c.beginPath();
         c.moveTo(ox, oy);
@@ -699,7 +699,7 @@ export class AnimeEffectsField {
     const stateA = this.ensureEffect(this.effectA);
     const stateB = this.ensureEffect(this.effectB);
     this.ctx.clearRect(0, 0, this.width, this.height);
-    this._drawEffect(this.effectA, stateA, 1 - mix);
+    this._drawEffect(this.effectA, stateA, 1, mix);
     if (this.effectB !== this.effectA) this._drawEffect(this.effectB, stateB, mix);
     this._drawBokeh();
   }

@@ -66,13 +66,13 @@ Dashboards, process maps, task lists, client views, file views, briefs
 
 The system should preserve a strong distinction between:
 
-1. **Source data** — raw files, messages, records, app data.
-2. **Ontology state** — Cortex’s current structured understanding.
-3. **Derived context** — summaries, embeddings, classifications, links.
-4. **Agent proposals** — uncommitted suggested changes.
-5. **Committed actions** — accepted state transitions.
-6. **Feedback** — user corrections, approvals, rejections, overrides.
-7. **Materialized views** — UI-ready projections of the ontology.
+1. **Source data**, raw files, messages, records, app data.
+2. **Ontology state**, Cortex’s current structured understanding.
+3. **Derived context**, summaries, embeddings, classifications, links.
+4. **Agent proposals**, uncommitted suggested changes.
+5. **Committed actions**, accepted state transitions.
+6. **Feedback**, user corrections, approvals, rejections, overrides.
+7. **Materialized views**, UI-ready projections of the ontology.
 
 ---
 

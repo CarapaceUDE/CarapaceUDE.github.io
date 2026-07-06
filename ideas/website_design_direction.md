@@ -3,22 +3,13 @@
 ## Brand architecture
 
 - **Carapace is the company**: consultancy, infrastructure partner, implementation team, licensor, and steward.
-- **Cortex is the software**: the open-core, model-independent control plane Carapace builds, deploys, and manages.
-- A useful shorthand is `Carapace : Cortex :: Microsoft : Office`.
+- **Cortex is the software**: the open-core, model-independent control plane Carapace builds, deploys, and manages., A useful shorthand is `Carapace : Cortex :: Microsoft : Office`.
 
 Every page should preserve this distinction. Company actions use “Carapace.” Product capabilities use “Cortex.”
 
 ## Visual synthesis
 
-The pitch deck provides the strongest visual language:
-
-- near-black navy canvas;
-- warm white typography with decisive copper highlights;
-- electric blue for control, routing, and system state;
-- green for verified or safe states;
-- violet reserved for the Discovery Sprint and expansion;
-- thin technical borders, luminous nodes, and hexagonal control-plane geometry;
-- diagrams that expose how work moves instead of generic decorative AI imagery.
+The pitch deck provides the strongest visual language:, near-black navy canvas;, warm white typography with decisive copper highlights;, electric blue for control, routing, and system state;, green for verified or safe states;, violet reserved for the Discovery Sprint and expansion;, thin technical borders, luminous nodes, and hexagonal control-plane geometry;, diagrams that expose how work moves instead of generic decorative AI imagery.
 
 The Cortex interface imagery adds quieter application surfaces: dense information inside calm, clearly bounded panels. The website combines these ideas by staying minimal at first glance and revealing deeper mechanics through dedicated pages, diagrams, and disclosure controls.
 
@@ -35,8 +26,7 @@ The Cortex interface imagery adds quieter application surfaces: dense informatio
 
 - `assets/site.css` is the website-level visual system.
 - `assets/site.js` owns navigation, progressive reveal, active-page state, and subtle hero response.
-- `assets/cortex-bloom-bg.js` owns the atmospheric brain/network canvas and respects reduced-motion preferences.
-- Pitch deck routes remain available at `/ideas/` and `/ideas/#slide-N`.
+- `assets/cortex-bloom-bg.js` owns the atmospheric brain/network canvas and respects reduced-motion preferences., Pitch deck routes remain available at `/ideas/` and `/ideas/#slide-N`.
 
 ## Page roles
 

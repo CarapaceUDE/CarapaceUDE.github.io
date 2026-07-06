@@ -1,11 +1,29 @@
 /**
- * HeroChipInteractions — vertical trunk + sequential branch bullets on proof chips
+ * HeroChipInteractions, vertical trunk + sequential branch bullets on proof chips
  */
 import { animate } from "https://esm.sh/animejs@4.0.2";
-import { dedupeBullets, expandDetailLines, normalizeBulletKey } from "./chip-bullet-enrich.js";
+import { dedupeBullets, expandDetailLines, normalizeBulletKey } from "./chip-bullet-enrich.js?v=20260706b";
+import {
+  detectChipRows,
+  shouldUseChipStackLayout,
+  CHIP_BULLET_CONNECTOR_MS,
+  CHIP_BULLET_SPINE_MS,
+  CHIP_BULLET_SPINE_DELAY_MS
+} from "./chip-wrap-layout.js?v=20260706b";
+import { computeChipTreeFlip } from "./chip-tree-layout.js?v=20260706b";
+import { sanitizeCopyText } from "./copy-sanitize.js?v=20260706b";
 
 const LEAVE_DELAY_MS = 160;
 const MIN_BULLETS = 2;
+const WRAP_MQ = "(max-width: 720px)";
+const TOUCH_CHIP_MQ = "(hover: none), (pointer: coarse)";
+const GHOST_MOUSE_SUPPRESS_MS = 700;
+
+export function shouldUseTouchChipControls(
+  mq = typeof window !== "undefined" ? window.matchMedia(TOUCH_CHIP_MQ) : null
+) {
+  return Boolean(mq?.matches);
+}
 
 export class HeroChipInteractions {
   constructor(options = {}) {
@@ -14,30 +32,180 @@ export class HeroChipInteractions {
     this.handlers = [];
     this.anims = [];
     this._leaveTimer = null;
+    this.layoutContainer = null;
+    this._layoutCleanup = null;
+    this._bodyClassObserver = null;
+    this._documentDismiss = null;
+    this._ignoreMouseUntil = 0;
+  }
+
+  _shouldUseTouchChip() {
+    return shouldUseTouchChipControls();
+  }
+
+  _suppressMouseHover() {
+    return this._shouldUseTouchChip() || Date.now() < this._ignoreMouseUntil;
+  }
+
+  _bindDocumentDismiss() {
+    this._unbindDocumentDismiss();
+    this._documentDismiss = (e) => {
+      if (!this._shouldUseTouchChip() || !this.activeChip) return;
+      if (this._isInChipZone(this.activeChip, e.target)) return;
+      this._leave(this.activeChip);
+    };
+    document.addEventListener("pointerdown", this._documentDismiss, true);
+  }
+
+  _unbindDocumentDismiss() {
+    if (!this._documentDismiss) return;
+    document.removeEventListener("pointerdown", this._documentDismiss, true);
+    this._documentDismiss = null;
+  }
+
+  _toggleChip(chip, e) {
+    e?.preventDefault?.();
+    e?.stopPropagation?.();
+    this._ignoreMouseUntil = Date.now() + GHOST_MOUSE_SUPPRESS_MS;
+    if (this.activeChip === chip && chip.querySelector(".chip-tree")) {
+      this._leave(chip);
+      return;
+    }
+    this._enter(chip);
   }
 
   setReducedMotion(v) {
     this.reducedMotion = v;
   }
 
+  _updateChipLayout(container) {
+    if (!container) return;
+    const chips = [...container.querySelectorAll("[data-chip]")];
+    const narrow = window.matchMedia(WRAP_MQ).matches;
+    const landscapeStack = document.body.classList.contains("hero-landscape-short");
+    const stackLayout = shouldUseChipStackLayout(narrow, landscapeStack);
+    const { wrap, rows } = detectChipRows(
+      chips.map((chip) => chip.offsetTop),
+      stackLayout
+    );
+
+    if (!wrap) {
+      container.removeAttribute("data-chip-wrap");
+      container.removeAttribute("data-chip-rows");
+      container.style.removeProperty("--chip-row-fade-ms");
+      container.style.removeProperty("--chip-row-fade-delay");
+      container.style.removeProperty("--chip-row-show-ms");
+      chips.forEach((chip) => chip.removeAttribute("data-chip-row"));
+      return;
+    }
+
+    container.dataset.chipWrap = "true";
+    container.dataset.chipRows = String(new Set(rows).size);
+    container.style.setProperty("--chip-row-fade-ms", `${CHIP_BULLET_SPINE_MS}ms`);
+    container.style.setProperty("--chip-row-fade-delay", `${CHIP_BULLET_SPINE_DELAY_MS}ms`);
+    container.style.setProperty("--chip-row-show-ms", `${CHIP_BULLET_CONNECTOR_MS}ms`);
+    chips.forEach((chip, index) => {
+      chip.dataset.chipRow = String(rows[index] ?? 0);
+    });
+  }
+
+  _bindLayout(container) {
+    this._unbindLayout();
+    if (!container) return;
+
+    const update = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => this._updateChipLayout(container));
+      });
+    };
+    update();
+
+    const observer =
+      typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => update()) : null;
+    observer?.observe(container);
+
+    const mq = window.matchMedia(WRAP_MQ);
+    const onChange = () => update();
+    if (mq.addEventListener) mq.addEventListener("change", onChange);
+    else mq.addListener(onChange);
+    window.addEventListener("resize", update, { passive: true });
+
+    if (typeof MutationObserver !== "undefined") {
+      this._bodyClassObserver?.disconnect();
+      this._bodyClassObserver = new MutationObserver(() => update());
+      this._bodyClassObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ["class"]
+      });
+    }
+
+    this._layoutCleanup = () => {
+      observer?.disconnect();
+      this._bodyClassObserver?.disconnect();
+      this._bodyClassObserver = null;
+      if (mq.removeEventListener) mq.removeEventListener("change", onChange);
+      else mq.removeListener(onChange);
+      window.removeEventListener("resize", update);
+    };
+  }
+
+  refreshLayout() {
+    if (!this.layoutContainer) return;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => this._updateChipLayout(this.layoutContainer));
+    });
+  }
+
+  _unbindLayout() {
+    this._layoutCleanup?.();
+    this._layoutCleanup = null;
+    if (this.layoutContainer) {
+      this.layoutContainer.removeAttribute("data-chip-wrap");
+      this.layoutContainer.removeAttribute("data-chip-rows");
+      this._clearWrapFocus(this.layoutContainer);
+      this.layoutContainer.querySelectorAll("[data-chip]").forEach((chip) => {
+        chip.removeAttribute("data-chip-row");
+      });
+    }
+    this.layoutContainer = null;
+  }
+
   bind(container) {
     this.unbind();
     if (!container) return;
+    this.layoutContainer = container;
+    this._bindLayout(container);
+    this._bindDocumentDismiss();
     container.querySelectorAll("[data-chip]").forEach((chip, index) => {
       if (chip.matches("a.proof-chip--source")) return;
       chip.classList.add("proof-chip--interactive");
       chip.dataset.chipIndex = String(index);
-      const onEnter = () => this._enter(chip);
-      const onLeave = (e) => this._scheduleLeave(chip, e);
-      const onFocusIn = () => {
-        if (!chip.matches(":hover")) onEnter();
+      const onEnter = () => {
+        if (this._suppressMouseHover()) return;
+        this._enter(chip);
       };
-      const onFocusOut = (e) => this._scheduleLeave(chip, e);
+      const onLeave = (e) => {
+        if (this._suppressMouseHover()) return;
+        this._scheduleLeave(chip, e);
+      };
+      const onFocusIn = () => {
+        if (this._suppressMouseHover()) return;
+        if (!chip.matches(":hover")) this._enter(chip);
+      };
+      const onFocusOut = (e) => {
+        if (this._suppressMouseHover()) return;
+        this._scheduleLeave(chip, e);
+      };
+      const onClick = (e) => {
+        if (!this._shouldUseTouchChip()) return;
+        this._toggleChip(chip, e);
+      };
       chip.addEventListener("mouseenter", onEnter);
       chip.addEventListener("mouseleave", onLeave);
       chip.addEventListener("focusin", onFocusIn);
       chip.addEventListener("focusout", onFocusOut);
-      this.handlers.push({ chip, onEnter, onLeave, onFocusIn, onFocusOut });
+      chip.addEventListener("click", onClick);
+      this.handlers.push({ chip, onEnter, onLeave, onFocusIn, onFocusOut, onClick });
     });
   }
 
@@ -61,10 +229,12 @@ export class HeroChipInteractions {
   }
 
   _scheduleLeave(chip, e) {
+    if (this._suppressMouseHover()) return;
     const related = e?.relatedTarget ?? null;
     if (this._isInChipZone(chip, related)) return;
     this._clearLeaveTimer();
     this._leaveTimer = setTimeout(() => {
+      if (this._suppressMouseHover()) return;
       const tree = chip.querySelector(".chip-tree");
       if (chip.matches(":hover") || tree?.matches(":hover")) return;
       this._leave(chip);
@@ -72,8 +242,62 @@ export class HeroChipInteractions {
   }
 
   _bindTreeHover(chip, tree) {
+    if (this._shouldUseTouchChip()) return;
     tree.addEventListener("mouseenter", () => this._clearLeaveTimer());
     tree.addEventListener("mouseleave", (e) => this._scheduleLeave(chip, e));
+  }
+
+  _applyWrapFocus(proofRow, activeRow) {
+    if (!proofRow || proofRow.dataset.chipWrap !== "true") return;
+    const active = Number(activeRow);
+    proofRow.classList.add("proof-row--chip-active");
+    proofRow.dataset.activeChipRow = String(active);
+    proofRow.querySelectorAll("[data-chip]").forEach((chip) => {
+      const row = Number(chip.dataset.chipRow ?? 0);
+      chip.classList.toggle("chip-row--below-active", row > active);
+    });
+  }
+
+  _clearWrapFocus(proofRow) {
+    if (!proofRow) return;
+    proofRow.classList.remove("proof-row--chip-active");
+    delete proofRow.dataset.activeChipRow;
+    proofRow.querySelectorAll(".chip-row--below-active").forEach((chip) => {
+      chip.classList.remove("chip-row--below-active");
+    });
+  }
+
+  _positionChipTree(chip, tree) {
+    const landscapeStack = document.body.classList.contains("hero-landscape-short");
+    const boundsEl = chip.closest(".pinned") || chip.closest(".slide-content");
+    const bounds = boundsEl?.getBoundingClientRect();
+    if (!bounds) return false;
+
+    const chipRect = chip.getBoundingClientRect();
+    const treeWidth = tree.scrollWidth || tree.offsetWidth;
+    const { flip, branchMaxPx } = computeChipTreeFlip({
+      chipLeft: chipRect.left,
+      chipWidth: chipRect.width,
+      treeWidth,
+      boundsLeft: bounds.left,
+      boundsRight: bounds.right,
+      preferRight: landscapeStack,
+      viewportRight: landscapeStack ? window.innerWidth : 0,
+      anchorLeft: landscapeStack
+    });
+
+    tree.classList.remove("chip-tree--flip", "chip-tree--left-anchor");
+    if (landscapeStack) tree.classList.add("chip-tree--left-anchor");
+    tree.style.removeProperty("--chip-branch-max");
+
+    if (branchMaxPx != null) {
+      tree.style.setProperty("--chip-branch-max", `${branchMaxPx}px`);
+    }
+
+    if (!flip) return false;
+
+    tree.classList.add("chip-tree--flip");
+    return true;
   }
 
   _parseNodes(raw) {
@@ -90,12 +314,12 @@ export class HeroChipInteractions {
     const detail = chip.dataset.detail?.trim();
     let bullets = dedupeBullets([
       ...expandDetailLines(detail),
-      ...this._parseNodes(chip.dataset.nodes)
+      ...this._parseNodes(chip.dataset.nodes).map((line) => sanitizeCopyText(line))
     ]);
 
     if (bullets.length < MIN_BULLETS) {
-      const note = chip.closest(".proof-row")?.dataset?.slideNote?.trim();
-      const sub = chip.closest(".proof-row")?.dataset?.slideSub?.trim();
+      const note = sanitizeCopyText(chip.closest(".proof-row")?.dataset?.slideNote?.trim());
+      const sub = sanitizeCopyText(chip.closest(".proof-row")?.dataset?.slideSub?.trim());
       if (note && !bullets.some((b) => normalizeBulletKey(b) === normalizeBulletKey(note))) {
         bullets.push(note);
       }
@@ -114,7 +338,7 @@ export class HeroChipInteractions {
       if (label) bullets.push(label);
     }
 
-    return dedupeBullets(bullets).slice(0, 4);
+    return dedupeBullets(bullets.map((line) => sanitizeCopyText(line))).slice(0, 4);
   }
 
   _glitchReveal(el, delay, index) {
@@ -147,13 +371,23 @@ export class HeroChipInteractions {
 
   _enter(chip) {
     this._clearLeaveTimer();
-    if (this.activeChip === chip && chip.classList.contains("is-hovered")) return;
+    if (this.activeChip === chip && chip.querySelector(".chip-tree")) return;
+    if (chip.classList.contains("is-hovered") && !chip.querySelector(".chip-tree")) {
+      chip.classList.remove("is-hovered");
+      if (this.activeChip === chip) this.activeChip = null;
+    }
     if (this.activeChip && this.activeChip !== chip) this._leave(this.activeChip);
     this.activeChip = chip;
     this._killAnims();
     chip.classList.add("is-hovered");
 
     const bullets = this._bullets(chip);
+    const proofRow = chip.closest(".proof-row");
+    if (proofRow) this._updateChipLayout(proofRow);
+    if (proofRow?.dataset.chipWrap === "true") {
+      this._applyWrapFocus(proofRow, chip.dataset.chipRow ?? "0");
+    }
+
     const tree = document.createElement("div");
     tree.className = "chip-tree";
     tree.setAttribute("aria-hidden", "true");
@@ -197,6 +431,7 @@ export class HeroChipInteractions {
     spineBlock.append(rail, list);
     tree.appendChild(spineBlock);
     chip.appendChild(tree);
+    const treeFlipped = this._positionChipTree(chip, tree);
     this._bindTreeHover(chip, tree);
     tree.addEventListener("mousedown", (e) => e.stopPropagation());
     tree.addEventListener("click", (e) => e.stopPropagation());
@@ -218,15 +453,15 @@ export class HeroChipInteractions {
     this.anims.push(
       animate(connector, {
         scaleY: [0, 1],
-        duration: 160,
+        duration: CHIP_BULLET_CONNECTOR_MS,
         ease: "outExpo"
       })
     );
     this.anims.push(
       animate(spine, {
         scaleY: [0, 1],
-        duration: 240,
-        delay: 100,
+        duration: CHIP_BULLET_SPINE_MS,
+        delay: CHIP_BULLET_SPINE_DELAY_MS,
         ease: "outExpo"
       })
     );
@@ -239,6 +474,7 @@ export class HeroChipInteractions {
       const textDelay = stemDelay + 80;
 
       stem.style.transform = "scaleX(0)";
+      stem.style.transformOrigin = treeFlipped ? "right center" : "left center";
       glitch.style.opacity = "0";
 
       this.anims.push(
@@ -258,23 +494,28 @@ export class HeroChipInteractions {
     if (!chip) return;
     chip.classList.remove("is-hovered");
     chip.querySelector(".chip-tree")?.remove();
+    this._clearWrapFocus(chip.closest(".proof-row"));
     if (this.activeChip === chip) this.activeChip = null;
     this._killAnims();
   }
 
   unbind() {
     this._clearLeaveTimer();
-    this.handlers.forEach(({ chip, onEnter, onLeave, onFocusIn, onFocusOut }) => {
+    this._unbindDocumentDismiss();
+    this._unbindLayout();
+    this.handlers.forEach(({ chip, onEnter, onLeave, onFocusIn, onFocusOut, onClick }) => {
       chip.removeEventListener("mouseenter", onEnter);
       chip.removeEventListener("mouseleave", onLeave);
       chip.removeEventListener("focusin", onFocusIn);
       chip.removeEventListener("focusout", onFocusOut);
+      chip.removeEventListener("click", onClick);
       chip.classList.remove("is-hovered", "proof-chip--interactive");
       chip.querySelector(".chip-tree")?.remove();
     });
     this.handlers = [];
     this._killAnims();
     this.activeChip = null;
+    this._ignoreMouseUntil = 0;
   }
 
   dispose() {

@@ -36,6 +36,8 @@ assert(heroSocial.includes("buildSocialNav(\"left\"") || heroSocial.includes('bu
 assert(heroSocial.includes("buildSocialNav(\"right\"") || heroSocial.includes('buildSocialNav("right"'), "right cluster mount");
 assert(heroSocial.includes("hero-chrome--minimal"), "minimal chrome fallback");
 assert(heroSocial.includes("chrome-bottom-hub"), "center hub wrapper for fixed social flanks");
+assert(heroSocial.includes("chrome-social-stack"), "stack band above copyright on narrow viewports");
+assert(heroSocial.includes("socialLayout"), "layout mode toggles stack vs flank");
 
 const pages = [
   "index.html",

@@ -15,10 +15,10 @@ Migrate About, Business, Licensing, Solutions, and Cortex from craft-photo heroe
 | # | Criterion | How to verify |
 |---|-----------|---------------|
 | G1 | `assets/hero-core.js` exists; `hero-home.js` is a thin wrapper; home still boots | `index.html` has `#hero-stage`; no console errors on load |
-| G2 | `pilotNote: true` renders muted disclaimer on Business slide 8 and Licensing slides 4–5 | Visual check + grep `pilot-note` in DOM after scroll |
-| G3 | `flowchart`, `pcb`, `topology`, `pipeline` (+ `constellation`, `vault`) work in `effects-anime.js` | No throw on slide change; home slides 3–4 use `topology` / `pcb` |
-| G4 | `docs/site-copy-ocr.md` includes OCR for `assets/slide-01`–`slide-11` (at least 04, 05, 08) | File contains `slide-08-team` section with @triphosphatedev / @ascendism |
-| G5 | `docs/visual-assets.md` exists — assets listed **or** explicit “procedural fallback” decision | File present with license log or fallback note |
+| G2 | `pilotNote: true` renders muted disclaimer on Business slide 8 and Licensing slides 4-5 | Visual check + grep `pilot-note` in DOM after scroll |
+| G3 | `flowchart`, `pcb`, `topology`, `pipeline` (+ `constellation`, `vault`) work in `effects-anime.js` | No throw on slide change; home slides 3-4 use `topology` / `pcb` |
+| G4 | `docs/site-copy-ocr.md` includes OCR for `assets/slide-01`-`slide-11` (at least 04, 05, 08) | File contains `slide-08-team` section with @triphosphatedev / @ascendism |
+| G5 | `docs/visual-assets.md` exists, assets listed **or** explicit “procedural fallback” decision | File present with license log or fallback note |
 | G6 | All six routes use scroll hero: `about`, `business`, `licensing`, `solutions`, `cortex`, `index` | `grep -l hero-stage *.html` → 6 files |
 | G7 | About: 7 slides, ontology + team (GitHub handles only), no legacy carousel/hidden block | `about-legacy` gone; no inline carousel JS |
 | G8 | Business: 8 slides + intake form tail at `#contact` | Form still submits; carousel removed |
@@ -28,7 +28,7 @@ Migrate About, Business, Licensing, Solutions, and Cortex from craft-photo heroe
 | G12 | Nav unified; `scripts/verify-revamp.py` passes | `python scripts/verify-revamp.py .verify-scratch` exit 0 |
 | G13 | No inline carousel JS on migrated pages; no `cortex-bloom-bg.js` on inner pages | Grep confirms |
 
-**Goal is DONE when G1–G13 all pass.**
+**Goal is DONE when G1-G13 all pass.**
 
 ---
 
@@ -36,7 +36,7 @@ Migrate About, Business, Licensing, Solutions, and Cortex from craft-photo heroe
 
 Each slice has: **scope**, **outputs**, **slice done when**, **do not start until**.
 
-### Slice 0 — Prerequisite read (orchestrator only, no code)
+### Slice 0, Prerequisite read (orchestrator only, no code)
 - **Scope:** Read `index.html`, `assets/hero-home.js`, `docs/site-copy-ocr.md`, `docs/carapace-ontology.txt`
 - **Outputs:** Mental model of slide schema + HTML shell
 - **Done when:** Orchestrator can list required DOM ids
@@ -44,7 +44,7 @@ Each slice has: **scope**, **outputs**, **slice done when**, **do not start unti
 
 ---
 
-### Slice 1 — `hero-core` + `pilotNote` + home regression
+### Slice 1 - `hero-core` + `pilotNote` + home regression
 - **Scope:** Extract `initScrollHero` to `assets/hero-core.js`; thin `hero-home.js`; add `pilotNote` to `text-anime.js` + `.pilot-note` CSS; home unchanged visually
 - **Files:** `hero-core.js` (new), `hero-home.js`, `text-anime.js`, `hero-home.css`
 - **Done when:** G1 pass; home scroll + theme toggle work
@@ -52,7 +52,7 @@ Each slice has: **scope**, **outputs**, **slice done when**, **do not start unti
 
 ---
 
-### Slice 2 — Parallel prep (3 subagents) ⬦
+### Slice 2, Parallel prep (3 subagents) ⬦
 
 Run **in parallel** after Slice 1. Orchestrator merges + resolves conflicts.
 
@@ -68,16 +68,16 @@ Run **in parallel** after Slice 1. Orchestrator merges + resolves conflicts.
 
 ---
 
-### Slice 3 — Effects polish + home retune
+### Slice 3, Effects polish + home retune
 - **Scope:** Add `constellation`, `vault`, (`schematic` optional); retune home slides 3→`topology`, 4→`pcb`
 - **Files:** `effects-anime.js`, `hero-home.js`
 - **Done when:** G3 pass
-- **Blocks:** Page migrations (need full effect set for About slide 4–5)
+- **Blocks:** Page migrations (need full effect set for About slide 4-5)
 - **Can parallel with:** Slice 4 only if 2B merged first
 
 ---
 
-### Slice 4 — About template (first full page migration)
+### Slice 4, About template (first full page migration)
 - **Scope:** Rewrite `about.html` with hero shell; `assets/hero-about.js` (7 slides); remove `about-legacy` + carousel JS; post-hero CTA only
 - **Files:** `about.html`, `hero-about.js`
 - **Done when:** G6 (about), G7 pass; About scrolls 7 slides
@@ -86,12 +86,12 @@ Run **in parallel** after Slice 1. Orchestrator merges + resolves conflicts.
 
 ---
 
-### Slice 5 — Parallel page migrations (2 subagents) ⬦
+### Slice 5, Parallel page migrations (2 subagents) ⬦
 
 | Track | Subagent task | Files | Track done when |
 |-------|---------------|-------|-----------------|
 | **5A Business** | `business.html` + `hero-business.js` (8 slides, `pilotNote` slide 8); keep `#contact` form tail | `business.html`, `hero-business.js` | G8 pass |
-| **5B Licensing** | `licensing.html` + `hero-licensing.js` (6 slides, `pilotNote` 4–5); PDF tail + disclaimer; fix carapace CTA | `licensing.html`, `hero-licensing.js` | G9 pass |
+| **5B Licensing** | `licensing.html` + `hero-licensing.js` (6 slides, `pilotNote` 4-5); PDF tail + disclaimer; fix carapace CTA | `licensing.html`, `hero-licensing.js` | G9 pass |
 
 **Slice 5 done when:** 5A + 5B complete; orchestrator spot-checks `pilot-note` on pricing slides.
 
@@ -99,7 +99,7 @@ Run **in parallel** after Slice 1. Orchestrator merges + resolves conflicts.
 
 ---
 
-### Slice 6 — Solutions (solo turn, largest slide count)
+### Slice 6, Solutions (solo turn, largest slide count)
 - **Scope:** `solutions.html` + `hero-solutions.js` (~10 slides from `site-copy-ocr.md`); remove infographic gallery + lightbox
 - **Files:** `solutions.html`, `hero-solutions.js`
 - **Done when:** G10 pass
@@ -109,7 +109,7 @@ Run **in parallel** after Slice 1. Orchestrator merges + resolves conflicts.
 
 ---
 
-### Slice 7 — Cortex merge + redirect + optional assets
+### Slice 7, Cortex merge + redirect + optional assets
 - **Scope:** Merge carapace download/GitHub into `cortex.html`; `hero-cortex.js` (~10 slides); wire SVG schematic layer if Slice 2C found assets; `carapace.html` redirect stub; trim redundant cortex grids
 - **Files:** `cortex.html`, `hero-cortex.js`, `carapace.html`, optional `hero-core.js` schematic layer
 - **Done when:** G11 pass; Cortex slide 2 has schematic OR procedural fallback documented
@@ -117,7 +117,7 @@ Run **in parallel** after Slice 1. Orchestrator merges + resolves conflicts.
 
 ---
 
-### Slice 8 — Nav unify + verification hardening
+### Slice 8, Nav unify + verification hardening
 - **Scope:** Standard nav on all pages; update `verify-revamp.py` (hero-stage on all routes, no carousel checks); run full verify; cache-bust versions
 - **Files:** all HTML, `verify-revamp.py`, `site.js` refs
 - **Done when:** G12, G13 pass; **goal complete**
@@ -160,16 +160,13 @@ flowchart TD
   S7 --> S8
 ```
 
-**Maximum parallelism:**
-- After Slice 1: **3 subagents** (2A, 2B, 2C)
-- After Slice 4: **2 subagents** (5A, 5B)
-- During Slice 6: **1 optional read-only subagent** (6P)
+**Maximum parallelism:**, After Slice 1: **3 subagents** (2A, 2B, 2C), After Slice 4: **2 subagents** (5A, 5B), During Slice 6: **1 optional read-only subagent** (6P)
 
 ---
 
 ## Subagent brief templates (copy-paste)
 
-### 2A — OCR slides
+### 2A, OCR slides
 ```
 Task: Create scripts/ocr-slides.py, OCR assets/slide-01 through slide-11,
 append results to docs/site-copy-ocr.md. Priority: slide-04, slide-05 ($12K→$24K),
@@ -177,14 +174,14 @@ slide-08 (team: @triphosphatedev, @ascendism). Do not edit HTML.
 Return: confirmation sections added + any figures found for Business slide 8.
 ```
 
-### 2B — Canvas effects (core four)
+### 2B, Canvas effects (core four)
 ```
 Task: Add flowchart, pcb, topology, pipeline to assets/effects-anime.js.
 Match existing effect style (wireframe, OKLCH, ambient). Do not edit HTML or page modules.
 Return: effect ids list + line count added.
 ```
 
-### 2C — Visual asset sourcing
+### 2C, Visual asset sourcing
 ```
 Task: Search for CC0/MIT SVG schematics and low-poly glTF (chip/PCB/motherboard).
 Write docs/visual-assets.md with license log. Download suitable files to
@@ -193,7 +190,7 @@ Do not add three.js yet.
 Return: manifest summary + file paths or fallback decision.
 ```
 
-### 5A — Business page
+### 5A, Business page
 ```
 Task: Migrate business.html to scroll hero using hero-core.js pattern from about.html.
 Create assets/hero-business.js with 8 slides per plan. pilotNote:true on slide 8.
@@ -202,7 +199,7 @@ Depends on: hero-core.js, effects-anime.js with all effects.
 Return: slide count + pilotNote confirmation.
 ```
 
-### 5B — Licensing page
+### 5B, Licensing page
 ```
 Task: Migrate licensing.html to scroll hero. Create assets/hero-licensing.js (6 slides).
 pilotNote:true on slides 4-5. PDF grid below hero with disclaimer above #agreements.
@@ -210,7 +207,7 @@ Fix CTA carapace.html → cortex.html. Remove craft hero/carousel.
 Return: slide count + disclaimer locations.
 ```
 
-### 6P — Carapace merge prep (read-only)
+### 6P, Carapace merge prep (read-only)
 ```
 Task: Read carapace.html and cortex.html. List unique carapace content to merge
 (download links, experimental notice, best-for/not-for). Do not edit files.
@@ -276,14 +273,14 @@ python scripts/verify-revamp.py .verify-scratch
 ## Turn checklist (orchestrator copy)
 
 ```
-[ ] Slice 0 — Read prerequisites
-[ ] Slice 1 — hero-core + pilotNote (G1)
-[ ] Slice 2 — Parallel: 2A OCR | 2B effects | 2C assets (G4, G5 partial)
-[ ] Slice 3 — constellation/vault + home retune (G3)
-[ ] Slice 4 — About template (G6, G7)
-[ ] Slice 5 — Parallel: 5A Business | 5B Licensing (G8, G9)
-[ ] Slice 6 — Solutions (G10)
-[ ] Slice 7 — Cortex + carapace redirect (G11)
-[ ] Slice 8 — Nav + verify-revamp (G12, G13)
-[ ] GOAL COMPLETE — all G1–G13 pass
+[ ] Slice 0, Read prerequisites
+[ ] Slice 1, hero-core + pilotNote (G1)
+[ ] Slice 2, Parallel: 2A OCR | 2B effects | 2C assets (G4, G5 partial)
+[ ] Slice 3, constellation/vault + home retune (G3)
+[ ] Slice 4, About template (G6, G7)
+[ ] Slice 5, Parallel: 5A Business | 5B Licensing (G8, G9)
+[ ] Slice 6, Solutions (G10)
+[ ] Slice 7, Cortex + carapace redirect (G11)
+[ ] Slice 8, Nav + verify-revamp (G12, G13)
+[ ] GOAL COMPLETE, all G1-G13 pass
 ```

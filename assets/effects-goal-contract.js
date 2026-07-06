@@ -5,7 +5,7 @@
 
 /**
  * Verification plan step 1 / E1 prerequisite draw IDs (15 named implementations).
- * Goal + plan text round to "16" — the 16th audit row is stack assignment debt (0× pre-ship).
+ * Goal + plan text round to "16", the 16th audit row is stack assignment debt (0× pre-ship).
  */
 export const PREREQUISITE_DRAW_IDS = [
   "shield",
@@ -25,7 +25,7 @@ export const PREREQUISITE_DRAW_IDS = [
   "schematic"
 ];
 
-/** @deprecated alias — use PREREQUISITE_DRAW_IDS */
+/** @deprecated alias, use PREREQUISITE_DRAW_IDS */
 export const ORIGINAL_GOAL_IDS = PREREQUISITE_DRAW_IDS;
 
 export const GOAL_ENUMERATION_ROW_COUNT = 16;
@@ -47,7 +47,7 @@ export const PHASE2_EFFECT_IDS = [
   "filament"
 ];
 
-/** Drawable primitive caps — full motion / reduced motion (research §Accessibility). */
+/** Drawable primitive caps, full motion / reduced motion (research §Accessibility). */
 export const EFFECT_PARTICLE_CAPS = {
   hexpulse: { full: 80, rm: 40 },
   parcel: { full: 24, rm: 12 },
@@ -104,7 +104,7 @@ export const EFFECTS_HARNESS_PREFIX = "scripts/effects-hero-harness";
 
 const H = EFFECTS_HARNESS_PREFIX;
 
-/** One hero slide per shipped effect — harness draw smoke (E7). */
+/** One hero slide per shipped effect, harness draw smoke (E7). */
 export const EFFECT_DRAW_SLIDES = [
   { id: "shield", route: `${H}/index.html`, slideCount: 8, slideIndex: 0, effect: "shield" },
   { id: "cascade", route: `${H}/index.html`, slideCount: 8, slideIndex: 1, effect: "cascade" },
@@ -142,7 +142,7 @@ export const EFFECT_DRAW_SLIDES = [
   { id: "glyph", route: `${H}/archive.html`, slideCount: 6, slideIndex: 5, effect: "glyph" }
 ];
 
-/** Scroll-sync / non-interactive effects — RM frozen-composition harness probes. */
+/** Scroll-sync / non-interactive effects, RM frozen-composition harness probes. */
 export const SCROLL_STATIC_RM_SLIDES = [
   { id: "telemetry", route: `${H}/index.html`, slideCount: 8, slideIndex: 5, effect: "telemetry" },
   { id: "trace", route: `${H}/solutions.html`, slideCount: 10, slideIndex: 4, effect: "trace" },
@@ -152,7 +152,7 @@ export const SCROLL_STATIC_RM_SLIDES = [
 /** All shipped effects support empty-space click microinteractions. */
 export const CLICK_EFFECT_IDS = [...SHIPPED_EFFECT_IDS];
 
-/** One harness slide per effect — click E2E smoke (reuse draw matrix). */
+/** One harness slide per effect, click E2E smoke (reuse draw matrix). */
 export const CLICK_WIRED_SLIDES = [...EFFECT_DRAW_SLIDES];
 
 export const CLICK_PULSE_CAPS = { default: 4, burst: 12 };

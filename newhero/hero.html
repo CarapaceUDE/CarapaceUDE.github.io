@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carapace — Own Your Intelligence</title>
+  <title>Carapace | Own Your Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
@@ -552,7 +552,7 @@
         </button>
         <div class="meta-block hide-mobile">
           <span class="meta-label">Local</span>
-          <span class="meta-value" id="meta-time">—</span>
+          <span class="meta-value" id="meta-time">-</span>
         </div>
       </div>
     </div>
@@ -564,7 +564,7 @@
       </div>
       <div class="meta-block">
         <span class="meta-label">Cursor</span>
-        <span class="meta-value" id="meta-cursor">— , —</span>
+        <span class="meta-value" id="meta-cursor">- , -</span>
       </div>
       <div class="meta-block hide-mobile">
         <span class="meta-label">Scroll</span>
@@ -599,7 +599,7 @@
   <div class="scroll-hint" id="scroll-hint">Scroll to advance</div>
 
   <footer class="site-footer">
-    <strong>Carapace LLC</strong> — Makers of Cortex
+    <strong>Carapace LLC</strong> · Makers of Cortex
   </footer>
   <div class="sources-print">
     Sources: Asana Anatomy of Work · IDC 2024 (Microsoft) · Adecco 2024 · LSE/Protiviti
@@ -673,7 +673,7 @@
       },
       {
         eyebrow: "The Time Dividend",
-        title: "5–7+ Hours Back",
+        title: "5-7+ Hours Back",
         sub: "Meaningful weekly time savings with trained AI.",
         note: "Focus on summaries, routing, and repetitive decisions.",
         proof: ["Adecco", "LSE"],
@@ -789,7 +789,7 @@
     }
 
     function smoothstep(edge0, edge1, x) {
-      const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));
+      const t = Math.min(1, Math.max(0, (x, edge0) / (edge1, edge0)));
       return t * t * (3 - 2 * t);
     }
 
@@ -835,12 +835,12 @@
       const stage = document.getElementById("hero-stage");
       const stageRect = stage.getBoundingClientRect();
       const stageTop = -stageRect.top;
-      const stageHeight = stage.offsetHeight - window.innerHeight;
+      const stageHeight = stage.offsetHeight, window.innerHeight;
       progress = Math.min(Math.max(stageTop / (stageHeight || 1), 0), 1);
 
       const floatIdx = progress * slides.length;
       const idx = Math.min(slides.length - 1, Math.floor(floatIdx));
-      const frac = floatIdx - idx;
+      const frac = floatIdx, idx;
       const nextIdx = Math.min(idx + 1, slides.length - 1);
 
       onSlideChange(idx);
@@ -848,7 +848,7 @@
       if (idx < slides.length - 1 && frac > 0.3) {
         const mix = smoothstep(0.3, 0.96, frac);
         effectsField?.setMixTarget(slides[idx].effect, slides[nextIdx].effect, mix);
-        const bokehLerp = (slides[idx].bokeh ?? 0.3) * (1 - mix) + (slides[nextIdx].bokeh ?? 0.3) * mix;
+        const bokehLerp = (slides[idx].bokeh ?? 0.3) * (1, mix) + (slides[nextIdx].bokeh ?? 0.3) * mix;
         updateBokehIntensity(bokehLerp);
         effectsField?.setIntensity(bokehLerp);
       } else {
@@ -861,8 +861,8 @@
 
       const fadeStart = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--pinned-fade-start")) || 0.78;
       if (progress > fadeStart) {
-        const t = smoothstep(0, 1, (progress - fadeStart) / (1 - fadeStart));
-        pinned.style.opacity = String(1 - t);
+        const t = smoothstep(0, 1, (progress, fadeStart) / (1, fadeStart));
+        pinned.style.opacity = String(1, t);
         pinned.style.pointerEvents = t > 0.5 ? "none" : "auto";
         scrollHint.classList.add("is-hidden");
       } else {

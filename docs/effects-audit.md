@@ -1,4 +1,4 @@
-# Hero Background Effects — Audit
+# Hero Background Effects, Audit
 
 _Last updated: 2026-07-05 (shipped)_
 
@@ -7,10 +7,7 @@ Canonical implementation: `assets/effects-anime.js`, `assets/hero-core.js`, `ass
 ## Architecture summary
 
 - `initScrollHero()` maps scroll progress → discrete slide index; when `frac > 0.3`, crossfades effects via `smoothstep(0.3, 0.96, frac)`.
-- `AnimeEffectsField` pipeline: `ensureEffect(id)` → `_createState` + `_bootLoops` → `_draw()` → `_drawEffect(id, state, alpha)`.
-- Pointer path: `mousemove` → `setPointerNorm` + `setInteraction(px, py, bgInteractive)` where `bgInteractive = heroPinned && INTERACTIVE_EFFECTS.includes(effect)`.
-- Canvas hover policy: `assets/effects-interaction.js` (`hoverAllowed`, `proximity`, …) via `_proximity` / `_hoverAllowed` wrappers.
-- Scroll frac: `effectsField.setScrollFrac(frac)` — schematic scan line reads `scrollFrac ?? state.scan`.
+- `AnimeEffectsField` pipeline: `ensureEffect(id)` → `_createState` + `_bootLoops` → `_draw()` → `_drawEffect(id, state, alpha)`., Pointer path: `mousemove` → `setPointerNorm` + `setInteraction(px, py, bgInteractive)` where `bgInteractive = heroPinned && INTERACTIVE_EFFECTS.includes(effect)`., Canvas hover policy: `assets/effects-interaction.js` (`hoverAllowed`, `proximity`, …) via `_proximity` / `_hoverAllowed` wrappers., Scroll frac: `effectsField.setScrollFrac(frac)`, schematic scan line reads `scrollFrac ?? state.scan`.
 - `atmosphere.dataset.effect` syncs CSS grid variants via `onMixChange`.
 
 ---
@@ -44,37 +41,37 @@ Verification plan step 1 lists **16 goal slots**: the 15 named draw IDs below (`
 
 ## §ID retire / merge decisions (E4)
 
-**Effect IDs retired:** none — every prerequisite draw ID remains in `effects-anime.js`.
+**Effect IDs retired:** none, every prerequisite draw ID remains in `effects-anime.js`.
 
-**Effect IDs merged:** none — no two IDs collapsed into one implementation.
+**Effect IDs merged:** none, no two IDs collapsed into one implementation.
 
 | ID | Retire effect ID? | Merge into | ID fate | Assignment change (pre → post) |
 |----|-------------------|------------|---------|--------------------------------|
-| `shield` | no | — | **keep** | 3 → 3 |
-| `cascade` | no | — | **keep** | 1 → 1 |
-| `mesh` | no | — | **keep** | 7 → 4 |
-| `stack` | no | — | **keep** | 0 → 1 (cortex 7) |
-| `magnet` | no | — | **keep** | 2 → 2 |
-| `signal` | no | — | **keep** | 2 → 2 |
-| `chrono` | no | — | **keep** | 1 → 1 |
-| `ping` | no | — | **keep** | 1 → 1 |
-| `flowchart` | no | — | **keep** | 8 → 2 |
-| `pcb` | no | — | **keep** | 2 → 2 |
-| `topology` | no | — | **keep** | 7 → 3 |
-| `pipeline` | no | — | **keep** | 9 → 2 |
-| `constellation` | no | — | **keep** | 2 → 1 |
-| `vault` | no | — | **keep** | 1 → 1 |
-| `schematic` | no | — | **keep** | 2 → 2 |
-| `isograph` | no | — | **add** | 0 → 3 |
-| `sonar` | no | — | **add** | 0 → 3 |
-| `ledger` | no | — | **add** | 0 → 3 |
-| `weave` | no | — | **add** | 0 → 2 |
-| `orbit` | no | — | **add** | 0 → 2 |
-| `relay` | no | — | **add** | 0 → 5 |
-| `seal` | no | — | **add** | 0 → 2 |
-| `glyph` | no | — | **add** | 0 → 2 |
+| `shield` | no | - | **keep** | 3 → 3 |
+| `cascade` | no | - | **keep** | 1 → 1 |
+| `mesh` | no | - | **keep** | 7 → 4 |
+| `stack` | no | - | **keep** | 0 → 1 (cortex 7) |
+| `magnet` | no | - | **keep** | 2 → 2 |
+| `signal` | no | - | **keep** | 2 → 2 |
+| `chrono` | no | - | **keep** | 1 → 1 |
+| `ping` | no | - | **keep** | 1 → 1 |
+| `flowchart` | no | - | **keep** | 8 → 2 |
+| `pcb` | no | - | **keep** | 2 → 2 |
+| `topology` | no | - | **keep** | 7 → 3 |
+| `pipeline` | no | - | **keep** | 9 → 2 |
+| `constellation` | no | - | **keep** | 2 → 1 |
+| `vault` | no | - | **keep** | 1 → 1 |
+| `schematic` | no | - | **keep** | 2 → 2 |
+| `isograph` | no | - | **add** | 0 → 3 |
+| `sonar` | no | - | **add** | 0 → 3 |
+| `ledger` | no | - | **add** | 0 → 3 |
+| `weave` | no | - | **add** | 0 → 2 |
+| `orbit` | no | - | **add** | 0 → 2 |
+| `relay` | no | - | **add** | 0 → 5 |
+| `seal` | no | - | **add** | 0 → 2 |
+| `glyph` | no | - | **add** | 0 → 2 |
 
-**Assignment-level retirements** (slide slots only — effect IDs above stay in code):
+**Assignment-level retirements** (slide slots only, effect IDs above stay in code):
 
 | Retired assignment pattern | Was (slides) | Shipped (slides) | Replacement IDs used on those slots |
 |----------------------------|--------------|------------------|-------------------------------------|
@@ -87,15 +84,15 @@ Verification plan step 1 lists **16 goal slots**: the 15 named draw IDs below (`
 
 **Add (8 new IDs):** `isograph`, `sonar`, `ledger`, `weave`, `orbit`, `relay`, `seal`, `glyph`.
 
-**Supporting module (plan deviation):** `assets/effects-interaction.js` — centralized `hoverAllowed` / `proximity` policy extracted from `effects-anime.js` draw paths; listed in `scripts/goal-effects-scope.txt`.
+**Supporting module (plan deviation):** `assets/effects-interaction.js`, centralized `hoverAllowed` / `proximity` policy extracted from `effects-anime.js` draw paths; listed in `scripts/goal-effects-scope.txt`.
 
-## §Replacement candidates (prioritized — shipped)
+## §Replacement candidates (prioritized, shipped)
 
 | Priority | Issue | Candidate action | Shipped resolution |
 |----------|-------|------------------|-------------------|
-| P0 | business 5–6 both `flowchart` | Replace slide 6 | slide 6 → `relay` |
-| P0 | licensing 4–5 both `pipeline` | Replace slide 5 | slides 4–5 → `relay`, `ledger` |
-| P0 | about 5–6 both `constellation` | Replace slide 6 | slide 6 → `orbit` |
+| P0 | business 5-6 both `flowchart` | Replace slide 6 | slide 6 → `relay` |
+| P0 | licensing 4-5 both `pipeline` | Replace slide 5 | slides 4-5 → `relay`, `ledger` |
+| P0 | about 5-6 both `constellation` | Replace slide 6 | slide 6 → `orbit` |
 | P1 | `pipeline` ×9 site-wide | Cut to ≤4; diversify | 2 slides remain |
 | P1 | `flowchart` ×8 | Cut to ≤4; diversify | 2 slides remain |
 | P1 | `topology` ×7 | Cut to ≤4; add `orbit`/`weave` | 3 slides remain |
@@ -107,36 +104,36 @@ Verification plan step 1 lists **16 goal slots**: the 15 named draw IDs below (`
 
 ---
 
-## §Inventory — 34 effect IDs (shipped)
+## §Inventory - 34 effect IDs (shipped)
 
 | ID | Visual metaphor | Animation loops | Hover / scroll | Particle cap | Similarity score* | Cluster |
 |----|-----------------|-----------------|----------------|--------------|-------------------|---------|
-| `shield` | Concentric security ellipses + orbiting sparks | Ring `rot`/`pulse`; spark `a` orbit | `_pointerOffset` parallax only | 24–52 sparks | 2 vs vault | security-ring |
-| `cascade` | Vertical matrix glyph rain | Column `y` fall; `_updateCascade` glitch bursts | **Interactive:** glitch chars within 120px of pointer | cols × 6–12 | 1 vs glyph | typographic |
+| `shield` | Concentric security ellipses + orbiting sparks | Ring `rot`/`pulse`; spark `a` orbit | `_pointerOffset` parallax only | 24-52 sparks | 2 vs vault | security-ring |
+| `cascade` | Vertical matrix glyph rain | Column `y` fall; `_updateCascade` glitch bursts | **Interactive:** glitch chars within 120px of pointer | cols × 6-12 | 1 vs glyph | typographic |
 | `mesh` | Force-directed node graph + link packets | Node `scale`; link `t` packet | **Interactive:** `_proximity` link wobble, node shake/glow | 24 nodes | 2 vs topology | node-graph |
 | `stack` | Scrolling terminal log lines | Row `x` marquee; `counter` tick | **Interactive:** row freeze + `_glitchString` by Y proximity | 10 rows | 1 vs cascade | typographic |
-| `magnet` | Central attractor + particle streams | Core `pulse`; stream pull-to-center | **Interactive:** pull target follows pointer; stream glow via `_proximity` | ~68 streams | — | field |
+| `magnet` | Central attractor + particle streams | Core `pulse`; stream pull-to-center | **Interactive:** pull target follows pointer; stream glow via `_proximity` | ~68 streams | - | field |
 | `signal` | ROI waveform + climbing trend | `phase`, `climb`, `glow` | **Interactive:** spike amplitude ×1.6 near pointer X (±10% width) | 14 samples | 1 vs ledger | metric |
 | `chrono` | Analog clock face + hand | `hand` rotation; `glow` pulse | **Interactive:** hand angle tracks pointer (disabled when `reducedMotion`) | 1 hand | 1 vs signal | metric |
 | `ping` | Radar radial sweep lines + expanding rings | `sweep`; ring `r`; blip pop | `_pointerOffset` only | 12 blips | 2 vs sonar | radar |
 | `flowchart` | Box-and-arrow diagram + edge packets | Packet `t` along edges | `_pointerOffset` only | 4 boxes | 2 vs isograph | flow-diagram |
-| `pcb` | Orthogonal trace grid + via pulses | Trace `pulse`; `gridPulse` | `_pointerOffset` only | ~35 traces | — | circuit |
+| `pcb` | Orthogonal trace grid + via pulses | Trace `pulse`; `gridPulse` | `_pointerOffset` only | ~35 traces | - | circuit |
 | `topology` | Hub-and-spoke star + radial packets | Hub/node `pulse`; `packet` along spokes | `_pointerOffset` only | 8 spokes | 2 vs mesh | node-graph |
 | `pipeline` | Linear stage nodes + active sweep | `sweep`; stage `pulse` | `_pointerOffset` only | 5 stages | 2 vs relay | flow-diagram |
 | `constellation` | Polygon node map + link glow | `glow`; node `pulse` | `_pointerOffset` only | 6 nodes | 2 vs topology | node-graph |
-| `vault` | Lock rings + padlock glyph + sparks | Ring `rot`/`pulse`; lock `pulse`; spark orbit | `_pointerOffset` only | 24–52 sparks | 2 vs shield | security-ring |
+| `vault` | Lock rings + padlock glyph + sparks | Ring `rot`/`pulse`; lock `pulse`; spark orbit | `_pointerOffset` only | 24-52 sparks | 2 vs shield | security-ring |
 | `schematic` | Blueprint grid + blocks + dimension ticks + scan line | `gridPulse`; `scan`; dim `t` | **Scroll:** scan Y = `scrollFrac ?? state.scan` | 3 blocks | 2 vs flowchart | flow-diagram |
 | `isograph` | Isometric diamond grid + highlight cell | Highlight `pulse`; cell hop timer | **Interactive:** highlight cell snaps toward pointer column | 8×5 RM / 10×8 FM | 3 vs flowchart | isometric-grid |
-| `sonar` | Arc wedge sweep + echo ring returns | `sweep`; echo `r`/`alpha` pop | **Interactive:** echo blip on pointer bearing when hover | 4–8 echoes | 3 vs ping | radar |
+| `sonar` | Arc wedge sweep + echo ring returns | `sweep`; echo `r`/`alpha` pop | **Interactive:** echo blip on pointer bearing when hover | 4-8 echoes | 3 vs ping | radar |
 | `ledger` | Vertical tick columns + running Σ total | `sweep` column highlight; `counter` tick; col `pulse` | **Interactive:** column brightens via `_proximity`; counter speed ×2.2 | 16 columns | 3 vs signal | metric |
-| `weave` | Interlaced H/V threads | Thread `offset` drift | **Interactive:** thread lift ±8px near pointer (`reducedMotion` → 0) | 14–22 per axis | 3 vs mesh | fabric |
+| `weave` | Interlaced H/V threads | Thread `offset` drift | **Interactive:** thread lift ±8px near pointer (`reducedMotion` → 0) | 14-22 per axis | 3 vs mesh | fabric |
 | `orbit` | Kepler ellipses + dual focal nodes | Body `a` orbit; `glow` pulse | **Interactive:** nearest body glow + radius boost via `_proximity` | 3 bodies | 3 vs topology | orbital |
 | `relay` | Station nodes + handoff baton | `baton.t` handoff loop; station `pulse` | **Interactive:** baton eases toward pointer-nearest station; speed ×1.8 | 6 stations | 3 vs pipeline | handoff |
 | `seal` | Wax-ring impression + ripple + label | Ring `pulse`; `rot`; ripple `alpha` | **Interactive:** impression depth via `_proximity(ox, oy, 200)` | 4 ripples | 2 vs vault | security-ring |
-| `glyph` | Drifting mono hash fragments | Fragment `x`/`y` drift | **Interactive:** glitch char swap within 100px of pointer | 18–36 fragments | 2 vs cascade | typographic |
-| `hexpulse` | Hex control-plane lattice pulse | Center-out `stagger` on cell `alpha`/`scale` | **Interactive:** `_proximity` cell brighten | 40–80 cells | 2 vs pcb | circuit |
+| `glyph` | Drifting mono hash fragments | Fragment `x`/`y` drift | **Interactive:** glitch char swap within 100px of pointer | 18-36 fragments | 2 vs cascade | typographic |
+| `hexpulse` | Hex control-plane lattice pulse | Center-out `stagger` on cell `alpha`/`scale` | **Interactive:** `_proximity` cell brighten | 40-80 cells | 2 vs pcb | circuit |
 | `parcel` | L-path data packets between stations | `animate({ t })` piecewise path | **Interactive:** nearest packet speed boost | ≤24 packets | 2 vs relay | handoff |
-| `hashwave` | Mono glyph grid horizontal brighten band | `stagger` axis-x + scramble | **Interactive:** glyph scramble near pointer | 40–80 glyphs | 2 vs glyph | typographic |
+| `hashwave` | Mono glyph grid horizontal brighten band | `stagger` axis-x + scramble | **Interactive:** glyph scramble near pointer | 40-80 glyphs | 2 vs glyph | typographic |
 | `branch` | Binary decision fork node reveal | Timeline `stagger` on `reveal` | **Interactive:** parallax via `_pointerOffset` | 6 nodes | 2 vs flowchart | flow-diagram |
 | `telemetry` | Instrument strip micro-ticks | Timeline stagger on tick `h` | none (metric read) | 10 ticks | 2 vs ledger | metric |
 | `trace` | Orthogonal route self-draw | Segment `progress`; packet loop | **Scroll:** `setScrollFrac` drives draw length | 6 segments | 2 vs schematic | flow-diagram |
@@ -146,11 +143,11 @@ Verification plan step 1 lists **16 goal slots**: the 15 named draw IDs below (`
 | `lattice` | Depth-layered perspective grid | Layer `offset` parallax | **Interactive:** `_pointerOffset` shear | 3 layers | 2 vs isograph | isometric-grid |
 | `filament` | Single luminous thread on grid | Motion-path `t` on knot path | **Interactive:** parallax offset | 6 knots | 2 vs weave | fabric |
 
-\*Similarity score 0–3 within nearest cluster peer (0 = distinct, 3 = near-clone).
+\*Similarity score 0-3 within nearest cluster peer (0 = distinct, 3 = near-clone).
 
 **Shipped `INTERACTIVE_EFFECTS` (22):** `cascade`, `mesh`, `stack`, `magnet`, `signal`, `chrono`, `sonar`, `weave`, `ledger`, `relay`, `isograph`, `orbit`, `seal`, `glyph`, `hexpulse`, `parcel`, `hashwave`, `branch`, `beacon`, `cellscan`, `lattice`, `filament`.
 
-**Archive-only draw smoke (6):** `pcb`, `weave`, `flowchart`, `schematic`, `vault`, `glyph` — `scripts/effects-hero-harness/archive.html`.
+**Archive-only draw smoke (6):** `pcb`, `weave`, `flowchart`, `schematic`, `vault`, `glyph` - `scripts/effects-hero-harness/archive.html`.
 
 ---
 
@@ -178,7 +175,7 @@ Verification plan step 1 lists **16 goal slots**: the 15 named draw IDs below (`
 
 ## §Click interaction contracts
 
-Empty-space `pointerdown` on pinned hero (via `isEmptyHeroClick` in `assets/effects-interaction.js`) → `AnimeEffectsField.triggerClick()` → per-effect handler in `assets/effects-click.js`. Reduced motion: `clickAllowed` false — no handlers fire.
+Empty-space `pointerdown` on pinned hero (via `isEmptyHeroClick` in `assets/effects-interaction.js`) → `AnimeEffectsField.triggerClick()` → per-effect handler in `assets/effects-click.js`. Reduced motion: `clickAllowed` false, no handlers fire.
 
 | ID | Click behavior | RM |
 |----|----------------|-----|
@@ -186,7 +183,7 @@ Empty-space `pointerdown` on pinned hero (via `isEmptyHeroClick` in `assets/effe
 | `vault` | Padlock pulse + 2 lock-ring ripples | no-op |
 | `seal` | Wax impression spike + ripple burst | no-op |
 | `checksum` | 3 staggered verify ticks at click X | no-op |
-| `cascade` | Glitch burst in 1–2 columns near click X | no-op |
+| `cascade` | Glitch burst in 1-2 columns near click X | no-op |
 | `stack` | Ephemeral terminal line at nearest row | no-op |
 | `glyph` | Nearest 3 fragments repel + glitch swap | no-op |
 | `hashwave` | Horizontal brighten band from click column | no-op |
@@ -219,7 +216,7 @@ Empty-space `pointerdown` on pinned hero (via `isEmptyHeroClick` in `assets/effe
 
 ---
 
-## §Slide matrix — post-reassignment (49 rows)
+## §Slide matrix, post-reassignment (49 rows)
 
 | Route | Slide# | Title | Effect | Cluster | Adjacent dup? |
 |-------|--------|-------|--------|---------|---------------|
@@ -229,7 +226,7 @@ Empty-space `pointerdown` on pinned hero (via `isEmptyHeroClick` in `assets/effe
 | home | 4 | Private AI Infrastructure | hexpulse | circuit | |
 | home | 5 | Replace SaaS Waste | magnet | field | |
 | home | 6 | 3.7× Average ROI | telemetry | metric | |
-| home | 7 | 5–7+ Hours Back | chrono | metric | |
+| home | 7 | 5-7+ Hours Back | chrono | metric | |
 | home | 8 | Start Small. Prove Value. | beacon | radar | |
 | about | 1 | Builders First | filament | fabric | |
 | about | 2 | Leverage Not Replacement | magnet | field | |
@@ -317,7 +314,7 @@ Empty-space `pointerdown` on pinned hero (via `isEmptyHeroClick` in `assets/effe
 
 | Pair | Score | Shipped mitigation |
 |------|-------|-------------------|
-| mesh ↔ topology | 2 | topology 3×, mesh 4× — separated by relay/isograph on adjacent routes |
+| mesh ↔ topology | 2 | topology 3×, mesh 4×, separated by relay/isograph on adjacent routes |
 | mesh ↔ constellation | 2 | constellation single use (about slide 4) |
 | topology ↔ constellation | 2 | Different slide contexts; constellation rare |
 | flowchart ↔ pipeline | 2 | pipeline 2×, flowchart 2×; relay/schematic replace former dup slides |
@@ -325,7 +322,7 @@ Empty-space `pointerdown` on pinned hero (via `isEmptyHeroClick` in `assets/effe
 | pipeline ↔ relay | 2 | relay is baton metaphor, not stage sweep |
 | shield ↔ vault ↔ seal | 2 | seal on agreement slides; vault on custody; shield on control plane |
 | ping ↔ sonar | 3 | sonar uses arc wedge; ping kept on cortex CTA only |
-| signal ↔ ledger | 2 | ledger columns vs waveform — distinct geometry |
+| signal ↔ ledger | 2 | ledger columns vs waveform, distinct geometry |
 | cascade ↔ glyph | 2 | cascade vertical rain; glyph drifting hashes |
 
 ### Clusters with ≥3 site-wide uses (post-ship)
@@ -341,9 +338,9 @@ Empty-space `pointerdown` on pinned hero (via `isEmptyHeroClick` in `assets/effe
 
 | Pre-ship issue | Resolution |
 |----------------|------------|
-| business 5–6 flowchart dup | slide 6 → `relay` |
-| business 7–8 pipeline dup | slides 7–8 → `glyph`, `ledger` |
-| licensing 4–5 pipeline dup | slides 4–5 → `relay`, `ledger` |
+| business 5-6 flowchart dup | slide 6 → `relay` |
+| business 7-8 pipeline dup | slides 7-8 → `glyph`, `ledger` |
+| licensing 4-5 pipeline dup | slides 4-5 → `relay`, `ledger` |
 | pipeline ×9 | → 2 slides |
 | flowchart ×8 | → 2 slides |
 | topology ×7 | → 3 slides |
@@ -357,13 +354,13 @@ Empty-space `pointerdown` on pinned hero (via `isEmptyHeroClick` in `assets/effe
 |---|--------|---------|---------|---------|-------------------|
 | 1 | [anime.js v4 Timer docs](https://animejs.com/documentation/timer/) | MIT | `createTimer` frame loop for canvas | **adopt** | `_draw` timer at 60fps |
 | 2 | [anime.js v4 Animation docs](https://animejs.com/documentation/animation/) | MIT | Property tweening on state objects | **adopt** | `_bootLoops` pattern |
-| 3 | [haoqi.design](https://haoqi.design) | — | Mono-spine instrument panel | **adapt** | DESIGN.md contract |
+| 3 | [haoqi.design](https://haoqi.design) | - | Mono-spine instrument panel | **adapt** | DESIGN.md contract |
 | 4 | [p5.js flow field examples](https://p5js.org/examples/) | LGPL | Flow-field advection | **adapt** | `weave` thread offsets |
 | 5 | [silverbolt/radar-canvas](https://github.com/silverbolt/radar-canvas) | MIT | Arc sweep + echo blips | **adapt** | `sonar` |
 | 6 | [bost.ocks.org/voronoi](https://bost.ocks.org/mike/voronoi/) | BSD | Voronoi highlight | **reject** | Too organic |
-| 7 | [codeshack.io radar scanner](https://codeshack.io/interactive-radar-scanner-animation-js/) | — | CSS conic-gradient sweep | **reject** | CSS-only |
+| 7 | [codeshack.io radar scanner](https://codeshack.io/interactive-radar-scanner-animation-js/) | - | CSS conic-gradient sweep | **reject** | CSS-only |
 | 8 | [ngigijohn/geometric-wallpapers](https://github.com/ngigijohn/geometric-wallpapers) | MIT | Isometric grid tiling | **adapt** | `isograph` |
-| 9 | [Generative Design (Hart/Bader)](https://www.generative-design.com/) | — | Harmonic / Lissajous motion | **adapt** | `orbit` |
+| 9 | [Generative Design (Hart/Bader)](https://www.generative-design.com/) | - | Harmonic / Lissajous motion | **adapt** | `orbit` |
 | 10 | [IBM Plex Mono](https://github.com/IBM/plex) | OFL-1.1 | Engineering monospace | **adopt** | cascade/stack/glyph |
 | 11 | [three.js wireframe examples](https://threejs.org/examples/) | MIT | 3D wireframe | **reject** | visual-assets.md Phase 1 |
 | 12 | [mtibben/jquery.radar](https://github.com/mtibben/jquery.radar) | MIT | jQuery radar | **reject** | jQuery dep |

@@ -1,5 +1,5 @@
 /**
- * Pure scroll/transition math for hero stages — no DOM or network imports.
+ * Pure scroll/transition math for hero stages, no DOM or network imports.
  * Consumed by hero-core.js and unit tests.
  */
 import {
@@ -7,7 +7,7 @@ import {
   EFFECT_MIX_ONSET,
   EFFECT_MIX_END,
   PINNED_FADE_ACCEL
-} from "./hero-constants.js";
+} from "./hero-constants.js?v=20260706b";
 
 export function smoothstep(edge0, edge1, x) {
   const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));

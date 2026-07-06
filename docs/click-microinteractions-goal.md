@@ -14,11 +14,7 @@ Add a centralized empty-space click pipeline on top of existing hover/proximity 
 
 ## Non-negotiables
 
-- `createTimer` render loop + `animate()` state tweens in `assets/effects-anime.js`
-- OKLCH palette via `effectPalette()` / `colorAtHue()`; backgrounds stay subordinate to hero copy
-- Centralized click policy in `assets/effects-interaction.js` (`clickAllowed`, `isEmptyHeroClick`) — no `elementFromPoint` in `effects-anime.js`
-- Click pulse pool: ≤4 concurrent, 200ms debounce; click tweens cancel + restore baselines on re-entry; no WebGL/particles.js
-- Do not regress hover microinteractions or insert-cursor text editing
+- `createTimer` render loop + `animate()` state tweens in `assets/effects-anime.js`, OKLCH palette via `effectPalette()` / `colorAtHue()`; backgrounds stay subordinate to hero copy, Centralized click policy in `assets/effects-interaction.js` (`clickAllowed`, `isEmptyHeroClick`), no `elementFromPoint` in `effects-anime.js`, Click pulse pool: ≤4 concurrent, 200ms debounce; click tweens cancel + restore baselines on re-entry; no WebGL/particles.js, Do not regress hover microinteractions or insert-cursor text editing
 
 ---
 
@@ -35,7 +31,7 @@ Add a centralized empty-space click pipeline on top of existing hover/proximity 
 | G7 | `docs/effects-audit.md` click contracts table (34 rows) | Doc review |
 | G8 | `python scripts/verify-revamp.py` exit 0; click E2E OK | Full verify + `test-effects-ids.mjs` |
 
-**Goal is DONE when G1–G8 all pass.**
+**Goal is DONE when G1-G8 all pass.**
 
 ---
 
@@ -47,7 +43,7 @@ Add a centralized empty-space click pipeline on top of existing hover/proximity 
 | `vault` | Padlock pulse + 2 lock-ring ripples at click |
 | `seal` | Wax impression spike + ripple burst at click |
 | `checksum` | 3 staggered verify ticks at click X on bar |
-| `cascade` | Glitch burst in 1–2 columns near click X |
+| `cascade` | Glitch burst in 1-2 columns near click X |
 | `stack` | Ephemeral terminal line at nearest row; freeze 500ms |
 | `glyph` | Nearest 3 fragments repel + glitch swap |
 | `hashwave` | Horizontal brighten band sweeps from click column |
@@ -90,7 +86,7 @@ Add a centralized empty-space click pipeline on top of existing hover/proximity 
 | **S2B** | Handlers: `isograph`, `sonar`, `ledger`, `weave`, `orbit`, `relay`, `seal`, `glyph` | 8 ids click OK |
 | **S2C** | Handlers: 11 Phase 2 ids | 11 ids click OK |
 | **S3** | Contract + E2E + verify gates | G5, G6 partial |
-| **S4** | Audit doc + full verify | G1–G8 pass |
+| **S4** | Audit doc + full verify | G1-G8 pass |
 
 ---
 
@@ -108,7 +104,7 @@ Add a centralized empty-space click pipeline on top of existing hover/proximity 
 
 ## Per-slice verification
 
-**Fast probes (≈2 min)** — run before full smoke:
+**Fast probes (≈2 min)**, run before full smoke:
 
 ```bash
 node scripts/test-click-registry.mjs .verify-scratch
@@ -143,14 +139,14 @@ rg "clickAllowed|triggerClick|_dispatchClick|clickSegFlash" assets/
 ## Turn checklist
 
 ```
-[x] Slice 0 — Goal doc
-[x] Slice 1 — Click infrastructure
-[x] Slice 2A — Original 15 handlers
-[x] Slice 2B — Phase 1 handlers
-[x] Slice 2C — Phase 2 handlers
-[x] Slice 3 — Contract + E2E + verify gates
-[x] Slice 4 — Audit + full verify
-[x] GOAL COMPLETE — G1–G8 pass
+[x] Slice 0, Goal doc
+[x] Slice 1, Click infrastructure
+[x] Slice 2A, Original 15 handlers
+[x] Slice 2B, Phase 1 handlers
+[x] Slice 2C, Phase 2 handlers
+[x] Slice 3, Contract + E2E + verify gates
+[x] Slice 4, Audit + full verify
+[x] GOAL COMPLETE, G1-G8 pass
 ```
 
 ---
@@ -165,11 +161,7 @@ Use docs/click-microinteractions-goal.md as the orchestration brief.
 Objective: Add centralized empty-space click pipeline to AnimeEffectsField with a
 unique themed canvas click response for each of the 34 SHIPPED_EFFECT_IDS.
 
-Constraints:
-- Scroll-hero routes only; preserve anime.js v4 createTimer + _draw architecture
-- All hit-testing via effects-interaction.js
-- Reduced motion = no click response
-- Do not regress hover or insert-cursor
+Constraints:, Scroll-hero routes only; preserve anime.js v4 createTimer + _draw architecture, All hit-testing via effects-interaction.js, Reduced motion = no click response, Do not regress hover or insert-cursor
 
 Verify: node scripts/test-effects-ids.mjs && python scripts/verify-revamp.py .verify-scratch
 ```

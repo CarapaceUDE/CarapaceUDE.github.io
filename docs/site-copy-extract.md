@@ -24,7 +24,7 @@ Licensing
 Pitch Deck
 Cortex
 About Carapace
-We build private AI infrastructure for real businesses—and the open-core software that keeps it governed, adaptable, and under their control.
+We build private AI infrastructure for real businesses, and the open-core software that keeps it governed, adaptable, and under their control.
 Technology in service of human capability. No AI theater required.
 See How We Help
 Explore Cortex
@@ -39,7 +39,7 @@ We are not here to sell AI theater. We help teams remove low-value work, protect
 Your intelligence layer should belong to you.
 What We Believe
 Useful technology should make people more capable.
-Our choices—technical and commercial—follow four durable principles.
+Our choices, technical and commercial, follow four durable principles.
 Human capability over replacement
 Offload repeatable work so people can spend more time on judgment, relationships, and the work that needs a human mind.
 Access beyond the enterprise
@@ -47,10 +47,10 @@ Owner-operators, small businesses, and lean teams deserve serious tools without 
 Practical over performative
 A working system that reduces drag matters more than a flashy demo. Real operations are the test.
 Value that compounds
-Good implementation work should become reusable integrations, packages, and operating knowledge—not disappear into a slide deck.
+Good implementation work should become reusable integrations, packages, and operating knowledge, not disappear into a slide deck.
 Our Mission
 Put practical AI within reach of everyday businesses.
-We help existing teams become more capable without losing the human strengths that make them valuable—or surrendering control of their data, workflows, and strategy.
+We help existing teams become more capable without losing the human strengths that make them valuable, or surrendering control of their data, workflows, and strategy.
 The goal is leverage.
 Not replacement. Not dependence. A stronger team, supported by systems that absorb the work people should not have to carry.
 Company + Software
@@ -231,7 +231,7 @@ Why Carapace instead of one AI tool?
 Do not buy one product and hope it fits every job.
 Carapace routes work to the right model based on capability, cost, speed, privacy, and policy. If a provider changes, your workflows and strategic direction do not have to change with it.
 Start with the Discovery Sprint
-One focused engagement. One to two real automations. Measurable results and a clear path forward—without a giant transformation project on faith.
+One focused engagement. One to two real automations. Measurable results and a clear path forward without a giant transformation project on faith.
 What helps us respond faster
 Your team size
 The workflow you want to improve
@@ -353,10 +353,10 @@ Licensing
 
 ### core-skills-guide.html
 
-**Title:** Carapace Core Skills Guide — Agent Builder Edition
+**Title:** Carapace Core Skills Guide, Agent Builder Edition
 
 ﻿
-Carapace Core Skills Guide — Agent Builder Edition
+Carapace Core Skills Guide, Agent Builder Edition
 Core Skills Guide (Agent Builder Edition)
 A practical spec for AI agents to implement the 5-core-skill architecture from scratch.
 0) What this guide gives you
@@ -729,9 +729,9 @@ Licensing
 
 ### ideas/Carapace_Cortex_Final_Refined_Slideshow_STANDALONE.html
 
-**Title:** Carapace / Cortex — Fullscreen Pitch Deck
+**Title:** Carapace / Cortex Fullscreen Pitch Deck
 
-Carapace / Cortex — Fullscreen Pitch Deck
+Carapace / Cortex Fullscreen Pitch Deck
 CARAPACE / CORTEX
 01 / 10
 peek next slide
@@ -744,11 +744,11 @@ Tap right edge for explanation
 
 ### ideas/index.html
 
-**Title:** Carapace / Cortex — Fullscreen Pitch Deck
+**Title:** Carapace / Cortex Fullscreen Pitch Deck
 
 **Meta description:** The Carapace / Cortex pitch deck: private, governed, model-independent AI infrastructure for organizations.
 
-Carapace / Cortex — Fullscreen Pitch Deck
+Carapace / Cortex Fullscreen Pitch Deck
 ← CARAPACE / CORTEX
 01 / 10
 ↑
@@ -760,9 +760,9 @@ Tap right edge for explanation
 
 ### ideas/slideshow.html
 
-**Title:** Carapace / Cortex — Pitch Deck
+**Title:** Carapace / Cortex Pitch Deck
 
-Carapace / Cortex — Pitch Deck
+Carapace / Cortex Pitch Deck
 CARAPACE / CORTEX
 1 / 10
 ←
@@ -925,7 +925,7 @@ Cortex
 LOI Status | Carapace
 Thanks for your interest.
 We received your request and we’ll follow up from here.
-If you signed the non-binding letter of intent, that helps us prioritize early access and pilot conversations. If you skipped it, no problem — we still have your request.
+If you signed the non-binding letter of intent, that helps us prioritize early access and pilot conversations. If you skipped it, no problem. We still have your request.
 Back to Business Page
 Home
 
@@ -970,26 +970,22 @@ your intelligence?
 Start with a focused Discovery Sprint.
 Map friction. Prototype value. Measure savings.
 Book the Discovery Sprint →
-Carapace LLC
-— Makers of Cortex
+Carapace LLC, Makers of Cortex
 Sources: Asana Anatomy of Work • IDC 2024 (Microsoft) • Adecco 2024 • LSE/Protiviti
 
 ---
 
 ### newhero/hero.html
 
-**Title:** Carapace — Own Your Intelligence
+**Title:** Carapace | Own Your Intelligence
 
-Carapace — Own Your Intelligence
+Carapace | Own Your Intelligence
 Carapace ©2026
 Dark
-Local
-—
-Stage
+Local, Stage
 01 / 08
 Cursor
-— , —
-Scroll
+- ,, Scroll
 0%
 Next step
 Ready to own
@@ -997,8 +993,7 @@ your intelligence?
 Start with a focused Discovery Sprint. Map friction. Prototype value. Measure savings.
 Book the Discovery Sprint →
 Scroll to advance
-Carapace LLC
-— Makers of Cortex
+Carapace LLC, Makers of Cortex
 Sources: Asana Anatomy of Work · IDC 2024 (Microsoft) · Adecco 2024 · LSE/Protiviti
 
 ---
@@ -1129,7 +1124,7 @@ We are not replacing your team. We are removing the low-value connective tissue 
 
 **Image:** `4.png`
 
-The best automations are usually not futuristic. They are often the most boring, recurring, annoying tasks in the company — the work everyone already knows is wasteful, but no one has had the time, tools, or structure to eliminate.
+The best automations are usually not futuristic. They are often the most boring, recurring, annoying tasks in the company, the work everyone already knows is wasteful, but no one has had the time, tools, or structure to eliminate.
 
 So when we come into a business, one of the first questions we ask is: what work should not exist anymore?
 
@@ -1267,7 +1262,7 @@ Our approach is the opposite: start small, prove value, then expand with confide
 
 First, we discover. We look for repetitive work, information bottlenecks, SaaS overlap, security requirements, and strong automation candidates. This is where we find the leaks.
 
-Second, we deploy. We create a private Cortex environment — local, cloud, or hybrid — with security controls, governance policies, model roster, and the right knowledge connections.
+Second, we deploy. We create a private Cortex environment (local, cloud, or hybrid) with security controls, governance policies, model roster, and the right knowledge connections.
 
 Third, we launch the first wins. These are usually one or two real workflows, not theoretical demos. It could be internal knowledge retrieval, proposal generation, approval routing, reporting automation, document processing, or another high-value workflow.
 
@@ -1291,7 +1286,7 @@ During the Sprint, we map the client’s workflows and identify the highest-impa
 
 This gives you a practical way to evaluate Carapace without committing to everything upfront.
 
-It is fixed in scope. It is focused on outcomes. It is designed to reveal where the company is leaking time, money, and energy — and what should be automated first.
+It is fixed in scope. It is focused on outcomes. It is designed to reveal where the company is leaking time, money, and energy, and what should be automated first.
 
 The key promise is not “AI magic.” The promise is a private, governed intelligence layer that starts producing value in a controlled way.
 
@@ -1305,9 +1300,9 @@ Book the Sprint. Own your intelligence.
 
 ## Pitch Deck Speaker Script (ideas/pitchdeck1.txt)
 
-# Carapace / Cortex Pitch Deck — Loose Speaker Script
+# Carapace / Cortex Pitch Deck, Loose Speaker Script
 
-## Slide 1 — Own Your Intelligence
+## Slide 1, Own Your Intelligence
 
 This is the core idea behind Carapace.
 
@@ -1321,11 +1316,11 @@ The point is control. Your business sits at the center. Carapace becomes the int
 
 ---
 
-## Slide 2 — Your AI Should Never See Your Secrets
+## Slide 2, Your AI Should Never See Your Secrets
 
 This is one of the biggest reasons companies hesitate around AI adoption.
 
-They are not necessarily afraid of intelligence. They are afraid of exposure. Passwords, API keys, client records, financial data, private files, personal information, business strategy — all of that becomes dangerous if it is casually pushed into a model context.
+They are not necessarily afraid of intelligence. They are afraid of exposure. Passwords, API keys, client records, financial data, private files, personal information, business strategy: all of that becomes dangerous if it is casually pushed into a model context.
 
 Cortex is designed around the idea that the model should only receive what it actually needs. Passwords, tokens, credentials, and sensitive information are isolated and masked until the exact moment they are required for execution. The model does not need to “know” the secret in order for the workflow to work.
 
@@ -1339,7 +1334,7 @@ So the message here is simple: AI capability without surrendering data ownership
 
 ---
 
-## Slide 3 — Your Employees Are Acting as APIs
+## Slide 3, Your Employees Are Acting as APIs
 
 This is the operational pain point.
 
@@ -1359,7 +1354,7 @@ The positioning is important: we are not replacing your team. We are removing th
 
 ---
 
-## Slide 4 — What Work Shouldn’t Exist Anymore?
+## Slide 4, What Work Shouldn’t Exist Anymore?
 
 This is where the conversation turns from abstract AI to immediate ROI.
 
@@ -1385,7 +1380,7 @@ Cortex eliminates low-value work so the team can focus on what moves the busines
 
 ---
 
-## Slide 5 — Control the Destination. Not the Vendor.
+## Slide 5, Control the Destination. Not the Vendor.
 
 This slide explains the core architecture in plain business language.
 
@@ -1407,7 +1402,7 @@ Cortex gives you the power to use any model or provider without giving up contro
 
 ---
 
-## Slide 6 — You Don’t Need an AI Department
+## Slide 6, You Don’t Need an AI Department
 
 This is where Carapace becomes a consultancy, not just a platform.
 
@@ -1429,7 +1424,7 @@ We handle the complexity. The client gets the competitive advantage.
 
 ---
 
-## Slide 7 — Finding the Right Model for the Right Job
+## Slide 7, Finding the Right Model for the Right Job
 
 This is one of the most important slides because it explains why model independence is not just a philosophical position. It produces better outcomes.
 
@@ -1453,7 +1448,7 @@ Best outcome, automatically: right capability, right cost, right speed, right fo
 
 ---
 
-## Slide 8 — Small Wins First. Scale Later.
+## Slide 8, Small Wins First. Scale Later.
 
 This is our adoption strategy.
 
@@ -1463,7 +1458,7 @@ Our approach is the opposite: start small, prove value, then expand with confide
 
 First, we discover. We look for repetitive work, information bottlenecks, SaaS overlap, security requirements, and strong automation candidates. This is where we find the leaks.
 
-Second, we deploy. We create a private Cortex environment — local, cloud, or hybrid — with security controls, governance policies, model roster, and the right knowledge connections.
+Second, we deploy. We create a private Cortex environment (local, cloud, or hybrid) with security controls, governance policies, model roster, and the right knowledge connections.
 
 Third, we launch the first wins. These are usually one or two real workflows, not theoretical demos. It could be internal knowledge retrieval, proposal generation, approval routing, reporting automation, document processing, or another high-value workflow.
 
@@ -1475,7 +1470,7 @@ This makes adoption safer and more believable. We are not asking the client to b
 
 ---
 
-## Slide 9 — Trust Should Be Inspectable
+## Slide 9, Trust Should Be Inspectable
 
 This is the trust slide.
 
@@ -1497,7 +1492,7 @@ Transparency is not something we ask clients to believe in. It is something we b
 
 ---
 
-## Slide 10 — Book the Sprint. Own Your Intelligence.
+## Slide 10, Book the Sprint. Own Your Intelligence.
 
 This is the call to action.
 
@@ -1509,7 +1504,7 @@ During the Sprint, we map the client’s workflows and identify the highest-impa
 
 This gives the client a practical way to evaluate Carapace without committing to everything upfront.
 
-It is fixed in scope. It is focused on outcomes. It is designed to reveal where the company is leaking time, money, and energy — and what should be automated first.
+It is fixed in scope. It is focused on outcomes. It is designed to reveal where the company is leaking time, money, and energy, and what should be automated first.
 
 The key promise is not “AI magic.” The promise is a private, governed intelligence layer that starts producing value in a controlled way.
 
@@ -1524,31 +1519,19 @@ Book the Sprint. Own your intelligence.
 
 ## SVG Text
 
-### assets/compounding-value.svg
-
-- Compounding value
-- Modular blocks accumulating into an upward path.
+### assets/compounding-value.svg, Compounding value, Modular blocks accumulating into an upward path.
 
 ---
 
-### assets/human-capability.svg
-
-- Human capability
-- A person supported by a gear, connected nodes, and a spark.
+### assets/human-capability.svg, Human capability, A person supported by a gear, connected nodes, and a spark.
 
 ---
 
-### assets/practical-results.svg
-
-- Practical results
-- A chart with an upward trend and a completed verification mark.
+### assets/practical-results.svg, Practical results, A chart with an upward trend and a completed verification mark.
 
 ---
 
-### assets/small-business-access.svg
-
-- Small-business access
-- A small storefront connected to an open network.
+### assets/small-business-access.svg, Small-business access, A small storefront connected to an open network.
 
 ---
 
@@ -1558,7 +1541,7 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 ---
 
-### Home — `assets/home_lower_1.png` (Open-Core)
+### Home - `assets/home_lower_1.png` (Open-Core)
 
 **Eyebrow:** 01 OPEN-CORE
 
@@ -1566,22 +1549,13 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 **Subhead:** Download Cortex free for personal use. Learn the platform before choosing a business path.
 
-**PERSONAL USE**
-- Free entry — Download Cortex for personal use. Explore and build at your own pace. — FREE
+**PERSONAL USE**, Free entry, Download Cortex for personal use. Explore and build at your own pace., FREE
 
-**Center — CORTEX / Open-core platform**
-- Workflows
-- Governance & Guardrails
-- Context & Memory
-- Monitoring & Insights
+**Center, CORTEX / Open-core platform**, Workflows, Governance & Guardrails, Context & Memory, Monitoring & Insights
 
-**BUSINESS PATH (OPTIONAL)**
-- Business path — When you're ready, unlock advanced capabilities with Carapace. — OPTIONAL
+**BUSINESS PATH (OPTIONAL)**, Business path, When you're ready, unlock advanced capabilities with Carapace., OPTIONAL
 
-**WHY OPEN-CORE?**
-- Lower-friction adoption — Start free. See value before you commit.
-- Build early trust — You run it. You learn it. You trust it.
-- Choose your path — Go to business when it makes sense for you.
+**WHY OPEN-CORE?**, Lower-friction adoption, Start free. See value before you commit., Build early trust, You run it. You learn it. You trust it., Choose your path, Go to business when it makes sense for you.
 
 **CTA:** Free download →
 
@@ -1589,43 +1563,27 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 ---
 
-### Home — `assets/home_lower_2.png` (Visible Foundation)
+### Home - `assets/home_lower_2.png` (Visible Foundation)
 
 **Eyebrow:** 02 VISIBLE FOUNDATION
 
 **Headline:** See what you are building on.
 
-**Subhead:** The software is on GitHub. Evaluate the foundation—not another mystery box.
+**Subhead:** The software is on GitHub. Evaluate the foundation, not another mystery box.
 
-**REPOSITORY**
-- Source repository — Open on GitHub. Review the code, history, and issues.
-- Core modules, Workflows, Tests, Documentation, Contributions
-- GITHUB
+**REPOSITORY**, Source repository, Open on GitHub. Review the code, history, and issues., Core modules, Workflows, Tests, Documentation, Contributions, GITHUB
 
-**INSPECTABLE STACK — CORTEX**
-- Open-core foundation — Transparent. Modular. Reviewable.
-- APPLICATION LAYER: Workflows, Interfaces, Integrations
-- CAPABILITIES LAYER: Automation, AI Orchestration, Analytics
-- CORE SERVICES LAYER: Execution Engine, Context & Memory, Events & State
-- FOUNDATION LAYER: Data Abstraction, Auth & Security, Observability
-- INFRASTRUCTURE LAYER: Plugins, APIs, Storage
-- Read the code. Understand the system.
+**INSPECTABLE STACK, CORTEX**, Open-core foundation, Transparent. Modular. Reviewable., APPLICATION LAYER: Workflows, Interfaces, Integrations, CAPABILITIES LAYER: Automation, AI Orchestration, Analytics, CORE SERVICES LAYER: Execution Engine, Context & Memory, Events & State, FOUNDATION LAYER: Data Abstraction, Auth & Security, Observability, INFRASTRUCTURE LAYER: Plugins, APIs, Storage, Read the code. Understand the system.
 
-**VERIFIED VIEW**
-- Inspect & evaluate — Trace dependencies. Review logic. Validate quality and security.
-- Code visibility, Traceable flows, Test coverage, Security checks, Quality signals
-- VERIFIED
+**VERIFIED VIEW**, Inspect & evaluate, Trace dependencies. Review logic. Validate quality and security., Code visibility, Traceable flows, Test coverage, Security checks, Quality signals, VERIFIED
 
-**WHY A VISIBLE FOUNDATION MATTERS**
-- Repository access — Open on GitHub. Read the code. Own your decisions.
-- Inspectable layers — Every layer is visible. Understand how it works. Extend with confidence.
-- No mystery box — No hidden logic. No vendor lock-in. Just transparent software.
+**WHY A VISIBLE FOUNDATION MATTERS**, Repository access, Open on GitHub. Read the code. Own your decisions., Inspectable layers, Every layer is visible. Understand how it works. Extend with confidence., No mystery box, No hidden logic. No vendor lock-in. Just transparent software.
 
 **CTA:** View the software →
 
 ---
 
-### Home — `assets/home_lower_3.png` (Flexible Support)
+### Home - `assets/home_lower_3.png` (Flexible Support)
 
 **Eyebrow:** 03 FLEXIBLE SUPPORT
 
@@ -1633,27 +1591,21 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 **Subhead:** Use implementation and support when useful. Ongoing support is optional.
 
-**SELF-SERVE**
-- Use it yourself — Docs, tutorials, and tools to move fast on your own. — ALWAYS AVAILABLE
+**SELF-SERVE**, Use it yourself, Docs, tutorials, and tools to move fast on your own., ALWAYS AVAILABLE
 
-**CORTEX — The software platform**
-- Workflows, Governance & Guardrails, Context & Memory, Monitoring & Insights
+**CORTEX, The software platform**, Workflows, Governance & Guardrails, Context & Memory, Monitoring & Insights
 
-**OPTIONAL SUPPORT**
-- Add guidance when useful — Implementation, best practices, and expert support when you need it. — OPTIONAL
+**OPTIONAL SUPPORT**, Add guidance when useful, Implementation, best practices, and expert support when you need it., OPTIONAL
 
 **You stay in control.**
 
-**Summary**
-- Use it yourself — Everything you need to build and run.
-- Add guided help — Bring in implementation or experts when it helps.
-- Support stays optional — No lock-in. No mandatory ongoing fees.
+**Summary**, Use it yourself, Everything you need to build and run., Add guided help, Bring in implementation or experts when it helps., Support stays optional, No lock-in. No mandatory ongoing fees.
 
 **CTA:** See the paths →
 
 ---
 
-### Home — `assets/home_lower_4.png` (Compounding Value)
+### Home - `assets/home_lower_4.png` (Compounding Value)
 
 **Eyebrow:** 04 COMPOUNDING VALUE
 
@@ -1661,65 +1613,41 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 **Subhead:** Successful workflows become reusable integrations and packages. Your team can keep building on them.
 
-**WORKFLOW**
-- Successful workflow — Proven. Verified. Ready to scale.
+**WORKFLOW**, Successful workflow, Proven. Verified. Ready to scale.
 
-**PACKAGE & INTEGRATE**
-- Abstracted, documented, and versioned.
-- Inputs & outputs, Logic & mappings, Docs & metadata
+**PACKAGE & INTEGRATE**, Abstracted, documented, and versioned., Inputs & outputs, Logic & mappings, Docs & metadata
 
-**REUSE**
-- New workflow — Build faster.
-- Another use case — Different team.
-- More possibilities — Amplify impact.
-- Build on what works. Again and again.
+**REUSE**, New workflow, Build faster., Another use case, Different team., More possibilities, Amplify impact., Build on what works. Again and again.
 
-**WHY IT COMPOUNDS**
-- Reusable integrations — Standardize what works across tools and teams.
-- Repeatable packages — Ship once, use everywhere with confidence.
-- Compounds over time — Every reuse makes your next build even faster.
+**WHY IT COMPOUNDS**, Reusable integrations, Standardize what works across tools and teams., Repeatable packages, Ship once, use everywhere with confidence., Compounds over time, Every reuse makes your next build even faster.
 
 **CTA:** Keep building →
 
 ---
 
-### Solutions — `assets/Solutions-how_work_gets_routable.png`
+### Solutions - `assets/Solutions-how_work_gets_routable.png`
 
 **Headline:** How Work Gets Routable
 
 **Subhead:** People ask for work outcomes; Cortex decides where that work should run.
 
-**USER REQUEST**
-- Example: "Summarize this quarter's client feedback and draft a follow-up email."
-- Plain-language work
+**USER REQUEST**, Example: "Summarize this quarter's client feedback and draft a follow-up email.", Plain-language work
 
 **CONTEXT PROVIDED:** Files & Documents, Notes & Conversations, Databases & Systems, Web & Research
 
-**CORTEX CONTROL PLANE — CAPABILITY ALIAS LAYER**
-- Business intent mapped to capabilities
-- SUMMARIZE — Create concise insights
-- EXTRACT — Pull key data and facts
-- CLASSIFY — Sort by category or type
-- COMPARE — Analyze differences and similarities
-- DRAFT — Create content or responses
-- ROUTE — Deliver to the right owner or system
+**CORTEX CONTROL PLANE, CAPABILITY ALIAS LAYER**, Business intent mapped to capabilities, SUMMARIZE, Create concise insights, EXTRACT, Pull key data and facts, CLASSIFY, Sort by category or type, COMPARE, Analyze differences and similarities, DRAFT, Create content or responses, ROUTE, Deliver to the right owner or system
 
-**ROUTED DESTINATIONS** — Best fit determined by policy
-- LOCAL MODELS — Run on your hardware. Private. Fast. Offline.
-- FRONTIER MODELS — Best reasoning and creative performance.
-- PRIVATE CLOUD — Your VPC. Your data. Your compliance.
-- SPECIALIZED SYSTEMS — CRMs, ERPs, APIs, RPA, tools, and more.
+**ROUTED DESTINATIONS**, Best fit determined by policy, LOCAL MODELS, Run on your hardware. Private. Fast. Offline., FRONTIER MODELS, Best reasoning and creative performance., PRIVATE CLOUD, Your VPC. Your data. Your compliance., SPECIALIZED SYSTEMS, CRMs, ERPs, APIs, RPA, tools, and more.
 
-**POLICY** — Rules govern data handling, model selection, cost, and risk.
-- Data Rules, Access Control, Cost Guardrails, Latency & Quality
+**POLICY**, Rules govern data handling, model selection, cost, and risk., Data Rules, Access Control, Cost Guardrails, Latency & Quality
 
-**AUDIT TRAIL** — Every decision is logged. Inspectable and reversible.
+**AUDIT TRAIL**, Every decision is logged. Inspectable and reversible.
 
 **Footer:** CARAPACE BUILDS. CORTEX ROUTES.
 
 ---
 
-### Solutions — `assets/Solutions-flow.png`
+### Solutions - `assets/Solutions-flow.png`
 
 **Eyebrow:** DISCOVER → DEPLOY → MEASURE → EXPAND
 
@@ -1727,34 +1655,20 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 **Subhead:** Carapace guides adoption while Cortex carries the workflow layer.
 
-**DISCOVER** — Map work. Find opportunities.
-- Workflows, Tools & Apps, Data & Files, Pain Points, Quick Wins
-- Prioritized opportunities — 1-2 workflows to start
+**DISCOVER**, Map work. Find opportunities., Workflows, Tools & Apps, Data & Files, Pain Points, Quick Wins, Prioritized opportunities - 1-2 workflows to start
 
-**DEPLOY** — Build fast. Deploy safely.
-- First Deployment — Secure • Isolated • Governed
-- Email, Drive, CRM → Workflow 1 Automated, Workflow 2 Automated, Human Checkpoint
-- Credentials stay in your control. No vendor lock-in.
+**DEPLOY**, Build fast. Deploy safely., First Deployment, Secure • Isolated • Governed, Email, Drive, CRM → Workflow 1 Automated, Workflow 2 Automated, Human Checkpoint, Credentials stay in your control. No vendor lock-in.
 
-**MEASURE** — Track impact. Prove value.
-- Measured Results — Real data. Clear impact.
-- 18.5 hrs Time Saved / mo, 92% Tasks Completed Automatically, 3.2x Faster Turnaround, $2,180 Est. Value / mo
-- Improvement Over Time (Week 1–4)
-- Clear ROI. Stakeholders aligned. Go / No-Go for expansion.
+**MEASURE**, Track impact. Prove value., Measured Results, Real data. Clear impact.
+- 18.5 hrs Time Saved / mo, 92% Tasks Completed Automatically, 3.2x Faster Turnaround, $2,180 Est. Value / mo, Improvement Over Time (Week 1-4), Clear ROI. Stakeholders aligned. Go / No-Go for expansion.
 
-**EXPAND** — Scale with control. Multiply wins.
-- Expanded Rollout — More teams. More impact.
-- Operations Team, Sales Team, Finance Team, Support Team
-- Governance, Access Controls, Audit Logs, Version Control
-- Systematized. Repeatable. Compounding advantage.
+**EXPAND**, Scale with control. Multiply wins., Expanded Rollout, More teams. More impact., Operations Team, Sales Team, Finance Team, Support Team, Governance, Access Controls, Audit Logs, Version Control, Systematized. Repeatable. Compounding advantage.
 
-**Footer**
-- CARAPACE — GUIDES ADOPTION — Discovery, strategy, governance, and scale.
-- CORTEX — CARRIES WORKFLOWS — Secure execution, routing, automation, and oversight.
+**Footer**, CARAPACE, GUIDES ADOPTION, Discovery, strategy, governance, and scale., CORTEX, CARRIES WORKFLOWS, Secure execution, routing, automation, and oversight.
 
 ---
 
-### Solutions — `assets/Solutions-Customer_follow-up.png`
+### Solutions - `assets/Solutions-Customer_follow-up.png`
 
 **Eyebrow:** CUSTOMER FOLLOW-UP
 
@@ -1765,21 +1679,19 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 **INCOMING LEAD OR REQUEST**
 
 **STAGED FOLLOW-UP PATH**
-1. INTRO — Immediate acknowledgment
-2. VALUE — Share relevant information
-3. NEXT STEP — Propose call, demo, or meeting
+1. INTRO, Immediate acknowledgment
+2. VALUE, Share relevant information
+3. NEXT STEP, Propose call, demo, or meeting
 
-**HANDOFF CHECKPOINT — HUMAN IN THE LOOP**
-- Review context, Approve message, Choose channel
+**HANDOFF CHECKPOINT, HUMAN IN THE LOOP**, Review context, Approve message, Choose channel
 
-**CONFIRMED RESPONSE DESTINATION — RESPONSE SENT**
-- Email, Chat, Call, Meeting
+**CONFIRMED RESPONSE DESTINATION, RESPONSE SENT**, Email, Chat, Call, Meeting
 
 **Benefits:** FEWER DROPPED LEADS, FASTER RESPONSE, LESS MANUAL CHASING
 
 ---
 
-### Solutions — `assets/solutions-operations.png`
+### Solutions - `assets/solutions-operations.png`
 
 **Eyebrow:** INTERNAL OPERATIONS
 
@@ -1787,20 +1699,17 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 **Subhead:** Cortex compresses repeat work into governed flows.
 
-**ADMIN** — Manual, repetitive, scattered.
-- Email triage & sorting, Data entry & re-entry, Report updates & formatting, File hunting & organizing, Status chasing & follow-ups, Approvals & hand-offs, Scheduling & calendar syncs
+**ADMIN**, Manual, repetitive, scattered., Email triage & sorting, Data entry & re-entry, Report updates & formatting, File hunting & organizing, Status chasing & follow-ups, Approvals & hand-offs, Scheduling & calendar syncs
 
-**CORTEX**
-- Classify & prioritize incoming work, Route to the right tool or agent, Apply rules, policies, approvals, Execute & update systems, Log, audit, and improve
+**CORTEX**, Classify & prioritize incoming work, Route to the right tool or agent, Apply rules, policies, approvals, Execute & update systems, Log, audit, and improve
 
-**TIME SAVED** — Clean outcomes. Clear focus.
-- Completed tasks delivered, Accurate data up to date, Polished reports ready to share, Files organized and accessible, Stakeholders informed, Approvals captured, Schedules aligned automatically
+**TIME SAVED**, Clean outcomes. Clear focus., Completed tasks delivered, Accurate data up to date, Polished reports ready to share, Files organized and accessible, Stakeholders informed, Approvals captured, Schedules aligned automatically
 
 **Benefits:** FEWER MANUAL TASKS, GREATER FOCUS, BETTER OUTCOMES
 
 ---
 
-### Solutions — `assets/solutions-approvals.png`
+### Solutions - `assets/solutions-approvals.png`
 
 **Eyebrow:** APPROVALS & OVERSIGHT
 
@@ -1808,25 +1717,21 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 **Subhead:** Cortex pauses sensitive steps at visible human checkpoints.
 
-**AUTOMATED STEPS**
-- Capture request (Email / Web / Form), Extract & organize, Generate draft, Pull related data, Prepare for review
+**AUTOMATED STEPS**, Capture request (Email / Web / Form), Extract & organize, Generate draft, Pull related data, Prepare for review
 
-**HUMAN CHECKPOINT — REVIEW**
-- Sensitive step requires approval
-- Context summary, Key outputs, Impact assessment, Recommendations
-- APPROVE / REJECT / HOLD
+**HUMAN CHECKPOINT, REVIEW**, Sensitive step requires approval, Context summary, Key outputs, Impact assessment, Recommendations, APPROVE / REJECT / HOLD
 
 **APPROVED path:** Execute next steps → Deliver outcome → Monitor & log → FLOW CONTINUES
 
 **REJECTED / PAUSED path:** Notify team → Revise or update → Resubmit for review → FLOW PAUSED
 
-**AUDIT TRAIL** — Every decision is logged and traceable.
+**AUDIT TRAIL**, Every decision is logged and traceable.
 
 **Benefits:** SAFER AUTOMATION, LESS FRICTION, MORE VELOCITY
 
 ---
 
-### Solutions — `assets/solutions-knowledge.png`
+### Solutions - `assets/solutions-knowledge.png`
 
 **Eyebrow:** KNOWLEDGE WORKFLOWS
 
@@ -1834,18 +1739,17 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 **Subhead:** Cortex indexes internal context and returns the right answer path.
 
-**CAPTURE** — Bring knowledge in. — Unstructured inputs: Docs, Notes, Email, Slack, Files, Web, Meetings, Tasks
+**CAPTURE**, Bring knowledge in., Unstructured inputs: Docs, Notes, Email, Slack, Files, Web, Meetings, Tasks
 
-**CORTEX — INDEX & UNDERSTAND** — Structure. Connect. Tag.
-- Tag & categorize, Find relationships, Semantic search, Access controls, Version & freshness
+**CORTEX, INDEX & UNDERSTAND**, Structure. Connect. Tag., Tag & categorize, Find relationships, Semantic search, Access controls, Version & freshness
 
-**REUSE** — Get the right answer. — Structured output: Answer / Summary, Answer Path, Key Sources, Related Insights
+**REUSE**, Get the right answer., Structured output: Answer / Summary, Answer Path, Key Sources, Related Insights
 
 **Benefits:** LESS REPEATED EXPLANATION, FASTER REUSE, STRONGER KNOWLEDGE BASE
 
 ---
 
-### Solutions — `assets/solutions-routing.png`
+### Solutions - `assets/solutions-routing.png`
 
 **Eyebrow:** REPORTING & ROUTING
 
@@ -1853,22 +1757,17 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 **Subhead:** Cortex classifies inputs and routes them by policy, urgency, or owner.
 
-**INBOUND QUEUE** — Mixed inputs. Unsorted.
-- Customer Email, Web Form Request, Invoice Received, Support Ticket, New Vendor Doc, HR Inquiry
+**INBOUND QUEUE**, Mixed inputs. Unsorted., Customer Email, Web Form Request, Invoice Received, Support Ticket, New Vendor Doc, HR Inquiry
 
-**CORTEX — CLASSIFY**
-- Intent Recognition, Policy Matching, Urgency Scoring, Owner Mapping
+**CORTEX, CLASSIFY**, Intent Recognition, Policy Matching, Urgency Scoring, Owner Mapping
 
-**ROUTE**
-- CUSTOMER SUCCESS — Alex R. — High Priority
-- FINANCE — Taylor M. — Medium Priority
-- SUPPORT OPERATIONS — Jordan K. — Urgent
+**ROUTE**, CUSTOMER SUCCESS, Alex R., High Priority, FINANCE, Taylor M., Medium Priority, SUPPORT OPERATIONS, Jordan K., Urgent
 
 **Benefits:** LESS INBOX DRAG, FEWER STALLED REQUESTS, BETTER FLOW
 
 ---
 
-### Solutions — `assets/solutions-workflow_automation.png`
+### Solutions - `assets/solutions-workflow_automation.png`
 
 **Eyebrow:** SMALL-TEAM WORKFLOW AUTOMATION
 
@@ -1876,50 +1775,33 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 **Subhead:** Cortex turns one or two proven workflows into repeatable leverage.
 
-**SMALL TEAM** — Focused people. Limited bandwidth.
-- Operator — Runs the workflows
-- Specialist — Adds expertise
-- Coordinator — Keeps things moving
-- Owner — Sets direction & reviews outcomes
+**SMALL TEAM**, Focused people. Limited bandwidth., Operator, Runs the workflows, Specialist, Adds expertise, Coordinator, Keeps things moving, Owner, Sets direction & reviews outcomes
 
-**LEVERAGE LAYER — CORTEX**
-- Workflow Orchestration, Governance & Guardrails, Context & Memory, Monitoring & Insights
+**LEVERAGE LAYER, CORTEX**, Workflow Orchestration, Governance & Guardrails, Context & Memory, Monitoring & Insights
 
-**REPEATABLE OUTPUTS**
-- Reports & Updates — Delivered on time, every time.
-- Client Responses — Faster replies, happier customers.
-- Data & Insights — Clean, organized, actionable.
+**REPEATABLE OUTPUTS**, Reports & Updates, Delivered on time, every time., Client Responses, Faster replies, happier customers., Data & Insights, Clean, organized, actionable.
 
 **Benefits:** MORE THROUGHPUT, LESS BUSYWORK, SUSTAINABLE LEVERAGE
 
 ---
 
-### About — `assets/about-carapace-cortex.png`
+### About - `assets/about-carapace-cortex.png`
 
-**Carapace** — Human infrastructure partner
-- MAP, ADVISE, BUILD, GOVERN, SUPPORT
-- STEWARDSHIP AT EVERY STEP
+**Carapace**, Human infrastructure partner, MAP, ADVISE, BUILD, GOVERN, SUPPORT, STEWARDSHIP AT EVERY STEP
 
 **DEPLOY** (bridge)
 
-**Cortex** — Software control plane
-- ROUTE, GOVERN, IMPROVE
-- TOOLS, MODELS, APPROVALS, DESTINATIONS, AUDIT
-- VERIFIED • INSPECTABLE • CONTROLLED
+**Cortex**, Software control plane, ROUTE, GOVERN, IMPROVE, TOOLS, MODELS, APPROVALS, DESTINATIONS, AUDIT, VERIFIED • INSPECTABLE • CONTROLLED
 
 ---
 
-### Pitch Deck — `ideas/1.png` (Own Your Intelligence)
+### Pitch Deck - `ideas/1.png` (Own Your Intelligence)
 
 **Eyebrow:** CLIENT PITCH DECK
 
 **Headline:** Own Your Intelligence.
 
-**Body:** Carapace installs and manages a private AI operating layer that gives your organization the capabilities of frontier AI without surrendering data, workflows, or strategic control.
-
-- Private by default — Your data stays yours. Always.
-- Model independent — Use the best model for the job.
-- Open source core — Transparent. Verifiable. Auditable.
+**Body:** Carapace installs and manages a private AI operating layer that gives your organization the capabilities of frontier AI without surrendering data, workflows, or strategic control., Private by default, Your data stays yours. Always., Model independent, Use the best model for the job., Open source core, Transparent. Verifiable. Auditable.
 
 **CARAPACE INTELLIGENCE LAYER**
 
@@ -1927,28 +1809,21 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 ---
 
-### Pitch Deck — `ideas/2.png` (Your AI Should Never See Your Secrets)
+### Pitch Deck - `ideas/2.png` (Your AI Should Never See Your Secrets)
 
 **Headline:** Your AI should never see your secrets.
 
-**Subhead:** Cortex masks passwords, PII, tokens, and other sensitive data until the exact moment they are needed—never in the model context.
+**Subhead:** Cortex masks passwords, PII, tokens, and other sensitive data until the exact moment they are needed, never in the model context.
 
-**Open source. Verifiable. Auditable.** — Inspect the code. Verify the data path. Trust through transparency.
+**Open source. Verifiable. Auditable.**, Inspect the code. Verify the data path. Trust through transparency.
 
 **LLMs never see sensitive data. We can prove it.**
 
-**Credential Isolation**
-- API keys never enter model context
-- Passwords remain encrypted
-- Tokens injected only at execution time
-- Model cannot leak what it never received
+**Credential Isolation**, API keys never enter model context, Passwords remain encrypted, Tokens injected only at execution time, Model cannot leak what it never received
 
-**CORTEX Security Harness**
-- PII & Secret Masking, Token & Credential Isolation, Zero Data Exposure to LLMs, Audit & Provenance
-- Your Data & Systems: PII • Passwords • Tokens • Records • Files
+**CORTEX Security Harness**, PII & Secret Masking, Token & Credential Isolation, Zero Data Exposure to LLMs, Audit & Provenance, Your Data & Systems: PII • Passwords • Tokens • Records • Files
 
-**Model Independence**
-- Switch providers at any time, Run local or cloud models, No vendor lock-in, No dependency on a single AI company
+**Model Independence**, Switch providers at any time, Run local or cloud models, No vendor lock-in, No dependency on a single AI company
 
 **Models:** Claude, GPT, Qwen, Local Models (On-Prem / Private Cloud)
 
@@ -1956,7 +1831,7 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 ---
 
-### Pitch Deck — `ideas/3.png` (Your Employees Are Acting as APIs)
+### Pitch Deck - `ideas/3.png` (Your Employees Are Acting as APIs)
 
 **Eyebrow:** THE PROBLEM
 
@@ -1966,20 +1841,15 @@ Text captured from PNG infographics and pitch-deck slides. Decorative hero photo
 
 Highly skilled people spend their day moving data instead of creating value.
 
-**The hidden cost**
-- Lost time — Hours lost to repetitive, low-value work.
-- More errors — Manual handoffs and copy/paste don't scale.
-- Slower execution — Information bottlenecks delay decisions.
-- Employee frustration — People didn't join to be human middleware.
+**The hidden cost**, Lost time, Hours lost to repetitive, low-value work., More errors, Manual handoffs and copy/paste don't scale., Slower execution, Information bottlenecks delay decisions., Employee frustration, People didn't join to be human middleware.
 
-**Solution:** Carapace becomes the intelligence layer between your people, software, and AI.
-- Connect your tools, Automate the busywork, Empower your team, Move faster
+**Solution:** Carapace becomes the intelligence layer between your people, software, and AI., Connect your tools, Automate the busywork, Empower your team, Move faster
 
 **Footer:** Stop paying your best people to move data. Let Cortex handle the plumbing so your team can build what matters.
 
 ---
 
-### Pitch Deck — `ideas/4.png` (What Work Shouldn't Exist Anymore?)
+### Pitch Deck - `ideas/4.png` (What Work Shouldn't Exist Anymore?)
 
 **Eyebrow:** WORKFLOW WEDGE
 
@@ -1993,50 +1863,37 @@ Focus on the work that drains time, creates risk, and blocks momentum.
 
 **Automated Workflows:** Time back, Lower cost, Better outcomes, Stronger control
 
-**Work types:**
-- Repetitive Work — Copying data, Weekly status updates, Manual data entry — High frequency. Low value.
-- Fragile Work — Depends on one person, Tribal knowledge, Hard to document — High risk. Low resilience.
-- Hidden Work — Searching for files, Finding past proposals, Hunting through emails — Information exists. Access doesn't.
-- Coordination Work — Approval chains, Hand-offs, Status chasing — Work about work.
-- Rework — Formatting, Corrections, Rebuilding the same thing — Solve once. Repeat forever.
+**Work types:**, Repetitive Work, Copying data, Weekly status updates, Manual data entry, High frequency. Low value., Fragile Work, Depends on one person, Tribal knowledge, Hard to document, High risk. Low resilience., Hidden Work, Searching for files, Finding past proposals, Hunting through emails, Information exists. Access doesn't., Coordination Work, Approval chains, Hand-offs, Status chasing, Work about work., Rework, Formatting, Corrections, Rebuilding the same thing, Solve once. Repeat forever.
 
 **Banner:** Cortex eliminates low-value work so your team can focus on what moves the business forward.
 
 ---
 
-### Pitch Deck — `ideas/5.png` (Control the Destination. Not the Vendor.)
+### Pitch Deck - `ideas/5.png` (Control the Destination. Not the Vendor.)
 
 **Eyebrow:** THE CONTROL LAYER
 
 **Headline:** Control the destination. Not the vendor.
 
-**Subhead:** Cortex is your control plane for AI work. It routes every request to the right model, tool, and environment based on your policies — while keeping humans in the loop.
+**Subhead:** Cortex is your control plane for AI work. It routes every request to the right model, tool, and environment based on your policies, while keeping humans in the loop., Policy-driven routing, Full visibility & audit, Human in control, Model & provider freedom
 
-- Policy-driven routing, Full visibility & audit, Human in control, Model & provider freedom
+**CORTEX CONTROL PLANE**, Security Enforced, Routing Intelligent, Policies Your Rules, Audit Complete, Your Work: Documents, Web Apps, Data & Files, Emails, Databases, Approvals, Model Roster: Local Models, Private Cloud, Frontier APIs, Specialized Tools, 3rd Party Services, Approval Gates, Guardrails, Rollback
 
-**CORTEX CONTROL PLANE**
-- Security Enforced, Routing Intelligent, Policies Your Rules, Audit Complete
-- Your Work: Documents, Web Apps, Data & Files, Emails, Databases, Approvals
-- Model Roster: Local Models, Private Cloud, Frontier APIs, Specialized Tools, 3rd Party Services
-- Approval Gates, Guardrails, Rollback
-
-**You decide. Cortex enforces.**
-- Where data lives, Who can access what, What gets approved, How work gets routed, What gets logged
-- Your data. Your rules. Your AI strategy. Cortex makes it real.
+**You decide. Cortex enforces.**, Where data lives, Who can access what, What gets approved, How work gets routed, What gets logged, Your data. Your rules. Your AI strategy. Cortex makes it real.
 
 **Banner:** Cortex gives you the power to use any model without giving up control of your data, workflows, or destiny.
 
 ---
 
-### Pitch Deck — `ideas/6.png` (You Don't Need an AI Department)
+### Pitch Deck - `ideas/6.png` (You Don't Need an AI Department)
 
 **Eyebrow:** THE CONSULTANCY
 
 **Headline:** You don't need an AI department.
 
-**Subhead:** We are your private AI infrastructure team — so your team can focus on outcomes, not plumbing.
+**Subhead:** We are your private AI infrastructure team, so your team can focus on outcomes, not plumbing.
 
-Enterprise-grade AI is complex. We make it reliable, secure, and continuously better — without adding headcount.
+Enterprise-grade AI is complex. We make it reliable, secure, and continuously better, without adding headcount.
 
 **CORTEX pillars:** Secure by design, Always evolving, Expert support, Deploy anywhere, Built for your workflows
 
@@ -2048,19 +1905,19 @@ Enterprise-grade AI is complex. We make it reliable, secure, and continuously be
 
 ---
 
-### Pitch Deck — `ideas/7.png` (Finding the Right Model for the Right Job)
+### Pitch Deck - `ideas/7.png` (Finding the Right Model for the Right Job)
 
 **Eyebrow:** EXECUTION STRATEGY
 
 **Headline:** Finding the right model for the right job.
 
-**Subhead:** Every request is different. Cortex matches it to the best model based on capability, cost, speed, context, and policy — then routes it securely through your environment.
+**Subhead:** Every request is different. Cortex matches it to the best model based on capability, cost, speed, context, and policy, then routes it securely through your environment.
 
 **Capability Aliases:** Summarize, Extract Data, Classify, Compare, Draft
 
 **Context Suggestions Engine:** Understands your intent, Matches to capability aliases, Evaluates quality/cost/speed, Learns from outcomes
 
-**Model stewardship built in** — We maintain and evaluate the model roster, capability aliases, testing, benchmarking, monitoring, recommendations, and policy enforcement.
+**Model stewardship built in**, We maintain and evaluate the model roster, capability aliases, testing, benchmarking, monitoring, recommendations, and policy enforcement.
 
 **Model Options:** GPT-4o, Claude 3.5, Gemini 1.5, Llama 3.1, Mistral Large, ...and more
 
@@ -2070,7 +1927,7 @@ Enterprise-grade AI is complex. We make it reliable, secure, and continuously be
 
 ---
 
-### Pitch Deck — `ideas/8.png` (Small Wins First. Scale Later.)
+### Pitch Deck - `ideas/8.png` (Small Wins First. Scale Later.)
 
 **Eyebrow:** EXECUTION STRATEGY
 
@@ -2078,15 +1935,15 @@ Enterprise-grade AI is complex. We make it reliable, secure, and continuously be
 
 **Subhead:** The fastest path to AI adoption isn't a massive rollout. It's proving value on real work and expanding from success.
 
-**01 Discover** — Repetitive work, Information bottlenecks, SaaS overlap, Security requirements, Automation candidates — Find the leaks.
+**01 Discover**, Repetitive work, Information bottlenecks, SaaS overlap, Security requirements, Automation candidates, Find the leaks.
 
-**02 Deploy** — Private Cortex environment. Local/cloud/hybrid, Security controls, Governance policies, Model roster, Knowledge connections — Establish control.
+**02 Deploy**, Private Cortex environment. Local/cloud/hybrid, Security controls, Governance policies, Model roster, Knowledge connections, Establish control.
 
-**03 First Wins** — Launch 1-2 production workflows. Internal knowledge retrieval, Proposal generation, Approval routing, Reporting automation, Document processing — Create measurable value.
+**03 First Wins**, Launch 1-2 production workflows. Internal knowledge retrieval, Proposal generation, Approval routing, Reporting automation, Document processing, Create measurable value.
 
-**04 Measure** — Hours saved, Vendor costs eliminated, Process improvements, User adoption, Operational impact — Turn outcomes into evidence.
+**04 Measure**, Hours saved, Vendor costs eliminated, Process improvements, User adoption, Operational impact, Turn outcomes into evidence.
 
-**05 Expand** — Additional departments, workflows, operators, integrations — Grow from proof, not assumptions.
+**05 Expand**, Additional departments, workflows, operators, integrations, Grow from proof, not assumptions.
 
 **Principles:** Secure by design, Governed at every step, Designed for your team, Built to compound
 
@@ -2094,7 +1951,7 @@ Enterprise-grade AI is complex. We make it reliable, secure, and continuously be
 
 ---
 
-### Pitch Deck — `ideas/9.png` (Trust Should Be Inspectable)
+### Pitch Deck - `ideas/9.png` (Trust Should Be Inspectable)
 
 **Eyebrow:** OPEN GOVERNANCE
 
@@ -2112,20 +1969,13 @@ Enterprise-grade AI is complex. We make it reliable, secure, and continuously be
 
 ---
 
-### Pitch Deck — `ideas/10.png` (Book the Sprint)
+### Pitch Deck - `ideas/10.png` (Book the Sprint)
 
 **Headline:** Book the Sprint. Own Your Intelligence.
 
-**Subhead:** One engagement. Measurable results. A clear path forward.
+**Subhead:** One engagement. Measurable results. A clear path forward., Map your workflows, Deploy a secure Cortex environment, Launch 1-2 production automations, Measure ROI, Deliver a long-term roadmap
 
-- Map your workflows
-- Deploy a secure Cortex environment
-- Launch 1-2 production automations
-- Measure ROI
-- Deliver a long-term roadmap
-
-**Cortex Discovery & Integration Sprint**
-- Fixed-price engagement, Secure sandbox deployment, 1-2 live automations, ROI assessment, Deployment recommendation
+**Cortex Discovery & Integration Sprint**, Fixed-price engagement, Secure sandbox deployment, 1-2 live automations, ROI assessment, Deployment recommendation
 
 **Footer promises:** No giant transformation project. No vendor lock-in. Expert-led. Practitioner delivered. Just measurable results and a clear path forward.
 
@@ -2136,7 +1986,7 @@ Enterprise-grade AI is complex. We make it reliable, secure, and continuously be
 ### Carapace_Cortex_Order_Form_and_Statement_of_Work_Sample.pdf
 
 CARAPACE / CORTEX SAMPLE ORDER FORM / SOW
-SAMPLE - ILLUSTRATIVE ONLY
+SAMPLE, ILLUSTRATIVE ONLY
 CARAPACE / CORTEX
 ORDER FORM & STATEMENT OF WORK
 A client-facing activation document for a Cortex license, a Strategy & Support Retainer, a Discovery
@@ -2153,10 +2003,10 @@ incorporates the applicable agreements listed in Section 9.
 Carapace LLC | 1231 SW 12 Court | Miami, Florida
 Carapace
 33135 | CarapaceAI@gmail.com | CarapaceAI.org
-EXAMPLE CLIENT, LLC - REPLACE WITH CLIENT
+EXAMPLE CLIENT, LLC, REPLACE WITH CLIENT
 Client legal name
 LEGAL NAME
-Florida limited liability company - REPLACE WITH
+Florida limited liability company, REPLACE WITH
 Client jurisdiction / entity type
 ENTITY TYPE AND JURISDICTION
 Client billing address 123 SAMPLE AVENUE, MIAMI, FLORIDA 33135
@@ -2165,7 +2015,7 @@ Client account administrator
 0100
 Billing contact ACCOUNTS PAYABLE | ap@example.com
 Project / technical contact OPERATIONS LEAD | operations@example.com
-SAMPLE - ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 1
+SAMPLE, ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 1
 
 CARAPACE / CORTEX SAMPLE ORDER FORM / SOW
 2. Services and Products Ordered
@@ -2202,17 +2052,16 @@ Additional Active Beyond included
 0 Monthly $0 N/A
 Operators threshold
 None selected in
-Selected add-ons - Monthly $0 N/A
+Selected add-ons, Monthly $0 N/A
 sample
 Choose monthly
 TOTAL FEES Monthly $898 $10,180
 or annual billing
-Selected billing frequency MONTHLY - SAMPLE
-Payment terms NET 15 FROM INVOICE DATE - SAMPLE
-INVOICE / ACH OR APPROVED PAYMENT METHOD -
-Payment method
+Selected billing frequency MONTHLY, SAMPLE
+Payment terms NET 15 FROM INVOICE DATE, SAMPLE
+INVOICE / ACH OR APPROVED PAYMENT METHOD, Payment method
 SAMPLE
-SAMPLE - ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 2
+SAMPLE, ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 2
 
 CARAPACE / CORTEX SAMPLE ORDER FORM / SOW
 4. Pilot Credit (If Applicable)
@@ -2241,7 +2090,7 @@ Commercial License Agreement.
 Active Operators are counted under the Cortex Commercial License Agreement. Passive viewers, read-only
 accounts, and external collaborators without control-plane access are excluded unless they initiate, approve,
 govern, or operate a controlled Cortex workflow.
-SAMPLE - ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 3
+SAMPLE, ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 3
 
 CARAPACE / CORTEX SAMPLE ORDER FORM / SOW
 6. Statement of Work / Scope Notes
@@ -2271,50 +2120,38 @@ roadmap.
 Client-specific integrations Excluded unless expressly
 As stated in a separate SOW TBD
 or development quoted and approved.
-Client responsibilities and dependencies
-- Provide timely access to Client-controlled systems, relevant accounts, sandbox environments, and authorized
-personnel as necessary for the selected scope.
-- Maintain all rights, permissions, subscriptions, API access, and third-party approvals necessary for Client Data
-and connected services.
-- Identify an account administrator and authorized approver for configuration changes, workflows, and production
-use.
-- Review proposed outputs and automations before commercial reliance, and comply with applicable law and
+Client responsibilities and dependencies, Provide timely access to Client-controlled systems, relevant accounts, sandbox environments, and authorized
+personnel as necessary for the selected scope., Maintain all rights, permissions, subscriptions, API access, and third-party approvals necessary for Client Data
+and connected services., Identify an account administrator and authorized approver for configuration changes, workflows, and production
+use., Review proposed outputs and automations before commercial reliance, and comply with applicable law and
 third-party terms.
-Express exclusions unless separately quoted
-- Custom SaaS development, major new software features, enterprise certification, substantial data migration, or
-on-site services.
-- Third-party model usage, API fees, cloud infrastructure, storage, subscriptions, pass-through expenses, and
-external provider charges.
-- Legal, financial, medical, security-audit, or other regulated professional advice.
-SAMPLE - ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 4
+Express exclusions unless separately quoted, Custom SaaS development, major new software features, enterprise certification, substantial data migration, or
+on-site services., Third-party model usage, API fees, cloud infrastructure, storage, subscriptions, pass-through expenses, and
+external provider charges., Legal, financial, medical, security-audit, or other regulated professional advice.
+SAMPLE, ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 4
 
 CARAPACE / CORTEX SAMPLE ORDER FORM / SOW
 7. Term, Renewal, and Service Relationship
 DATE OF LAST SIGNATURE OR OTHER DATE STATED
 Start date
-HERE - SAMPLE
-Initial term MONTH-TO-MONTH - SAMPLE
+HERE, SAMPLE
+Initial term MONTH-TO-MONTH, SAMPLE
 AUTOMATIC MONTH-TO-MONTH UNLESS
 Renewal TERMINATED UNDER THE COMMERCIAL LICENSE
-AGREEMENT - SAMPLE
+AGREEMENT, SAMPLE
 30 DAYS WRITTEN NOTICE, UNLESS THIS ORDER
 Termination notice
 FORM STATES OTHERWISE.
 The Strategy & Support Retainer is valid only while
 Retainer dependency Client maintains an active, paid Cortex Commercial
 License.
-8. Important Commercial Conditions
-- This Order Form does not grant any rights beyond the selected services and the incorporated agreements. Any
-additional scope, pricing, Active Operators, integrations, or project work requires written authorization.
-- A Discovery & Integration Sprint, if selected, is a defined pilot. It does not automatically activate recurring
-commercial services, platform access, long-term hosting, or an ongoing support retainer.
-- The Strategy & Support Retainer is non-standalone. It may be purchased and used only with an active, paid Cortex
-Commercial License.
-- Carapace may reasonably require updated billing authorization or an amended Order Form before activating
-paid add-ons or services outside scope.
-- Client is responsible for applicable taxes other than taxes based on Carapace net income. Service activation is
+8. Important Commercial Conditions, This Order Form does not grant any rights beyond the selected services and the incorporated agreements. Any
+additional scope, pricing, Active Operators, integrations, or project work requires written authorization., A Discovery & Integration Sprint, if selected, is a defined pilot. It does not automatically activate recurring
+commercial services, platform access, long-term hosting, or an ongoing support retainer., The Strategy & Support Retainer is non-standalone. It may be purchased and used only with an active, paid Cortex
+Commercial License., Carapace may reasonably require updated billing authorization or an amended Order Form before activating
+paid add-ons or services outside scope., Client is responsible for applicable taxes other than taxes based on Carapace net income. Service activation is
 subject to last signature, payment arrangements, and completion of required onboarding items.
-SAMPLE - ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 5
+SAMPLE, ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 5
 
 CARAPACE / CORTEX SAMPLE ORDER FORM / SOW
 9. Incorporated Agreements and Order of Control
@@ -2351,12 +2188,12 @@ Data Processing Addendum or Security Exhibit; (3) the Cortex Commercial License 
 Support Retainer Terms; and (5) online documentation. A more specific signed document controls only for the
 specific subject it addresses.
 Attachments and special conditions
-Attachment / exhibit A NONE IN THIS SAMPLE - INSERT IF APPLICABLE
-Attachment / exhibit B NONE IN THIS SAMPLE - INSERT IF APPLICABLE
-NONE IN THIS SAMPLE - INSERT FINAL TERMS OR
+Attachment / exhibit A NONE IN THIS SAMPLE, INSERT IF APPLICABLE
+Attachment / exhibit B NONE IN THIS SAMPLE, INSERT IF APPLICABLE
+NONE IN THIS SAMPLE, INSERT FINAL TERMS OR
 Special commercial terms
 WRITE "NONE"
-SAMPLE - ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 6
+SAMPLE, ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 6
 
 CARAPACE / CORTEX SAMPLE ORDER FORM / SOW
 10. Notices and Communications
@@ -2371,7 +2208,7 @@ Notices to Client
 FLORIDA 33135 | legal@example.com
 CarapaceAI@gmail.com OR OTHER DESIGNATED
 Approved support channel
-PORTAL / TICKETING CHANNEL - SAMPLE
+PORTAL / TICKETING CHANNEL, SAMPLE
 11. Signatures
 DO NOT SIGN THIS SAMPLE
 In the final version, remove the sample notice, complete all blue entries, attach any referenced exhibits, and have
@@ -2384,7 +2221,7 @@ Title: YOUR TITLE GOES HERE Title: YOUR TITLE GOES HERE
 Date: DATE SIGNED GOES HERE Date: DATE SIGNED GOES HERE
 THIS COULD BE YOU: Replace sample fields, confirm selected products and pricing, attach any project-specific SOW, and execute only after
 final review. Draft for counsel review and business use; not legal advice.
-SAMPLE - ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 7
+SAMPLE, ILLUSTRATIVE ONLY | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FL 33135 | PAGE 7
 
 ---
 
@@ -2443,63 +2280,25 @@ states otherwise, the Sprint fee is non-refundable once Sprint planning, discove
 If Client activates a recurring Cortex Commercial License and Strategy & Support Retainer within 90 days after
 Sprint completion, the $3,000 Sprint fee will be credited toward the first two billing cycles of recurring service, as
 specified in the applicable Order Form.
-Unless otherwise stated in writing:
-- the credit is non-refundable;
+Unless otherwise stated in writing:, the credit is non-refundable;
 DRAFT FOR COUNSEL REVIEW | CARAPACE LLC | EFFECTIVE DATE: JUNE 19, 2026 | PAGE 2
 
-CARAPACE / CORTEX DISCOVERY & INTEGRATION SPRINT AGREEMENT
-- the credit is non-transferable;
-- the credit applies only to Cortex recurring commercial service;
-- the credit does not apply to third-party costs, pass-through expenses, custom development outside Sprint scope,
-or separately quoted services; and
-- the credit expires if Client does not activate qualifying commercial service within 90 days after Sprint
+CARAPACE / CORTEX DISCOVERY & INTEGRATION SPRINT AGREEMENT, the credit is non-transferable;, the credit applies only to Cortex recurring commercial service;, the credit does not apply to third-party costs, pass-through expenses, custom development outside Sprint scope,
+or separately quoted services; and, the credit expires if Client does not activate qualifying commercial service within 90 days after Sprint
 completion.
 5. Sprint Deliverables
-Carapace will provide the following deliverables:
-- one-day workflow mapping and credential/security audit;
-- secure Cortex sandbox deployment, local/cloud hybrid as appropriate;
-- one to two live automations selected by mutual agreement;
-- filemap architecture and embedding breadcrumb setup;
-- SaaS-consolidation ROI projection;
-- commercial tier or deployment recommendation; and
-- post-pilot handoff summary.
+Carapace will provide the following deliverables:, one-day workflow mapping and credential/security audit;, secure Cortex sandbox deployment, local/cloud hybrid as appropriate;, one to two live automations selected by mutual agreement;, filemap architecture and embedding breadcrumb setup;, SaaS-consolidation ROI projection;, commercial tier or deployment recommendation; and, post-pilot handoff summary.
 6. Example Automations
-Example Sprint automations may include:
-- transcript-to-content routing;
-- voice/style model capture and routing;
-- browser-extension PDF workflow;
-- document intake and summarization;
-- filemap discovery workflow;
-- approval-gated content drafting;
-- lead-intake routing;
-- internal knowledge-retrieval prototype;
-- creator-pipeline automation; or
-- administrative workflow automation.
+Example Sprint automations may include:, transcript-to-content routing;, voice/style model capture and routing;, browser-extension PDF workflow;, document intake and summarization;, filemap discovery workflow;, approval-gated content drafting;, lead-intake routing;, internal knowledge-retrieval prototype;, creator-pipeline automation; or, administrative workflow automation.
 Final automation selection depends on feasibility, Client access, available third-party services, and Sprint scope.
 7. Out of Scope
-The Sprint does not include:
-- full production deployment;
-- unlimited automations;
-- custom SaaS product development;
-- enterprise security certification;
-- legal, financial, medical, or regulated professional advice;
-- third-party subscription costs;
-- long-term hosting;
+The Sprint does not include:, full production deployment;, unlimited automations;, custom SaaS product development;, enterprise security certification;, legal, financial, medical, or regulated professional advice;, third-party subscription costs;, long-term hosting;
 DRAFT FOR COUNSEL REVIEW | CARAPACE LLC | EFFECTIVE DATE: JUNE 19, 2026 | PAGE 3
 
-CARAPACE / CORTEX DISCOVERY & INTEGRATION SPRINT AGREEMENT
-- ongoing support after Sprint completion;
-- major data migration; or
-- custom integrations beyond agreed Sprint scope.
+CARAPACE / CORTEX DISCOVERY & INTEGRATION SPRINT AGREEMENT, ongoing support after Sprint completion;, major data migration; or, custom integrations beyond agreed Sprint scope.
 Out-of-scope work may be quoted separately through a module, Order Form, or Statement of Work.
 8. Client Responsibilities
-Client will provide:
-- timely access to necessary systems;
-- authorized personnel for workflow mapping;
-- test data or sandbox data where possible;
-- approval for selected automations;
-- required third-party accounts or API access; and
-- reasonable cooperation during Sprint scheduling.
+Client will provide:, timely access to necessary systems;, authorized personnel for workflow mapping;, test data or sandbox data where possible;, approval for selected automations;, required third-party accounts or API access; and, reasonable cooperation during Sprint scheduling.
 Delays caused by lack of Client access, approvals, systems, or cooperation may extend the Sprint timeline or
 require rescheduling. Client remains responsible for all rights, permissions, account authority, and third-party
 terms necessary to use Client Data and selected third-party services during the Sprint.
@@ -2535,15 +2334,7 @@ To the maximum extent permitted by law, Carapace's total aggregate liability und
 not exceed the Sprint fee actually paid by Client, except for liability that cannot be limited under applicable law.
 The additional limitation-of-liability provisions in the Commercial License Agreement apply to the Sprint.
 14. Completion and Handoff
-At Sprint completion, Carapace will provide a handoff summary that may include:
-- workflow map;
-- credential/security observations;
-- sandbox summary;
-- automation summary;
-- filemap structure;
-- ROI projection;
-- commercial recommendation; and
-- next-step implementation plan.
+At Sprint completion, Carapace will provide a handoff summary that may include:, workflow map;, credential/security observations;, sandbox summary;, automation summary;, filemap structure;, ROI projection;, commercial recommendation; and, next-step implementation plan.
 15. Contact
 Carapace LLC
 1231 SW 12 Court
@@ -2640,15 +2431,10 @@ DRAFT FOR COUNSEL REVIEW | CARAPACE LLC | 1231 SW 12 COURT, MIAMI, FLORIDA 33135
 CARAPACE / CORTEX MUTUAL NDA + CLIENT DATA SEGREGATION
 4. Exclusions
 Confidential Information does not include information that the Receiving Party can demonstrate through
-contemporaneous written records:
-- is or becomes publicly available through no breach of this Agreement by the Receiving Party or its
-Representatives;
-- was lawfully known to the Receiving Party before disclosure by the Disclosing Party without a duty of
-confidentiality;
-- is lawfully received from a third party without breach of any duty of confidentiality;
-- is independently developed by the Receiving Party without use of or reference to the Disclosing Party's
-Confidential Information; or
-- is approved in writing for release by the Disclosing Party.
+contemporaneous written records:, is or becomes publicly available through no breach of this Agreement by the Receiving Party or its
+Representatives;, was lawfully known to the Receiving Party before disclosure by the Disclosing Party without a duty of
+confidentiality;, is lawfully received from a third party without breach of any duty of confidentiality;, is independently developed by the Receiving Party without use of or reference to the Disclosing Party's
+Confidential Information; or, is approved in writing for release by the Disclosing Party.
 The burden of proving an exclusion rests with the Receiving Party. Information will not be deemed non-
 confidential merely because individual elements are publicly known if the combination, arrangement, or
 application of those elements is not publicly known.
@@ -2795,19 +2581,7 @@ License Agreement, the Commercial License Agreement controls unless the applicab
 states otherwise.
 2. Included Monthly Services
 The standard Strategy & Support Retainer includes up to 10 hours per month of support and strategy services.
-Included services may include:
-- agent tuning;
-- workflow refinement;
-- routing adjustments;
-- approval-gate configuration;
-- Documentation updates;
-- troubleshooting;
-- quarterly architecture review;
-- priority routing guidance;
-- commercial-tier recommendations;
-- SaaS-consolidation planning;
-- one formal agent update per month; and
-- ticket-based support intake.
+Included services may include:, agent tuning;, workflow refinement;, routing adjustments;, approval-gate configuration;, Documentation updates;, troubleshooting;, quarterly architecture review;, priority routing guidance;, commercial-tier recommendations;, SaaS-consolidation planning;, one formal agent update per month; and, ticket-based support intake.
 DRAFT FOR COUNSEL REVIEW | CARAPACE LLC | EFFECTIVE DATE: JUNE 19, 2026 | PAGE 2
 
 CARAPACE / CORTEX STRATEGY & SUPPORT RETAINER TERMS
@@ -2821,17 +2595,7 @@ Agreement, unless the parties agree otherwise in writing.
 Client may purchase the Extended Support Retainer add-on for $199 per month, increasing included support to 15
 hours per month. Unless otherwise stated in an Order Form, unused hours do not roll over.
 5. Scope Boundaries
-The Retainer does not include:
-- custom SaaS builds;
-- major new software features;
-- third-party subscription costs;
-- third-party API costs;
-- large-scale data migration;
-- legal, financial, medical, or regulated professional advice;
-- security audits beyond agreed scope;
-- custom integrations requiring substantial development;
-- emergency incident response outside Cortex-controlled components; or
-- on-site services unless separately agreed.
+The Retainer does not include:, custom SaaS builds;, major new software features;, third-party subscription costs;, third-party API costs;, large-scale data migration;, legal, financial, medical, or regulated professional advice;, security audits beyond agreed scope;, custom integrations requiring substantial development;, emergency incident response outside Cortex-controlled components; or, on-site services unless separately agreed.
 Work outside the Retainer scope may be quoted separately or added through a module, Order Form, or Statement
 of Work.
 6. Agent Updates
@@ -2839,22 +2603,12 @@ The Retainer includes one formal agent update per month, scope-bounded to reason
 routing, tool, or behavior improvements. Major agent redesigns, multi-agent architecture rebuilds, or custom
 software development may require a separate quote, module, or Statement of Work.
 7. Quarterly Architecture Review
-The Retainer includes one quarterly architecture review. The review may include:
-- workflow performance review;
-- Active Operator usage review;
-- SaaS-replacement progress;
-- ROI projection update;
-- governance recommendations;
-- security and credential-routing review; and
-- roadmap recommendations.
+The Retainer includes one quarterly architecture review. The review may include:, workflow performance review;, Active Operator usage review;, SaaS-replacement progress;, ROI projection update;, governance recommendations;, security and credential-routing review; and, roadmap recommendations.
 DRAFT FOR COUNSEL REVIEW | CARAPACE LLC | EFFECTIVE DATE: JUNE 19, 2026 | PAGE 3
 
 CARAPACE / CORTEX STRATEGY & SUPPORT RETAINER TERMS
 8. Response Times
-Unless otherwise stated in an Order Form:
-- Critical Issue response target: 4 business hours;
-- standard issue response target: 24 business hours; and
-- general strategic requests: commercially reasonable response based on queue and urgency.
+Unless otherwise stated in an Order Form:, Critical Issue response target: 4 business hours;, standard issue response target: 24 business hours; and, general strategic requests: commercially reasonable response based on queue and urgency.
 A "Critical Issue" means a material failure of a Carapace-controlled production component that prevents Client
 from using a core function included in Client's active paid Cortex Commercial License. Response targets measure
 acknowledgment, triage, and the start of commercially reasonable action; they do not guarantee final resolution
@@ -2864,21 +2618,11 @@ Support requests must be submitted through the approved intake channel designate
 ticketing, email, portal, or project-management system. Requests made outside approved channels may not be
 tracked against service levels or included-support hours.
 10. Client Cooperation
-Client agrees to provide:
-- timely access to relevant systems;
-- accurate descriptions of issues;
-- test credentials or sandbox access when needed;
-- responsible personnel for approvals;
-- prompt review of proposed changes; and
-- compliance with third-party service terms.
+Client agrees to provide:, timely access to relevant systems;, accurate descriptions of issues;, test credentials or sandbox access when needed;, responsible personnel for approvals;, prompt review of proposed changes; and, compliance with third-party service terms.
 Client remains responsible for maintaining the rights, permissions, systems, accounts, credentials, and third-party
 subscriptions necessary for Carapace to perform Retainer services.
 11. Overage
-If Client exceeds included monthly support hours, Carapace may:
-- pause non-critical support until the next billing period;
-- request approval for overage;
-- bill overage at $250 per hour; or
-- recommend an upgraded Retainer or separate Statement of Work.
+If Client exceeds included monthly support hours, Carapace may:, pause non-critical support until the next billing period;, request approval for overage;, bill overage at $250 per hour; or, recommend an upgraded Retainer or separate Statement of Work.
 Overage will not be billed without Client approval unless expressly authorized in the applicable Order Form.
 12. Contact
 Carapace LLC
@@ -2906,8 +2650,8 @@ Why it matters: lower token waste, lower cost, faster runs, cleaner prompts, and
 exposure of sensitive information.
 2. Intent-Aware Routing
 Cortex does not treat every request the same.
-An intent layer evaluates what the user is actually trying to do — summarize, extract, classify, compare,
-draft, search, route, automate, approve, or execute — and then chooses the right path.
+An intent layer evaluates what the user is actually trying to do, summarize, extract, classify, compare,
+draft, search, route, automate, approve, or execute, and then chooses the right path.
 That path may use a local model, a frontier model, a private cloud model, a tool, a workflow, a human
 approval gate, or a delegated agent.
 Why it matters: better outcomes without asking employees to understand model selection, token budgets,

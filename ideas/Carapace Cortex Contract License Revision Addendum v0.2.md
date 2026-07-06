@@ -1,6 +1,6 @@
 # Carapace / Cortex Contract and License Package
 
-## Revision Addendum v0.2 — Clean Replacement Package
+## Revision Addendum v0.2, Clean Replacement Package
 
 **Prepared for internal business planning and review by qualified Florida counsel.**
 
@@ -92,7 +92,7 @@ This Agreement, each Order Form and Statement of Work, and any dispute, claim, o
 
 The parties irrevocably submit to the exclusive jurisdiction and venue of (a) the state courts located in Miami-Dade County, Florida, or (b) if federal subject-matter jurisdiction exists, the United States District Court for the Southern District of Florida, Miami Division. Each party waives any objection based on improper venue or forum non conveniens.
 
-### Optional Section 25B — Emergency Equitable Relief (Counsel Decision Required)
+### Optional Section 25B, Emergency Equitable Relief (Counsel Decision Required)
 
 If approved by counsel, insert the following:
 

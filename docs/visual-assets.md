@@ -12,9 +12,9 @@ After searching CC0/MIT SVG schematics and low-poly glTF chip/PCB assets, no can
 
 | Query | Result | License | Verdict |
 |-------|--------|---------|---------|
-| `site:commons.wikimedia.org circuit board svg wireframe` | Various PCB photos/vectors | Mixed CC-BY | Rejected — too photorealistic or oversized |
-| `github pcb svg wireframe` | OSS icon sets | MIT/CC | Rejected — trademarked part silhouettes, poor veil compositing |
-| `site:sketchfab.com CC0 chip glb` | Low-poly SoC models | CC0 | Rejected — >150KB, needs three.js (Phase 2) |
+| `site:commons.wikimedia.org circuit board svg wireframe` | Various PCB photos/vectors | Mixed CC-BY | Rejected, too photorealistic or oversized |
+| `github pcb svg wireframe` | OSS icon sets | MIT/CC | Rejected, trademarked part silhouettes, poor veil compositing |
+| `site:sketchfab.com CC0 chip glb` | Low-poly SoC models | CC0 | Rejected - >150KB, needs three.js (Phase 2) |
 
 ## Integration path (Phase 2)
 

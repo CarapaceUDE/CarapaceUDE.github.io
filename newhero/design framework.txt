@@ -301,7 +301,7 @@ Possible fields:
 
 ## Implementation Phases
 
-### Phase 1 — Minimal Site Kit
+### Phase 1, Minimal Site Kit
 
 Build:
 
@@ -315,7 +315,7 @@ Build:
 * basic motion
   No WASM yet except install scaffolding.
 
-### Phase 2 — Haoqi Utility Integration
+### Phase 2, Haoqi Utility Integration
 
 Add:
 
@@ -326,7 +326,7 @@ Add:
 * image lightbox with dominant-color background
 * squircle/capsule components
 
-### Phase 3 — Agent-Ready Website Generator
+### Phase 3, Agent-Ready Website Generator
 
 Add a generator that can create a new site from:
 
@@ -344,7 +344,7 @@ Add a generator that can create a new site from:
 * project cards
 * deployment notes
 
-### Phase 4 — Cortex/Carapace Extension
+### Phase 4, Cortex/Carapace Extension
 
 Wrap this as a Cortex skill:
 

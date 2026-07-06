@@ -1,4 +1,4 @@
-# Goal-scoped files — effects hero background work (35 paths)
+# Goal-scoped files, effects hero background work (35 paths)
 # Includes harness pages for smoke/capture without modifying production HTML shells.
 assets/effects-goal-contract.js
 assets/effects-anime.js
