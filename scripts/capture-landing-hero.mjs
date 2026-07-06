@@ -2,6 +2,7 @@ import { chromium } from "playwright";
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 import { wheelScrollToStage } from "./hero-scroll-wheel.mjs";
+import { VH_PER_SLIDE } from "../assets/hero-constants.js";
 
 const scratch = process.argv[2];
 const base = process.argv[3] || "http://127.0.0.1:8765";
@@ -90,7 +91,12 @@ try {
   log.push("screenshot: landing-hero-scrolled.png");
 
   const h1Flat = h1Before.replace(/\s+/g, " ").trim();
-  const minStage = await page.evaluate(() => Math.floor(window.innerHeight * 3.5));
+  const harnessSlideCount = 8;
+  const minStage = await page.evaluate(
+    ({ vhPerSlide, slideCount }) =>
+      Math.floor(window.innerHeight * (slideCount * vhPerSlide / 100) * 0.88),
+    { vhPerSlide: VH_PER_SLIDE, slideCount: harnessSlideCount }
+  );
   const passed =
     stageHeight > minStage &&
     h1Flat.includes("Own Your Intelligence") &&

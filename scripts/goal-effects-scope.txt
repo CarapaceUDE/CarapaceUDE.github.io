@@ -4,6 +4,8 @@ assets/effects-goal-contract.js
 assets/effects-anime.js
 assets/effects-interaction.js
 assets/effects-click.js
+assets/hero-constants.js
+assets/hero-scroll-math.js
 assets/hero-core.js
 assets/hero-home.js
 assets/hero-about.js
@@ -33,5 +35,7 @@ scripts/test-click-transient.mjs
 scripts/test-click-probes.mjs
 scripts/test-click-registry.mjs
 scripts/capture-inner-heroes.mjs
+scripts/capture-landing-hero.mjs
+scripts/test-hero-scroll.mjs
 scripts/verify-revamp.py
 scripts/goal-effects-scope.txt

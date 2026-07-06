@@ -4,9 +4,9 @@ _Last updated: 2026-07-05_
 
 Implements findings from `docs/effects-audit.md`. No slide copy changes.
 
-## Assumed scope (35 manifest paths)
+## Assumed scope (39 manifest paths)
 
-Goal patch and classifier evidence are limited to `scripts/goal-effects-scope.txt` (35 manifest paths; includes `scripts/effects-hero-harness/*.html` for smoke/capture; production route HTML shells are unchanged).
+Goal patch and classifier evidence are limited to `scripts/goal-effects-scope.txt` (39 manifest paths; includes `scripts/effects-hero-harness/*.html` for smoke/capture; production route HTML shells are unchanged).
 
 ## New effect IDs (8)
 

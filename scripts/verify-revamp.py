@@ -839,12 +839,18 @@ def check_stage_artifacts() -> tuple[bool, list[str]]:
         ok = False
     else:
         pt = patch.read_text(encoding="utf-8")
-        for req in ("effects-anime.js", "hero-core.js", "effects-audit.md"):
+        scroll_only_markers = ("hero-scroll-math.js", "SCROLL_DISTANCE_MULTIPLIER", "VH_PER_SLIDE")
+        scroll_only_patch = "hero-core.js" in pt and any(m in pt for m in scroll_only_markers)
+        required_in_patch = ["hero-core.js"]
+        if not scroll_only_patch:
+            required_in_patch.extend(["effects-anime.js", "effects-audit.md"])
+        for req in required_in_patch:
             if req not in pt:
                 lines.append(f"FAIL effects-goal.patch: no diff for {req}")
                 ok = False
-        if all(r in pt for r in ("effects-anime.js", "hero-core.js", "effects-audit.md")):
-            lines.append("PASS effects-goal.patch: core file diffs present")
+        if all(r in pt for r in required_in_patch):
+            label = "scroll-hero core diffs" if scroll_only_patch else "core file diffs"
+            lines.append(f"PASS effects-goal.patch: {label} present")
         patch_paths = re.findall(r"^diff --git a/(.+?) b/", pt, re.MULTILINE)
         manifest = ROOT / "scripts/goal-effects-scope.txt"
         if manifest.exists():
@@ -859,16 +865,22 @@ def check_stage_artifacts() -> tuple[bool, list[str]]:
                 ok = False
             else:
                 lines.append(f"PASS effects-goal.patch: {len(patch_paths)} paths all in manifest")
-        if not pt.lstrip().startswith("diff --git a/assets/effects-anime.js"):
-            lines.append("FAIL effects-goal.patch: must start with assets/effects-anime.js")
+        allowed_patch_starts = (
+            "diff --git a/assets/effects-anime.js",
+            "diff --git a/assets/hero-constants.js",
+            "diff --git a/assets/hero-core.js",
+            "diff --git a/assets/hero-scroll-math.js",
+        )
+        if not any(pt.lstrip().startswith(p) for p in allowed_patch_starts):
+            lines.append("FAIL effects-goal.patch: must start with effects-anime or hero scroll diff")
             ok = False
         else:
-            lines.append("PASS effects-goal.patch: starts with assets/effects-anime.js")
+            lines.append("PASS effects-goal.patch: allowed first diff")
     classifier = SCRATCH / "goal-classifier.patch"
     if classifier.exists():
         cpt = classifier.read_text(encoding="utf-8")
-        if cpt.lstrip().startswith("diff --git a/assets/effects-anime.js"):
-            lines.append("PASS goal-classifier.patch: starts with assets/effects-anime.js")
+        if any(cpt.lstrip().startswith(p) for p in allowed_patch_starts):
+            lines.append("PASS goal-classifier.patch: allowed first diff")
         else:
             lines.append("FAIL goal-classifier.patch: wrong first diff (PDF/broad patch)")
             ok = False

@@ -1,5 +1,12 @@
 import { init, oklch2rgb_rel, getCapsule } from "https://esm.sh/@wenhaoqi/wasm_design_utils@0.2.0";
 import { DEFAULT_EFFECT_HUE } from "./hero-constants.js";
+import {
+  heroStageHeightVh,
+  progressToSlide,
+  effectMixFromFrac,
+  pinnedFadeT,
+  scrollMetrics
+} from "./hero-scroll-math.js";
 import { HeroTextAnime } from "./text-anime.js";
 import { AnimeEffectsField } from "./effects-anime.js";
 import { HeroChipInteractions } from "./chip-interactions.js";
@@ -8,24 +15,25 @@ import { fitHeroSlideCopy } from "./hero-title-fit.js";
 import { INTERACTIVE_EFFECTS } from "./effects-goal-contract.js";
 import { clickAllowed, isEmptyHeroClick } from "./effects-interaction.js";
 
-export { PILOT_NOTE_DISCLAIMER } from "./hero-constants.js";
+export {
+  PILOT_NOTE_DISCLAIMER,
+  BASE_VH_PER_SLIDE,
+  SCROLL_DISTANCE_MULTIPLIER,
+  VH_PER_SLIDE,
+  EFFECT_MIX_ONSET,
+  EFFECT_MIX_END,
+  PINNED_FADE_ACCEL
+} from "./hero-constants.js";
 
-function smoothstep(edge0, edge1, x) {
-  const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));
-  return t * t * (3 - 2 * t);
-}
-
-function scrollMetrics(slideCount) {
-  const slideSpan = slideCount;
-  const fadeStart = (slideCount - 0.28) / slideSpan;
-  return { slideSpan, fadeStart };
-}
-
-function pinnedFadeT(progress, fadeStart) {
-  const raw = (progress - fadeStart) / (1 - fadeStart);
-  const t = Math.min(1, Math.max(0, raw * 2.4));
-  return t * t;
-}
+export {
+  smoothstep,
+  scrollMetrics,
+  heroStageHeightVh,
+  scrollablePx,
+  progressToSlide,
+  effectMixFromFrac,
+  pinnedFadeT
+} from "./hero-scroll-math.js";
 
 /**
  * Shared scroll-pinned hero initializer for all routes.
@@ -58,7 +66,7 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
   if (pageClass) document.body.classList.add(pageClass);
 
   const slideCount = stageHeight ?? slides.length;
-  heroStage.style.setProperty("--hero-stage-height", `${slideCount * 47.5}vh`);
+  heroStage.style.setProperty("--hero-stage-height", `${heroStageHeightVh(slideCount)}vh`);
 
   let activeIndex = -1;
   let progress = 0;
@@ -221,11 +229,8 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
     const stageHeightPx = stage.offsetHeight - window.innerHeight;
     progress = Math.min(Math.max(stageTop / (stageHeightPx || 1), 0), 1);
 
-    const { slideSpan, fadeStart } = scrollMetrics(slides.length);
-    const floatIdx = progress * slideSpan;
-    const idx = Math.min(slides.length - 1, Math.floor(floatIdx));
-    const frac = floatIdx - idx;
-    const nextIdx = Math.min(idx + 1, slides.length - 1);
+    const { fadeStart } = scrollMetrics(slides.length);
+    const { idx, frac, nextIdx } = progressToSlide(progress, slides.length);
 
     onSlideChange(idx);
 
@@ -235,16 +240,18 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
       effectsField?.setMixTarget(slides[idx].effect, slides[idx].effect, 0);
       updateBokehIntensity(slides[idx].bokeh ?? 0.3);
       effectsField?.setIntensity(slides[idx].bokeh ?? 0.3);
-    } else if (idx < slides.length - 1 && frac > 0.3) {
-      const mix = smoothstep(0.3, 0.96, frac);
-      effectsField?.setMixTarget(slides[idx].effect, slides[nextIdx].effect, mix);
-      const bokehLerp = (slides[idx].bokeh ?? 0.3) * (1 - mix) + (slides[nextIdx].bokeh ?? 0.3) * mix;
-      updateBokehIntensity(bokehLerp);
-      effectsField?.setIntensity(bokehLerp);
     } else {
-      effectsField?.setMixTarget(slides[idx].effect, slides[idx].effect, 0);
-      updateBokehIntensity(slides[idx].bokeh ?? 0.3);
-      effectsField?.setIntensity(slides[idx].bokeh ?? 0.3);
+      const mix = effectMixFromFrac(frac, slides.length, idx);
+      if (mix > 0) {
+        effectsField?.setMixTarget(slides[idx].effect, slides[nextIdx].effect, mix);
+        const bokehLerp = (slides[idx].bokeh ?? 0.3) * (1 - mix) + (slides[nextIdx].bokeh ?? 0.3) * mix;
+        updateBokehIntensity(bokehLerp);
+        effectsField?.setIntensity(bokehLerp);
+      } else {
+        effectsField?.setMixTarget(slides[idx].effect, slides[idx].effect, 0);
+        updateBokehIntensity(slides[idx].bokeh ?? 0.3);
+        effectsField?.setIntensity(slides[idx].bokeh ?? 0.3);
+      }
     }
 
     if (metaScroll && !insertCursor?.isMetaLocked("meta-scroll")) {

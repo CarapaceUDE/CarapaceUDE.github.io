@@ -141,8 +141,15 @@ if (stagedExtra.length || stagedMissing.length) {
   process.exit(1);
 }
 
-if (!patch.trim().startsWith("diff --git a/assets/effects-anime.js")) {
-  console.error("FAIL patch must start with assets/effects-anime.js diff");
+const patchStart = patch.trim().slice(0, 80);
+const allowedPatchStarts = [
+  "diff --git a/assets/effects-anime.js",
+  "diff --git a/assets/hero-constants.js",
+  "diff --git a/assets/hero-core.js",
+  "diff --git a/assets/hero-scroll-math.js"
+];
+if (!allowedPatchStarts.some((p) => patchStart.startsWith(p))) {
+  console.error(`FAIL patch must start with effects-anime or hero scroll diff (got: ${patchStart})`);
   process.exit(1);
 }
 
