@@ -650,7 +650,7 @@ footer { margin-top: 0 !important; padding: 2.2rem 0 3rem !important; border-top
   border: 0;
 }
 footer .wrap { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
-footer .footer-sources { flex-basis: 100%; margin-top: .35rem; line-height: 1.55; }
+footer .footer-sources { flex-basis: 100%; line-height: 1.55; }
 footer a { color: var(--muted-strong) !important; }
 
 /* Atmospheric canvas: visible, but no longer the whole show */
