@@ -653,6 +653,51 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1.5rem; align
 footer .footer-sources { flex-basis: 100%; line-height: 1.55; }
 footer a { color: var(--muted-strong) !important; }
 
+/* Hero chrome social — shared across hero and minimal pages */
+body[class*="page-"] .hero-chrome--minimal {
+  position: fixed;
+  z-index: 100;
+  inset: auto 0 0 0;
+  pointer-events: none;
+  padding: var(--chrome-pad);
+}
+body[class*="page-"] .chrome-bottom--social-only {
+  display: grid;
+  grid-template-columns: 1fr auto auto 1fr;
+  align-items: end;
+  column-gap: 14px;
+  width: 100%;
+}
+body[class*="page-"] .chrome-bottom--social-only > .chrome-social--left { grid-column: 2; }
+body[class*="page-"] .chrome-bottom--social-only > .chrome-social--right { grid-column: 3; }
+body[class*="page-"] .chrome-social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+body[class*="page-"] .chrome-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  color: var(--muted);
+  opacity: 0.62;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  pointer-events: auto;
+}
+body[class*="page-"] .chrome-social a:hover,
+body[class*="page-"] .chrome-social a:focus-visible {
+  color: var(--accent);
+  opacity: 1;
+  outline: none;
+}
+body[class*="page-"] .chrome-social svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+}
+
 /* Atmospheric canvas: visible, but no longer the whole show */
 .cortex-bg-layer { display: none !important; }
 .cortex-wave-layer, .cortex-brain-layer { position: fixed; inset: 0; pointer-events: none; z-index: 1 !important; opacity: .22 !important; mask-image: linear-gradient(to bottom, #000 0, #000 46%, transparent 92%) !important; }

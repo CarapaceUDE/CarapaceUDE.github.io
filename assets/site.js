@@ -217,6 +217,7 @@
     setupHeroTilt();
     setupHomeThemeToggle();
     setupBrandLogos();
+    if (typeof window.setupChromeSocial === "function") window.setupChromeSocial();
   }
 
   if (document.readyState === 'loading') {

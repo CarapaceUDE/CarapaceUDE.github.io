@@ -4,7 +4,7 @@
  */
 
 const BLOCKED_CLICK_SELECTORS =
-  "a, button, input, textarea, select, .theme-toggle, .nav-toggle, .nav, .proof-chip, .chip-tree, .scroll-hint, .chip-label, .chip-detail, .chip-source-hint";
+  "a, button, input, textarea, select, .theme-toggle, .nav-toggle, .nav, .chrome-social, .proof-chip, .chip-tree, .scroll-hint, .chip-label, .chip-detail, .chip-source-hint";
 
 const INSERT_TEXT_SELECTORS = [
   ".slide-content .eyebrow",
