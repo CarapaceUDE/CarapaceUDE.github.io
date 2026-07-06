@@ -199,7 +199,7 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
       svg.setAttribute("preserveAspectRatio", "none");
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path.setAttribute("d", d);
-      path.setAttribute("fill", "var(--accent)");
+      path.setAttribute("fill", "var(--cta-gold)");
       svg.appendChild(path);
       link.querySelector("svg.capsule-bg")?.remove();
       link.prepend(svg);

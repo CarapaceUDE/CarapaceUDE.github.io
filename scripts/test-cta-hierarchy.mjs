@@ -25,10 +25,17 @@ function assert(cond, msg) {
 assert(siteCss.includes(".cta-link") && siteCss.includes("var(--cta-gold)"), "site.css .cta-link uses --cta-gold");
 assert(heroCss.includes("var(--cta-gold)"), "hero-home.css cta-link uses --cta-gold");
 assert(siteCss.includes("#intake-form .btn.primary[type=\"submit\"]"), "business form submit targets gold");
-assert(siteCss.includes("body.page-home .links > a.nav-contact"), "homepage nav-contact violet override exists");
 assert(
-  siteCss.match(/body\.page-home \.links > a\.nav-contact[\s\S]*?var\(--accent\)/),
-  "homepage nav-contact uses accent not cta-gold"
+  siteCss.match(/\.links > a\.nav-contact[\s\S]*?var\(--cta-gold\)/),
+  "nav-contact uses --cta-gold"
+);
+assert(
+  !siteCss.match(/body\.page-home \.links > a\.nav-contact[\s\S]*?var\(--accent\)/),
+  "no homepage nav-contact violet override"
+);
+assert(
+  readFileSync(join(root, "assets/hero-core.js"), "utf8").includes('fill", "var(--cta-gold)"'),
+  "hero-core CTA squircle uses --cta-gold"
 );
 
 const featureCardBlock = craftCss.match(/\.page-cortex \.feature-card::before[\s\S]*?\}/);

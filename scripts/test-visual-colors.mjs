@@ -45,13 +45,19 @@ const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
 
 await page.goto(`${base}/index.html`, { waitUntil: "networkidle" });
+await page.waitForTimeout(600);
 const bodyBg = parseRgb(await page.evaluate(() => getComputedStyle(document.body).backgroundColor));
 const ctaBg = parseRgb(await page.evaluate(() => getComputedStyle(document.querySelector(".cta-link")).backgroundColor));
 const navBg = parseRgb(await page.evaluate(() => getComputedStyle(document.querySelector(".nav-contact")).backgroundColor));
+const squircleFill = parseRgb(await page.evaluate(() => {
+  const path = document.querySelector(".cta-link svg.capsule-bg path");
+  return path ? getComputedStyle(path).fill : null;
+}));
 
 console.log("index body bg:", bodyBg);
 console.log("index cta-link bg:", ctaBg);
 console.log("index nav-contact bg:", navBg);
+console.log("index cta squircle fill:", squircleFill);
 
 let failed = 0;
 function fail(msg) {
@@ -68,8 +74,11 @@ else pass("index body graphite");
 if (!near(ctaBg, [201, 162, 39])) fail("index cta-link not gold");
 else pass("index cta-link gold");
 
-if (near(navBg, [201, 162, 39])) fail("index nav-contact is gold (should be violet outline)");
-else pass("index nav-contact not gold");
+if (squircleFill && !near(squircleFill, [201, 162, 39])) fail("index cta squircle not gold");
+else if (squircleFill) pass("index cta squircle gold");
+
+if (!near(navBg, [201, 162, 39])) fail("index nav-contact not gold");
+else pass("index nav-contact gold");
 
 await page.screenshot({ path: join(scratch, "index-colors.png"), fullPage: false });
 
@@ -82,8 +91,8 @@ console.log("business nav-contact bg:", bizNavBg);
 if (!near(submitBg, [201, 162, 39])) fail("business submit not gold");
 else pass("business submit gold");
 
-if (near(bizNavBg, [201, 162, 39])) fail("business nav-contact is gold");
-else pass("business nav-contact not gold");
+if (!near(bizNavBg, [201, 162, 39])) fail("business nav-contact not gold");
+else pass("business nav-contact gold");
 
 await page.screenshot({ path: join(scratch, "business-colors.png"), fullPage: false });
 

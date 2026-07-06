@@ -1192,6 +1192,16 @@ body[class*="page-"] .cta-link svg.capsule-bg {
   pointer-events: none;
 }
 
+body[class*="page-"] .cta-link svg.capsule-bg path {
+  fill: var(--cta-gold);
+  transition: fill 0.2s ease;
+}
+
+body[class*="page-"] .cta-link:hover svg.capsule-bg path,
+body[class*="page-"] .cta-link:focus-visible svg.capsule-bg path {
+  fill: var(--cta-gold-hover);
+}
+
 body[class*="page-"] .cta-link .cta-label {
   position: relative;
   z-index: 1;

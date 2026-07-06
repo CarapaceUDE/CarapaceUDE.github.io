@@ -254,23 +254,6 @@ body[class*="page-"] .nav {
   background: var(--cta-gold-hover);
   border-color: var(--cta-gold-hover);
 }
-body.page-home .links > a.nav-contact,
-body.page-business .links > a.nav-contact,
-body.page-about .links > a.nav-contact,
-body.page-solutions .links > a.nav-contact {
-  color: var(--accent) !important;
-  background: transparent;
-  border: 1px solid var(--accent);
-  box-shadow: none;
-}
-body.page-home .links > a.nav-contact:hover,
-body.page-business .links > a.nav-contact:hover,
-body.page-about .links > a.nav-contact:hover,
-body.page-solutions .links > a.nav-contact:hover {
-  color: var(--accent-on) !important;
-  background: var(--accent);
-  border-color: var(--accent);
-}
 .nav-utilities {
   display: flex;
   align-items: center;
