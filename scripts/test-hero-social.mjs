@@ -35,6 +35,7 @@ assert(heroSocial.includes('chrome-social--" + side'), "dynamic social nav side 
 assert(heroSocial.includes("buildSocialNav(\"left\"") || heroSocial.includes('buildSocialNav("left"'), "left cluster mount");
 assert(heroSocial.includes("buildSocialNav(\"right\"") || heroSocial.includes('buildSocialNav("right"'), "right cluster mount");
 assert(heroSocial.includes("hero-chrome--minimal"), "minimal chrome fallback");
+assert(heroSocial.includes("chrome-bottom-hub"), "center hub wrapper for fixed social flanks");
 
 const pages = [
   "index.html",

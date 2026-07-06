@@ -658,6 +658,11 @@ body[class*="page-"] {
   --chrome-social-hit: 2.85rem;
   --chrome-social-icon: 1.72rem;
   --chrome-social-gap: 18px;
+  --chrome-social-flank-gap: 22px;
+  --chrome-social-hub-gap: calc(var(--chrome-social-flank-gap) * 2 + var(--chrome-cursor-slot));
+  --chrome-cursor-slot: 5.75rem;
+  --chrome-mark-height: 0.82rem;
+  --chrome-foot-gap: 6px;
 }
 
 body[class*="page-"] .hero-chrome--minimal {
@@ -667,15 +672,7 @@ body[class*="page-"] .hero-chrome--minimal {
   pointer-events: none;
   padding: var(--chrome-pad);
 }
-body[class*="page-"] .chrome-bottom--social-only {
-  display: grid;
-  grid-template-columns: 1fr auto auto 1fr;
-  align-items: center;
-  column-gap: 14px;
-  width: 100%;
-}
-body[class*="page-"] .chrome-bottom--social-only > .chrome-social--left { grid-column: 2; }
-body[class*="page-"] .chrome-bottom--social-only > .chrome-social--right { grid-column: 3; }
+
 body[class*="page-"] .chrome-social {
   display: flex;
   align-items: center;

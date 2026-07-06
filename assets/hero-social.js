@@ -67,16 +67,15 @@
 
     cursorBlock.classList.add("meta-block--center");
 
-    const scrollBlock = bottom.querySelector(".meta-block.hide-mobile");
+    const hub = document.createElement("div");
+    hub.className = "chrome-bottom-hub";
+    bottom.insertBefore(hub, cursorBlock);
+
     const leftNav = buildSocialNav("left", LEFT);
     const rightNav = buildSocialNav("right", RIGHT);
-
-    bottom.insertBefore(leftNav, cursorBlock);
-    if (scrollBlock) {
-      bottom.insertBefore(rightNav, scrollBlock);
-    } else {
-      bottom.appendChild(rightNav);
-    }
+    hub.appendChild(leftNav);
+    hub.appendChild(cursorBlock);
+    hub.appendChild(rightNav);
 
     bottom.dataset.socialMounted = "1";
   }
