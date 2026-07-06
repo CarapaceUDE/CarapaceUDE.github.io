@@ -982,9 +982,8 @@ body[class*="page-"] .slide-dot.is-active {
 }
 
 body[class*="page-"] .scroll-hint {
-  --chrome-footer-height: 92px;
   position: fixed;
-  bottom: calc(var(--chrome-footer-height) + 14px);
+  bottom: calc(var(--chrome-footer-reserve, 120px) + 14px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 35;
@@ -1311,8 +1310,8 @@ body[class*="page-"] .cta-link .cta-label {
     padding: 14px 16px;
   }
   body[class*="page-"] .scroll-hint {
-    --chrome-footer-height: 84px;
-    bottom: calc(var(--chrome-footer-height) + 10px);
+    --chrome-footer-reserve: 108px;
+    bottom: calc(var(--chrome-footer-reserve) + 10px);
   }
   body[class*="page-"] .slide-rail { display: none; }
   body[class*="page-"] .meta-block.hide-mobile { display: none; }
