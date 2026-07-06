@@ -21,7 +21,24 @@ function near(rgb, target, tol = 8) {
   return rgb.every((v, i) => Math.abs(v - target[i]) <= tol);
 }
 
-const browser = await chromium.launch();
+async function launchBrowser() {
+  const attempts = [
+    () => chromium.launch({ channel: "chrome" }),
+    () => chromium.launch({ channel: "msedge" }),
+    () => chromium.launch(),
+  ];
+  let lastErr;
+  for (const attempt of attempts) {
+    try {
+      return await attempt();
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr;
+}
+
+const browser = await launchBrowser();
 const context = await browser.newContext({ colorScheme: "dark" });
 const page = await context.newPage();
 const errors = [];
@@ -36,14 +53,23 @@ console.log("index body bg:", bodyBg);
 console.log("index cta-link bg:", ctaBg);
 console.log("index nav-contact bg:", navBg);
 
-if (!near(bodyBg, [15, 15, 16])) console.error("FAIL index body not Cortex graphite");
-else console.log("ok index body graphite");
+let failed = 0;
+function fail(msg) {
+  console.error(`FAIL: ${msg}`);
+  failed++;
+}
+function pass(msg) {
+  console.log(`ok: ${msg}`);
+}
 
-if (!near(ctaBg, [201, 162, 39])) console.error("FAIL index cta-link not gold");
-else console.log("ok index cta-link gold");
+if (!near(bodyBg, [15, 15, 16])) fail("index body not Cortex graphite");
+else pass("index body graphite");
 
-if (near(navBg, [201, 162, 39])) console.error("FAIL index nav-contact is gold (should be violet outline)");
-else console.log("ok index nav-contact not gold");
+if (!near(ctaBg, [201, 162, 39])) fail("index cta-link not gold");
+else pass("index cta-link gold");
+
+if (near(navBg, [201, 162, 39])) fail("index nav-contact is gold (should be violet outline)");
+else pass("index nav-contact not gold");
 
 await page.screenshot({ path: join(scratch, "index-colors.png"), fullPage: false });
 
@@ -53,30 +79,45 @@ const bizNavBg = parseRgb(await page.evaluate(() => getComputedStyle(document.qu
 console.log("business submit bg:", submitBg);
 console.log("business nav-contact bg:", bizNavBg);
 
-if (!near(submitBg, [201, 162, 39])) console.error("FAIL business submit not gold");
-else console.log("ok business submit gold");
+if (!near(submitBg, [201, 162, 39])) fail("business submit not gold");
+else pass("business submit gold");
 
-if (near(bizNavBg, [201, 162, 39])) console.error("FAIL business nav-contact is gold");
-else console.log("ok business nav-contact not gold");
+if (near(bizNavBg, [201, 162, 39])) fail("business nav-contact is gold");
+else pass("business nav-contact not gold");
 
 await page.screenshot({ path: join(scratch, "business-colors.png"), fullPage: false });
 
-// Light theme spot-check on index
-await page.evaluate(() => {
-  document.documentElement.dataset.theme = "light";
-});
-await page.waitForTimeout(100);
-const lightBody = parseRgb(await page.evaluate(() => getComputedStyle(document.body).backgroundColor));
-const lightAccent = parseRgb(await page.evaluate(() => getComputedStyle(document.querySelector(".links > a[href='cortex.html']")).color));
-console.log("light body bg:", lightBody);
-console.log("light nav link color:", lightAccent);
-if (!near(lightBody, [242, 242, 244], 4)) console.error("FAIL light body bg");
-else console.log("ok light body");
+// Light theme spot-check on homepage via real theme toggle (site.js applyTheme path)
+await page.goto(`${base}/index.html`, { waitUntil: "networkidle" });
+await page.click("#theme-toggle");
+await page.waitForTimeout(400);
+const lightBgToken = await page.evaluate(() =>
+  getComputedStyle(document.documentElement).getPropertyValue("--bg").trim()
+);
+const lightHtml = parseRgb(await page.evaluate(() => getComputedStyle(document.documentElement).backgroundColor));
+console.log("light --bg token:", lightBgToken);
+console.log("light html bg:", lightHtml);
+if (lightBgToken !== "#f2f2f4") fail(`light --bg token expected #f2f2f4 got ${lightBgToken}`);
+else pass("light --bg token");
+
+if (!near(lightHtml, [242, 242, 244], 4)) fail("light html bg");
+else pass("light html bg");
+
+await page.locator(".cta-link").scrollIntoViewIfNeeded();
+const lightCta = parseRgb(await page.evaluate(() => getComputedStyle(document.querySelector(".cta-link")).backgroundColor));
+if (!near(lightCta, [201, 162, 39])) fail("light mode cta-link not gold");
+else pass("light mode cta-link gold");
+
+await page.screenshot({ path: join(scratch, "index-light-colors.png"), fullPage: false });
 
 await browser.close();
 
 if (errors.length) {
   console.error("Page errors:", errors);
+  failed++;
+}
+if (failed) {
+  console.error(`\n${failed} visual check(s) failed`);
   process.exit(1);
 }
 console.log("\nVisual color checks complete");
