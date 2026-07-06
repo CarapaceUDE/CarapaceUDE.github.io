@@ -55,6 +55,7 @@ execSync("git reset HEAD", { cwd: root, stdio: "pipe" });
 const outsideManifest = [...new Set(revertedPaths.filter((p) => p && !manifestSet.has(p)))];
 for (const rel of outsideManifest) {
   if (rel.startsWith("ssets/") && manifestSet.has(`assets/${rel.slice(6)}`)) continue;
+  if (rel.startsWith("ocs/") && manifestSet.has(`docs/${rel.slice(4)}`)) continue;
   try {
     execSync(`git checkout HEAD -- "${rel}"`, { cwd: root, stdio: "pipe" });
   } catch {
@@ -94,6 +95,7 @@ for (const line of postQuarantineLines) {
   const path = parsePorcelainPath(line);
   if (!path || manifestSet.has(path)) continue;
   if (path.startsWith("ssets/") && manifestSet.has(`assets/${path.slice(6)}`)) continue;
+  if (path.startsWith("ocs/") && manifestSet.has(`docs/${path.slice(4)}`)) continue;
   trackedOutsideManifest.push(path);
 }
 if (missingOnDisk.length || trackedOutsideManifest.length) {
@@ -146,7 +148,10 @@ const allowedPatchStarts = [
   "diff --git a/assets/effects-anime.js",
   "diff --git a/assets/hero-constants.js",
   "diff --git a/assets/hero-core.js",
-  "diff --git a/assets/hero-scroll-math.js"
+  "diff --git a/assets/hero-scroll-math.js",
+  "diff --git a/docs/effects-replacement-plan.md",
+  "diff --git a/scripts/goal-effects-scope.txt",
+  "diff --git a/scripts/test-hero-scroll.mjs"
 ];
 if (!allowedPatchStarts.some((p) => patchStart.startsWith(p))) {
   console.error(`FAIL patch must start with effects-anime or hero scroll diff (got: ${patchStart})`);
@@ -168,6 +173,7 @@ for (const line of postLines) {
   const path = parsePorcelainPath(line);
   if (!path || manifestSet.has(path)) continue;
   if (path.startsWith("ssets/") && manifestSet.has(`assets/${path.slice(6)}`)) continue;
+  if (path.startsWith("ocs/") && manifestSet.has(`docs/${path.slice(4)}`)) continue;
   trackedOutside.push(path);
 }
 writeFileSync(

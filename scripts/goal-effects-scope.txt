@@ -37,5 +37,7 @@ scripts/test-click-registry.mjs
 scripts/capture-inner-heroes.mjs
 scripts/capture-landing-hero.mjs
 scripts/test-hero-scroll.mjs
+scripts/hero-scroll-baseline.json
+scripts/probe-hero-scroll-routes.mjs
 scripts/verify-revamp.py
 scripts/goal-effects-scope.txt
