@@ -654,6 +654,12 @@ footer .footer-sources { flex-basis: 100%; line-height: 1.55; }
 footer a { color: var(--muted-strong) !important; }
 
 /* Hero chrome social — shared across hero and minimal pages */
+body[class*="page-"] {
+  --chrome-social-hit: 2.85rem;
+  --chrome-social-icon: 1.72rem;
+  --chrome-social-gap: 18px;
+}
+
 body[class*="page-"] .hero-chrome--minimal {
   position: fixed;
   z-index: 100;
@@ -664,7 +670,7 @@ body[class*="page-"] .hero-chrome--minimal {
 body[class*="page-"] .chrome-bottom--social-only {
   display: grid;
   grid-template-columns: 1fr auto auto 1fr;
-  align-items: end;
+  align-items: center;
   column-gap: 14px;
   width: 100%;
 }
@@ -673,16 +679,16 @@ body[class*="page-"] .chrome-bottom--social-only > .chrome-social--right { grid-
 body[class*="page-"] .chrome-social {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--chrome-social-gap);
 }
 body[class*="page-"] .chrome-social a {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: var(--chrome-social-hit);
+  height: var(--chrome-social-hit);
   color: var(--muted);
-  opacity: 0.62;
+  opacity: 0.78;
   transition: color 0.2s ease, opacity 0.2s ease;
   pointer-events: auto;
 }
@@ -693,8 +699,8 @@ body[class*="page-"] .chrome-social a:focus-visible {
   outline: none;
 }
 body[class*="page-"] .chrome-social svg {
-  width: 15px;
-  height: 15px;
+  width: var(--chrome-social-icon);
+  height: var(--chrome-social-icon);
   fill: currentColor;
 }
 
