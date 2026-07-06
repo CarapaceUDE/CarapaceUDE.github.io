@@ -3,11 +3,8 @@
 /**
  * Copyright (c) 2026 Carapace LLC. All rights reserved.
  *
- * Cortex brand logo — hex-brain canvas animation for the animated brand mark.
- * Proprietary; unauthorized copying or distribution prohibited.
- *
  * Hex-brain canvas for the web harness header hub (same algorithm as electron/splash-renderer.js).
- * Source: carapace-ops cortex-bloom-main HexBrainCanvas.
+ * Source: carapace-ops cortex-bloom-main HexBrainCanvas; synced from cortex/public/harness-brain-canvas.js.
  */
 
 /** @returns {() => number} uniform in [0,1) */
@@ -39,6 +36,11 @@ const BRAIN_IDLE = {
   sparkThreshold: 0.75
 };
 
+const BRAIN_DENSITY_PRESETS = {
+  full: { hemisphere: 60, layer2: 25, layer3: 12, layer4: 15, layerNeg1: 20, maxConn: 6 },
+  lite: { hemisphere: 32, layer2: 12, layer3: 6, layer4: 8, layerNeg1: 10, maxConn: 4 }
+};
+
 /**
  * Audio-reactive multipliers for the hub brain canvas (1 = idle baseline).
  * @param {number} amplitude smoothed 0…1 from orb-audio-drive / brainAmplitudeDrive
@@ -62,12 +64,13 @@ function edgeFlowSparkOn(i, j, t, sparkThreshold = BRAIN_IDLE.sparkThreshold) {
   return x - Math.floor(x) > sparkThreshold;
 }
 
-function generateBrainNodes() {
+function generateBrainNodes(density = 'full') {
+  const preset = BRAIN_DENSITY_PRESETS[density] || BRAIN_DENSITY_PRESETS.full;
   const ns = [];
   const rnd = getBrainLayoutRng();
 
   const addHemisphere = (side) => {
-    const count = 60;
+    const count = preset.hemisphere;
     for (let i = 0; i < count; i++) {
       const phi = Math.acos(2 * rnd() - 1);
       const theta = rnd() * Math.PI * 2;
@@ -104,7 +107,7 @@ function generateBrainNodes() {
   addHemisphere(1);
   addHemisphere(-1);
 
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < preset.layer2; i++) {
     const phi = Math.acos(2 * rnd() - 1);
     const theta = rnd() * Math.PI * 2;
     const r = 50 + rnd() * 15;
@@ -120,8 +123,8 @@ function generateBrainNodes() {
     });
   }
 
-  for (let i = 0; i < 12; i++) {
-    const t = i / 12;
+  for (let i = 0; i < preset.layer3; i++) {
+    const t = preset.layer3 > 1 ? i / (preset.layer3 - 1) : 0;
     const angle = t * Math.PI * 2;
     const r = 15 + rnd() * 8;
     ns.push({
@@ -136,8 +139,8 @@ function generateBrainNodes() {
     });
   }
 
-  for (let i = 0; i < 15; i++) {
-    const t = i / 15;
+  for (let i = 0; i < preset.layer4; i++) {
+    const t = preset.layer4 > 1 ? i / (preset.layer4 - 1) : 0;
     const z = -60 + t * 120;
     ns.push({
       x: (rnd() - 0.5) * 20,
@@ -151,7 +154,7 @@ function generateBrainNodes() {
     });
   }
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < preset.layerNeg1; i++) {
     const phi = Math.acos(2 * rnd() - 1);
     const theta = rnd() * Math.PI * 2;
     const r = 30 + rnd() * 20;
@@ -174,7 +177,7 @@ function generateBrainNodes() {
       const dz = ns[i].z - ns[j].z;
       const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
       const threshold = ns[i].layer === ns[j].layer ? 55 : 45;
-      if (dist < threshold && ns[i].connections.length < 6) {
+      if (dist < threshold && ns[i].connections.length < preset.maxConn) {
         ns[i].connections.push(j);
         ns[j].connections.push(i);
       }
@@ -182,82 +185,6 @@ function generateBrainNodes() {
   }
 
   return ns;
-}
-
-/** Read OKLCH site tokens for nav brand canvas (theme-aware). */
-function readBrandLogoPalette() {
-  const root = typeof document !== 'undefined' ? document.documentElement : null;
-  if (!root) {
-    return {
-      accent: 'oklch(0.78 0.14 210)',
-      accentDim: 'oklch(0.55 0.08 210)',
-      accentHover: 'oklch(0.82 0.14 210)',
-      muted: 'oklch(0.72 0.02 265)',
-      isLight: false
-    };
-  }
-  const style = getComputedStyle(root);
-  const read = (name, fallback) => style.getPropertyValue(name).trim() || fallback;
-  const isLight = root.dataset.theme === 'light';
-  return {
-    accent: read('--accent', isLight ? 'oklch(0.48 0.14 210)' : 'oklch(0.78 0.14 210)'),
-    accentDim: read('--accent-dim', isLight ? 'oklch(0.62 0.08 210)' : 'oklch(0.55 0.08 210)'),
-    accentHover: read('--accent-hover', isLight ? 'oklch(0.44 0.14 210)' : 'oklch(0.82 0.14 210)'),
-    muted: read('--muted', isLight ? 'oklch(0.42 0.02 265)' : 'oklch(0.72 0.02 265)'),
-    isLight
-  };
-}
-
-/** Interconnected ring + hub for the nav brand mark. */
-function generateBrandLogoNodes() {
-  const ringCount = 10;
-  const radius = 24;
-  const nodes = [];
-
-  for (let i = 0; i < ringCount; i++) {
-    const angle = (i / ringCount) * Math.PI * 2 - Math.PI / 2;
-    nodes.push({
-      x: Math.cos(angle) * radius,
-      y: Math.sin(angle) * radius,
-      z: 0,
-      px: 0,
-      py: 0,
-      connections: [],
-      pulse: (i / ringCount) * Math.PI * 2,
-      layer: 0
-    });
-  }
-
-  const hubIndex = nodes.length;
-  nodes.push({
-    x: 0,
-    y: 0,
-    z: 0,
-    px: 0,
-    py: 0,
-    connections: [],
-    pulse: 0.4,
-    layer: 1
-  });
-
-  for (let i = 0; i < ringCount; i++) {
-    const next = (i + 1) % ringCount;
-    nodes[i].connections.push(next);
-    nodes[next].connections.push(i);
-
-    const skip = (i + 3) % ringCount;
-    if (!nodes[i].connections.includes(skip)) {
-      nodes[i].connections.push(skip);
-      nodes[skip].connections.push(i);
-    }
-
-    if (i % 2 === 0) {
-      nodes[i].connections.push(hubIndex);
-      nodes[hubIndex].connections.push(i);
-    }
-  }
-
-  return nodes;
 }
 
 /** Three-node cluster for session-rail mini orb (Control Hub tab). */
@@ -298,39 +225,38 @@ function generateMiniHubOrbNodes() {
 
 /**
  * @param {HTMLCanvasElement} canvas
- * @param {{ crispInterior?: boolean, exportMinDpr?: number, mini?: boolean, brand?: boolean }} [opts]
- * @returns {{ destroy: () => void, setBusy?: (busy: boolean) => void, refreshPalette?: () => void } | null}
+ * @param {{ crispInterior?: boolean, exportMinDpr?: number, mini?: boolean, lite?: boolean }} [opts]
+ * @returns {{ destroy: () => void, setBusy?: (busy: boolean) => void, setActive?: (active: boolean) => void } | null}
  */
 function initCortexHubBrainCanvas(canvas, opts) {
   if (!canvas || !(canvas instanceof HTMLCanvasElement)) return null;
 
-  const brand = Boolean(opts && opts.brand);
-  const mini = brand || Boolean(opts && opts.mini);
-  const crisp = brand || mini || Boolean(opts && opts.crispInterior);
+  const lite = Boolean(opts && opts.lite);
+  const mini = Boolean(opts && opts.mini);
+  const crisp = lite || mini || Boolean(opts && opts.crispInterior);
   const exportMinDpr =
     crisp && opts && typeof opts.exportMinDpr === 'number'
       ? opts.exportMinDpr
       : crisp
-        ? brand
+        ? lite
           ? 2.5
           : mini
             ? 2
             : 3.25
         : null;
 
-  const nodes = brand
-    ? generateBrandLogoNodes()
+  const nodes = lite
+    ? generateBrainNodes('lite')
     : mini
       ? generateMiniHubOrbNodes()
-      : generateBrainNodes();
+      : generateBrainNodes('full');
   const mouse = { x: 0, y: 0 };
   let time = 0;
   let anim = 0;
-  let amplitude = 0;
+  let amplitude = lite ? 0.42 : 0;
   let busyTarget = 0;
-  let palette = brand ? readBrandLogoPalette() : null;
 
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: true });
   if (!ctx) return null;
 
   const reduceMotion =
@@ -339,9 +265,9 @@ function initCortexHubBrainCanvas(canvas, opts) {
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function setAmplitude(value) {
-    amplitude = amplitude * 0.8 + value * 0.2; // smooth ramp
+    amplitude = amplitude * 0.8 + value * 0.2;
   }
-  if (!mini) {
+  if (!mini && !lite) {
     window.brainAmplitudeDrive = setAmplitude;
   }
 
@@ -368,119 +294,44 @@ function initCortexHubBrainCanvas(canvas, opts) {
   }
 
   window.addEventListener('resize', onResize);
-  if (!mini) {
+  if (!mini && !lite) {
     canvas.addEventListener('mousemove', onMouseMove);
   }
 
-  function layoutBrandNodes(t, w, h) {
-    const cx = w / 2;
-    const cy = h / 2;
-    const rot = t * 0.1;
-    const cosR = Math.cos(rot);
-    const sinR = Math.sin(rot);
-    const layoutScale = Math.min(w, h) * 0.018;
+  let activeTarget = mini ? 0.6 : lite ? 0.48 : 1;
+  let rafRunning = true;
+  let drawFrames = 0;
+  let blankFrameStreak = 0;
+  let blankWarned = false;
 
-    for (const node of nodes) {
-      const rx = node.x * cosR - node.y * sinR;
-      const ry = node.x * sinR + node.y * cosR;
-      node.px = cx + rx * layoutScale;
-      node.py = cy + ry * layoutScale;
-    }
+  let ro = null;
+  if (typeof ResizeObserver === 'function') {
+    ro = new ResizeObserver(() => {
+      try { resize(); } catch {}
+    });
+    ro.observe(canvas);
   }
 
-  function drawBrandNetwork(t, drive) {
-    const edgeBase = palette.isLight ? 0.16 : 0.1;
-    const edgePeak = palette.isLight ? 0.34 : 0.26;
-    const sparkThreshold = palette.isLight ? 0.68 : BRAIN_IDLE.sparkThreshold;
-
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-
-    for (let i = 0; i < nodes.length; i++) {
-      const n = nodes[i];
-      for (const j of n.connections) {
-        if (j <= i) continue;
-        const m = nodes[j];
-        const pulseVal =
-          (Math.sin(t * BRAIN_IDLE.pulseEdge * drive.pulse + n.pulse) + 1) * 0.5;
-        const alpha = edgeBase + pulseVal * (edgePeak - edgeBase);
-        const flowT = (t * BRAIN_IDLE.flowSpeed * drive.flow + n.pulse) % 1;
-        const edgeColor = n.layer === 1 || m.layer === 1 ? palette.accentHover : palette.accentDim;
-
-        ctx.beginPath();
-        ctx.moveTo(n.px, n.py);
-        ctx.lineTo(m.px, m.py);
-        ctx.strokeStyle = edgeColor;
-        ctx.globalAlpha = alpha;
-        ctx.lineWidth = 0.9;
-        ctx.stroke();
-        ctx.globalAlpha = 1;
-
-        if (edgeFlowSparkOn(i, j, t, sparkThreshold)) {
-          const fx = n.px + (m.px - n.px) * flowT;
-          const fy = n.py + (m.py - n.py) * flowT;
-          ctx.beginPath();
-          ctx.arc(fx, fy, 0.85, 0, Math.PI * 2);
-          ctx.fillStyle = palette.accentHover;
-          ctx.globalAlpha = pulseVal * (palette.isLight ? 0.58 : 0.72);
-          ctx.fill();
-          ctx.globalAlpha = 1;
-        }
-      }
-    }
-
-    for (const node of nodes) {
-      const pulseVal =
-        (Math.sin(t * BRAIN_IDLE.pulseNode * drive.pulse + node.pulse) + 1) * 0.5;
-      const isHub = node.layer === 1;
-      const size = (isHub ? 1.55 : 1.05) + pulseVal * (isHub ? 0.55 : 0.75);
-      const haloR = size + 1.6;
-      const haloA = pulseVal * (palette.isLight ? 0.09 : 0.14);
-
-      ctx.beginPath();
-      ctx.arc(node.px, node.py, haloR, 0, Math.PI * 2);
-      ctx.fillStyle = palette.accent;
-      ctx.globalAlpha = haloA;
-      ctx.fill();
-      ctx.globalAlpha = 1;
-
-      ctx.beginPath();
-      ctx.arc(node.px, node.py, size, 0, Math.PI * 2);
-      ctx.fillStyle = isHub ? palette.accentHover : palette.accent;
-      ctx.globalAlpha = palette.isLight ? 0.68 + pulseVal * 0.28 : 0.58 + pulseVal * 0.36;
-      ctx.fill();
-      ctx.globalAlpha = 1;
-
-      ctx.beginPath();
-      ctx.arc(node.px, node.py, size, 0, Math.PI * 2);
-      ctx.strokeStyle = palette.accentDim;
-      ctx.globalAlpha = 0.22 + pulseVal * 0.28;
-      ctx.lineWidth = 0.65;
-      ctx.stroke();
-      ctx.globalAlpha = 1;
-    }
-  }
+  requestAnimationFrame(() => {
+    try { resize(); } catch {}
+    if (rafRunning) draw();
+  });
 
   function draw() {
-    if (mini && !brand) {
-      amplitude = amplitude * 0.82 + busyTarget * 0.18;
+    if (!rafRunning) return;
+    if (mini || lite) {
+      const target = (busyTarget || 0) * 0.9 + (activeTarget || 0) * 0.35;
+      amplitude = amplitude * 0.82 + target * 0.18;
     }
     const drive = getAudioDrive(amplitude);
     time += BRAIN_IDLE.timeStep * drive.timeStep;
     const t = time;
-    const w = canvas.offsetWidth;
-    const h = canvas.offsetHeight;
+    const w = canvas.offsetWidth || 20;
+    const h = canvas.offsetHeight || 20;
     const cx = w / 2;
     const cy = h / 2;
 
     ctx.clearRect(0, 0, w, h);
-
-    if (brand) {
-      layoutBrandNodes(t, w, h);
-      drawBrandNetwork(t, drive);
-      if (!reduceMotion) anim = requestAnimationFrame(draw);
-      return;
-    }
 
     const rotY = t * BRAIN_IDLE.rotSpeed + mouse.x * 0.5;
     const rotX = mouse.y * 0.3 + 0.1;
@@ -501,6 +352,8 @@ function initCortexHubBrainCanvas(canvas, opts) {
 
     ctx.lineCap = crisp ? 'round' : 'butt';
     ctx.lineJoin = crisp ? 'round' : 'miter';
+    const dpr = window.devicePixelRatio || 1;
+    const strokeW = crisp ? 1.1 : Math.max(0.85, 1 / dpr);
 
     for (let i = 0; i < nodes.length; i++) {
       const n = nodes[i];
@@ -524,7 +377,7 @@ function initCortexHubBrainCanvas(canvas, opts) {
         else if (n.layer === 4 || m.layer === 4) hue = 220;
 
         ctx.strokeStyle = `hsla(${hue}, 100%, 50%, ${alpha})`;
-        ctx.lineWidth = crisp ? 1.1 : 0.5;
+        ctx.lineWidth = strokeW;
         ctx.stroke();
 
         if (edgeFlowSparkOn(i, j, t, drive.sparkThreshold)) {
@@ -572,51 +425,93 @@ function initCortexHubBrainCanvas(canvas, opts) {
       }
     }
 
+    drawFrames += 1;
+    if (drawFrames >= 4 && drawFrames % 30 === 0 && canvas.width > 0 && canvas.height > 0) {
+      try {
+        const probe = ctx.getImageData(
+          Math.floor(canvas.width * 0.45),
+          Math.floor(canvas.height * 0.45),
+          Math.max(1, Math.floor(canvas.width * 0.1)),
+          Math.max(1, Math.floor(canvas.height * 0.1))
+        ).data;
+        let sawInk = false;
+        for (let pi = 3; pi < probe.length; pi += 4) {
+          if (probe[pi] > 8) {
+            sawInk = true;
+            break;
+          }
+        }
+        if (sawInk) {
+          blankFrameStreak = 0;
+          canvas.dataset.cortexBrainState = 'running';
+        } else {
+          blankFrameStreak += 1;
+          if (blankFrameStreak >= 2) {
+            canvas.dataset.cortexBrainState = 'blank-frames';
+            if (!blankWarned) {
+              blankWarned = true;
+              console.warn(
+                '[cortex-hub] brain canvas is drawing blank frames (size=%sx%s dpr=%s crisp=%s). ' +
+                  'Check display scaling, GPU acceleration, or whether harness-brain-canvas.js loaded.',
+                canvas.offsetWidth,
+                canvas.offsetHeight,
+                dpr,
+                crisp
+              );
+            }
+          }
+        }
+      } catch {
+        /* getImageData can fail when canvas is tainted or zero-sized */
+      }
+    }
+
     if (!reduceMotion) {
       anim = requestAnimationFrame(draw);
     }
   }
 
-  draw();
-
-  const api = {
+  return {
     destroy() {
+      rafRunning = false;
       cancelAnimationFrame(anim);
       window.removeEventListener('resize', onResize);
-      if (!mini) {
+      if (!mini && !lite) {
         canvas.removeEventListener('mousemove', onMouseMove);
       }
-    }
+      if (ro) {
+        try { ro.disconnect(); } catch {}
+      }
+    },
+    ...(mini
+      ? {
+          setBusy(busy) {
+            busyTarget = busy ? 0.72 : 0;
+          },
+          setActive(active) {
+            activeTarget = active ? 0.85 : 0.25;
+          }
+        }
+      : {})
   };
-
-  if (brand) {
-    api.refreshPalette = function () {
-      palette = readBrandLogoPalette();
-    };
-  } else if (mini) {
-    api.setBusy = function (busy) {
-      busyTarget = busy ? 0.72 : 0;
-    };
-  }
-
-  return api;
 }
 
 /**
  * Session-rail Control Hub tab — 3-node mini brain inside the orb glyph.
  * @param {HTMLCanvasElement} canvas
- * @param {{ busy?: boolean }} [opts]
+ * @param {{ busy?: boolean, active?: boolean }} [opts]
  */
 function initCortexHubTabOrbCanvas(canvas, opts) {
   const api = initCortexHubBrainCanvas(canvas, { mini: true, crispInterior: true });
   if (!api) return null;
   if (api.setBusy) api.setBusy(Boolean(opts && opts.busy));
+  if (api.setActive) api.setActive(Boolean(opts && opts.active));
   return api;
 }
 
-/** Nav brand mark — ring of interconnected nodes using site OKLCH tokens. */
+/** Nav brand mark — lite hex brain + crisp interior (scaled-down Cortex hub orb). */
 function initCortexBrandLogoCanvas(canvas) {
-  return initCortexHubBrainCanvas(canvas, { brand: true, crispInterior: true });
+  return initCortexHubBrainCanvas(canvas, { lite: true, crispInterior: true, exportMinDpr: 2.5 });
 }
 
 if (typeof window !== 'undefined') {
@@ -632,7 +527,7 @@ if (typeof module !== 'undefined' && module.exports) {
     edgeFlowSparkOn,
     BRAIN_IDLE,
     generateMiniHubOrbNodes,
-    generateBrandLogoNodes,
-    readBrandLogoPalette
+    generateBrainNodes,
+    BRAIN_DENSITY_PRESETS
   };
 }

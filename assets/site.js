@@ -186,19 +186,12 @@
     });
   }
 
-  function refreshBrandLogoPalettes() {
-    document.querySelectorAll('[data-cortex-brand-logo]').forEach(function (wrap) {
-      const api = wrap._cortexBrandLogoApi;
-      if (api && api.refreshPalette) api.refreshPalette();
-    });
-  }
-
   function setupBrandLogos() {
     const logos = document.querySelectorAll('[data-cortex-brand-logo]');
     if (!logos.length) return;
 
     const base = getAssetsBase();
-    loadScript(base + 'harness-brain-canvas.js?v=20260705d')
+    loadScript(base + 'harness-brain-canvas.js?v=20260706a')
       .then(function () {
         const init = window.initCortexBrandLogoCanvas || window.initCortexHubTabOrbCanvas;
         if (typeof init !== 'function') return;
@@ -215,10 +208,6 @@
         /* conic ring shell still renders without canvas */
       });
 
-    if (!window.__carapaceBrandLogoThemeBound) {
-      window.__carapaceBrandLogoThemeBound = true;
-      window.addEventListener('carapace-theme-change', refreshBrandLogoPalettes);
-    }
   }
 
   function bootSite() {
