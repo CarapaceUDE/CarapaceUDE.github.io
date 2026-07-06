@@ -653,6 +653,21 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1.5rem; align
 footer .footer-sources { flex-basis: 100%; line-height: 1.55; }
 footer a { color: var(--muted-strong) !important; }
 
+/* Home: sources above the page-end rule (not below the border) */
+body.page-home footer.home-footer {
+  border-top: none !important;
+  margin-top: 0 !important;
+  padding: 0 0 3rem !important;
+}
+body.page-home .footer-sources-wrap {
+  padding: 2.2rem 0 1.15rem;
+  font-size: .68rem !important;
+  color: var(--muted) !important;
+}
+body.page-home .page-end-rule {
+  border-top: 1px solid var(--border);
+}
+
 /* Hero chrome social — shared across hero and minimal pages */
 body[class*="page-"] {
   --chrome-social-hit: 2.85rem;
