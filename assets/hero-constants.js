@@ -1,4 +1,16 @@
 /** Shared hero constants — no imports from hero-core or text-anime. */
+
+/** OKLCH hue anchors aligned with Cortex site tokens (violet / cyan / purple family). */
+export const EFFECT_HUE = {
+  accent: 275,
+  cyan: 230,
+  purple: 300,
+  blue: 250,
+  sky: 195,
+  warm: 45
+};
+export const DEFAULT_EFFECT_HUE = EFFECT_HUE.accent;
+
 export const PILOT_NOTE_DISCLAIMER =
   "Pilot program pricing. Figures reflect our current testing phase and are subject to change once pilots complete and the model is validated.";
 

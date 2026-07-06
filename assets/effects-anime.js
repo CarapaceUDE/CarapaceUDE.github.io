@@ -12,6 +12,7 @@ import {
   rowProximity
 } from "./effects-interaction.js";
 import { CLICK_COOLDOWN_MS, dispatchClick, drawClickPulses } from "./effects-click.js";
+import { DEFAULT_EFFECT_HUE, EFFECT_HUE } from "./hero-constants.js";
 
 const MATRIX_CHARS = "01アイウエオカキクケコ∞∆∑λ#%&@<>{}[]";
 const GLITCH_CHARS = "█▓▒░╳╱╲│─┼<>[]{}#@$%&01";
@@ -138,7 +139,7 @@ export class AnimeEffectsField {
     this.reducedMotion = options.reducedMotion ?? false;
     this.width = 0;
     this.height = 0;
-    this.hue = 210;
+    this.hue = DEFAULT_EFFECT_HUE;
     this.intensity = 0.3;
     this.effectA = "shield";
     this.effectB = "shield";
@@ -235,7 +236,7 @@ export class AnimeEffectsField {
   }
 
   setHue(h) {
-    this.hue = h ?? 210;
+    this.hue = h ?? DEFAULT_EFFECT_HUE;
   }
 
   setIntensity(v) {
@@ -1758,10 +1759,10 @@ export class AnimeEffectsField {
           if (glitched) {
             c.fillStyle = this._pc(Math.max(0.05, 0.14 - i * 0.01));
             c.fillText(entry.base, col.x, yy);
-            c.fillStyle = head ? this._pc(0.98, 160) : this._pc(0.78 + Math.min(i * 0.015, 0.1));
+            c.fillStyle = head ? this._pc(0.98, EFFECT_HUE.purple) : this._pc(0.78 + Math.min(i * 0.015, 0.1));
             c.fillText(ch, x, y);
           } else {
-            c.fillStyle = head ? this._pc(0.95, 160) : this._pc(Math.max(0.06, 0.65 - i * 0.04));
+            c.fillStyle = head ? this._pc(0.95, EFFECT_HUE.purple) : this._pc(Math.max(0.06, 0.65 - i * 0.04));
             c.fillText(ch, col.x, yy);
           }
         }
@@ -1791,7 +1792,7 @@ export class AnimeEffectsField {
         this._clearGlow();
 
         if (prox > 0.2) {
-          c.strokeStyle = colorAtHue(175, 0.15 + prox * 0.25, 0.1, 0.68);
+          c.strokeStyle = colorAtHue(EFFECT_HUE.cyan, 0.15 + prox * 0.25, 0.1, 0.68);
           c.lineWidth = 0.7;
           c.beginPath();
           c.moveTo(ax + 2, ay);
@@ -1821,7 +1822,7 @@ export class AnimeEffectsField {
           c.stroke();
           c.beginPath();
           c.arc(n.x, n.y, r + 2, 0, Math.PI * 2);
-          c.fillStyle = colorAtHue(175, 0.12 + prox * 0.2, 0.1, 0.75);
+          c.fillStyle = colorAtHue(EFFECT_HUE.cyan, 0.12 + prox * 0.2, 0.1, 0.75);
           c.fill();
         }
       });
@@ -1852,13 +1853,13 @@ export class AnimeEffectsField {
         this._clearGlow();
 
         const jitterX = nearRow && this._hoverAllowed() ? rnd(-4, 4) * rowProx : 0;
-        c.fillStyle = this._pc(0.4 + rowProx * 0.35, 195);
+        c.fillStyle = this._pc(0.4 + rowProx * 0.35, EFFECT_HUE.sky);
         c.fillText(txt, drawX + jitterX, row.y - 4);
 
         if (nearRow && rowProx > 0.35) {
-          c.fillStyle = colorAtHue(28, 0.22 + rowProx * 0.3, 0.12, 0.7);
+          c.fillStyle = colorAtHue(EFFECT_HUE.purple, 0.22 + rowProx * 0.3, 0.12, 0.7);
           c.fillText(this._glitchString(txt, rowProx * 0.8), drawX + jitterX + 2, row.y - 3);
-          c.fillStyle = colorAtHue(230, 0.15 + rowProx * 0.2, 0.1, 0.65);
+          c.fillStyle = colorAtHue(EFFECT_HUE.cyan, 0.15 + rowProx * 0.2, 0.1, 0.65);
           c.fillText(txt, drawX + jitterX - 2, row.y - 5);
         }
       });
@@ -2363,11 +2364,11 @@ export class AnimeEffectsField {
         const colVal = Math.floor(col.counter * speed) % 10000;
         runningTotal += colVal;
         c.font = "10px IBM Plex Mono, monospace";
-        c.fillStyle = this._pc(0.45 + prox * 0.3 + (swept ? 0.2 : 0), 145);
+        c.fillStyle = this._pc(0.45 + prox * 0.3 + (swept ? 0.2 : 0), EFFECT_HUE.purple);
         c.fillText(String(colVal), cx - 12, baseY + 14);
       });
       c.font = "11px IBM Plex Mono, monospace";
-      c.fillStyle = this._pc(0.55, 145);
+      c.fillStyle = this._pc(0.55, EFFECT_HUE.purple);
       c.fillText(`Σ ${runningTotal % 100000}`, x0 + span * 0.02, baseY + 32);
     }
 
@@ -2477,7 +2478,7 @@ export class AnimeEffectsField {
           c.stroke();
         }
       });
-      c.fillStyle = this._pc(0.85, 45);
+      c.fillStyle = this._pc(0.85, EFFECT_HUE.warm);
       c.beginPath();
       c.arc(batonX, y, 5, 0, Math.PI * 2);
       c.fill();
@@ -2582,7 +2583,7 @@ export class AnimeEffectsField {
         }
         const px = a.x + (b.x - a.x) * t;
         const py = a.y + (b.y - a.y) * t;
-        c.fillStyle = this._pc(0.75, 45);
+        c.fillStyle = this._pc(0.75, EFFECT_HUE.warm);
         c.fillRect(px - 3, py - 3, 6, 6);
       });
     }
@@ -2703,7 +2704,7 @@ export class AnimeEffectsField {
         const localT = (state.packetT * totalSegs) % 1;
         const a = pts[seg];
         const b = pts[seg + 1];
-        c.fillStyle = this._pc(0.8, 45);
+        c.fillStyle = this._pc(0.8, EFFECT_HUE.warm);
         c.fillRect(a.x + (b.x - a.x) * localT - 3, a.y + (b.y - a.y) * localT - 3, 6, 6);
       }
     }

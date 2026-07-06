@@ -10,7 +10,7 @@ export const HERO_SLIDES = [
       { label: "Human API", detail: "Email, files, portals → governed execution." },
       { label: "Your boundary", detail: "Runs inside your environment." }
     ],
-    oklch: { L: 0.52, h: 210, rel: 0.32 },
+    oklch: { L: 0.52, h: 275, rel: 0.32 },
     effect: "topology",
     bokeh: 0.31
   },
@@ -24,7 +24,7 @@ export const HERO_SLIDES = [
       { label: "Connect", detail: "Bridge tools & data paths." },
       { label: "Build", detail: "Deploy governed automations." }
     ],
-    oklch: { L: 0.5, h: 175, rel: 0.3 },
+    oklch: { L: 0.5, h: 230, rel: 0.3 },
     effect: "lattice",
     bokeh: 0.32
   },
@@ -50,7 +50,7 @@ export const HERO_SLIDES = [
       { label: "Measured wins", detail: "Prove value before you scale." },
       { label: "Governed", detail: "Policy, custody, inspectability." }
     ],
-    oklch: { L: 0.53, h: 145, rel: 0.3 },
+    oklch: { L: 0.53, h: 300, rel: 0.3 },
     effect: "signal",
     bokeh: 0.29
   },

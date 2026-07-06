@@ -10,7 +10,7 @@ export const HERO_SLIDES = [
       { label: "Open core", detail: "Inspectable software boundary." },
       { label: "Governed", detail: "Policy-first execution." }
     ],
-    oklch: { L: 0.54, h: 210, rel: 0.34 },
+    oklch: { L: 0.54, h: 275, rel: 0.34 },
     effect: "shield",
     bokeh: 0.3
   },
@@ -25,7 +25,7 @@ export const HERO_SLIDES = [
       { label: "Approve", detail: "Human checkpoints." },
       { label: "Execute", detail: "Governed automation." }
     ],
-    oklch: { L: 0.5, h: 175, rel: 0.3 },
+    oklch: { L: 0.5, h: 230, rel: 0.3 },
     effect: "trace",
     bokeh: 0.32
   },
@@ -51,7 +51,7 @@ export const HERO_SLIDES = [
       { label: "Aliases", detail: "Intent → capability map." },
       { label: "Policy", detail: "Cost, latency, risk rules." }
     ],
-    oklch: { L: 0.53, h: 145, rel: 0.3 },
+    oklch: { L: 0.53, h: 300, rel: 0.3 },
     effect: "mesh",
     bokeh: 0.3
   },
@@ -116,7 +116,7 @@ export const HERO_SLIDES = [
       { label: "Processes", detail: "Living operational map." },
       { label: "Compounding", detail: "Reusable intelligence." }
     ],
-    oklch: { L: 0.56, h: 160, rel: 0.3 },
+    oklch: { L: 0.56, h: 285, rel: 0.3 },
     effect: "hashwave",
     bokeh: 0.29
   },
@@ -129,7 +129,7 @@ export const HERO_SLIDES = [
       { label: "GitHub", detail: "Free download & releases.", source: "https://github.com/CarapaceUDE/carapace/releases" },
       { label: "Discovery Sprint", detail: "Guided deployment.", source: "business.html#contact" }
     ],
-    oklch: { L: 0.57, h: 210, rel: 0.35 },
+    oklch: { L: 0.57, h: 275, rel: 0.35 },
     effect: "ping",
     bokeh: 0.3
   }

@@ -1,4 +1,5 @@
 import { init, oklch2rgb_rel, getCapsule } from "https://esm.sh/@wenhaoqi/wasm_design_utils@0.2.0";
+import { DEFAULT_EFFECT_HUE } from "./hero-constants.js";
 import { HeroTextAnime } from "./text-anime.js";
 import { AnimeEffectsField } from "./effects-anime.js";
 import { HeroChipInteractions } from "./chip-interactions.js";
@@ -154,7 +155,7 @@ export function initScrollHero({ slides, pageClass, stageHeight, ctaSectionId = 
     });
     await wasmReady;
     await applySlideAtmosphere(index);
-    effectsField?.setHue(s.oklch?.h ?? 210);
+    effectsField?.setHue(s.oklch?.h ?? DEFAULT_EFFECT_HUE);
     if (atmosphere) {
       atmosphere.dataset.interactive = INTERACTIVE_EFFECTS.includes(s.effect) ? "true" : "false";
     }

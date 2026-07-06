@@ -12,7 +12,7 @@ export const HERO_SLIDES = [
       { label: "Model-independent", detail: "Route across providers without rewrites." },
       { label: "No lock-in", detail: "Own the workflows and the data path." }
     ],
-    oklch: { L: 0.55, h: 210, rel: 0.35 },
+    oklch: { L: 0.55, h: 275, rel: 0.35 },
     effect: "shield",
     bokeh: 0.28
   },
@@ -43,7 +43,7 @@ export const HERO_SLIDES = [
       { label: "Less routing", detail: "Automate handoffs between tools." },
       { label: "Less copy/paste", detail: "Keep humans on judgment, not glue work." }
     ],
-    oklch: { L: 0.52, h: 175, rel: 0.3 },
+    oklch: { L: 0.52, h: 230, rel: 0.3 },
     effect: "orbit",
     bokeh: 0.32
   },
@@ -86,7 +86,7 @@ export const HERO_SLIDES = [
         stat: true
       }
     ],
-    oklch: { L: 0.56, h: 145, rel: 0.3 },
+    oklch: { L: 0.56, h: 300, rel: 0.3 },
     effect: "telemetry",
     bokeh: 0.31
   },

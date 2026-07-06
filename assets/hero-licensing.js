@@ -10,7 +10,7 @@ export const HERO_SLIDES = [
       { label: "Open-core", detail: "Inspectable software boundary." },
       { label: "Personal free", detail: "Community edition path." }
     ],
-    oklch: { L: 0.52, h: 210, rel: 0.32 },
+    oklch: { L: 0.52, h: 275, rel: 0.32 },
     effect: "shield",
     bokeh: 0.3
   },
@@ -23,7 +23,7 @@ export const HERO_SLIDES = [
       { label: "Community edition", detail: "Read & download the license." },
       { label: "GitHub", detail: "Open-core releases.", source: "https://github.com/CarapaceUDE/carapace" }
     ],
-    oklch: { L: 0.5, h: 175, rel: 0.28 },
+    oklch: { L: 0.5, h: 230, rel: 0.28 },
     effect: "branch",
     bokeh: 0.31
   },
@@ -66,7 +66,7 @@ export const HERO_SLIDES = [
       { label: "Retainer terms", detail: "$399/mo strategy & support." },
       { label: "No forced dependency", detail: "Support is additive." }
     ],
-    oklch: { L: 0.53, h: 145, rel: 0.3 },
+    oklch: { L: 0.53, h: 300, rel: 0.3 },
     effect: "ledger",
     bokeh: 0.31
   },

@@ -10,7 +10,7 @@ export const HERO_SLIDES = [
       { label: "Carapace", detail: "Infrastructure partner & implementation." },
       { label: "Cortex", detail: "Open-core control plane software." }
     ],
-    oklch: { L: 0.54, h: 210, rel: 0.32 },
+    oklch: { L: 0.54, h: 275, rel: 0.32 },
     effect: "filament",
     bokeh: 0.3
   },
@@ -23,7 +23,7 @@ export const HERO_SLIDES = [
       { label: "Human-centered", detail: "Judgment, care, and craft stay human." },
       { label: "Owner-operators", detail: "Serious tools without enterprise overhead." }
     ],
-    oklch: { L: 0.52, h: 175, rel: 0.3 },
+    oklch: { L: 0.52, h: 230, rel: 0.3 },
     effect: "magnet",
     bokeh: 0.31
   },
@@ -38,7 +38,7 @@ export const HERO_SLIDES = [
       { label: "Practical over performative", detail: "Real operations are the test." },
       { label: "Value that compounds", detail: "Reusable integrations & packages." }
     ],
-    oklch: { L: 0.5, h: 145, rel: 0.28 },
+    oklch: { L: 0.5, h: 300, rel: 0.28 },
     effect: "lattice",
     bokeh: 0.32
   },

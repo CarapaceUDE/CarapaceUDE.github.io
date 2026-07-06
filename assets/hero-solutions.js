@@ -10,7 +10,7 @@ export const HERO_SLIDES = [
       { label: "Capability aliases", detail: "Summarize, extract, draft, route." },
       { label: "Policy layer", detail: "Data rules & access control." }
     ],
-    oklch: { L: 0.52, h: 210, rel: 0.32 },
+    oklch: { L: 0.52, h: 275, rel: 0.32 },
     effect: "topology",
     bokeh: 0.31
   },
@@ -24,7 +24,7 @@ export const HERO_SLIDES = [
       { label: "Deploy", detail: "Secure, governed automation." },
       { label: "Expand", detail: "Multiply proven wins." }
     ],
-    oklch: { L: 0.54, h: 175, rel: 0.3 },
+    oklch: { L: 0.54, h: 230, rel: 0.3 },
     effect: "pipeline",
     bokeh: 0.32
   },
@@ -37,7 +37,7 @@ export const HERO_SLIDES = [
       { label: "Staged path", detail: "Intro → value → next step." },
       { label: "Human checkpoint", detail: "Approve before send." }
     ],
-    oklch: { L: 0.5, h: 145, rel: 0.28 },
+    oklch: { L: 0.5, h: 300, rel: 0.28 },
     effect: "isograph",
     bokeh: 0.3
   },
@@ -116,7 +116,7 @@ export const HERO_SLIDES = [
       { label: "Intake", detail: "Signal-to-work routing." },
       { label: "Ops", detail: "Admin drag reduction." }
     ],
-    oklch: { L: 0.54, h: 160, rel: 0.3 },
+    oklch: { L: 0.54, h: 285, rel: 0.3 },
     effect: "cellscan",
     bokeh: 0.29
   },
@@ -129,7 +129,7 @@ export const HERO_SLIDES = [
       { label: "Discovery Sprint", detail: "Book the intake form.", source: "business.html#contact" },
       { label: "Cortex", detail: "Explore the control plane.", source: "cortex.html" }
     ],
-    oklch: { L: 0.57, h: 210, rel: 0.34 },
+    oklch: { L: 0.57, h: 275, rel: 0.34 },
     effect: "beacon",
     bokeh: 0.3
   }
