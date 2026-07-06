@@ -1096,7 +1096,7 @@ body[class*="page-"] .page-licensing .doc-mark {
 
 body[class*="page-"] .page-licensing .section-kicker {
   margin: 0;
-  color: var(--warn);
+  color: var(--accent);
   font: 600 0.72rem/1.4 var(--font-mono);
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1168,18 +1168,20 @@ body[class*="page-"] .cta-link {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--accent-on) !important;
-  background: var(--accent);
-  border: none;
+  color: var(--cta-gold-on) !important;
+  background: var(--cta-gold);
+  border: 1px solid var(--cta-gold);
   position: relative;
-  transition: transform 0.15s var(--ease-out), filter 0.2s;
+  transition: transform 0.15s var(--ease-out), filter 0.2s, background 0.2s ease, border-color 0.2s ease;
 }
 
 body[class*="page-"] .cta-link:hover,
 body[class*="page-"] .cta-link:focus-visible {
   transform: translateY(-1px);
-  filter: brightness(1.05);
-  color: var(--accent-on) !important;
+  filter: brightness(1.03);
+  color: var(--cta-gold-on) !important;
+  background: var(--cta-gold-hover);
+  border-color: var(--cta-gold-hover);
 }
 
 body[class*="page-"] .cta-link svg.capsule-bg {

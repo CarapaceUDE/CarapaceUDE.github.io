@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Licensing | Carapace</title>
   <meta name="description" content="Cortex is free for personal use. Carapace provides the commercial path, implementation help, optional support, and downloadable current agreements." />
-  <meta name="theme-color" content="#1a1c24" id="meta-theme-color" />
+  <meta name="theme-color" content="#0f0f10" id="meta-theme-color" />
   <script>
     (function () {
       try {
@@ -13,7 +13,7 @@
         if (t === "light" || t === "dark") {
           document.documentElement.dataset.theme = t;
           var meta = document.querySelector('meta[name="theme-color"]');
-          if (meta) meta.setAttribute("content", t === "light" ? "#f5f6f8" : "#1a1c24");
+          if (meta) meta.setAttribute("content", t === "light" ? "#f2f2f4" : "#0f0f10");
         }
       } catch (e) { /* private mode */ }
     })();
@@ -29,7 +29,7 @@
 <body class="page-licensing">
   <nav class="nav" aria-label="Primary navigation">
     <div class="wrap nav-inner">
-      <a class="brand" href="index.html" aria-label="Carapace home"><span class="cortex-brand-logo" data-cortex-brand-logo aria-hidden="true"><span class="cortex-brand-logo__ring"></span><span class="cortex-brand-logo__brain"><canvas class="cortex-brand-logo__canvas"></canvas></span></span><span>Carapace</span></a>
+      <a class="brand" href="index.html" aria-label="Carapace home"><span class="cortex-brand-logo" data-cortex-brand-logo aria-hidden="true"><span class="cortex-brand-logo__ring cortex-brand-logo__ring--back"></span><span class="cortex-brand-logo__ring cortex-brand-logo__ring--front"></span><span class="cortex-brand-logo__brain"><canvas class="cortex-brand-logo__canvas"></canvas></span></span><span>Carapace</span></a>
       <div class="links">
         <a href="index.html">Home</a>
         <a href="business.html">How We Help</a>

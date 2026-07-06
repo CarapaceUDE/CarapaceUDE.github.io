@@ -93,7 +93,7 @@
 }
 
 .about-declaration {
-  background: color-mix(in oklch, var(--warn) 9%, transparent) !important;
+  background: color-mix(in srgb, var(--accent) 9%, transparent) !important;
   color: var(--fg) !important;
 }
 
@@ -270,10 +270,10 @@
     }
 .page-cortex .route-tag {
       padding: .28rem .48rem;
-      border: 1px solid color-mix(in oklch, var(--warn) 20%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
       border-radius: 0;
-      color: var(--warn);
-      background: color-mix(in oklch, var(--warn) 20%, transparent);
+      color: var(--cyan);
+      background: color-mix(in srgb, var(--cyan) 20%, transparent);
       font-size: .68rem;
       white-space: nowrap;
     }
@@ -337,10 +337,10 @@
       position: absolute;
       inset: 0 0 auto 0;
       height: 3px;
-      background: linear-gradient(90deg, var(--accent), color-mix(in oklch, var(--accent) 25%, transparent), var(--warn));
+      background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 25%, transparent), var(--cyan));
       opacity: .72;
     }
-.page-cortex .feature-card:nth-child(2n)::before { background: linear-gradient(90deg, var(--warn), color-mix(in oklch, var(--warn) 20%, transparent), var(--accent)); }
+.page-cortex .feature-card:nth-child(2n)::before { background: linear-gradient(90deg, var(--purple), color-mix(in srgb, var(--purple) 20%, transparent), var(--accent)); }
 .page-cortex .feature-num {
       display: inline-flex;
       align-items: center;
@@ -394,7 +394,7 @@
       right: 7%;
       top: 50%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, color-mix(in oklch, var(--accent) 25%, transparent), color-mix(in oklch, var(--warn) 20%, transparent), transparent);
+      background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 25%, transparent), color-mix(in srgb, var(--cyan) 20%, transparent), transparent);
       pointer-events: none;
     }
 .page-cortex .flow-step {
@@ -425,7 +425,7 @@
     }
 .page-cortex .proof-panel {
       padding: clamp(1.5rem, 3vw, 2.4rem);
-      border: 1px solid color-mix(in oklch, var(--warn) 20%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
       border-radius: 0;
       background: var(--surface);
     }
@@ -461,7 +461,7 @@
       letter-spacing: -.01em;
     }
 .page-cortex .advanced-card p { margin: 0; color: var(--muted); font-size: .92rem; }
-.page-cortex .adv-label { display: block; margin-bottom: .65rem; color: var(--warn); font-size: .66rem; }
+.page-cortex .adv-label { display: block; margin-bottom: .65rem; color: var(--accent); font-size: .66rem; }
 .page-cortex .cta-panel {
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(260px, .58fr);
