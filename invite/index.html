@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You Can Build It Now | Carapace Workshop</title>
+  <meta name="description" content="A one-day workshop for small business owners. Find the work that is wasting your time, then build a first version that runs on your laptop." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0f0f10" id="meta-theme-color" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("carapace-theme");
+        if (t === "light" || t === "dark") {
+          document.documentElement.dataset.theme = t;
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute("content", t === "light" ? "#f2f2f4" : "#0f0f10");
+        }
+      } catch (e) { /* private mode */ }
+    })();
+  </script>
+  <link rel="icon" href="../assets/carapace_logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="invite.css" />
+</head>
+<body class="page-workshop">
+  <div class="atmosphere" aria-hidden="true">
+    <div class="atmosphere-glow"></div>
+    <div class="atmosphere-grid"></div>
+  </div>
+
+  <nav class="nav" aria-label="Primary navigation">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html" aria-label="Carapace home">
+        <img src="../assets/carapace_logo.svg" alt="" />
+        <span>Carapace</span>
+      </a>
+      <div class="links" id="site-navigation">
+        <a href="../index.html">Home</a>
+        <a href="../business.html">How We Help</a>
+        <a href="#day">The day</a>
+        <a href="#apply" class="nav-contact">Request a seat</a>
+        <div class="nav-utilities">
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode" title="Toggle light / dark theme">
+            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 0 1 9.5 3 7 7 0 1 0 21 14.5z" /></svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+            <span class="theme-label" id="theme-label">Dark</span>
+          </button>
+          <div class="nav-meta hide-mobile">
+            <span class="meta-label">Local</span>
+            <span class="meta-value" id="meta-time">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-chrome">
+        <span>Carapace ©2026</span>
+        <span>Workshop · 12 seats</span>
+      </div>
+      <p class="eyebrow">Your company. Your tools.</p>
+      <h1>You Can Build It Now</h1>
+      <p class="lead">A one-day workshop for small business owners. You already use AI to write emails. Today you learn how to build something your company can keep and run.</p>
+      <p class="note">Find the work that is wasting your time. Then make a first version that runs on your laptop.</p>
+      <div class="proof-row">
+        <span class="proof-chip">One real job</span>
+        <span class="proof-chip">Files on your machine</span>
+        <span class="proof-chip">No coding class</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn gold" href="#apply">Request a seat</a>
+        <a class="btn outline" href="#doors">See the three problems</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="facts" aria-label="Workshop facts">
+    <article><span>When</span><strong>Date TBD · weekday · 8:30-5:30</strong></article>
+    <article><span>Where</span><strong>Venue TBD · in person</strong></article>
+    <article><span>Price</span><strong>$1,200-$1,500 · lunch included</strong></article>
+    <article><span>After</span><strong>20-minute call within 14 days</strong></article>
+  </div>
+
+  <main id="top">
+    <section>
+      <div class="wrap">
+        <p class="eyebrow">The gap</p>
+        <h2>The expensive part was the programmers.</h2>
+        <p class="lede">Big companies never waited for a vendor to invent exactly how they quote a job. They paid programmers and built it. You were told that was only for huge companies. You still know how your shop works. That was always the valuable part.</p>
+        <p>Most owners cannot name the real problem when they walk in. The morning is finding it together. The afternoon is building a first version. You leave with files on your laptop, and they are yours.</p>
+      </div>
+    </section>
+
+    <section id="doors">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">What we look for</p>
+            <h2>Three kinds of problems</h2>
+          </div>
+          <p>Keep payroll and the credit card tool. Build the piece that almost fits, or the bridge between tools that do not talk.</p>
+        </div>
+        <div class="rail">
+          <article>
+            <div class="n">01</div>
+            <h3>Stop renting the important part</h3>
+            <p>You pay monthly for a tool that almost fits. Keep payroll and credit cards. Build the quoting page, intake form, or job sheet yourself.</p>
+          </article>
+          <article>
+            <div class="n">02</div>
+            <h3>Connect tools that do not talk</h3>
+            <p>The website form sits in email. Photos die on a phone. You do not have to switch platforms. You need a small bridge in between.</p>
+          </article>
+          <article>
+            <div class="n">03</div>
+            <h3>Stop being the copy-paste</h3>
+            <p>Someone, often you, retypes the same job from email to spreadsheet to the paid tool. Encode the rule. Leave people for judgment.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap split">
+        <div class="block">
+          <span class="kicker">Who it is for</span>
+          <h3>Owners and operators</h3>
+          <ul>
+            <li>About 1-40 people</li>
+            <li>You can use a laptop. You do not think of yourself as technical.</li>
+            <li>You do not need to arrive knowing the right problem.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <span class="kicker">Who it is not for</span>
+          <h3>Skip this day if</h3>
+          <ul>
+            <li>You are a professional developer looking for an engineering class</li>
+            <li>You only want AI for social posts</li>
+            <li>You want a lecture without building something</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap split">
+        <div class="block">
+          <span class="kicker">What you bring</span>
+          <h3>Laptop, one job, one AI app</h3>
+          <ul>
+            <li>A laptop you can install software on, plus the charger</li>
+            <li>An AI account that can edit files, not just chat: Claude Code, Grok Build, ChatGPT/Codex, or Cursor</li>
+            <li>One recent job you can walk through, with names removed</li>
+          </ul>
+        </div>
+        <div class="block">
+          <span class="kicker">What you leave with</span>
+          <h3>Yours to keep</h3>
+          <ul>
+            <li>A map of the slow, expensive, or copy-paste work in your week</li>
+            <li>A one-page brief in plain English</li>
+            <li>A first version that runs on your laptop</li>
+            <li>A 30-day plan, and a 20-minute follow-up call</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="day">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Schedule</p>
+            <h2>The day</h2>
+          </div>
+          <p>Eight hours. Not a tour of 12 apps. Morning we find the problem. Afternoon you build.</p>
+        </div>
+        <ol class="day">
+          <li><time>8:30-9:00</time><p>Get set up</p></li>
+          <li><time>9:00-10:15</time><p>What you can actually do now</p></li>
+          <li><time>10:30-12:00</time><p>Find your problem, then write it down</p></li>
+          <li><time>12:00-1:00</time><p>Lunch</p></li>
+          <li><time>1:00-2:45</time><p>We demo, then you build the first version</p></li>
+          <li><time>3:00-4:15</time><p>Make it useful</p></li>
+          <li><time>4:15-5:00</time><p>How to keep going after today</p></li>
+          <li><time>5:00-5:30</time><p>Stay if you are close</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap company">
+        <div>
+          <p class="eyebrow">Carapace</p>
+          <h2>The company presenting the day.</h2>
+          <p>We help businesses use AI without giving up control of their files and process. Cortex is our software. This workshop is not a Cortex class. If you want help keeping a system running after you have built something, that conversation is optional, at the end.</p>
+          <div class="cta-row">
+            <a class="btn outline" href="../index.html">carapaceai.org</a>
+          </div>
+        </div>
+        <aside>
+          <strong>Carapace is the company. Cortex is the software.</strong>
+          Same idea as Microsoft and Office. You do not need Cortex to take this workshop.
+        </aside>
+      </div>
+    </section>
+
+    <section id="apply">
+      <div class="wrap apply">
+        <div class="card">
+          <p class="eyebrow">Next step</p>
+          <h2>Request a seat</h2>
+          <div class="intake-intro">
+            <p class="muted">Short form. Date, venue, and the exact ticket inside $1,200-$1,500 will be confirmed before checkout. They are not locked on this page.</p>
+            <div class="intake-aside">
+              <strong>What helps us respond faster</strong>
+              <ul>
+                <li>About how many people</li>
+                <li>Tools you already pay for monthly</li>
+                <li>One recent job, no customer names</li>
+                <li>Which AI app you can bring</li>
+              </ul>
+            </div>
+          </div>
+          <form id="seat-form" action="#" method="get">
+            <div class="form-grid">
+              <div>
+                <label for="business">Business</label>
+                <input id="business" name="business" type="text" required />
+              </div>
+              <div>
+                <label for="headcount">About how many people</label>
+                <input id="headcount" name="headcount" type="text" />
+              </div>
+              <div class="full">
+                <label for="saas">Tools you pay for monthly</label>
+                <input id="saas" name="saas" type="text" />
+              </div>
+              <div class="full">
+                <label for="job">Walk one recent job in a few bullets (no real customer names)</label>
+                <textarea id="job" name="job" rows="4"></textarea>
+              </div>
+              <div>
+                <label for="harness">Which AI app can you bring</label>
+                <select id="harness" name="harness">
+                  <option>Claude Code</option>
+                  <option>Grok Build</option>
+                  <option>ChatGPT / Codex</option>
+                  <option>Cursor</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+              <div>
+                <label for="os">Laptop</label>
+                <select id="os" name="os">
+                  <option>Mac</option>
+                  <option>Windows</option>
+                  <option>Linux</option>
+                </select>
+              </div>
+            </div>
+            <div class="cta-row" style="margin-top:1.2rem;">
+              <button class="btn gold" type="submit">Request a seat</button>
+            </div>
+            <p class="form-status" id="form-status" aria-live="polite"></p>
+          </form>
+          <p class="fine">Doors 8:30. Before you come, open your AI app, point it at an empty folder, and have it create hello.md. No live client data. We start at 9:00.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Carapace workshop</span>
+      <a href="../index.html">carapaceai.org</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var toggle = document.getElementById("theme-toggle");
+      var label = document.getElementById("theme-label");
+      var meta = document.getElementById("meta-theme-color");
+      function paint() {
+        var dark = root.dataset.theme !== "light";
+        if (label) label.textContent = dark ? "Dark" : "Light";
+        if (toggle) toggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+        if (meta) meta.setAttribute("content", dark ? "#0f0f10" : "#f2f2f4");
+      }
+      paint();
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          var next = root.dataset.theme === "light" ? "dark" : "light";
+          root.dataset.theme = next;
+          try { localStorage.setItem("carapace-theme", next); } catch (e) {}
+          paint();
+        });
+      }
+      var clock = document.getElementById("meta-time");
+      function tick() {
+        if (!clock) return;
+        clock.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      }
+      tick();
+      setInterval(tick, 30000);
+      if (location.hash) {
+        var jump = document.querySelector(location.hash);
+        if (jump) jump.scrollIntoView();
+      }
+      var form = document.getElementById("seat-form");
+      var status = document.getElementById("form-status");
+      if (form) {
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          if (status) status.textContent = "This page is a draft. It is not open registration yet.";
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
