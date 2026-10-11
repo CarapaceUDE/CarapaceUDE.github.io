@@ -1,0 +1,16 @@
+name = "carapace-waitlist"
+main = "src/index.js"
+compatibility_date = "2026-10-11"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = false
+routes = [{ pattern = "carapaceai.org/api/waitlist*", zone_name = "carapaceai.org" }]
+
+[vars]
+ALLOWED_ORIGINS = "https://carapaceai.org,https://www.carapaceai.org"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "carapace-waitlist"
+database_id = "D1_DATABASE_ID_PENDING"
+
+# Set TURNSTILE_SECRET and ADMIN_TOKEN with wrangler secret put. See README.md.
